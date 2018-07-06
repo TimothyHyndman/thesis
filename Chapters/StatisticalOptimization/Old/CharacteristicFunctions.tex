@@ -1,0 +1,203 @@
+\chapter{Characteristic Functions}
+\label{Ch:CharacteristicFunctions}
+
+\lhead{Chapter \ref{Ch:CharacteristicFunctions}. \emph{Characteristic Functions}} % This is for the header on each page
+
+%----------------------------------------------------------------------------------------
+%	Chapter Text
+%----------------------------------------------------------------------------------------
+%Contains some unpolished notes on non-negative stuff
+
+Given a real-valued random variable $X$ with probability distribution $\sigma(x)$, we define its characteristic function to be
+\begin{equation}
+	\phi_X(t) =  \expect\left[e^{iXt}\right] = \int e^{ixt} \intd \sigma(x).
+\end{equation}
+
+The following theorems are fundamental and are stated without proof (see \cite{Lukacs1970-qm} for proofs).
+\begin{theorem}[Uniqueness]
+	Two distributions are identical if, and only if, their characteristic functions are identical.
+\end{theorem}
+\begin{theorem}[Convolution]
+	The convolution of two distribution functions $\sigma_1$ and $\sigma_2$ (with characteristic functions $\phi_1$ and $\phi_2$ respectively),
+	$$\sigma(t) = \int_{-\infty}^{\infty} \sigma_1(t - s) \intd \sigma_2(s)$$
+	has characteristic function $\phi(t) = \phi_1(t)\phi_2(t)$.
+	\label{thm:convolution}
+\end{theorem}
+Note that the distribution of $X + Y$ where $X$ and $Y$ are independent is given by the convolution of $\sigma_X$ and $\sigma_Y$.
+
+
+\section{Symmetric Distributions}
+We say a distribution $\sigma$ is \emph{symmetric} if
+BLAHBLAHBLAH
+\begin{theorem}
+	A characteristic function is both real-valued and even if, and only if, its corresponding distribution is symmetric.
+	\label{thm:symmetricdistrealcf}
+\end{theorem}
+\section{Real-valued and Non-negative Characteristic Functions}
+
+\subsection{Infinitely Divisible}
+A characteristic function, $\phi(t)$ is \emph{infinitely divisible} if $\forall n \in \mathbb{N}$, $\exists \phi_n$ such that
+$$\phi(t) = \phi_n(t)^n$$
+and $\phi_n(t)$ is also a characteristic function. All stable distributions are infinitely divisible.
+We state the following theorem from \cite{Lukacs1970-qm}.
+\begin{theorem}
+	An infinitely divisible characteristic function has no real zeros.
+	\label{thm:infinitelydivisible}
+\end{theorem}
+Combining Theorems \ref{thm:symmetricdistrealcf} and \ref{thm:infinitelydivisible} we get the following corollary.
+\begin{corollary}
+	An infinitely divisible characteristic function of a symmetric random variable is real-valued and positive.
+\end{corollary}
+Examples of symmetric and infinitely divisible distributions include the normal distribution, the Cauchy distribution and the degenerate distribution.
+
+\subsection{Discrete Distributions}
+Let us consider a discrete probability distribution $F$ with a finite number of point masses $\rho_j > 0$ at locations $x_j \in \mathbb{R}$ for $j = 0,1,\dots,m$. Without loss of generality, let $x_0 = 0$ (we allow for the possibility that $\rho_0 = 0$). Then
+\begin{align*}
+\Re\left\lbrace\phi_F(t)\right\rbrace  &= \int_{-\infty}^\infty \cos(tx) \intd F(x)\\
+&= \sum_{j = 0}^m \rho_j \cos(tx_j)\\
+&= \rho_0 + \sum_{j = 1}^m \rho_j \cos(tx_j).\\
+\end{align*}
+Clearly, a sufficient condition for $\Re\left\lbrace \phi_F(t)\right\rbrace $ to be positive is that $\rho_0 > \frac{1}{2}$. We also have that a necessary condition for $\Re\left\lbrace \phi_F(t)\right\rbrace $ to be positive is that $\rho_0 > 0$\footnote{I can't figure out how to prove it but it's definitely true.}. It is easy to show that the first of these bounds is sharp (for example, $f(x) = \frac{1}{2} + \frac{1}{2} \cos(x)$ has zeros at $x = (2n+1)\pi$, $n \in \mathbb{Z}$). We will now show that the latter bound is also sharp.
+
+%	Let $F$ be a discrete distribution with $\rho_0 = \epsilon > 0$ and choose $m > \frac{1}{\epsilon}$.
+Consider the Fejer kernel,
+$$K_M(x) = 1 + 2\sum_{k=1}^M \left(1 - \frac{k}{M + 1} \right) \cos(kx)$$
+which is non-negative for all $x \in \mathbb{R}$. At $x = 0$ we have
+\begin{align*}
+K_M(0) &= 1 + 2\sum_{k=1}^M \left(1 - \frac{k}{M + 1} \right)\\
+&=1 + 2 M - 2\sum_{k=1}^M \frac{k}{M + 1}\\
+&= 1 + 2M - M\\
+&= M+1.
+\end{align*}
+
+So $\phi_M(t) = \frac{1}{M+1} K_M(t)$ is the characteristic function of the discrete distribution with masses at $x_j = 0, \pm 1, \pm 2, \dots, \pm M$ and masses of size $\rho_j = \frac{1}{M+1}\left(1 - \frac{|x_j|}{M+1} \right)$. In particular, $\rho_0 = \frac{1}{M+1}$. Since the Fejer kernel is non-negative, $\phi_M(t)$ is also non-negative and since $M$ can be arbitrarily large, our bound is sharp.
+
+\subsection{Conjecture}
+\begin{conjecture}
+	Let $f(x)$ be a symmetric continuous probability density function. Then if $\phi_F(t) > 0$ for all $t$, $f(x)$ must have a unique mode at $x = 0$.
+	i.e.
+	$f(x)$ must be increasing for $x < 0$ and decreasing for $x > 0$.
+\end{conjecture}
+\begin{proof}
+	No idea... Very possibly not true. However, numerical tests have supported this so far.
+\end{proof}
+
+Here are some related theorems from \cite{Ushakov1999-rn}.
+
+\begin{theorem}
+	If $\phi(t)$ is the characteristic function of a unimodal distribution then $|\phi(t)|^2$ is also the characteristic function of a unimodal distribution.
+\end{theorem}
+
+This one's actually from \cite{Askey1975-ft}.
+\begin{theorem}
+	If $\phi(t)$ is a real-valued, continuous function, differentiable for $t>0$ and $\phi$ satisfies
+	\begin{enumerate}
+		\item $\phi(0) = 1$
+		\item $\phi(t) = \phi(-t)$
+		\item $\lim_{t\rightarrow \infty} \phi(t) = 0$
+		\item $-\phi'(t)$ is convex for $t>0$
+	\end{enumerate}
+	then $\phi(t)$ is the characteristic function of a unimodal distribution.
+	\label{thm:sufficientforunimodal}
+\end{theorem}
+
+Question: Do the above conditions also imply $\phi(t) > 0$? (I think so) OR Does $\phi(t) > 0$ and $\phi(t)$ an even characteristic function of density imply the above conditions. (NO)
+
+
+	
+
+\section{Phase Functions}
+The \emph{phase function} of a random variable $X$ is defined as 
+\begin{equation}
+	\rho_X(t) = \frac{\phi_X(t)}{|\phi_X(t)|}
+	\label{eq:phasefunctiondef}
+\end{equation}
+where $\phi_X(t)$ is the characteristic function of $X$. If $X$ has distribution $f$ then we can also write $\phi_f(t)$ for its characteristic function and say that $f$ has characteristic function $\phi_f(t)$.
+
+\begin{theorem}
+	If $X$ and $U$ are independent random variables with $U$ symmetric and $\phi_U(t) \geq 0$ then
+	\begin{equation}
+		\rho_{X+U}(t) = \rho_X(t).
+	\end{equation}
+	\label{thm:phasefunctionaddsymmetric}
+\end{theorem}
+\begin{proof}
+	From Theorem \ref{thm:convolution} we have
+	$$\phi_{X+U}(t) = \phi_X(t)\phi_U(t)$$
+	and so from \eqref{eq:phasefunctiondef},
+	\begin{align*}
+		\rho_{X+U}(t) &= \frac{\phi_X(t)\phi_U(t)}{|\phi_X(t)\phi_U(t)|}\\
+							&= \frac{\phi_X(t)}{|\phi_X(t)|}\\
+							&= \rho_X(t)
+	\end{align*}
+	as $\phi_U(t) = |\phi_U(t)|$.
+\end{proof}
+
+\begin{corollary}
+%	Given a random variable, there are infinitely other random variables that share the same phase function.
+	Given a distribution, there are infinitely other distributions that share the same phase function.
+\end{corollary}
+
+%This follows immediately from Theorem \ref{thm:phasefunctionaddsymmetric}.
+
+
+%\subsection{Relation to the Cumulants of a Distribution}
+%Do we need this section... probably don't know yet
+
+%\subsection{Convexity}
+
+\begin{theorem}
+	The set of all distributions with a given phase function is convex.
+\end{theorem}
+%Lemma about convex combination for characteristic functions
+\begin{proof}
+	Let $f$ and $g$ be probability distributions such that $\rho_f = \rho_g$. We write their characteristic functions as $\phi_f(t) = r_f(t) e^{i \theta_f(t)}$ and $\phi_g = r_g(t) e^{i \theta_g(t)}$ where $r_f,r_g,\theta_f,\theta_g$ are real valued. Clearly $\rho_f = e^{i\theta_f(t)} = \rho_g = e^{i\theta_g(t)}$.
+	
+	Now, for $0 \leq \lambda \leq 1$, $h = \lambda f + (1-\lambda) g$ is a convex combination of $f$ and $g$. We have
+	\begin{align*}
+	\phi_h &= \lambda \phi_f + (1-\lambda) \phi_g\\
+		&= (\lambda r_f(t) + (1-\lambda) r_g(t)) e^{i \theta_f(t)}
+	\end{align*}
+	and since $r_f$ and $r_g$ are real,
+	$$\rho_h = e^{i \theta_f(t)} = \rho_f = \rho_g.$$
+\end{proof}
+
+%Convex combination of distribuitons with greater than given distribution
+%\begin{theorem}
+%	The set of all distributions whose variance is at least some value $v$ is convex.
+%\end{theorem}
+%\begin{proof}
+%	Let $f$ and $g$ be probability distributions such that $\var(f),\var(g) \geq v$. For $0 \leq \lambda \leq 1$, $h = \lambda f + (1-\lambda) g$ is a convex combination of $f$ and $g$. Writing $\mu_h$ for the mean of $h$ we have
+%	\begin{align*}
+%	\var(h) &= \int (x - \mu_h)^2 \intd h(x)\\
+%	&= \lambda \int (x - \mu_h)^2 \intd f(x) + (1-\lambda) \int (x - \mu_h)^2 \intd g(x)\\
+%	&\geq \lambda \var(f) + (1-\lambda) \var(g)\\
+%	&\geq v.
+%	\end{align*}
+%\end{proof}
+%\begin{corollary}
+%	$-\var$ is a convex function
+%\end{corollary}
+%
+%OR
+
+\begin{theorem}
+	$-\var$ is a convex function
+\end{theorem}
+\begin{proof}
+	Let $f$ and $g$ be probability distributions. For $0 \leq \lambda \leq 1$, $h = \lambda f + (1-\lambda) g$ is a convex combination of $f$ and $g$. Writing $\mu_h$ for the mean of $h$ we have
+	\begin{align*}
+	\var(h) &= \int (x - \mu_h)^2 \intd h(x)\\
+	&= \lambda \int (x - \mu_h)^2 \intd f(x) + (1-\lambda) \int (x - \mu_h)^2 \intd g(x)\\
+	&\geq \lambda \var(f) + (1-\lambda) \var(g)\\
+	\end{align*}
+	and so $-\var(h) \leq \lambda \var(f) + (1-\lambda) \var(g)$.
+\end{proof}
+We are finding the maximum of a convex function over a convex set. If minimum is obtained then it must be on the boundary.
+
+Max of -var is bounded...
+
+Boundary of set of functions with given phase function
+
+However... might have no interior...
+	

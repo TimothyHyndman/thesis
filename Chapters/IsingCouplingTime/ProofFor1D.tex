@@ -1,0 +1,560 @@
+%!TEX root = ..\..\main.tex
+\chapter{One Dimensional Case}
+\label{Ch:1D}
+
+\lhead{Chapter \ref{Ch:1D}. \emph{One Dimensional Case}}
+
+	In this chapter we prove the following theorem.
+
+	\begin{theorem}
+	\label{thm:Coupling Distribution on Cycle}
+		Let $T_n$ be the coupling time for the continuous-time Ising heat-bath 
+		dynamics for the zero-field ferromagnetic Ising model on the cycle 
+		$(\mathbb{Z} / n\mathbb{Z})$. Then for any inverse-temperature $\beta$,
+		\begin{equation}
+			\euler^{-\sqrt{\theta/(4 - 3\theta)}\euler^{-z}} \leq \lim_{n \rightarrow \infty} \prob[T_n < (z + \ln n)/\theta] \leq \euler^{-\euler^{-z}}
+		\end{equation}
+		where $\theta = 1 - \tanh(2\beta)$.
+	\end{theorem}
+
+	The simplification of only looking at the Ising model on the cycle means that BLAHBLAHBLAH
+
+	\section{Information percolation on the cycle}
+	\label{sec:information percolation on the cycle}
+	On the cycle, we will use a different coupling of $\mathscr{T}_t$ and $\mathscr{B}_t$ via a new set of update rules that will replace those from \eqref{eq:plusorminusrules}. The new update rules will ensure that each of the update histories never contain more than one vertex at any one time. However, since the coupling time is a property of the specific coupling we choose, we must also verify that these new rules do not affect $T$. 
+
+	The new update rules state that when vertex $i$ updates, a spin $\sigma_i'$ is chosen via
+	\begin{equation}
+	\label{eq:new update rules}
+		\sigma_i' = \begin{cases}
+			+1 & U < \theta/2,\\
+			\sigma_{i-1} & \theta/2 \leq U < 1/2,\\
+			\sigma_{i+1} & 1/2 \leq U < 1 - \theta/2,\\
+			-1 & U \geq 1 - \theta/2.
+		\end{cases}
+	\end{equation}
+	where $U \in [0,1]$ is an independent uniform random variable as before. It is easy to see that these update rules give rise to the same transition rates as those in \eqref{eq:plusorminusrules}. To show that the coupling time is unchanged, it is sufficient to verify that the joint jump probabilities of $(\mathscr{T}_t[i], \mathscr{B}_t[i])$ are unchanged for each possible configuration of spins of vertices $i-1$ and $i+1$. There are only nine possible configurations for the two neighbours of $i$ in the top and bottom chain since $\mathscr{B}_t[i] \leq \mathscr{T}_t[i], \forall t$. Likewise, there are only three possible configurations for the updated spins $(\mathscr{T}_t[i]', \mathscr{B}_t[i]')$. Hence, given vertex $i$ updates at time $t$, we can easily calculate all the required jump probabilities as shown in Table \ref{tab: joint jump probs}. These are unchanged whether using \eqref{eq:plusorminusrules} or \eqref{eq:new update rules} and so the new rules do not change the coupled dynamics.
+
+	\begin{table}
+	\begin{tabular}{c || c c c}
+	\diagbox[]{		
+		\begin{tabular}{@{}c@{}}
+		$\mathscr{T}_t = \cdot$ \\ 
+		$\mathscr{B}_t = \cdot$ 
+		\end{tabular}
+	}{
+		$\prob[(\mathscr{T}_t[i]', \mathscr{B}_t[i]') = \cdot \,]$
+	}
+	&(1,1)&(1,-1)&(-1,-1)\\
+	\hline
+	\hline
+		\begin{tabular}{@{}c@{}}
+		$(\dots, 1, \sigma_i, 1,\dots)$ \\ 
+		$(\dots, 1, \sigma_i, 1,\dots)$ 
+		\end{tabular}
+	&$1 - \theta$& 0 & $\frac{\theta}{2}$\\
+	\hline
+		\begin{tabular}{@{}c@{}}
+		$(\dots, 1, \sigma_i, 1,\dots)$ \\ 
+		$(\dots, 1, \sigma_i, -1,\dots)$ 
+		\end{tabular}
+	&$\frac{1}{2}$& $\frac{1-\theta}{2}$ & $\frac{\theta}{2}$\\
+	\hline
+		\begin{tabular}{@{}c@{}}
+		$(\dots, 1, \sigma_i, 1,\dots)$ \\ 
+		$(\dots, -1, \sigma_i, 1,\dots)$ 
+		\end{tabular}
+	&$\frac{1}{2}$& $\frac{1-\theta}{2}$ & $\frac{\theta}{2}$\\
+	\hline
+		\begin{tabular}{@{}c@{}}
+		$(\dots, 1, \sigma_i, 1,\dots)$ \\ 
+		$(\dots, -1, \sigma_i, -1,\dots)$ 
+		\end{tabular}
+	& $\frac{\theta}{2}$ & $1 - \theta$ & $\frac{\theta}{2}$ \\
+	\hline
+		\begin{tabular}{@{}c@{}}
+		$(\dots, 1, \sigma_i, -1,\dots)$ \\ 
+		$(\dots, 1, \sigma_i, -1,\dots)$ 
+		\end{tabular}
+	& $\frac{1}{2}$ & 0 & $\frac{1}{2}$ \\
+	\hline
+		\begin{tabular}{@{}c@{}}
+		$(\dots, 1, \sigma_i, -1,\dots)$ \\ 
+		$(\dots, -1, \sigma_i, -1,\dots)$ 
+		\end{tabular}
+	& $\frac{\theta}{2}$ & $\frac{1-\theta}{2}$ & $\frac{1}{2}$ \\
+	\hline
+		\begin{tabular}{@{}c@{}}
+		$(\dots, -1, \sigma_i, 1,\dots)$ \\ 
+		$(\dots, -1, \sigma_i, 1,\dots)$ 
+		\end{tabular}
+	& $\frac{1}{2}$ & 0 & $\frac{1}{2}$ \\
+	\hline
+		\begin{tabular}{@{}c@{}}
+		$(\dots, -1, \sigma_i, 1,\dots)$ \\ 
+		$(\dots, -1, \sigma_i, -1,\dots)$ 
+		\end{tabular}
+	& $\frac{\theta}{2}$ & $\frac{1-\theta}{2}$ & $\frac{1}{2}$ \\
+	\hline
+		\begin{tabular}{@{}c@{}}
+		$(\dots, -1, \sigma_i, -1,\dots)$ \\ 
+		$(\dots, -1, \sigma_i, -1,\dots)$ 
+		\end{tabular}
+	& $\frac{\theta}{2}$ & 0 & $1 - \theta$
+	\end{tabular}
+	\caption{Probabilities of updating from $(\mathscr{T}_t, \mathscr{B}_t)$ to $(\mathscr{T}_t', \mathscr{B}_t')$ given vertex $i$ updates at time $t$.}
+	\label{tab: joint jump probs}
+	\end{table}
+	% It is easy to verify that for each possible configuration, the joint distribution for $\sigma_i'$ in the top and bottom chains is the same whether we use these rules or the ones given in \eqref{eq:plusorminusrules}. Hence the coupling time is unchanged in distribution in this new random mapping representation.
+
+	\subsection{Update histories on the cycle}
+	Under the update rules in \eqref{eq:new update rules}, each time a vertex is updated, it is either an oblivious update with probability $\theta$, or it takes the spin of a uniformly chosen neighbour. So as $t$ decreases from $t^*$, $\mathcal{H}_i(t)$ is a continuous-time random walk that dies at rate $\theta$, moves left at rate $(1 - \theta)/2$, and moves right at rate $(1 - \theta)/2$. The probability that $\mathcal{H}_i(0) \neq \emptyset$ is simply the probability that the continuous-time random walk survives until time $t = 0$. So recalling \eqref{eq:prob equality of coupling and empty support}
+	\begin{equation}
+		\prob \left[ \mathscr{B}_{t^*}[i] \neq \mathscr{T}_{t^*}[i] \right] = 
+		\prob \left[ \mathcal{H}_i(0) \neq \emptyset \right] = 
+		\euler^{-\theta t^*}.
+		\label{eq:1D bernoulli prob}
+	\end{equation}
+
+	% Note that any two update histories that intersect will merge.
+	% \section{Stein-Chen Fails}
+	% The first of our Lemmas is now trivial to prove.
+
+	% \begin{lemma}
+	% \label{lem:1D gamma}
+	% 	\begin{equation}
+	% 		\expect\left[W\left(\left(z + \ln n\right)/\theta\right)\right] = \euler^{-z}
+	% 	\end{equation}
+	% \end{lemma}
+	% \begin{proof}
+	% 	From \eqref{eq:1D bernoulli prob}
+	% 	\begin{align}
+	% 		\expect\left[W\left(\left(z + \ln n\right)/\theta\right)\right]&= \sum_{i = 1}^n \euler^{-\left(z + \ln n\right)} \\
+	% 			% &= n \euler^{-\left(z + \ln n\right)}\\
+	% 			&= \euler^{- z}.
+	% 	\end{align}
+	% \end{proof}
+
+	% \subsection{Choosing Subsets}
+	% The Stein-Chen method set out in Theorem \ref{thm:Stein-Chen}, requires us
+	% to choose a subset $B_i \subseteq V$ for each $i \in V$, and then show that using these choices of $B_i$, the quantities $b_1, b_2$, and $b_3$ go to zero as $n$ increases. As it turns out there is no possible choice of $B_i$ that will make both $b_2$ and $b_3$ approach zero. We will prove this by showing that $b_2$ is bounded away from $0$ when vertex $v_{i+1} \in B_i$ for at least half of the $B_i$ and that $b_3$ is bounded away from $0$ when vertex $v_{i+1} \in {B_i}^\complement$ for at least half of the $B_i$.
+
+	% Throughout we will evaluate everything at the time of interest, $t^* = (z + \ln n)/\theta$.
+
+	% % \begin{lemma}
+	% % 	\label{lem:1D b1}
+	% % 	\begin{equation}
+	% % 		\lim_{n \rightarrow \infty} b_1 = 0
+	% % 	\end{equation}
+	% % \end{lemma}
+	% % \begin{proof}
+	% % 	Recall that $p_i(t) = \prob[X_i(t) = 1] = \euler^{-\theta t}$. Then
+	% % 	\begin{align}
+	% % 		b_1 
+	% % 		&= \sum_{i \in V} \sum_{j \in B_i} p_i(t^*) p_j(t^*)\\
+	% % 		&= n \sum_{j \in B_i} \euler^{-2 \theta t^*}\\
+	% % 		&\leq \frac{\max|B_i|}{n} \euler^{-2z}
+	% % 	\end{align}
+	% % \end{proof}
+
+	% \begin{lemma}
+	% 	\label{lem:1D b2}
+	% 	If $v_{i+1} \in B_i$ for at least $n/2$ of the $B_i$, then
+	% 	\begin{equation}
+	% 		\lim_{n \rightarrow \infty} b_2 \geq \frac{1}{4} \left(\euler^{-2\theta} - \euler^{-2} \right) e^{-z}.
+	% 	\end{equation}
+	% \end{lemma}
+	% \begin{proof}
+	% 	Let $A$ be the set of $i$ such that $v_{i+1} \in B_i$. Then
+	% 	\begin{align}
+	% 		b_2 &= \sum_{i=1}^n \sum_{j \in B_i \setminus \{i\}} \expect[X_i(t^*) X_j(t^*)]\\
+	% 			&\geq \sum_{i \in A} \expect[X_i(t^*) X_{i+1}(t^*)]\\
+	% 			&= \sum_{i \in A} \prob[\{X_i(t^*) = 1\} \cap \{X_{i+1}(t^*) = 1\}].
+	% 	\end{align}
+
+	% 	As previously established, the update history from each vertex is a continuous-time random walk that dies at rate $\theta$ and moves left or right with equal probability at rate $(1- \theta)$. The distance between the update histories of each vertex also forms a continuous-time random walk. While greater than 0 and less than $L$, this random walk dies at rate $2 \theta$ and moves left or right with equal probability at rate $2(1 - \theta)$. Once it hits either $L$ or $0$ (the update histories merge) the walk dies at rate $\theta$ and does not move.
+
+	% 	We observe that $\prob[\{X_i = 1\} \cap \{X_{i+1} = 1\}]$ is the probability that this random walk starts at 1 and doesn't die by time $t^*$. One way in which the random walk can survive is that it hits $0$ by time $1$ and then doesn't die. We can use the probability of this event as a lower bound. For the above event to occur the walk must move by time $1$, it must move in the correct direction, and it cannot die in either the first time unit or the remaining time. Combining these we have that the probability of the above event is at least
+	% 	\begin{equation}
+	% 		\frac{1}{2}\left(1 - \euler^{-2(1 - \theta)}\right) \euler^{-2\theta} \euler^{-\theta t^*}.
+	% 	\end{equation}
+	% 	So
+	% 	\begin{align}
+	% 		b_2 &\geq \sum_{i \in A} \frac{1}{2}\left(1 - \euler^{-2(1 - \theta)}\right) \euler^{-2\theta} \euler^{-\theta t^*}\\
+	% 			&\geq \frac{1}{4} \left(\euler^{-2\theta} - \euler^{-2} \right) e^{-z}
+	% 	\end{align}
+	% 	where we have used that $|A| \geq \frac{n}{2}$.
+	% \end{proof}
+
+	% \begin{lemma}
+	% 	\label{lem:1D b3}
+	% 	If $v_{i+1} \in {B_i}^\complement$ for at least $n/2$ of the $B_i$ then
+	% 	\begin{equation}
+	% 		\lim_{n \rightarrow \infty} b_3 \geq \frac{\euler^{-\theta - z}}{4}\left(1 - \euler^{-2(1 - \theta)}\right).
+	% 	\end{equation}
+	% \end{lemma}
+	% \begin{proof}
+	% 	Recall that
+	% 	\begin{align}
+	% 		b_3 &= \sum_{i = 1}^n \expect \left( \right| \expect \left(X_i(t^*) - p_i(t^*) | \mathcal{H}_i(t^*) \right) \left| \right)
+	% 	\end{align}
+	% 	where 
+	% 	\begin{equation}
+	% 		\mathcal{H}_i(t) = \sigma \left(X_j(t) : j \in {B_i}^\complement \right).
+	% 	\end{equation}
+
+	% 	In part iii of Section 3.2.2 of \cite{Chiarini2016-xy}, the authors show that if $\mathcal{H}_1$ and $\mathcal{H}_2$ are both sigma algebras such that $\mathcal{H}_2$ strictly contains $\mathcal{H}_1$ then
+	% 	\begin{equation}
+	% 		\expect \left( \right| \expect \left(X_i - p_i | \mathcal{H}_1 \right) \left| \right) \leq \expect \left( \right| \expect \left(X_i - p_i | \mathcal{H}_2 \right) \left| \right).
+	% 	\end{equation}
+
+	% 	Let $A$ be the set of $i$ such that $v_{i+1} \in {B_i}^\complement$. Then
+	% 	\begin{align}
+	% 		b_3 &\geq \sum_{i \in A} \expect \left( \left| \expect \left(X_i(t^*) - p_i(t^*) | X_{i+1}(t^*) \right) \right| \right)\\
+	% 			&= \sum_{i \in A} \left( \left| \expect \left(X_i(t^*) - p_i(t^*) | X_{i+1}(t^*) = 1 \right) \right| \prob\left(X_{i+1}(t^*) = 1 \right) \right. \\
+	% 			&\phantom{=} + \left. \left| \expect \left(X_i(t^*) - p_i(t^*) | X_{i+1}(t^*) = 0 \right) \right| \prob \left(X_{i+1}(t^*) = 0 \right) \right) \nonumber\\
+	% 			&\geq \sum_{i \in A} p_i(t^*) \left| \expect \left(X_i(t^*) - p_i(t^*) | X_{i+1}(t^*) = 1 \right) \right| \\
+	% 			&= \sum_{i \in A} p_i(t^*) \left| \prob \left(X_i(t^*)  = 1| X_{i+1}(t^*) = 1 \right)  - p_i(t^*)\right|
+	% 	\end{align}
+	% 	We can get rid of the absolute value signs since $X_i$ is more likely to be $1$ given that its neighbour is $1$. So
+	% 	\begin{align}
+	% 		b_3	&\geq \sum_{i \in A} p_i(t^*) \left( \prob \left(X_i(t^*)  = 1| X_{i+1}(t^*) = 1 \right)  - p_i(t^*) \right)%\\
+	% 			% &= \euler^{-z} \left( \prob \left(X_i(t^*) = 1 | X_{i+1}(t^*) = 1 \right) - \frac{\euler^{-z}}{n} \right).
+	% 	\end{align}
+
+	% 	We can use a similar argument to the one in the proof of Lemma \ref{lem:1D b2} to obtain a lower bound for $\prob \left(X_i(t^*) = 1 | X_{i+1}(t^*) = 1 \right)$. One way in which $X_i(t^*) = 1$ is that the update history of $v_i$ merges with that of $v_{i+1}$ by time 1. This occurs with probability at least
+	% 	\begin{equation}
+	% 		\frac{1}{2}(1 - \euler^{-2(1 - \theta)})\euler^{-\theta}
+	% 	\end{equation}
+	% 	and so
+	% 	\begin{align}
+	% 		b_3 &\geq \sum_{i \in A} p_i(t^*) \left( \frac{1}{2}(1 - \euler^{-2(1 - \theta)})\euler^{-\theta}  - p_i(t^*) \right)\\
+	% 			&\geq \frac{\euler^{-z}}{2} \left( \frac{1}{2}(1 - \euler^{-2(1 - \theta)})\euler^{-\theta} - \frac{\euler^{-z}}{n} \right)
+	% 	\end{align}
+	% 	where we have used that $|A| \geq n/2$. The result follows.
+	% \end{proof}
+
+	% \section{Proof of Theorem \ref{thm:Coupling Distribution on Cycle}}
+	\section{Compound Poisson Approximation}
+	Fix $z$ and a time of interest, $t_* = (z + \ln n)/\theta$. For each vertex $i \in G$, we define indicators
+	\begin{equation}
+		X_i = 
+		\begin{cases}
+			1 & \mathscr{B}_{t^*}[i] \neq \mathscr{T}_{t^*}[i],\\
+			0 & \mathscr{B}_{t^*}[i] = \mathscr{T}_{t^*}[i]
+		\end{cases}
+	\end{equation}
+	and set $W = \sum_{i \in V} X_i$. Note that from \eqref{eq:1D bernoulli prob} we get
+	\begin{equation}
+		\label{eq:1D prob X_i}
+		\prob[X_i = 1] = \euler^{-\theta t_*} = \frac{e^{-z}}{n}.
+	\end{equation}
+
+	The random variable $W$ is closely related to the distribution of the coupling time $T$ in that the events $\{W = 0\}$ and $\{T \leq t^*\}$ are the same. We will show that the limiting distribution of $W$ as $n$ increases is compound Poisson using Theorem \ref{thm: compound poisson approximation} which we have taken from \cite{Barbour2001-nh} which in turn is based on Stein's method for the compound Poisson distribution, introduced in \cite{Barbour1992-mc}. Before stating the theorem as it applies to our problem, there are a few more quantities we need to define.
+
+	For each $i \in V$, decompose $W$ into $W = X_i + U_i + Z_i + W_i$ where
+	\begin{align}
+		U_i &= \sum_{j \in B_i} X_j, &
+		Z_i &= \sum_{j \in C_i} X_j, &
+		W_i &= \sum_{j \in D_i} X_j.
+	\end{align}
+	and $B_i, C_i$, and $D_i$ are the vertex sets
+	\begin{align}
+		B_i &= \{j\neq i : |j - i| \leq b_n \},\\
+		C_i &= \{j\notin B_i\cup \{i\}: |j - i| \leq c_n \},\\
+		D_i &= V \setminus (B_i \cup C_i \cup \{i\}).
+	\end{align}
+	We have some freedom in choosing $b_n$ and $c_n$, but they must be chosen such that various quantities go to zero as $n \rightarrow \infty$. One choice that will work in our circumstances is $b_n = \ln(n)$ and $c_n = \ln(n)^2$.
+
+	Define the following which are the parameters of the approximating compound Poisson distribution to $W$.
+	\begin{align}
+		\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \indicator[ X_i + U_i \geq 1] \right],\\
+		\mu_l &= \frac{1}{l \lambda} \sum_{i \in V} \expect\left[ X_i \indicator[X_i + U_i = l] \right], && l\geq 1.
+	\end{align}
+
+	Also define quantities
+	\begin{align}
+		\delta_1 &= \sum_{i \in V}  \sum_{k \geq 0} \prob[X_i = 1, U_i = k] \expect \left|\frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|,\\ 
+		% \delta_2 &= \\
+		% \delta_3 &= \\
+		\delta_4 &= \sum_{i \in V} \left( \expect[X_i Z_i] + \expect[X_i] \expect[X_i + U_i + Z_i] \right).
+	\end{align}
+	which we require to vanish as $n \rightarrow \infty$.
+
+	The following theorem (reworked from \cite{Barbour2001-nh}) bounds the distance between the distributions of $W$ and the approximating compound Poisson.
+
+	\begin{theorem}[\cite{Barbour2001-nh}]
+	\label{thm: compound poisson approximation}
+		Let $W$, $\lambda$, $\mu$, $\delta_1$ and $\delta_4$ be as defined above. Then there exist constants $C_1 = C_1(\lambda, \vect{\mu})$ and $C_2 = C_2(\lambda, \vect{\mu})$ such that
+		\begin{equation}
+			d_{\mathrm{TV}}(\mathscr{L}(W), \mathrm{CP}(\lambda, \vect{\mu})) \leq C_1 \delta_1 + C_2 \delta_4.
+		\end{equation}
+	\end{theorem}
+	As an immediate corollary, and from the equivalence of the events $\{W = 0\}$ and $\{T \leq t^*\}$, we get that
+	\begin{equation}
+		\left|\prob\left[T \leq \frac{z+\ln(n)}{\theta}\right] - \euler^{-\lambda}\right| \leq C_1 \delta_1 + C_2 \delta_4.
+		\label{eq:bound distance prob[w=0] and e^-lambda}
+	\end{equation}
+
+	\section{Proof of Theorem \ref{thm:Coupling Distribution on Cycle}}
+	The proof of Theorem \ref{thm:Coupling Distribution on Cycle} comes as a result of equation \eqref{eq:bound distance prob[w=0] and e^-lambda} along with Lemmas \ref{lem:1Dlambda}, \ref{lem:delta1 goes to 0}, and \ref{lem:delta4 goes to 0} which bound the various quantities required.
+
+
+	\begin{lemma}
+	\label{lem:1Dlambda}
+		Using the above setup
+		\begin{equation}
+			\sqrt{\frac{\theta}{4 - 3\theta}}\euler^{-z} \leq \lim_{n \rightarrow \infty} \lambda \leq \euler^{-z}.
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		\begin{align}
+			\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \indicator[ X_i + U_i \geq 1] \right]\\
+				&= \sum_{i = 1}^n \prob(X_i = 1) \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]\\
+				&= \sum_{i = 1}^n \frac{\euler^{-z}}{n} \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]\\
+				&= \euler^{-z} \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]
+		\end{align}
+		where we have used that $X_i$ is zero-one, \eqref{eq:1D prob X_i}, and the transitivity of the graph.
+		Clearly 
+		\begin{align}
+			\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] \leq 1
+		\end{align}
+		and so $\lambda \leq e^{-z}$.
+
+		By Jensen's inequality
+		\begin{align}
+			\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] &\geq \frac{1}{\expect[1 + U_i | X_i = 1]}\\
+				&= \frac{1}{1 + \expect[U_i | X_i = 1]}.
+		\end{align}
+		so in order to find a lower bound for $\lambda$ we will find an upper bound to $\expect[U_i | X_i = 1]$. Now
+		\begin{align}
+			\expect[U_i | X_i = 1] &= \sum_{j \in B_i} \prob[X_j = 1| X_i = 1]\\
+				&= \sum_{k=1}^{b_n} \sum_{|j - i| = k} \prob[X_j = 1| X_i = 1]\\
+				&= 2 \sum_{k=1}^{b_n} \prob[X_{i+k} = 1 | X_i = 1]
+		\end{align}
+		where we have used the symmetry of $X_{i+k}$ and $X_{i -k}$ in the last step. From Lemma \ref{lem:X_i+k given X_i}, 
+		\begin{align}
+			\expect[U_i | X_i = 1] &\leq 2 \sum_{k = 1}^{b_n} \left(\frac{e^{-z}}{n} + \left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^k\right)\\
+				&< 2 \sum_{k = 1}^{b_n} \frac{e^{-z}}{n} + 2\sum_{k = 1}^\infty \left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^k\\
+				&= \frac{2 b_n}{n}e^{-z} + \sqrt{\frac{4}{\theta} - 3} - 1.
+		\end{align}
+		Finally, as $n \rightarrow \infty$ the first term vanishes and
+		\begin{align}
+			\lim_{n \rightarrow \infty} \lambda \geq \sqrt{\frac{\theta}{4 - 3\theta}} e^{-z}.
+		\end{align}
+	\end{proof}
+
+	\begin{lemma}
+	\label{lem:delta1 goes to 0}
+		\begin{equation}
+			\lim_{n\rightarrow\infty} \delta_1 = 0
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		\begin{align}
+			\delta_1 &= \sum_{i = 1}^n \sum_{k = 0}^{2 b_n} \prob[X_i = 1, U_i = k] \expect \left| \frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|\\
+			&= n \sum_{k = 0}^{2 b_n} \expect \left|\prob[X_i = 1, U_i = k|W_i] - \prob[X_i = 1, U_i = k] \right|%\\
+			\label{eq: delta1 line 2}
+			% &\leq n \sup_{W_i} \sum_{k = 0}^{2 b_n} \left| \prob[X_i = 1, U_i = k|W_i] - \prob[X_i = 1, U_i = k] \right|
+		\end{align}
+		Let $A$ be the event that the history of a vertex in $D_i$ merges with the history of a vertex in $B_i \cup \{i\}$. More formally,
+		\begin{equation}
+			A = \{ \exists j \in B_i \cup \{i\}, l \in D_i : \mathcal{H}_j \cap \mathcal{H}_l \neq \emptyset\}.
+		\end{equation}
+		We note that if $A$ does not happen, then $W_i$ cannot affect $X_i$ or $U_i$. That is,
+		\begin{equation}
+			\prob[X_i = 1, U_i = j | A^\complement, W_i] = \prob[X_i = 1, U_i = j | A^\complement].
+		\end{equation} 
+		Continuing on from \eqref{eq: delta1 line 2}, we split the probabilities into
+		\begin{align}
+			\delta_1 &= n \sum_{k = 0}^{2 b_n} \expect \left| \prob[X_i = 1, U_i = k|W_i, A]\prob[A|W_i] - \prob[X_i = 1, U_i = k| A]\prob[A] + \vphantom{A^\complement} \right.\\
+			&\hphantom{= .} \left.\prob(X_i = 1, U_i = k | A^\complement) (\prob[A^\complement|W_i] - \prob[A^\complement]) \right| \notag \\
+			&\leq n (2b_n+1) \expect\left[ \prob[A|W_i] + \prob[A] + \left|\prob[A^\complement|W_i] - \prob[A^\complement]\right|\right]\\
+			&= n (2b_n + 1) \expect\left[ \prob[A|W_i] + \prob[A] + \left|1 - \prob[A|W_i] - (1 - \prob[A])\right|\right]\\
+			&\leq n (2b_n + 1) \expect\left[ \prob[A|W_i] + \prob[A] + \prob[A|W_i] + \prob[A])\right]\\
+			&= 2 n (2b_n + 1) \left(\expect[\prob[A|W_i]] + \prob[A]\right)\\
+			&= 4 n (2b_n + 1) \prob[A]
+		\end{align}
+
+		Let $A_{j,k}$ denote the event that the histories of vertices $j$ and $k$ merge. That is,
+		\begin{equation}
+			A_{j,k} = \{\mathcal{H}_j \cap \mathcal{H}_k \neq \emptyset\}.
+		\end{equation}
+		By a union bound,
+		\begin{align}
+			\delta_1 &\leq 4 n (2b_n + 1) \sum_{j \in B_i \cup \{i\}} \sum_{k \in D_i} \prob[A_{j,k}]\\
+			&\leq 8n^2(2b_n + 1)^2  \left(\frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}\right)^{c_n - b_n}
+		\end{align}
+		by Lemma \ref{lem: A_ij bound}. This goes to $0$ as $n \rightarrow \infty$.
+
+		% Denote the right and left vertices on the boundary of $D_i$ by indices $r_i$ and $l_i$. 
+
+		% \begin{equation}
+		% 	\prob[A] \leq \prob[A | X_{r_i} = 1] + \prob[A | X_{l_i} = 1]
+		% \end{equation}
+
+		% The last equality comes from realising that the probability of $A$ increases for each history in $D_i$ that survives and so is maximized when we condition on every history surviving. In fact, we need only consider that the vertices on the boundary of $D_i$ have surviving histories since any history from $B_i \cup \{i\}$ must merge with these first.
+		% Let $b$ and $b'$ be the indices of the vertices on the boundary of $D_i$. The histories of these vertices have the greatest chance to intersect with a history from $B_i$ since they are the closest. If we condition on their survival, we will increase the probability of $A$. Furthermore, 
+		% Let $b$ and $b'$ be the indices of the vertices on the boundary of $D_i$ and let $A_{i,j}$ denote the probability that the histories of $i$ and $j$ merge. By a union bound,
+		% \begin{align}
+		% 	\delta_1 &\leq 4n(2b_n + 1) \sum_{j \in B_i \cup \{i\}}\left( \prob[A_{j,b}|X_b = 1] + \prob[A_{j,b'}|X_{b'} = 1]\right)\\
+		% 	&= 8n(2b_n + 1) \sum_{j \in B_i \cup \{i\}} \prob[A_{j,b}|X_b = 1]
+		% \end{align}
+		% by symmetry. We now employ Lemma \ref{lem:A_ij bound conditioned} to get
+		% \begin{align}
+		% 	\delta_1 &\leq 16n(2b_n + 1) \sum_{j \in B_i \cup \{i\}} \left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^{c_n - b_n}\\
+		% 	&= 16n (2b_n + 1)^2 \left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^{c_n - b_n}
+		% \end{align}
+		% which goes to $0$ as $n \rightarrow \infty$.
+
+
+	\end{proof}
+
+	\begin{lemma}
+	\label{lem:delta4 goes to 0}
+		\begin{equation}
+			\lim_{n\rightarrow\infty} \delta_4 = 0
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		\begin{align}
+			\delta_4 &= \sum_{i = 1}^n \left(\expect[X_i Z_i] + \expect[X_i]\expect[X_i + U_i + Z_i]\right)\\
+				&= \sum_{i=1}^n \expect[X_i Z_i] + \euler^{-z} \sum_{j \in \{i\}\cup B_i \cup C_i} \expect[X_j]\\
+				&= n \expect[X_i Z_i] + \frac{2\euler^{-2z}c_n}{n}\\
+				&= n \prob[X_i = 1] \expect[Z_i | X_i = 1] + \frac{2\euler^{-2z}c_n}{n}\\
+				&= \euler^{-z}\expect[Z_i | X_i = 1] + \frac{2\euler^{-2z}c_n}{n}
+		\end{align}
+		Now
+		\begin{align}
+			\expect[Z_i | X_i = 1] &= \sum_{j \in C_i} \prob[X_j = 1 | X_i = 1]\\
+			&= 2 \sum_{k = b_n + 1}^{c_n} \prob[X_{i+k} = 1 | X_i = 1]
+		\end{align}
+		From Lemma \ref{lem:X_i+k given X_i},
+		\begin{align}
+			\expect[Z_i | X_i = 1] &\leq 2 \sum_{k = b_n + 1}^{c_n} \left(\frac{e^{-z}}{n} + 2\left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^k\right)\\
+				&\leq \frac{2(c_n - b_n)\euler^{-z}}{n} + 4(c_n - b_n)\left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^{b_n + 1}.
+		\end{align}
+		Altogether
+		\begin{equation}
+			\delta_4 \leq \frac{2(c_n - b_n)\euler^{-z}}{n} + 4(c_n - b_n)\left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^{b_n + 1} + \frac{2\euler^{-2z}c_n}{n}
+		\end{equation}
+		which goes to $0$ as $n \rightarrow \infty$.
+	\end{proof}
+
+	\subsection{Additional Lemmas}
+	\begin{lemma}
+		\label{lem: A_ij bound}
+		Let $A_{i,j}$ be the event that the update history of vertex $i$ merges with the update history of vertex $j$. Then
+		\begin{equation}
+			\prob[A_{i,j}] \leq 2\left(\frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}\right)^k
+		\end{equation}
+		where $k = |i - j|$.
+	\end{lemma}
+	\begin{proof}
+		We note that, while the update histories survive, the distance between the update histories of $i$ and $j$ is a birth and death process that starts at $k = |i - j|$ and has birth and death rates, $\lambda = \mu = 1 - \theta$. Let $P(t)$ be such a process and define $s_0  = \inf\{t : P(t) = 0\}$ to be the first time the process reaches zero (this corresponds to the update histories merging). Let $s_d$ be exponentially distributed with rate $2\theta$ (this corresponds to the first time that one of the update histories dies). Then
+		\begin{align}
+		 	\prob[A_{i,j}] \leq 2 \prob_k(s_0 < s_d)
+		 \end{align} 
+		 where $\prob_k$ indicates that $P(0) = k$. The factor of two comes from the fact that the update histories may meet by going the other direction around the cycle.
+
+		 At any time before $s_d$ there are three possibilities for what can happen to $P$ next. Either the next event is a birth with probability $(1 - \theta)/2$, the next event is a death with the same probability or we reach time $s_d$ with probability $\theta$. Writing $\zeta_k = \prob_k(s_0 < s_d)$ this gives us the recurrence relation
+		 \begin{align}
+		 	\zeta_k = \frac{1 - \theta}{2} \zeta_{k-1} + \frac{1 - \theta}{2} \zeta_{k+1}
+		 \end{align}
+		 which is subject to the conditions 
+		 \begin{align}
+		 	\label{eq:zetacondition1}
+		 	\zeta_0 &= 1\\
+		 	\zeta_k &\leq 1, \, \forall k \in \mathbb{N}.
+		 	\label{eq:zetacondition2}
+		 \end{align} 
+		 This recurrence has characteristic equation
+		 \begin{align}
+		 	x^2 - \frac{2}{1 - \theta} x + 1 = 0
+		 \end{align}
+		 which has roots
+		 \begin{align}
+		 	r_1 &= \frac{1 + \sqrt{\theta(2 - \theta)}}{1 - \theta}\\
+		 	r_2 &= \frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}
+		 \end{align}
+		 and so
+		 \begin{align}
+		 	\zeta_k = a r_1^k + b r_2^k
+		 \end{align}
+		 where $a$ and $b$ are constants to be determined from \eqref{eq:zetacondition1} and \eqref{eq:zetacondition2}. We note that $r_1 \geq 1, \forall \theta \in [0,1]$ and so from \eqref{eq:zetacondition2} we have that $a = 0$. Finally from \eqref{eq:zetacondition1}, $b = 1$ and so
+		 \begin{equation}
+		 	\zeta_k = \left(\frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}\right)^k.
+		 \end{equation}
+	\end{proof}
+
+	\begin{lemma}
+	\label{lem:A_ij bound conditioned}
+		Let $A_{i,j}$ be the event that the update history of vertex $i$ merges with the update history of vertex $j$. Then
+		\begin{equation}
+			\prob[A_{i,j}|X_{j} = 1] \leq 2\left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^k
+		\end{equation}
+		where $k = |i - j|$.
+	\end{lemma}
+	\begin{proof}
+		We note that, while the update histories survive, the distance between the update histories of $i$ and $j$ is a birth and death process that starts at $k = |i - j|$ and has birth and death rates, $\lambda = \mu = 1 - \theta$. Let $P(t)$ be such a process and define $s_0  = \inf\{t : P(t) = 0\}$ to be the first time the process reaches zero (this corresponds to the update histories merging). Let $s_d$ be exponentially distributed with rate $\theta$ (this corresponds to the update history of vertex $i$ dying). Then
+		\begin{align}
+		 	\prob[A_{i,j} | X_j = 1] \leq 2 \prob_k(s_0 < s_d)
+		 \end{align} 
+		 where $\prob_k$ indicates that $P(0) = k$. The factor of two comes from the fact that the update histories may meet by going the other direction around the cycle.
+
+		 At any time before $s_d$ there are three possibilities for what can happen to $P$ next. Either the next event is a birth with probability $(1 - \theta)/(2 - \theta)$, the next event is a death with the same probability or we reach time $s_d$ with probability $\theta/(2 - \theta)$. Writing $\zeta_k = \prob_k(s_0 < s_d)$ this gives us the recurrence relation
+		 \begin{align}
+		 	\zeta_k = \frac{1 - \theta}{2 - \theta} \zeta_{k-1} + \frac{1 - \theta}{2 - \theta} \zeta_{k+1}
+		 \end{align}
+		 which is subject to the conditions 
+		 \begin{align}
+		 	\label{eq:zetacondition1_cond}
+		 	\zeta_0 &= 1\\
+		 	\zeta_k &\leq 1, \, \forall k \in \mathbb{N}.
+		 	\label{eq:zetacondition2_cond}
+		 \end{align} 
+		 This recurrence has characteristic equation
+		 \begin{align}
+		 	x^2 - \frac{2 - \theta}{1 - \theta} x + 1 = 0
+		 \end{align}
+		 which has roots
+		 \begin{align}
+		 	r_1 &= \frac{2 - \theta + \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\\
+		 	r_2 &= \frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}
+		 \end{align}
+		 and so
+		 \begin{align}
+		 	\zeta_k = a r_1^k + b r_2^k
+		 \end{align}
+		 where $a$ and $b$ are constants to be determined from \eqref{eq:zetacondition1_cond} and \eqref{eq:zetacondition2_cond}. We note that $r_1 \geq 1, \forall \theta \in [0,1]$ and so from \eqref{eq:zetacondition2_cond} we have that $a = 0$. Finally from \eqref{eq:zetacondition1_cond}, $b = 1$ and so
+		 \begin{equation}
+		 	\zeta_k = \left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^k.
+		 \end{equation}
+	\end{proof}
+
+	\begin{lemma}
+		\label{lem:X_i+k given X_i}
+		\begin{equation}
+			\label{eq:prob X_i+k = 1|X_i = 1}
+			\prob[X_{i+k} = 1| X_i = 1] \leq \frac{e^{-z}}{n} + 2\left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^k.
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		There are two ways in which the update history of vertex $i+k$ can survive until time $0$. The update history can survive without intersecting with the update history of vertex $i$ or the update history of vertex $i+k$ can survive long enough to merge with the update history of vertex $i$ (whose surival we are conditioning on). (Note that these events are not mutually exclusive as the update history of vertex $i+k$ could merge with the update history of vertex $i$ after it reaches time $0$.) So we have
+		\begin{align}
+			\prob[X_{i+k} = 1| X_i = 1] &\leq \prob[X_{i+k} = 1] + \prob[A_{i,i+k} | X_i = 1].
+		\end{align}
+		The result follows from \eqref{eq:1D prob X_i} and Lemma \ref{lem:A_ij bound conditioned}.
+
+		% For any two vertices, $i$ and $j$, let $S: [0, \infty) \mapsto \mathbb{N} \cup \{0\}$ be the process defined by
+		% \begin{equation}
+		% 	S(t;i,j) = |\mathcal{H}_i(t^* - t) - \mathcal{H}_j(t^* - t)|
+		% \end{equation}
+		% where we set $S(t;i,j) = \infty$ if either $\mathcal{H}_i(t^* - t)$ or $\mathcal{H}_j(t^* - t)$ are empty. Recalling that $\{X_i = 1\} = \{\mathcal{H}_i(0) \neq \emptyset\}$,
+		% \begin{equation}
+		% 	\prob[X_{i+k} = 1 | X_i = 1] = \prob[S(t^*; i, i+k) \neq \infty | X_i = 1].
+		% \end{equation}
+		% % From Section \ref{sec:information percolation on the cycle}, $S$ is a continuous-time random walk initialized by $S(0; i,j) = |i-j|$
+
+		% Consider the update histories of $X_i$ and $X_{i+k}$. Each is a continuous-time random walk that moves to one of its neighbours with equal probability at rate $(1 - \theta)$ and dies at rate $\theta$. Given that the update history of $X_i$ survives, the distance between the update histories of $X_i$ and $X_{i+k}$ is therefore a continuous-time random walk that starts at $k$, moves either up or down one with equal probability at rate $2 (1 - \theta)$ and dies at rate $\theta$. Then $X_{i+k} = 1$ if and only if this random walk survives to time $t^*$.
+	\end{proof}

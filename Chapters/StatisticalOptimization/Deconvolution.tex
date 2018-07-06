@@ -1,0 +1,57 @@
+%!TEX root = ..\..\main.tex
+\chapter{Deconvolution}
+\label{Ch:Deconvolution}
+
+\lhead{Chapter \ref{Ch:Deconvolution}. \emph{Deconvolution}}
+
+%-------------------------------------------------------------------------------
+%	Chapter Text
+%-------------------------------------------------------------------------------
+
+\section{Introduction}
+	From here to the end of Section \ref{ssec:KernelSmoothing} is a summary of \cite{Delaigle2016-la}.
+	We want to find the distribution of a random variable $X$ but only measure 
+	$$W = X + U$$
+	where $U$ is symmetric (and hence $\phi_U(t)$ is real-valued and even). We also additionally require that $\phi_U(t) \geq 0$. We write
+	$$\rho_X = \frac{\phi_X}{|\phi_X|}$$
+	for the phase function of $X$. Then 
+	\begin{align*}
+	\phi_W &= \phi_X \phi_U	&&\text{as $X$ and $U$ are independent,}\\
+	\frac{\phi_W}{|\phi_W|} &= \frac{\phi_X}{|\phi_X|}\frac{\phi_U}{|\phi_U|},\\
+	\rho_W &= \rho_X	&&\text{as $\phi_U$ is real and non-negative.}
+	\end{align*}
+
+	Given a probability distribution, there are an infinite number of other distributions that have the same phase function. We make the choice that out of all the distributions with phase function $\rho_W$, we choose the one that has smallest variance. Hence, we want to find a distribution $F_Y$ that minimizes $\var(Y)$ such that
+	$$\rho_Y = \rho_W.$$
+
+	\subsection{Optimization problem}
+		\label{ssec:optimizationproblem}
+		Ideally, we would like to minimize the variance of $Y$ under the constraint that $\rho_Y = \rho_W$. However, we can't do this since we only estimate $\rho_W(t)$ from a random sample of size $n$ and this estimate is bad for large $|t|$. So we instead choose a $Y_0$ to minimize 
+		\begin{equation}
+		T(Y) = \int_{-\infty}^{\infty} \Big| \hat{\phi}_W(t) - |\hat{\phi}_W(t)| \rho_Y(t) \Big|^2 w(t) \intd t
+		\end{equation}\label{eq:T(Y)}
+		where $w(t)$ is some suitably chosen weight function and $\hat{\phi}_W(t)$ is our empirical estimate for $\phi_W(t)$. We then search for $Y$ which minimizes $\var(Y)$ subject to $T(Y) \leq T(Y_0)$.
+
+		We restrict our search to $Y$ discrete with point masses $p_j$ at locations $x_j$ for $j = 1,2,\dots,m$. We place our $x_j$ uniformly at random along the interval $[\min W, \max W]$ and choose the $p_j$ to solve the optimization problem described above. Numerical investigations indicate that $m = 5 \sqrt{n}$ is a reasonable choice.
+
+	\subsection{Kernel Smoothing}
+		\label{ssec:KernelSmoothing}
+		Once we have our discrete distribution $Y$ we can create a continuous density approximation using
+		\begin{equation}
+		\hat{f}_Y(x) = \frac{1}{2\pi} \int e^{-itx} \phi_Y(t) \phi_K(ht)  \intd t
+		\label{eq:f_Y(x)integral}
+		\end{equation}
+		where $K$ is some kernel with bandwidth $h$. This is exactly equivalent to
+		\begin{equation}
+		\hat{f}_Y(x) = \sum_{j=1}^m p_j K_h(x - x_j).
+		\label{eq:f_Y(x)sum}
+		\end{equation}
+
+		However, we can get a better result by using \eqref{eq:f_Y(x)integral} and replacing $\phi_Y(t)$ with an appropriate ridge function for $t \geq t^*$.
+		%Ridging stuff
+		%Choice of bandwidth
+		%Integral considerations (stuff I did about how to integrate this thing)
+
+\section{Examples and Relation to Mixture Phenomenon}
+
+\section{R Package}

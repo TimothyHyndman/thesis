@@ -1,0 +1,308 @@
+%!TEX root = ..\..\main.tex
+\chapter{General Results}
+\label{Ch:GeneralResults}
+
+\lhead{Chapter \ref{Ch:GeneralResults}. \emph{General Results}}
+	
+	In this chapter we prove the following theorem.
+
+	\begin{conjecture}
+	\label{thm:Coupling Distribution on Lattice}
+		Let $T_L$ be the coupling time for the continuous-time Ising heat-bath 
+		dynamics for the zero-field ferromagnetic Ising model on the torus
+		$(\mathbb{Z} / L \mathbb{Z})^d$. Then for any small enough 
+		inverse-temperature $\beta$,
+		\begin{equation}
+			\lim_{L \rightarrow \infty} \prob[T_L < a_L z + b_L] = \euler^{-\euler^{-z}}
+		\end{equation}
+		where $a_L$ and $b_L$ have yet to be determined.
+	\end{conjecture}
+	\begin{proof}
+	\end{proof}
+
+	\section{Information Percolation in higher dimensions}
+	In the previous chapter, we showed that on the cycle, there was a coupling that made the update history of a single vertex to be a continuous-time random walk that died at rate $\theta$. On lattices of dimension $d > 2$, we can no longer use this coupling and so the updates histories are significantly more complex. 
+
+	Recall from Section \ref{sec: definition update support function} that given a target time $t^*$, the update history of a vertex set $A$ at time $t$, $\mathcal{H}_A(t)$, is the set of vertices whose spins at time $t$ determine the spins of $A$ at time $t^*$. Developing this history backwards in time from $t = t^*$ produces a subgraph of $\Omega \times [0, t^*]$ which we write as $\mathcal{H}_A$ and call the update history of vertex set $A$. This history can be constructed using the update sequence along $(t, t^*]$. 
+
+	In practise, we may choose to construct this history as follows: For each $i \in A$, create a temporal edge between $(i, t^*)$ and $(i, t_i)$ where $t_i$ is the time of the latest update to $i$ (or $0$ if $i$ is never updated). Then for each update $(i, u, t_i)$, we either terminate the edge if $u$ is such that the update is oblivious, or we add spatial branches to each of the neighbours of $i$. We repeat this process recursively for the neighbours of $i$ until every branch has been terminated due to an oblivious update or has reached time $0$.
+
+	However, it is possible for vertices to be removed from $\mathcal{H}_A(t)$ from updates that are not oblivious. [PUT EXAMPLE IN]. Since our method above for constructing the history does not take this into account, the history it produces will possibly be larger than $\mathcal{H}_A$. To ensure a distinction between the two, the history that results from the above construction we will denote $\hat{\mathcal{H}}_A$, and likewise $\hat{\mathcal{H}}_A(t)$ for the history at time $t$ that results from the above construction. We have that
+	\begin{equation}
+		\mathcal{H}_A(t) \subseteq \hat{\mathcal{H}}_A(t)
+	\end{equation}
+	and also that $\mathcal{H}_A$ is a subgraph of $\hat{\mathcal{H}}_A$.
+
+	\subsection{Magnetization}
+	One quantity which we used multiple times in Chapter \ref{Ch:1D} was $\prob[X_i = 1]$. Although it was not required earlier, we would now like to make clear that this is in fact the magnetization at time $t^*$. 
+
+	The magnetization at vertex $i \in V$ at time $t > 0$ is defined to be
+	\begin{equation}
+		m_t(i) = \expect[\mathcal{T}_t[i]]
+	\end{equation}
+	where $(\mathcal{T}_t)_{t \geq 0}$ is the dynamics starting from the all-plus configuration. %On vertex-transitive graphs, we can drop the vertex specific notation and simply write $m_t$. 
+	Given a monotonically coupled chain $(\mathcal{B}_t)_{t\geq0}$, starting in the all minus configuration and such that $\mathcal{T}_t[i] \geq \mathcal{B}_t[i]$ for all $t\geq 0$ and $i \in V$, we can split up this expectation by conditioning on the event $A_t = \{\mathcal{T}_t[i] \neq \mathcal{B}_t[i]\}$. We obtain that
+	\begin{align}
+		m_t(i) &= \expect[Y_t^+[i]]\\
+		&= \prob\left[A_t\right] \left(\prob\left[Y_t^+[i] = 1 | A_t\right] - \prob\left[Y_t^+[i] = -1|A_t\right]\right)  \\
+		&\phantom{= } + \prob\left[A_t^\complement\right] \left( \prob\left[Y_t^+[i] = 1 |A_t^\complement\right] - \prob\left[Y_t^+[i] = -1|A_t^\complement\right] \right). \notag
+	\end{align}
+
+	Now if event $A_t^\complement$ holds, $\mathcal{T}_t[i] = \mathcal{B}_t[i]$, and so by symmetry vertex $i$ must take values $-1$ and $+1$ uniformly. Furthermore, by the monontonicity of our coupling, if $A_t$ holds, we must have that $\mathcal{T}_t[i] = +1$ and $\mathcal{B}_t[i] = -1$.
+	So
+	\begin{align}
+		m_t(i) = \prob[A_t].
+	\end{align}
+	Finally, given a target time $t^*$, $X_i$ is defined such that $\{X_i = 1\} = A_{t^*}$. So $\prob[X_i = 1] = m_{t^*}(i)$. This motivates the following restatement of part of Lemma 2.1 from \cite{Lubetzky2016-wd}.
+
+	\begin{lemma}[\cite{Lubetzky2016-wd}, Lemma 2.1]
+		There exist some constant $c_{\beta, d} > 0$ such that for any $t > 0$,
+		\begin{equation}
+			m_t \leq 2 \euler^{-c_{\beta, d} t}
+		\end{equation}
+	\end{lemma}
+	\begin{corollary}
+		\begin{equation}
+			\prob[X_i = 1] \leq 2 \euler^{-c_{\beta, d} t^*}
+		\end{equation}
+	\end{corollary}
+
+	\section{Setup}
+	Define the time
+	\begin{equation}
+		t_c(n) = \inf\left\{ t > 0 : m_t = \frac{1}{n}\right\}.
+	\end{equation}
+	Fix $z$ and a time of interest $t^* = t_c(n) + z$.
+
+	\begin{lemma}[\cite{Lubetzky2017-nc}, Claim 3.3]
+		On any graph with maximum degree $\Delta$, for any $t, s > 0$ we have
+		\begin{equation}
+			\euler^{-2s} \leq \frac{\sum_i m_{t+s}[i]^2}{\sum_i m_t[i]^2} \leq \euler^{-2(1 - \beta \Delta)s}.
+		\end{equation}
+	\end{lemma}
+
+	The following corollary is then straightfoward.
+	\begin{corollary}
+		On any vertex transitive graph with degree $\Delta$, $m_{t^*}$ can be bounded as follows:
+
+		For $z \geq 0$,
+		\begin{equation}
+			\frac{\euler^{-z}}{n} \leq m_{t^*} \leq \frac{\euler^{-(1 - \beta \Delta)z}}{n}.
+		\end{equation}
+
+		For $z \leq 0$,
+		\begin{equation}
+			\frac{\euler^{-(1 - \beta \Delta)z}}{n} \leq m_{t^*} \leq \frac{\euler^{-z}}{n}.
+		\end{equation}
+	\end{corollary}
+
+	\section{Proof of Theorem \ref{thm:Coupling Distribution on Lattice}}
+	\begin{lemma}
+	\label{lem:nDlambda}
+		Using the above setup
+		\begin{equation}
+			 \leq \lim_{n \rightarrow \infty} \lambda \leq n m_{t^*}
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		\begin{align}
+			\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \indicator[ X_i + U_i \geq 1] \right]\\
+				&= \sum_{i = 1}^n \prob(X_i = 1) \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]\\
+				&= n m_{t^*} \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]
+		\end{align}
+		where we have used that $X_i$ is zero-one, \eqref{eq:1D prob X_i}, and the transitivity of the graph.
+		Clearly 
+		\begin{align}
+			\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] \leq 1
+		\end{align}
+		and so $\lambda \leq n m_{t^*}$.
+
+		By Jensen's inequality
+		\begin{align}
+			\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] &\geq \frac{1}{\expect[1 + U_i | X_i = 1]}\\
+				&= \frac{1}{1 + \expect[U_i | X_i = 1]}.
+		\end{align}
+		so in order to find a lower bound for $\lambda$ we will find an upper bound to $\expect[U_i | X_i = 1]$. Now
+		\begin{align}
+			\expect[U_i | X_i = 1] &= \sum_{j \in B_i} \prob[X_j = 1| X_i = 1]\\
+				&= \sum_{k=1}^{b_n} \sum_{|j - i| = k} \prob[X_j = 1| X_i = 1]\\
+				& \leq \sum_{k=1}^{b_n} \sum_{|j - i| = k} \left(m_{t^*} + \prob[\mathcal{H}_{j} \cap \mathcal{H}_i \neq \emptyset | X_i = 1] \right)
+		\end{align}
+	\end{proof}
+
+	\begin{lemma}
+	\label{lem:delta1 goes to 0 general}
+		\begin{equation}
+			\lim_{n\rightarrow\infty} \delta_1 = 0
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		\begin{align}
+			\delta_1 &= \sum_{i = 1}^n \sum_{k = 0}^{|B_i|} \prob[X_i = 1, U_i = k] \expect \left| \frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|\\
+			&= n \sum_{k = 0}^{|B_i|} \expect \left|\prob[X_i = 1, U_i = k|W_i] - \prob[X_i = 1, U_i = k] \right|%\\
+			\label{eq:nD delta1 line 2}
+			% &\leq n \sup_{W_i} \sum_{k = 0}^{2 b_n} \left| \prob[X_i = 1, U_i = k|W_i] - \prob[X_i = 1, U_i = k] \right|
+		\end{align}
+		Let $A$ be the event that the history of a vertex in $D_i$ merges with the history of a vertex in $B_i \cup \{i\}$. More formally,
+		\begin{equation}
+			A = \{ \exists j \in B_i \cup \{i\}, l \in D_i : \mathcal{H}_j \cap \mathcal{H}_l \neq \emptyset\}.
+		\end{equation}
+		We note that if $A$ does not happen, then $W_i$ cannot affect $X_i$ or $U_i$. That is,
+		\begin{equation}
+			\prob[X_i = 1, U_i = j | A^\complement, W_i] = \prob[X_i = 1, U_i = j | A^\complement].
+		\end{equation} 
+		Continuing on from \eqref{eq:nD delta1 line 2}, we split the probabilities into
+		\begin{align}
+			\delta_1 &= n \sum_{k = 0}^{|B_i|} \expect \left| \prob[X_i = 1, U_i = k|W_i, A]\prob[A|W_i] - \prob[X_i = 1, U_i = k| A]\prob[A] + \vphantom{A^\complement} \right.\\
+			&\hphantom{= .} \left.\prob(X_i = 1, U_i = k | A^\complement) (\prob[A^\complement|W_i] - \prob[A^\complement]) \right| \notag \\
+			&\leq n (|B_i| + 1) \expect\left[ \prob[A|W_i] + \prob[A] + \left|\prob[A^\complement|W_i] - \prob[A^\complement]\right|\right]\\
+			&= n (|B_i| + 1) \expect\left[ \prob[A|W_i] + \prob[A] + \left|1 - \prob[A|W_i] - (1 - \prob[A])\right|\right]\\
+			&\leq n (|B_i| + 1) \expect\left[ \prob[A|W_i] + \prob[A] + \prob[A|W_i] + \prob[A])\right]\\
+			&= 2 n (|B_i| + 1) \left(\expect[\prob[A|W_i]] + \prob[A]\right)\\
+			&= 4 n (|B_i| + 1) \prob[A]
+		\end{align}
+
+		By a union bound,
+		\begin{align}
+			\delta_1 &\leq 4 n (|B_i| + 1) \sum_{j \in B_i \cup \{i\}} \sum_{k \in D_i} \prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset].
+		\end{align}
+
+		From Lemma \ref{lem:intersecting histories bound},
+		\begin{align}
+			\delta_1 &\leq 4 n^2 (|B_i| + 1)^2 \exp(2\alpha) \exp(-\lambda(c_n - b_n)).
+		\end{align}
+
+		On the torus $(\mathbb{Z} / L \mathbb{Z})^d$, $n = L^d$, $c_n = \log(L)^2$, $b_n = \log(L)$, and $|B_i| \leq C \log(L)^d$. So
+
+		\begin{equation}
+			\delta_1 \leq C L^{2d} \log(L)^{2d} \exp(-\lambda(\log(L)^2 - \log(L))
+		\end{equation}
+		which goes to $0$ as $L \rightarrow \infty$.
+	\end{proof}
+
+	\begin{lemma}
+	\label{lem:delta4 goes to 0 general}
+		\begin{equation}
+			\lim_{n\rightarrow\infty} \delta_4 = 0
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		\begin{align}
+			\delta_4 &= \sum_{i = 1}^n \left(\expect[X_i Z_i] + \expect[X_i]\expect[X_i + U_i + Z_i]\right)\\
+				&= n \expect[X_i Z_i] + n m_{t^*}^2 \left(1 + |B_i| + |C_i|\right)\\
+				&= n m_{t^*} \expect[Z_i | X_i = 1] + n m_{t^*}^2 \left(1 + |B_i| + |C_i|\right)\\
+				&= n m_{t^*} \left(\sum_{j \in C_i} \prob[X_j = 1 | X_i = 1] + m_{t^*} \left(1 + |B_i| + |C_i|\right) \right)\\
+				&\leq n m_{t^*} \left(\sum_{j \in C_i} \left(m_{t^*} + \prob[\mathcal{H}_{j} \cap \mathcal{H}_i \neq \emptyset | X_i = 1\right) + m_{t^*} \left(1 + |B_i| + |C_i|\right) \right)
+		\end{align}
+
+		NEED TO PROVE LEMMA \ref{lem:intersecting histories bound given X_j = 1}
+	\end{proof}
+
+	\subsection{Additional Lemmas}
+	\begin{lemma}
+		\label{lem:intersecting histories bound}
+		\begin{equation}
+			\prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset] \leq \exp(2\alpha) \exp(-\lambda |j - k|).
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+	The following is based on the proof used in Section 3.2 of \cite{Lubetzky2014-po}.
+
+	We first relax our histories to our alternative construction by observing that
+	\begin{equation}
+		\prob[\mathcal{H}_j \cap \mathcal{H}_k \neq \emptyset] \leq \prob[\hat{\mathcal{H}}_j \cap \hat{\mathcal{H}}_k \neq \emptyset].
+	\end{equation}
+
+	Let $W_s = |\hat{\mathcal{H}}_{\{j, k\}} (t^* - s)|$ and let $Y_s = \#\left\{ \left( (u,t), (v,t) \right) \in \hat{\mathcal{H}}_{\{j, k\}}: t \in [t^* - s, t^*) \right\}$ count the total number of spatial edges observed in the history by time $t^* - s$. For $\hat{\mathcal{H}}_j$ and $\hat{\mathcal{H}}_k$ to intersect at time $t^* - s$, there must be enough spatial edges for the histories to reach each other. That is, we require that
+	\begin{equation}
+		Y_s \geq |i - j|.
+	\end{equation}
+
+	Initially, $W_0 = 2$ and $Y_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s)$ such that $\bar{W}_s \geq W_s$ and $\bar{Y}_s \geq Y_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s) = (2, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$, and at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$.
+
+	% stochastically dominate $(W_s, Y_s)$ by a process $(\bar{W}_s, \bar{Y}_s)$ which starts at $(\bar{W}_0, \bar{Y}_0) = (2, 0)$ and evolves in the following way. At rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$, and at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$.
+
+	Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s \right)$ where $\alpha$ and $\lambda$ are some fixed constants yet to be determined. We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then
+	\begin{align}
+		\expect\left[Q_{s_0 + h} - Q_{s_0}| Q_{s_0}\right] &= h \theta \bar{W}_{s_0} \left(\exp(\alpha (\bar{W}_{s_0} - 1) + \lambda \bar{Y}_{s_0}) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0})\right) + \\
+		&\hphantom{= .} h (1 - \theta) \bar{W}_{s_0} \left( \exp(\alpha (\bar{W}_{s_0} + \Delta) + \lambda (\bar{Y}_{s_0} + \Delta)) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0}) \right) + \notag\\
+		&\hphantom{= .} \mathcal{O}(h^2) \notag\\
+		&= \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)h \bar{W}_{s_0} Q_{s_0} + \mathcal{O}(h^2).
+	\end{align}
+	Dividing through by $h$ and taking $h$ to $0$, we have
+	\begin{equation}
+		\left.\frac{d}{ds} \expect\left[Q_{s} | Q_{s_0}\right] \right|_{s = s_0} = \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)\bar{W}_{s_0} Q_{s_0}
+	\end{equation}
+	which is negative for $\theta$ sufficiently close to $1$. Hence $Q_s$ is a supermartingale for sufficiently large $\theta$.
+
+	Define the stopping time 
+	\begin{equation}
+		\tau = \inf\{s: \bar{W}_s = 0\}.
+	\end{equation}
+	Since $(\bar{W}_s, \bar{Y}_s) \geq (W_s, Y_s)$, we have that $W_\tau = 0$ which corresponds to the event that both histories, $\mathcal{H}_j$ and $\mathcal{H}_k$, have terminated by time $\tau$. Hence
+	\begin{equation}
+		\prob[\hat{\mathcal{H}}_j \cap \hat{\mathcal{H}}_k \neq \emptyset] \leq \prob[Y_\tau \geq |j-k|].
+	\end{equation}
+	Now
+	\begin{equation}
+		\expect[\exp(\lambda Y_\tau)] \leq \expect[\exp(\lambda\bar{Y}_\tau)].
+	\end{equation}
+	and from optional stopping [FIGURE THIS OUT PROPERLY],
+	\begin{align}
+		\expect[\exp(\lambda \bar{Y}_\tau )] &\leq \expect[Q_{0}]\\
+		&= \exp(2\alpha).
+	\end{align}
+	Hence 
+	\begin{equation}
+		\prob[Y_\tau \geq |j-k|] \leq \exp(2\alpha) \exp(-\lambda |j - k|)
+	\end{equation}
+	and overall we have that
+	\begin{equation}
+		\prob[\mathcal{H}_j \cap \mathcal{H}_k \neq \emptyset] \leq \exp(2\alpha) \exp(-\lambda |j - k|).
+	\end{equation}
+	\end{proof}
+
+	\begin{lemma}
+		\label{lem:intersecting histories bound given X_j = 1}
+		\begin{equation}
+			\prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset | X_j = 1] \leq 
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+	The proof here is similar to that of Lemma \ref{lem:intersecting histories bound}. We first relax to our alternative histories
+	\begin{equation}
+		\prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset | X_j = 1] \leq \prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_j = 1].
+	\end{equation}
+	By symmetry, 
+	\begin{equation}
+		\prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_j = 1] = \prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_k = 1]
+	\end{equation}
+	and also
+	\begin{equation}
+		\prob[X_j = 1] = \prob[X_k = 1].
+	\end{equation}
+	So 
+	\begin{equation}
+		\prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_j = 1] \leq 2 \prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | \{X_j = 1\} \cup \{X_k = 1\}].
+	\end{equation}
+
+	We now define $W_s$ and $Y_s$ as before, except now conditioned on the event $\{X_j = 1\} \cup \{X_k = 1\}$. The effect of this conditioning is to forbid updates that reduce $W_s$ to $0$. 
+
+	HANDWAVING: If we stop when $W_s = 1$ then we can ignore the conditioning???
+
+	Define the stopping time 
+	\begin{equation}
+		\tau = \inf\{s: \bar{W}_s = 1\}.
+	\end{equation}
+
+	% We again create a coupled process $(\bar{W}_s, \bar{Y}_s)$ such that $\bar{W}_s \geq W_s$ and $\bar{Y}_s \geq Y_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s) = (2, 0)$ and at rate $\theta (\bar{W}_s - 1)$, $\bar{W}_s$ decreases by 1, and at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$.
+
+	% Let $Q_s = \exp(\alpha \bar{W}_s + \lambda\bar{Y}_s)$ where $\alpha$ and $\lambda$ are some fixed constants yet to be determined. 
+	% \begin{equation}
+	% 	\left.\frac{d}{ds} \expect\left[Q_{s} | Q_{s_0}\right] \right|_{s = s_0} = \left(\theta (\euler^{-\alpha} - 1)(\bar{W}_s - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\bar{W}_s\right)Q_{s_0}
+	% \end{equation}
+
+	
+
+
+	\end{proof}

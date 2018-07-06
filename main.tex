@@ -1,0 +1,312 @@
+%------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%------------------------------------------------------------------------------
+
+\documentclass[11pt, oneside]{Thesis} % The default font size and one-sided printing (no margin offsets)
+
+\graphicspath{{Figures/}} % Specifies the directory where pictures are stored
+
+\usepackage[square, numbers, comma, sort&compress]{natbib} % Use the natbib reference package - read up on this to edit the reference style; if you want text (e.g. Smith et al., 2012) for the in-text references (instead of numbers), remove 'numbers' 
+\hypersetup{urlcolor=blue, colorlinks=true} % Colors hyperlinks in blue - change to black if annoying
+\title{\ttitle} % Defines the thesis title - don't touch this
+
+\usepackage{color,subcaption,mathrsfs,bm,diagbox}
+
+%------------------------------------------------------------------------------
+%	New Commands
+%------------------------------------------------------------------------------
+
+\newcommand{\expect}{\mathbb{E}}
+\newcommand{\prob}{\mathbb{P}}
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\indicator}{I}
+\newcommand{\erf}{\mathrm{erf}}
+\newcommand{\vect}[1]{{\bm{{#1}}}}
+\newcommand{\suchthat}{\mathrel{}\middle|\mathrel{}}
+\newcommand{\coni}{\mathrm{coni}}
+\newcommand{\conv}{\mathrm{Conv}}
+\newcommand{\intd}{\, \mathrm{d}}
+\newcommand{\euler}{e}
+\DeclareMathOperator{\PolyFunc}{\mathscr{F}}
+\DeclareUnicodeCharacter{02B9}{'}	%Paperpile uses funny symbol instead of apostrophe. This line converts it to an apostrophe.
+\newcommand{\jmax}{{j_\mathrm{MAX}}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+%------------------------------------------------------------------------------
+%	Begin document
+%------------------------------------------------------------------------------
+
+\begin{document}
+
+\frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
+
+\setstretch{1.3} % Line spacing of 1.3
+
+% Define the page headers using the FancyHdr package and set up for one-sided printing
+\fancyhead{} % Clears all page headers and footers
+\rhead{\thepage} % Sets the right side header to show the page number
+\lhead{} % Clears the left side page header
+
+\pagestyle{fancy} % Finally, use the "fancy" page style to implement the FancyHdr headers
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % New command to make the lines in the title page
+
+% PDF meta-data
+\hypersetup{pdftitle={\ttitle}}
+\hypersetup{pdfsubject=\subjectname}
+\hypersetup{pdfauthor=\authornames}
+\hypersetup{pdfkeywords=\keywordnames}
+
+%------------------------------------------------------------------------------
+%	TITLE PAGE
+%------------------------------------------------------------------------------
+
+\begin{titlepage}
+\begin{center}
+
+\textsc{\LARGE \univname}\\[1.5cm] % University name
+\textsc{\Large Doctoral Thesis}\\[0.5cm] % Thesis type
+
+\HRule \\[0.4cm]
+{\huge \bfseries \ttitle}\\[0.4cm] % Thesis title
+\HRule \\[1.5cm]
+ 
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Author:}\\
+\href{http://www.ms.unimelb.edu.au/Personnel/profile.php?PC_id=1763}{\authornames} % Author name - remove the \href bracket to remove the link
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Supervisors:} \\% Supervisors names - remove the \href bracket to remove the link  
+\href{http://www.ms.unimelb.edu.au/Personnel/profile.php?PC_id=147}{\supnameone} \\ 
+\href{http://www.ms.unimelb.edu.au/~aurored/}{\supnametwo}
+\end{flushright}
+\end{minipage}\\[3cm]
+ 
+\large \textit{Submitted in total fulfilment of the requirements\\ of the degree of \degreename}\\[0.3cm] % University requirement text
+%\textit{in the}\\[0.4cm]
+\groupname\\\deptname\\[2cm] % Research group name and department name
+ 
+{\large \today}\\[4cm] % Date
+%\includegraphics{Logo} % University/department logo - uncomment to place it
+ 
+\vfill
+\end{center}
+\end{titlepage}
+
+%------------------------------------------------------------------------------
+%	ABSTRACT PAGE
+%------------------------------------------------------------------------------
+
+\addtotoc{Abstract}
+
+\abstract{
+	\addtocontents{toc}{\vspace{1em}}
+	
+	The title page must be followed by an abstract of 300–500 words in English. The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too.
+}
+
+\clearpage 
+
+%------------------------------------------------------------------------------
+%	DECLARATION PAGE
+%------------------------------------------------------------------------------
+
+\Declaration{
+
+\addtocontents{toc}{\vspace{1em}}
+
+This is to certify that:
+
+\begin{enumerate}
+	\item the thesis comprises only my original work towards the PhD except where indicated in the Preface,
+	\item due acknowledgement has been made in the text to all other material used,
+	\item the thesis is fewer than 100 000 words in length, exclusive of tables, maps, bibliographies and appendices.
+\end{enumerate}
+ 
+Signed:\\
+\rule[1em]{25em}{0.5pt} % This prints a line for the signature
+ 
+Date:\\
+\rule[1em]{25em}{0.5pt} % This prints a line to write the date
+}
+
+\clearpage
+
+%------------------------------------------------------------------------------
+%	PREFACE
+%------------------------------------------------------------------------------
+
+\btypeout{Preface}	%What does this line do??
+\addtotoc{Preface}
+\thispagestyle{plain}
+\null\vfil
+%\vskip 60\p@
+\begin{center}{\huge\bf Preface \par}\end{center}
+
+If applicable, a Preface page includes a statement of:
+\begin{itemize}
+	\item Work carried out in collaboration indicating the nature and proportion of the contribution of others and in general terms the portions of the work which the candidate claims as original
+	\item Work submitted for other qualifications
+	\item Work carried out prior to PhD candidature enrolment
+	\item any third party editorial assistance, either paid or voluntary (as limited to the Editing of Research Theses by Professional Editors guidelines) and/or
+	\item Where a substantially unchanged multi-author paper is included in the thesis a statement prepared by the candidate explaining the contributions of all involved. A signed copy by all authors must be included with the submission form.
+\end{itemize}
+\clearpage
+
+%------------------------------------------------------------------------------
+%	QUOTATION PAGE
+%------------------------------------------------------------------------------
+
+\pagestyle{empty} % No headers or footers for the following pages
+
+\null\vfill
+
+\textit{``Thanks to my solid academic training, today I can write hundreds of words on virtually any topic without possessing a shred of information, which is how I got a good job in journalism."}
+
+\begin{flushright}
+Dave Barry
+\end{flushright}
+
+\vfill\vfill\vfill\vfill\vfill\vfill\null 
+
+\clearpage
+
+%------------------------------------------------------------------------------
+%	ACKNOWLEDGEMENTS
+%------------------------------------------------------------------------------
+
+\setstretch{1.3} % Reset the line-spacing to 1.3 for body text (if it has changed)
+
+\acknowledgements{\addtocontents{toc}{\vspace{1em}}
+
+The acknowledgements and the people to thank go here, don't forget to include your project advisor\ldots
+}
+\clearpage
+
+%------------------------------------------------------------------------------
+%	LIST OF CONTENTS/FIGURES/TABLES PAGES
+%------------------------------------------------------------------------------
+
+\pagestyle{fancy} % The page style headers have been "empty" all this time, now use the "fancy" headers as defined before to bring them back
+
+\lhead{\emph{Contents}} % Set the left side page header to "Contents"
+\tableofcontents
+
+\lhead{\emph{List of Figures}} % Set the left side page header to "List of Figures"
+\listoffigures
+
+%------------------------------------------------------------------------------
+%	ABBREVIATIONS
+%------------------------------------------------------------------------------
+
+%\clearpage % Start a new page
+%
+%\setstretch{1.5} % Set the line spacing to 1.5, this makes the following tables easier to read
+%
+%\lhead{\emph{Abbreviations}} % Set the left side page header to "Abbreviations"
+%\listofsymbols{ll} % Include a list of Abbreviations (a table of two columns)
+%{
+%	$f(\infty)$ & $\lim_{x \rightarrow \infty} f(x)$\\
+%	$f(-\infty)$ & $\lim_{x \rightarrow -\infty} f(x)$\\
+%	$f(x^+)$ & $\lim_{h \rightarrow 0^+} f(x+h)$\\
+%	$f(x^-)$ & $\lim_{h \rightarrow 0^-} f(x+h)$
+%}
+
+%------------------------------------------------------------------------------
+%	DEDICATION
+%------------------------------------------------------------------------------
+
+\setstretch{1.3} % Return the line spacing back to 1.3
+
+\pagestyle{empty} % Page style needs to be empty for this page
+
+\dedicatory{For/Dedicated to/To my\ldots} % Dedication text
+
+\addtocontents{toc}{\vspace{2em}}
+
+%------------------------------------------------------------------------------
+%	THESIS CONTENT - CHAPTERS
+%------------------------------------------------------------------------------
+
+\mainmatter % Begin numeric (1,2,3...) page numbering
+
+\pagestyle{fancy} % Return the page headers back to the "fancy" style
+
+\include{Chapters/IntroductionToThesis}
+\part{The Distribution of the Coupling Time for the Ising Heat-Bath Dynamics on Lattices}
+\label{part:coupling time}
+%---"Lit review" chapter---
+% Definition of process
+% Stein Chen method
+%    - W is like distance from coupling
+%    - beta = 0 case
+% Information percolation clusters
+\include{Chapters/IsingCouplingTime/Introduction}
+
+%---results chapter---
+% 1D results
+\include{Chapters/IsingCouplingTime/ProofFor1D}
+% mD conjectures
+\include{Chapters/IsingCouplingTime/GeneralResults}
+
+%---conclusion chapter---
+\include{Chapters/IsingCouplingTime/Conclusion}
+
+\part{Efficient Optimization for Statistical Inference}
+\label{part:optimization for stats}
+% \include{Chapters/ExtremalMomentProblem}
+
+%---"Lit review" chapter---
+% Definitions
+% Summary of Lindsay papers
+%	- Example graphs 2d, 3d?
+% \include{Chapters/StatisticalOptimization/MixtureLikelihoods}
+
+%---results chapter---
+% 2D simple results (minor extensions to Lindsay's results)
+%	- 2 points, angle of trace results (difference between one and two points)
+%	- Specific case of normal density?
+% more general results 
+%	- Numerical 'flag' graphs
+%	- particular class of optimization problem
+%	- constraints, gamma etc
+%	- constraints for normals
+%	- md result for normals
+% \include{Chapters/StatisticalOptimization/SmallInsightsSmallNData}{}
+% \include{Chapters/StatisticalOptimization/StatOptim}
+
+%--- Mixture chapter---
+\include{Chapters/StatisticalOptimization/Mixtures}
+
+%--- Deconvolution chapter?---
+% Don't forget deconvolution r package?
+% \include{Chapters/CharacteristicFunctions}
+% \include{Chapters/NonparametricDeconvolution}
+
+\include{Chapters/StatisticalOptimization/Deconvolution}
+
+%------------------------------------------------------------------------------
+%	THESIS CONTENT - APPENDICES
+%------------------------------------------------------------------------------
+\addtocontents{toc}{\vspace{2em}}
+\appendix
+
+% \include{Appendices/AppendixA}
+
+\addtocontents{toc}{\vspace{2em}}
+\backmatter
+
+%------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%------------------------------------------------------------------------------
+
+\label{Bibliography}
+\lhead{\emph{Bibliography}} % Change the page header to say "Bibliography"
+\bibliographystyle{unsrtnat}
+\bibliography{Paperpile-PhD-Jul02}
+
+
+\end{document}
