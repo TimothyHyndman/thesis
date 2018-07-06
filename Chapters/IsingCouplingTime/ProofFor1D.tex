@@ -116,125 +116,6 @@
 		\label{eq:1D bernoulli prob}
 	\end{equation}
 
-	% Note that any two update histories that intersect will merge.
-	% \section{Stein-Chen Fails}
-	% The first of our Lemmas is now trivial to prove.
-
-	% \begin{lemma}
-	% \label{lem:1D gamma}
-	% 	\begin{equation}
-	% 		\expect\left[W\left(\left(z + \ln n\right)/\theta\right)\right] = \euler^{-z}
-	% 	\end{equation}
-	% \end{lemma}
-	% \begin{proof}
-	% 	From \eqref{eq:1D bernoulli prob}
-	% 	\begin{align}
-	% 		\expect\left[W\left(\left(z + \ln n\right)/\theta\right)\right]&= \sum_{i = 1}^n \euler^{-\left(z + \ln n\right)} \\
-	% 			% &= n \euler^{-\left(z + \ln n\right)}\\
-	% 			&= \euler^{- z}.
-	% 	\end{align}
-	% \end{proof}
-
-	% \subsection{Choosing Subsets}
-	% The Stein-Chen method set out in Theorem \ref{thm:Stein-Chen}, requires us
-	% to choose a subset $B_i \subseteq V$ for each $i \in V$, and then show that using these choices of $B_i$, the quantities $b_1, b_2$, and $b_3$ go to zero as $n$ increases. As it turns out there is no possible choice of $B_i$ that will make both $b_2$ and $b_3$ approach zero. We will prove this by showing that $b_2$ is bounded away from $0$ when vertex $v_{i+1} \in B_i$ for at least half of the $B_i$ and that $b_3$ is bounded away from $0$ when vertex $v_{i+1} \in {B_i}^\complement$ for at least half of the $B_i$.
-
-	% Throughout we will evaluate everything at the time of interest, $t^* = (z + \ln n)/\theta$.
-
-	% % \begin{lemma}
-	% % 	\label{lem:1D b1}
-	% % 	\begin{equation}
-	% % 		\lim_{n \rightarrow \infty} b_1 = 0
-	% % 	\end{equation}
-	% % \end{lemma}
-	% % \begin{proof}
-	% % 	Recall that $p_i(t) = \prob[X_i(t) = 1] = \euler^{-\theta t}$. Then
-	% % 	\begin{align}
-	% % 		b_1 
-	% % 		&= \sum_{i \in V} \sum_{j \in B_i} p_i(t^*) p_j(t^*)\\
-	% % 		&= n \sum_{j \in B_i} \euler^{-2 \theta t^*}\\
-	% % 		&\leq \frac{\max|B_i|}{n} \euler^{-2z}
-	% % 	\end{align}
-	% % \end{proof}
-
-	% \begin{lemma}
-	% 	\label{lem:1D b2}
-	% 	If $v_{i+1} \in B_i$ for at least $n/2$ of the $B_i$, then
-	% 	\begin{equation}
-	% 		\lim_{n \rightarrow \infty} b_2 \geq \frac{1}{4} \left(\euler^{-2\theta} - \euler^{-2} \right) e^{-z}.
-	% 	\end{equation}
-	% \end{lemma}
-	% \begin{proof}
-	% 	Let $A$ be the set of $i$ such that $v_{i+1} \in B_i$. Then
-	% 	\begin{align}
-	% 		b_2 &= \sum_{i=1}^n \sum_{j \in B_i \setminus \{i\}} \expect[X_i(t^*) X_j(t^*)]\\
-	% 			&\geq \sum_{i \in A} \expect[X_i(t^*) X_{i+1}(t^*)]\\
-	% 			&= \sum_{i \in A} \prob[\{X_i(t^*) = 1\} \cap \{X_{i+1}(t^*) = 1\}].
-	% 	\end{align}
-
-	% 	As previously established, the update history from each vertex is a continuous-time random walk that dies at rate $\theta$ and moves left or right with equal probability at rate $(1- \theta)$. The distance between the update histories of each vertex also forms a continuous-time random walk. While greater than 0 and less than $L$, this random walk dies at rate $2 \theta$ and moves left or right with equal probability at rate $2(1 - \theta)$. Once it hits either $L$ or $0$ (the update histories merge) the walk dies at rate $\theta$ and does not move.
-
-	% 	We observe that $\prob[\{X_i = 1\} \cap \{X_{i+1} = 1\}]$ is the probability that this random walk starts at 1 and doesn't die by time $t^*$. One way in which the random walk can survive is that it hits $0$ by time $1$ and then doesn't die. We can use the probability of this event as a lower bound. For the above event to occur the walk must move by time $1$, it must move in the correct direction, and it cannot die in either the first time unit or the remaining time. Combining these we have that the probability of the above event is at least
-	% 	\begin{equation}
-	% 		\frac{1}{2}\left(1 - \euler^{-2(1 - \theta)}\right) \euler^{-2\theta} \euler^{-\theta t^*}.
-	% 	\end{equation}
-	% 	So
-	% 	\begin{align}
-	% 		b_2 &\geq \sum_{i \in A} \frac{1}{2}\left(1 - \euler^{-2(1 - \theta)}\right) \euler^{-2\theta} \euler^{-\theta t^*}\\
-	% 			&\geq \frac{1}{4} \left(\euler^{-2\theta} - \euler^{-2} \right) e^{-z}
-	% 	\end{align}
-	% 	where we have used that $|A| \geq \frac{n}{2}$.
-	% \end{proof}
-
-	% \begin{lemma}
-	% 	\label{lem:1D b3}
-	% 	If $v_{i+1} \in {B_i}^\complement$ for at least $n/2$ of the $B_i$ then
-	% 	\begin{equation}
-	% 		\lim_{n \rightarrow \infty} b_3 \geq \frac{\euler^{-\theta - z}}{4}\left(1 - \euler^{-2(1 - \theta)}\right).
-	% 	\end{equation}
-	% \end{lemma}
-	% \begin{proof}
-	% 	Recall that
-	% 	\begin{align}
-	% 		b_3 &= \sum_{i = 1}^n \expect \left( \right| \expect \left(X_i(t^*) - p_i(t^*) | \mathcal{H}_i(t^*) \right) \left| \right)
-	% 	\end{align}
-	% 	where 
-	% 	\begin{equation}
-	% 		\mathcal{H}_i(t) = \sigma \left(X_j(t) : j \in {B_i}^\complement \right).
-	% 	\end{equation}
-
-	% 	In part iii of Section 3.2.2 of \cite{Chiarini2016-xy}, the authors show that if $\mathcal{H}_1$ and $\mathcal{H}_2$ are both sigma algebras such that $\mathcal{H}_2$ strictly contains $\mathcal{H}_1$ then
-	% 	\begin{equation}
-	% 		\expect \left( \right| \expect \left(X_i - p_i | \mathcal{H}_1 \right) \left| \right) \leq \expect \left( \right| \expect \left(X_i - p_i | \mathcal{H}_2 \right) \left| \right).
-	% 	\end{equation}
-
-	% 	Let $A$ be the set of $i$ such that $v_{i+1} \in {B_i}^\complement$. Then
-	% 	\begin{align}
-	% 		b_3 &\geq \sum_{i \in A} \expect \left( \left| \expect \left(X_i(t^*) - p_i(t^*) | X_{i+1}(t^*) \right) \right| \right)\\
-	% 			&= \sum_{i \in A} \left( \left| \expect \left(X_i(t^*) - p_i(t^*) | X_{i+1}(t^*) = 1 \right) \right| \prob\left(X_{i+1}(t^*) = 1 \right) \right. \\
-	% 			&\phantom{=} + \left. \left| \expect \left(X_i(t^*) - p_i(t^*) | X_{i+1}(t^*) = 0 \right) \right| \prob \left(X_{i+1}(t^*) = 0 \right) \right) \nonumber\\
-	% 			&\geq \sum_{i \in A} p_i(t^*) \left| \expect \left(X_i(t^*) - p_i(t^*) | X_{i+1}(t^*) = 1 \right) \right| \\
-	% 			&= \sum_{i \in A} p_i(t^*) \left| \prob \left(X_i(t^*)  = 1| X_{i+1}(t^*) = 1 \right)  - p_i(t^*)\right|
-	% 	\end{align}
-	% 	We can get rid of the absolute value signs since $X_i$ is more likely to be $1$ given that its neighbour is $1$. So
-	% 	\begin{align}
-	% 		b_3	&\geq \sum_{i \in A} p_i(t^*) \left( \prob \left(X_i(t^*)  = 1| X_{i+1}(t^*) = 1 \right)  - p_i(t^*) \right)%\\
-	% 			% &= \euler^{-z} \left( \prob \left(X_i(t^*) = 1 | X_{i+1}(t^*) = 1 \right) - \frac{\euler^{-z}}{n} \right).
-	% 	\end{align}
-
-	% 	We can use a similar argument to the one in the proof of Lemma \ref{lem:1D b2} to obtain a lower bound for $\prob \left(X_i(t^*) = 1 | X_{i+1}(t^*) = 1 \right)$. One way in which $X_i(t^*) = 1$ is that the update history of $v_i$ merges with that of $v_{i+1}$ by time 1. This occurs with probability at least
-	% 	\begin{equation}
-	% 		\frac{1}{2}(1 - \euler^{-2(1 - \theta)})\euler^{-\theta}
-	% 	\end{equation}
-	% 	and so
-	% 	\begin{align}
-	% 		b_3 &\geq \sum_{i \in A} p_i(t^*) \left( \frac{1}{2}(1 - \euler^{-2(1 - \theta)})\euler^{-\theta}  - p_i(t^*) \right)\\
-	% 			&\geq \frac{\euler^{-z}}{2} \left( \frac{1}{2}(1 - \euler^{-2(1 - \theta)})\euler^{-\theta} - \frac{\euler^{-z}}{n} \right)
-	% 	\end{align}
-	% 	where we have used that $|A| \geq n/2$. The result follows.
-	% \end{proof}
-
-	% \section{Proof of Theorem \ref{thm:Coupling Distribution on Cycle}}
 	\section{Compound Poisson Approximation}
 	Fix $z$ and a time of interest, $t_* = (z + \ln n)/\theta$. For each vertex $i \in G$, we define indicators
 	\begin{equation}
@@ -386,28 +267,6 @@
 			&\leq 8n^2(2b_n + 1)^2  \left(\frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}\right)^{c_n - b_n}
 		\end{align}
 		by Lemma \ref{lem: A_ij bound}. This goes to $0$ as $n \rightarrow \infty$.
-
-		% Denote the right and left vertices on the boundary of $D_i$ by indices $r_i$ and $l_i$. 
-
-		% \begin{equation}
-		% 	\prob[A] \leq \prob[A | X_{r_i} = 1] + \prob[A | X_{l_i} = 1]
-		% \end{equation}
-
-		% The last equality comes from realising that the probability of $A$ increases for each history in $D_i$ that survives and so is maximized when we condition on every history surviving. In fact, we need only consider that the vertices on the boundary of $D_i$ have surviving histories since any history from $B_i \cup \{i\}$ must merge with these first.
-		% Let $b$ and $b'$ be the indices of the vertices on the boundary of $D_i$. The histories of these vertices have the greatest chance to intersect with a history from $B_i$ since they are the closest. If we condition on their survival, we will increase the probability of $A$. Furthermore, 
-		% Let $b$ and $b'$ be the indices of the vertices on the boundary of $D_i$ and let $A_{i,j}$ denote the probability that the histories of $i$ and $j$ merge. By a union bound,
-		% \begin{align}
-		% 	\delta_1 &\leq 4n(2b_n + 1) \sum_{j \in B_i \cup \{i\}}\left( \prob[A_{j,b}|X_b = 1] + \prob[A_{j,b'}|X_{b'} = 1]\right)\\
-		% 	&= 8n(2b_n + 1) \sum_{j \in B_i \cup \{i\}} \prob[A_{j,b}|X_b = 1]
-		% \end{align}
-		% by symmetry. We now employ Lemma \ref{lem:A_ij bound conditioned} to get
-		% \begin{align}
-		% 	\delta_1 &\leq 16n(2b_n + 1) \sum_{j \in B_i \cup \{i\}} \left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^{c_n - b_n}\\
-		% 	&= 16n (2b_n + 1)^2 \left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^{c_n - b_n}
-		% \end{align}
-		% which goes to $0$ as $n \rightarrow \infty$.
-
-
 	\end{proof}
 
 	\begin{lemma}
@@ -545,16 +404,4 @@
 			\prob[X_{i+k} = 1| X_i = 1] &\leq \prob[X_{i+k} = 1] + \prob[A_{i,i+k} | X_i = 1].
 		\end{align}
 		The result follows from \eqref{eq:1D prob X_i} and Lemma \ref{lem:A_ij bound conditioned}.
-
-		% For any two vertices, $i$ and $j$, let $S: [0, \infty) \mapsto \mathbb{N} \cup \{0\}$ be the process defined by
-		% \begin{equation}
-		% 	S(t;i,j) = |\mathcal{H}_i(t^* - t) - \mathcal{H}_j(t^* - t)|
-		% \end{equation}
-		% where we set $S(t;i,j) = \infty$ if either $\mathcal{H}_i(t^* - t)$ or $\mathcal{H}_j(t^* - t)$ are empty. Recalling that $\{X_i = 1\} = \{\mathcal{H}_i(0) \neq \emptyset\}$,
-		% \begin{equation}
-		% 	\prob[X_{i+k} = 1 | X_i = 1] = \prob[S(t^*; i, i+k) \neq \infty | X_i = 1].
-		% \end{equation}
-		% % From Section \ref{sec:information percolation on the cycle}, $S$ is a continuous-time random walk initialized by $S(0; i,j) = |i-j|$
-
-		% Consider the update histories of $X_i$ and $X_{i+k}$. Each is a continuous-time random walk that moves to one of its neighbours with equal probability at rate $(1 - \theta)$ and dies at rate $\theta$. Given that the update history of $X_i$ survives, the distance between the update histories of $X_i$ and $X_{i+k}$ is therefore a continuous-time random walk that starts at $k$, moves either up or down one with equal probability at rate $2 (1 - \theta)$ and dies at rate $\theta$. Then $X_{i+k} = 1$ if and only if this random walk survives to time $t^*$.
 	\end{proof}

@@ -75,12 +75,6 @@
 	Let $\mathscr{V}$ and $U$ be independent, with $\mathscr{V}$ uniform on $V$ and $U$ uniform on $[0,1]$. Then, updating our chain at rate $n = |V|$, and performing updates from $\sigma$ to $\sigma'$ according to $\sigma' = f(\sigma, \mathscr{V}, U)$, we recover the dynamics described in Section \ref{sec:heat-bath glauber dynamics definition}.
 
 	We also note that $f$ is monotonic. We define a partial ordering on $\Omega$ by writing that $\sigma \preceq \omega$ if $\sigma, \omega \in \Omega$ are such that $\sigma[i] \leq \omega[i]$ for all $i \in V$ (and similarly for $\sigma \succeq \omega$). Then for any fixed $i \in V$ and $u \in [0,1]$, if $\sigma \preceq \omega$ then $f(\sigma, i, u) \preceq f(\omega, i, u)$.
-
-
-	% and can be defined by the following random mapping representation. Let $\mathscr{V}$and $U$ be independent random variables, with $\mathscr{V}$ uniform on $V$ and $U$ uniform on $[0,1]$. For $v \in V$ and $\sigma \in \{-1, 1\}^V$, define
-
-	% Now define $f: \{-1, 1\}^V \times V \times [0,1] \mapsto \{-1, 1\}^V$ so
-	% that $f(\sigma, v, u) = \sigma'$ where, for each $i \in V$
 	
 	Let $(\mathscr{V}_k, U_k)_{k \geq 1}$ be an i.i.d. sequence of copies of $(\mathscr{V}, U)$. Define top and bottom chains, $(\mathscr{T}_t)_{t\geq0}$ and $(\mathscr{B}_t)_{t\geq0}$, with initial states
 	\begin{align}
@@ -88,7 +82,7 @@
 		\mathscr{B}_0 &= (-1, -1, \dots, -1)
 	\end{align}
 	that update together at rate $n$. On the $k$th update at time $t_k$, update $\mathscr{T}_{t_k}$ to $f(\mathscr{T}_{t_k}, \mathscr{V}_k, U_k)$ and update $\mathscr{B}_{t_k}$ to $f(\mathscr{B}_{t_k}, \mathscr{V}_k, U_k)$.
-	% We couple these chains by making each vertex in the top chain share the same Poisson clock as the equivalent vertex in the bottom chain and for any particular update, we make the top and bottom chains use the same uniform random variable $U$. 
+
 	We call the coupled process, $(\mathscr{B}_t, \mathscr{F}_t)_{t\geq0}$, \emph{the Ising heat-bath coupling}. From the monotonicity of $f$, $\mathscr{T}_t \succeq \mathscr{B}_t$, for all $t \geq 0$.
 
 	A more descriptive explanation of the coupling is that the top and bottom chains share the same rate-one Poisson clocks at each vertex, and upon updating that vertex, we share the same uniform random variable $U$ between the two chains to determine whether to update to a plus or minus according to \eqref{eq:plusorminusrules}.
@@ -103,239 +97,6 @@
 	We are now in a position to give a brief summary of the CFTP method, as it applies to the Ising heat-bath coupling. It should be noted that we include this summary of CFTP for completeness. None of the details regarding the implementation of CFTP are required outside of this section. It serves only as motivation for the study of the coupling time.
 
 	[EXTEND?]
-
-
-	% We suspect that the distribution of $T$ is closely related to the 
-	% \emph{coupon collector's time},
-	% \begin{equation}
-	% 	\mathcal{W} := \min\{t \in \mathbb{N}^+ : \{\mathscr{V}_1, \dots, \mathscr{V}_t\} = V\}.
-	% \end{equation}
-
-	% SHOW EXPECTATION, VAR, LIMIT Distribution ETC ETC HERE WITH CITATION.
-
-	% In \cite{Collevecchio2017-nq}, the relationship between $T$ and
-	% $W$ is conjectured more precisely, along with more general conjectures on 
-	% the behaviour of $T$. Numerical evidence is also provided in support. The 
-	% main conjecture is repeated here for convenience.
-
-	% \begin{conjecture}[\cite{Collevecchio2017-nq} Conjecture 7.1]
-	% \label{conj: ising heat-bath conjectures}
-	% 	Consider the Ising heat-bath process on $\mathbb{Z}_L^d$ with $d \geq 1$.
-	% 	As $L \rightarrow \infty$:
-	% 	\begin{enumerate}
-	% 		\item $\mu_T \sim C_1(\beta, d) \mu_\mathcal{W}$ and $\sigma_T \sim 
-	% 		C_2(\beta, d) \sigma_\mathcal{W}$ when $\beta < \beta_c$ with $C_1(\beta, d)$,
-	% 		$C_2(\beta, d) > 0$.
-	% 		\item $\mu_T/\sigma_T \rightarrow C_3(d)$ at $\beta = \beta_c$ with 
-	% 		$C_3(d) > 0$.
-	% 		\item $\sigma_T \sim C_4(\beta, d) t_{\mathrm{rel}}$ for all $\beta
-	% 		\leq \beta_c$, with $C_4(\beta, d) > 0.$ Moreover, $C_4(\beta, d) = 
-	% 		\pi/\sqrt{6}$ for all $\beta < \beta_c$ and all $d$.
-	% 		\item \label{conj:item: limiting distribution} If $\beta \leq \beta_c$
-	% 		\begin{align}
-	% 			\lim_{L \rightarrow \infty} \prob[T_L \leq \expect(T_L) + x \sqrt{\var(T_L)}] &= F(x), &\text{for each } x \in \mathbb{R}
-	% 		\end{align}
-	% 		for some non-degenerate distribution function $F$. Moreover, $F(x) = 
-	% 		G(x)$ for all $\beta < \beta_c$, where $G(x)$ is the Gumbel 
-	% 		distribution defined by 
-	% 		\begin{align}
-	% 			G(x) &:= \exp \left( - \exp \left( - \frac{\pi}{\sqrt{6}} x - \gamma \right) \right), &x \in \mathbb{R}
-	% 		\end{align}
-	% 	\end{enumerate}
-	% \end{conjecture}
-
-	% Our aim is to calculate 
-	% \begin{equation}
-	% 	\lim_{n\rightarrow \infty} \prob \left[T \leq a_n z + b_n \right]
-	% \end{equation}
-	% where $n = |V|$, $a_n = n$ and $b_n = n \ln(n)$ (or similar).
-
-% \section{Information percolation}
-% \section{Summary of the proof method}
-	
-% 	Let $n = |V|$. BLAH
-% 	At each vertex $i \in V$, we create a bernoulli random variable (FUNCTION?)
-% 	\begin{equation}
-% 		X_i(t) = \begin{cases}
-% 			1 & \mathscr{T}_t[i] \neq \mathscr{B}_t[i],\\
-% 			0 & \mathscr{T}_t[i] = \mathscr{B}_t[i].
-% 		\end{cases}
-% 		\label{eq:define X_i}
-% 	\end{equation}
-	
-% 	The sum of these,
-% 	\begin{equation}
-% 		W(t) = \sum_{i = 1}^n X_i(t),
-% 		\label{eq:define W}
-% 	\end{equation}
-% 	gives us a gauge of how far away we are from coupling at time $t$. Note that 
-% 	while a single vertex can go from coupled ($X_i = 0$) to uncoupled 
-% 	($X_i = 1$), once the top and bottom chains have completely coupled ($W = 0$),
-% 	they will remain so. This means that the event $\{T \leq t\}$ is the same as
-% 	the event $\{W(t) = 0\}$. In light of part \ref{conj:item: limiting distribution}
-% 	of Conjecture \ref{conj: ising heat-bath conjectures}, we are interested in
-% 	\begin{equation}
-% 		\lim_{L \rightarrow \infty} \prob[T_L \leq a_L t + b_L] = \lim_{L \rightarrow \infty} \prob[W(a_L t + b_L) = 0]
-% 		\label{eq:link W and T}
-% 	\end{equation}
-% 	for some appropriate choice of sequences $(a_L)_{L=1}^\infty$ and 
-% 	$(b_L)_{L=1}^\infty$.
-
-% 	FIGURE OUT $n$ VS $L$.
-
-
-% 	\subsection{Stein-Chen Method}
-% 	WRITE SUMMARY OF WHAT STEIN-CHEN METHOD IS
-
-% 	The Stein-Chen Method \cite{Chen1975-ge} forms the backbone of our proof of 
-% 	the limiting distribution of $T$. We have taken the following form of it 
-% 	from \cite{Chiarini2016-xy} which in turn is based on the presentation of 
-% 	the Stein-Chen method found in \cite{Arratia1989-ez}.
-
-% 	Let $V$ be a countable index set and $(X_i)_{i \in V}$ be a sequence of 
-% 	Bernoilli random variables with parameter $p_i$. For each $i$, create a 
-% 	subset $B_i \subseteq V$. Set
-% 	\begin{align}
-% 		b_1 &= \sum_{i \in V} \sum_{j \in B_i} p_i p_j\\
-% 		b_2 &= \sum_{i \in V} \sum_{j \in B_i, j \neq i} \expect[X_i X_j]\\
-% 		b_3 &= \sum_{i \in V} \expect \left[ | \expect[X_i - p_i | \mathcal{H}_i] |\right]
-% 	\end{align}
-% 	where
-% 	\begin{equation}
-% 		\mathcal{H}_i = \sigma\left( X_j : j \in V \setminus B_i \right).
-% 	\end{equation}
-
-% 	\begin{theorem}[Stein-Chen]
-% 		\label{thm:Stein-Chen}
-% 		Let $W = \sum_i X_i$ and $\lambda = \expect[W]$. Let $Z$ be a Poisson 
-% 		random variable with $\expect[Z] = \lambda$. Then
-% 		\begin{equation}
-% 			||\mathcal{L}(W) - \mathcal{L}(Z)||_{\mathrm{TV}} \leq 2 (b_1 + b_2 + b_3)
-% 			\label{eq:Stein-Chen General}
-% 		\end{equation}
-% 		and
-% 		\begin{equation}
-% 			|\prob[W = 0] - e^{-\lambda}| < \min\{1, \lambda^{-1}\}(b_1 + b_2 + b_3)
-% 			\label{eq:stein-chen}
-% 		\end{equation}
-% 	\end{theorem}
-% 	DEFINE TV DISTANCE
-
-% 	\subsection{Our application}
-% 	We will fix a time $t$ and let the $X_i$ and $W$ be as defined in 
-% 	\eqref{eq:define X_i} and \eqref{eq:define W}. The idea is to calculate 
-% 	$\expect[W]$ and to find appropriate subsets $B_i$ such that $b_1, b_2$ and
-% 	$b_3$ go to zero as the size of our lattice increases. Then we can use 
-% 	\eqref{eq:Stein-Chen General} to find the limiting distribution of $W$, and 
-% 	in particular, use \eqref{eq:stein-chen} and \eqref{eq:link W and T} to show 
-% 	that the limiting distribution of $T$ is $\euler^{-\expect[W(t)]}$.
-
-% 	FIGURE OUT WHERE TO PUT SCALING SEQUENCES ETC IN ABOVE SENTENCE.
-
-% 	% \subsection{Our application}
-% 	% We begin by observing that since the top and bottom chains are coupled, once
-% 	% they are equal, they will remain equal. This means that the event 
-% 	% $\{T \leq t^*\}$ is the same as the event 
-% 	% $\{\mathscr{T}_{\lfloor t^* \rfloor} = \mathscr{B}_{\lfloor t^* \rfloor}\}$.
-
-% 	% Set $u_n(z) = a_n z + b_n$. Let 
-% 	% \begin{equation}
-% 	% 	X_i = 
-% 	% 	\begin{cases}
-% 	% 		1 & \mathscr{T}_{\lfloor u_n(z) \rfloor}[i] \neq \mathscr{B}_{\lfloor u_n(z) \rfloor}[i]\\
-% 	% 		0 & \mathscr{T}_{\lfloor u_n(z) \rfloor}[i] = \mathscr{B}_{\lfloor u_n(z) \rfloor}[i]
-% 	% 	\end{cases}
-% 	% \end{equation}
-% 	% and
-% 	% \begin{equation}
-% 	% 	W = \sum_{i \in V} X_i.
-% 	% \end{equation}
-
-% 	% The event $\{W = 0\}$ is the same as the event $\{ T \leq u_n(z)\}$. If we
-% 	% can calculate $\expect[W]$, and show that $b_1, b_2$ and $b_3$ go to zero as 
-% 	% $n$ increases, we can use Theorem \ref{thm:Stein-Chen} to find 
-% 	% $\prob[W = 0]$ and therefore $\prob[T \leq u_n(z)]$.
-
-% 	\subsection{Example application to \texorpdfstring{$\beta = 0$}{beta = 0} case.}
-% 	\label{sec:beta = 0}
-% 	As a brief example of the Stein-Chen method we apply it to find the limiting
-% 	distribution of $T$ in the $\beta = 0$ case. There are simpler ways to do 
-% 	this when $\beta = 0$ but we include this toy example as a gentle  
-% 	introduction to the method.
-
-% 	\begin{theorem}
-% 		Let $T_n$ be the coupling time of the process defined in Section 
-% 		\ref{sec:definition} with $\beta = 0$ on a graph, $G = (V, E)$, with 
-% 		$|V| = n$ vertices. Let $a_n = n$ and $b_n = n\ln(n)$. Then
-% 		\begin{equation}
-% 			\lim_{n \rightarrow \infty} \prob[T_n \leq a_n z  +b_n] = \euler^{-\euler^{-z}}.
-% 		\end{equation}
-% 	\end{theorem}
-% 	\begin{proof}
-% 		Fix $z$ and set $t = a_n z + b_n$. We first want to calculate lambda.
-% 		\begin{align}
-% 			\lambda &= \expect[W]\\
-% 					&= \sum_i \expect[X_i]\\
-% 					&= \sum_i \prob \left[ \mathscr{T}_t[i] \neq \mathscr{B}_t[i] \right].
-% 		\end{align}
-% 		Now by the coupling of the top and bottom chains, and since $\beta = 0$,
-% 		once vertex $i$ has been updated, the chains never differ again at that 
-% 		vertex. So
-% 		\begin{align}
-% 			\prob \left[ \mathscr{T}_t[i] \neq \mathscr{B}_t[i] \right] &= \prob \left[i \notin 
-% 			\{\mathscr{V}_1, \dots, \mathscr{V}_{\lfloor a_n z + b_n \rfloor}\} 
-% 			\right]\\
-% 			&= \left(1 - \frac{1}{n}\right)^{\lfloor a_n z + b_n \rfloor}
-% 		\end{align}
-% 		Then substituting in our values for $a_n$ and $b_n$ we get
-% 		\begin{align}
-% 			\lambda &= \sum_{i=1}^n \left( 1 - \frac{1}{n} \right)^{\lfloor n z + n \ln(n) \rfloor}\\
-% 			&= n \left( 1 - \frac{1}{n} \right)^{\lfloor n z + n \ln(n) \rfloor}
-% 		\end{align}
-
-% 		We are interested in the limit as $n \rightarrow \infty$.
-% 		\begin{align}
-% 			\lim_{n \rightarrow \infty} \lambda &= \lim_{n \rightarrow \infty} n 
-% 				\left( 1 - \frac{1}{n} \right)^{\lfloor n z + n \ln(n) \rfloor}\\
-% 			&= \lim_{n \rightarrow \infty}  n \left(\frac{1}{e}\right)^{z + \ln(n)}\\
-% 			&= \lim_{n \rightarrow \infty}  n e^{-z - \ln(n)}\\
-% 			&= e^{-z}.
-% 			\label{eq:lambdavalue}
-% 		\end{align}
-
-% 		For each vertex, $i$, set $B_i = i$. We will show that each of $b_1, b_2$,
-% 		and $b_3$ go to zero. 
-% 		\begin{align}
-% 			\lim_{n \rightarrow \infty} b_1 &= \lim_{n \rightarrow \infty}  
-% 			\sum_{i\in V} \sum_{j \in B_i} \prob \left[\mathscr{T}_t[i] \neq \mathscr{B}_t[i]\right] 
-% 			\prob \left[ \mathscr{T}_t[j] \neq \mathscr{B}_t[j] \right]\\
-% 			&= \lim_{n \rightarrow \infty}  \sum_{i \in V} \prob \left[ \mathscr{T}_t[i] \neq \mathscr{B}_t[i] \right]^2\\
-% 			&= \lim_{n \rightarrow \infty}  n \left(1 - \frac{1}{n}\right)^{2 \lfloor a_n z + b_n \rfloor}\\
-% 			&= \lim_{n \rightarrow \infty}  n \left(1 - \frac{1}{n}\right)^{2 \lfloor n z + n \ln(n) \rfloor}\\
-% 			&= \lim_{n \rightarrow \infty}  n e^{-2 z -2\ln(n) }\\
-% 			&= \lim_{n \rightarrow \infty}  e^{-2 z} \frac{1}{n}\\
-% 			&= 0\\
-% 			&\\
-% 		% \end{align}
-% 	%
-% 		% \begin{align}
-% 			b_2 &= \sum_{i \in V} \sum_{j \in B_i, j \neq i} \expect[X_i X_j]\\
-% 			&= \sum_{i \in V} \sum_{j \in \emptyset} \expect[X_i X_j]\\
-% 			&= 0 \\
-% 			&\\
-% 		% \end{align}
-% 	%
-% 		% \begin{align}
-% 			b_3 &= \sum_{i \in V} \expect[|\expect[X_i - p_i | \mathcal{H}_i]|]\\
-% 				&= \sum_{i \in V} \expect[|\expect[X_i - p_i]|]\\
-% 				&= 0.
-% 		\end{align}
-
-% 		The proof is complete by combining \eqref{eq:stein-chen} with 
-% 		\eqref{eq:lambdavalue} and the fact that $b_1, b_2$, and $b_3$ all go to 
-% 		zero.	
-% 	\end{proof}
-
 
 \section{Information percolation}
 	A cornerstone to the proofs contained in Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults} is the framework of information percolation, first introduced by Lubetzky and Sly in \cite{Lubetzky2013-yv} and \cite{Lubetzky2016-wd}. 
@@ -368,12 +129,6 @@
 	\end{equation}
 	where $t^*$ is some target time that should be clear from context. We call this the \emph{update history of vertex $i$ at time $t$}. Tracing $\mathcal{H}_i(t)$ backwards in time from $t^*$ produces a subgraph of $\Omega \times [0, t^*]$ which we write as $\mathcal{H}_i$ and which we simply call the \emph{update history of vertex $i$}. To be slightly more precise, to produce $\mathcal{H}_i$ we connect $(j,t)$ to $(j,t')$ if $j \in \mathcal{H}_i(t)$ and there are no updates along $(t', t]$ and we connect $(j,t)$ to $(j',t)$ if there was an update at $(j, t)$, $j \in \mathcal{H}_i(t)$, $j' \notin \mathcal{H}_i(t)$, and $j' \in \mathcal{H}_i(t+\epsilon)$ for any sufficiently small $\epsilon > 0$.
 
-	% Furthermore, if $\mathscr{F}(V, 0, t) = \emptyset$ then $Y_t = Y_t'$.
-
-	% The update support function can be thought of as being constructed by 	tracking back recursively through the update sequence from time $t_2$ to 	time $t_1$. We start with the set $A$ and as we go back through the update 	sequence for each tuple $(v, u, t)$ we remove $v$ and add its neighbours.	However, if	$u \leq \theta/2$ or $u > 1 - \theta/2$ then the update is 	oblivious and so we do not need to add the neighbours of $i$. There are other more subtle ways in which vertices can be removed from the update support as we trace back in time.
-
-	% WHAT ARE THEY?
-
 	% ALSO DEFINE UPDATE SUPPORT
 
 	\subsection{Oblivious updates}
@@ -392,13 +147,5 @@
 
 	Of particular note is the effect of an oblivious update on the update history of a vertex. If $j \in \mathcal{H}_i(t)$, then an oblivious update $(j, u, t)$ removes $j$ from $\mathcal{H}_i(t)$ without adding any of its neighbours. These are not necessarily the only updates that can shrink the size of the update history of $i$, but they are essential in doing so.
 
-	% \subsection{Update History}
-	% The \emph{update history} of vertex $i$ at time $t^*$ is the subgraph of $V \times [0, t^*]$ that arises from developing $\{\mathscr{F}(i, t, t^*):t \leq t^* \}$ backward in time, starting at time $t^*$.
-	% OR
-	% The \emph{update history} of vertex $i$ at time $t^*$ is
-	% \begin{equation}
-	% 	H_i(t) = \mathscr{F}(i, t^* - t, t^*).
-	% \end{equation}
-	% Tracing out $H_i(t)$ from $t = 0$ to $t = t^*$ gives us a subgraph $H_i$ of $V \times [0, t^*]$
 	
 
