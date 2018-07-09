@@ -99,16 +99,35 @@
 	[EXTEND?]
 
 \section{Information percolation}
-	A cornerstone to the proofs contained in Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults} is the framework of information percolation, first introduced by Lubetzky and Sly in 2016 \cite{Lubetzky2016-wd}. This paper proved the existence of cutoff with a constant order window for the Glaubery dynamics for the Ising model. Cutoff is a BLAHBLAHBLAH
+	A cornerstone to the proofs contained in Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults} is the framework of information percolation, first introduced by Lubetzky and Sly in 2016 \cite{Lubetzky2016-wd}. In this paper, Lubetzky and Sly managed to achieve much sharper results, in much more generality, regarding the mixing time for the Glauber dynamics for the Ising model than had been achieved before. In this section we provide a brief summary of their paper before laying out the basic framework that will be required for Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults}.
 
+	\subsection{Information percolation and cutoff for the stochastic Ising model}
+	In order to define cutoff, the central phenomenon of study in Lubetzky and Sly's 2016 paper titled, `Information percolation and cutoff for the stochastic Ising model', we first have to define the total-variation mixing time. Given a parameter $\epsilon$, a Markov Chain $Y_t$ has mixing time
+	\begin{equation}
+		t_\mathrm{MIX}(\epsilon) = \inf\left\{t: \max_{x_0 \in \Omega} ||\prob(X_t \in \cdot | X_0 = x_0) - \pi ||_\mathrm{TV} \leq \epsilon \right\}
+	\end{equation}
+	where the total variation distance $||\nu_1 - \nu_2||_\mathrm{TV}$ is defined as 
+	\begin{equation}
+		\max_{A \in \Omega}|\nu_1(A) - \nu_2(A)| = \frac{1}{2}\sum_{\sigma \in \Omega} |\nu_1(\sigma) - \nu_2(\sigma)|.
+	\end{equation}
+	A family of Markov chains $(Y_t)$ indexed by $n$ is said to exhibit cutoff if
+	\begin{equation}
+		t_\mathrm{MIX}(\epsilon) = (1 + o(1)) t_\mathrm{MIX}(\epsilon'),
+	\end{equation}
+	for any fixed $0 < \epsilon, \epsilon' < 1$. A \emph{cutoff window} is a sequence $w_n$ where
+	\begin{equation}
+		t_\mathrm{MIX}(\epsilon) = t_\mathrm{MIX}(1 - \epsilon) + \mathcal{O}(w_n)
+	\end{equation}
+	for any $0 < \epsilon <1$.
 
+	Lubetzky and Sly proved the existence of cutoff for the continous time Glauber dynamics for the Ising model with an $\mathcal{O}(1)$ window on $\mathbb{Z}^d$ for all temperatures up to the critical temperature. Previously, 
 
-	In this section we write a summary of the basic framework and definitions that we will use.
+	\subsection{The framework}
 
-	\subsection{The update sequence}
+	\subsubsection{The update sequence}
 	We can encode each update with the tuple $(i, u, t)$, where $i$ is the	vertex that is updated, $t$ is the time of the update, and $u$ is the value of the uniform random variable that tells us whether $i$ is a plus or minus	according to \eqref{eq:plusorminusrules}. The \emph{update sequence} along 	an interval $(t_0, t_1]$ is the set of these tuples with $t_0 < t \leq t_1$. Given the state of our Markov Chain at time $t_0$, $Y_{t_0}$, the update sequence along $(t_0, t_1]$ contains all the information we need to contruct $Y_{t_1}$. In particular, given the update sequence along the interval $(0, t_1]$, $Y_{t_1}$ is a deterministic function of $Y_0$.
 
-	\subsection{The update support function}
+	\subsubsection{The update support function}
 	\label{sec: definition update support function}
 	Given the update sequence along the interval $(t_1, t_2]$, the \emph{update support function}, $\mathscr{F}(A, t_1, t_2)$, is the minimal set of vertices whose spins at time $t_1$ determine the spins of the vertices in $A$ at time $t_2$. That is, $i \in \mathscr{F}(A, t_1, t_2)$ if and only if there exist states $Y_{t_1}, Y_{t_1}' \in \{-1, +1\}^{V}$ that differ only at $i$ and such that when we construct $Y_{t_2}$ and $Y_{t_2}'$ using the update sequence, $Y_{t_2} \neq Y_{t_2}'$.
 
@@ -132,7 +151,7 @@
 
 	% ALSO DEFINE UPDATE SUPPORT
 
-	\subsection{Oblivious updates}
+	\subsubsection{Oblivious updates}
 
 	Important to the idea of the update support function is that of an oblivious update. In general, an oblivious update is one that does not depend on its neighbours. Write $\Delta_i$ for the degree of a vertex $i$. Recalling \eqref{eq:define p_i},
 	\begin{equation}
