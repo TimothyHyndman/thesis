@@ -97,7 +97,37 @@
 	\subsection{Summary of CFTP}
 	We are now in a position to give a brief summary of the CFTP method, as it applies to the Ising heat-bath coupling. It should be noted that we include this summary of CFTP for completeness. None of the details regarding the implementation of CFTP are required outside of this section. It serves only as motivation for the study of the coupling time.
 
-	[EXTEND?]
+	[EXTEND]
+
+	\begin{claim}
+		Let $T_n$ be a sequence of random times that converges to $\infty$ in some sense. Let $N(T_n)$ be the number of updates that occur in the rate $\lambda$ CTMC in time $T_n$. Let $w_n$ be some sequence such that
+		\begin{equation}
+			\lim_{n \rightarrow \infty} \prob(T_n < w_n) = L
+		\end{equation}
+		for some finite $L$.
+		Then
+		\begin{equation}
+			\lim_{n \rightarrow \infty} \prob(N(T_n) < \lambda w_n) = L.
+		\end{equation}
+	\end{claim}
+	\begin{proof}
+		\begin{align}
+			\prob(T_n < w_n) &= \prob\left(1 < \frac{w_n}{T_n}\right)\\
+			&= \prob\left(N(T_n) < \frac{N(T_n)}{T_n} w_n\right)
+		\end{align}
+
+		Now for a CTMC with updates at constant rate $\lambda$, 
+		\begin{equation}
+			\lim_{t \rightarrow \infty} \frac{N(t)}{t} = \lambda.
+		\end{equation}
+
+		So 
+		\begin{align}
+			\lim_{n \rightarrow \infty} \prob(T_n < w_n) &= \lim_{n \rightarrow \infty} \prob\left(N(T_n) < \frac{N(T_n)}{T_n} w_n\right)\\
+			&= \lim_{n \rightarrow \infty} \prob(N(T_n) < \lambda w_n)
+		\end{align}
+
+	\end{proof}
 
 \section{Information percolation}
 	A cornerstone to the proofs contained in Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults} is the framework of information percolation, first introduced by Lubetzky and Sly in 2016 \cite{Lubetzky2016-wd}. In this paper, Lubetzky and Sly managed to achieve much sharper results, in much more generality, regarding the mixing time for the Glauber dynamics for the Ising model than had been achieved before. In this section we provide a brief summary of their paper before laying out the basic framework that will be required for Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults}.
