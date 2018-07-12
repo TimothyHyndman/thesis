@@ -100,33 +100,59 @@
 	[EXTEND]
 
 	\begin{claim}
-		Let $T_n$ be a sequence of random times that converges to $\infty$ in some sense. Let $N(T_n)$ be the number of updates that occur in the rate $\lambda$ CTMC in time $T_n$. Let $w_n$ be some sequence such that
+		Let $(N_n)_{n \in \mathbb{N}}$ be a sequence of positive random variables, and $(a_n)_{n \in \mathbb{N}}$ be a sequence of real numbers such that $N_n \geq a_n$ for all $n$ and 
 		\begin{equation}
-			\lim_{n \rightarrow \infty} \prob(T_n < w_n) = L
+			\lim_{n \rightarrow \infty} a_n = \infty.
 		\end{equation}
-		for some finite $L$.
-		Then
+
+		Let $T(N_n)$ be the random time it takes for a rate $\lambda$ Poisson clock to go off $N_n$ times (i.e. $N_n$ updates in a CTMC).
+
+		Then if
 		\begin{equation}
-			\lim_{n \rightarrow \infty} \prob(N(T_n) < \lambda w_n) = L.
+			\lim_{n \rightarrow \infty} \prob(T(N_n) < w_n) = L
+		\end{equation}	
+		for some $L$, we have
+		\begin{equation}
+			\lim_{n \rightarrow \infty} \prob(N_n < \lambda w_n) = L.
 		\end{equation}
+		
 	\end{claim}
 	\begin{proof}
+		We have
+	 	\begin{align}
+			L &= \lim_{n \rightarrow \infty} \prob\left(T(N_n) < w_n\right)\\
+			&= \lim_{n \rightarrow \infty} \prob\left(1 < \frac{1}{T(N_n)} w_n\right)\\
+			&= \lim_{n \rightarrow \infty} \prob\left(N_n < \frac{N_n}{T(N_n)} w_n\right) \label{eq:L=limprob N_n}.
+		\end{align}	
+		% Now,
+		% \begin{equation}
+		% 	\lim_{n \rightarrow \infty} \frac{N_n}{T(N_n)}
+		% \end{equation}
+		Now,
 		\begin{align}
-			\prob(T_n < w_n) &= \prob\left(1 < \frac{w_n}{T_n}\right)\\
-			&= \prob\left(N(T_n) < \frac{N(T_n)}{T_n} w_n\right)
+			|\prob(N_n < \lambda w_n) - L| &\leq \left|\prob(N_n < \lambda w_n) - \prob\left(N_n < \frac{N_n}{T(N_n)} w_n\right)\right| + \\
+				&\phantom{\leq \,} \left|\prob\left(N_n < \frac{N_n}{T(N_n)} w_n\right) - L\right| \notag
 		\end{align}
+		From \eqref{eq:L=limprob N_n}, for all $\epsilon > 0$, there exists an $M$ such that for all $n > M$
+		\begin{equation}
+			\left|\prob\left(N_n < \frac{N_n}{T(N_n)} w_n\right) - L\right| < \epsilon / 2.
+		\end{equation}
+		The key then, is to bound
+		\begin{equation}
+			\left|\prob(N_n < \lambda w_n) - \prob\left(N_n < \frac{N_n}{T(N_n)} w_n\right)\right| = \prob\left(N_n \in [A_n, B_n)\right)
+		\end{equation}
+		where $A_n = \min\left(\lambda w_n, \frac{N_n}{T(N_n)} w_n \right)$ and $B_n = \max\left(\lambda w_n, \frac{N_n}{T(N_n)} w_n \right)$.
+
+		THE FOLLOWING IS FLAWED
 
 		Now for a CTMC with updates at constant rate $\lambda$, 
 		\begin{equation}
 			\lim_{t \rightarrow \infty} \frac{N(t)}{t} = \lambda.
 		\end{equation}
-
 		So 
 		\begin{align}
-			\lim_{n \rightarrow \infty} \prob(T_n < w_n) &= \lim_{n \rightarrow \infty} \prob\left(N(T_n) < \frac{N(T_n)}{T_n} w_n\right)\\
-			&= \lim_{n \rightarrow \infty} \prob(N(T_n) < \lambda w_n)
+			L = \lim_{n \rightarrow \infty} \prob(N(T_n) < \lambda w_n)
 		\end{align}
-
 	\end{proof}
 
 \section{Information percolation}
