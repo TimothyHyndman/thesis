@@ -94,12 +94,11 @@
 	\end{equation}
 	This is the main object of interest for our analysis. Note that the coupling time is not just a property of the Ising heat-bath process, but also of the coupling we have chosen. In Section \ref{sec:information percolation on the cycle} we will make a change to the coupling we use to make the analysis easier. Some care will need to be taken to verify that the coupling time is not affected by this change.
 
-	\subsection{Summary of CFTP}
-	We are now in a position to give a brief summary of the CFTP method, as it applies to the Ising heat-bath coupling. It should be noted that we include this summary of CFTP for completeness. None of the details regarding the implementation of CFTP are required outside of this section. It serves only as motivation for the study of the coupling time.
-
-	[EXTEND]
+	\subsection{Equivalence of Discrete and Continuous Coupling Time}
+	So far we have stated that the running time of CFTP has the same distribution as the coupling time. In fact, we have glossed over one important detail. Namely, CFTP is exclusively run in discrete time, and our coupling time is defined by the continuous time dynamics. Therefore, for our motivation to be reasonable, we would like to show some sort of equivalence between the distributions of the discrete and continuous coupling times. We do this via Claim \ref{claim:discrete vs continuous distributions}.l
 
 	\begin{claim}
+	\label{claim:discrete vs continuous distributions}
 		Let $(N_n)_{n \in \mathbb{N}}$ be a sequence of positive random variables, and $(a_n)_{n \in \mathbb{N}}$ be a sequence of real numbers such that $N_n \geq a_n$ for all $n$ and 
 		\begin{equation}
 			\lim_{n \rightarrow \infty} a_n = \infty.
@@ -141,7 +140,11 @@
 		\begin{equation}
 			\left|\prob(N_n < \lambda w_n) - \prob\left(N_n < \frac{N_n}{T(N_n)} w_n\right)\right| = \prob\left(N_n \in [A_n, B_n)\right)
 		\end{equation}
-		where $A_n = \min\left(\lambda w_n, \frac{N_n}{T(N_n)} w_n \right)$ and $B_n = \max\left(\lambda w_n, \frac{N_n}{T(N_n)} w_n \right)$.
+		where $A_n = \min\left(\lambda w_n, \frac{N_n}{T(N_n)} w_n \right)$ and $B_n = \max\left(\lambda w_n, \frac{N_n}{T(N_n)} w_n \right)$. The size of this interval is
+		\begin{align}
+			|A_n - B_n| &= \left|\lambda w_n - \frac{N_n}{T(N_n)}w_n\right|\\
+			&= |w_n| \left|\lambda - \frac{N_n}{T(N_n)}\right|
+		\end{align}
 
 		THE FOLLOWING IS FLAWED
 
@@ -155,6 +158,28 @@
 		\end{align}
 	\end{proof}
 
+	\subsection{Summary of CFTP}
+	\label{sec:summary of CFTP}
+	We are now in a position to give a brief summary of the CFTP method, as it applies to the Ising heat-bath coupling. It should be noted that we include this summary of CFTP for completeness. None of the details regarding the implementation of CFTP are required outside of this section. It serves only as motivation for the study of the coupling time.
+
+	Let $f: \Omega \times V \times [0,1] \mapsto \Omega$ and $(\mathcal{V}, U)$ be as defined in Section \ref{sec:the coupling time}. Let $(\mathcal{V}_k, U_k)$ be an i.i.d. sequence of copies of $(\mathcal{V}, U)$ and define 
+	\begin{equation}
+		f_{-k} = f(\cdot, \mathcal{V}_k, U_k).
+	\end{equation}
+	We construct the composition
+	\begin{equation}
+		F_{-k} = f_0 \circ f_1 \circ \dots \circ f_{k-1}
+	\end{equation}
+	and define the \emph{backwards coupling time} to be
+	\begin{equation}
+		T_\mathrm{BACK} = \min\{k \in \mathbb{N} : F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0)\}.
+	\end{equation}
+
+	The state $F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0)$ is the output of the CFTP algorithm, and is an exact sample from the Gibbs measure \eqref{eq:gibbsmeasure}.
+	
+	[EXTEND]
+
+	
 \section{Information percolation}
 	A cornerstone to the proofs contained in Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults} is the framework of information percolation, first introduced by Lubetzky and Sly in 2016 \cite{Lubetzky2016-wd}. In this paper, Lubetzky and Sly managed to achieve much sharper results, in much more generality, regarding the mixing time for the Glauber dynamics for the Ising model than had been achieved before. In this section we provide a brief summary of their paper before laying out the basic framework that will be required for Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults}.
 
