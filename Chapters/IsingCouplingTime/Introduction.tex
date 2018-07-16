@@ -32,7 +32,10 @@
 		\label{eq:gibbsmeasure}
 	\end{equation}
 
-	SECTION ON CRITICAL BETA
+	\subsection{The Phase Transition}
+	On most graphs [FIND OUT WHICH] the Ising model undergoes a phase transition at a critical inverse temperature $\beta_c = \beta_c(G)$ that is dependent on the graph. Roughly speaking, for $\beta < \beta_c$ (the high-temperature regime), the correlation of spins dies off quickly with the distance between them and for $\beta > \beta_c$ (the low-temperature regime), spins remain correlated at a large distance.
+
+	[EXTEND]
 
 \section{Coupling from the Past}
 	One of the primary concerns regarding the Ising model is how to efficiently sample from the Gibbs measure. A direct approach is computationally intractable as the number of configurations grows exponentially in the size of the graph and so other methods must be employed instead. One such method is Markov Chain Monte Carlo (MCMC). This involves constructing a Markov chain whose states are elements of $\Omega$ and whose stationary distribution is given by \eqref{eq:gibbsmeasure}. One can then obtain a sample by running this Markov chain for long enough that the output has distribution sufficiently close to \eqref{eq:gibbsmeasure}.
@@ -177,6 +180,16 @@
 
 	The state $F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0)$ is the output of the CFTP algorithm, and is an exact sample from the Gibbs measure \eqref{eq:gibbsmeasure}.
 	
+	If we reverse the composition to construct
+	\begin{equation}
+		F_{k} = f_{k} \circ f_{k-1} \circ \dots \circ f_1
+	\end{equation}
+	we can define the usual discrete time coupling time as
+	\begin{equation}
+		T_\mathrm{DIS} =  \min\{k \in \mathbb{N} : F_{k}(\mathscr{B}_0) = F_{k}(\mathscr{T}_0)\}.
+	\end{equation}
+	It can be shown
+
 	[EXTEND]
 
 	
