@@ -100,7 +100,7 @@
 	\subsection{Equivalence of Discrete and Continuous Coupling Time}
 	So far we have stated that the running time of CFTP has the same distribution as the coupling time. In fact, we have glossed over one important detail. Namely, CFTP is exclusively run in discrete time, and our coupling time is defined by the continuous time dynamics. Therefore, for our motivation to be reasonable, we would like to show some sort of equivalence between the distributions of the discrete and continuous coupling times. We do this via Claim \ref{claim:discrete vs continuous distributions}.l
 
-	\begin{claim}
+	\begin{claim}[UNPROVEN]
 	\label{claim:discrete vs continuous distributions}
 		Let $(N_n)_{n \in \mathbb{N}}$ be a sequence of positive random variables, and $(a_n)_{n \in \mathbb{N}}$ be a sequence of real numbers such that $N_n \geq a_n$ for all $n$ and 
 		\begin{equation}
@@ -148,17 +148,20 @@
 			|A_n - B_n| &= \left|\lambda w_n - \frac{N_n}{T(N_n)}w_n\right|\\
 			&= |w_n| \left|\lambda - \frac{N_n}{T(N_n)}\right|
 		\end{align}
-
-		THE FOLLOWING IS FLAWED
-
-		Now for a CTMC with updates at constant rate $\lambda$, 
-		\begin{equation}
-			\lim_{t \rightarrow \infty} \frac{N(t)}{t} = \lambda.
-		\end{equation}
-		So 
+		(which I think we want to show does not grow with $n$).
+		Note that for our case we want $a_n$ some like $n$ and 
 		\begin{align}
-			L = \lim_{n \rightarrow \infty} \prob(N(T_n) < \lambda w_n)
+			\expect\left[\frac{1}{T(n)}\right] = \frac{\lambda}{n-1}\\
+			\var\left[\frac{1}{T(n)}\right] = \frac{\lambda^2}{(n-1)^2(n-2)}\\
 		\end{align}
+		and
+		\begin{align}
+			\left|\lambda - \frac{n}{T(n)}\right| &\leq \left|\lambda - \frac{n \lambda}{n-1}\right| + \left|\frac{n \lambda}{n-1} - \frac{n}{T(n)}\right|\\
+			&= \left|\frac{\lambda}{n-1}\right| + \left|\frac{n \lambda}{n-1} - \frac{n}{T(n)}\right|
+		\end{align}
+
+		Given that we want $w_n = n\log(n)$ this method looks like it won't work...
+
 	\end{proof}
 
 	\subsection{Summary of CFTP}
@@ -178,7 +181,7 @@
 		T_\mathrm{BACK} = \min\{k \in \mathbb{N} : F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0)\}.
 	\end{equation}
 
-	The state $F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0)$ is the output of the CFTP algorithm, and is an exact sample from the Gibbs measure \eqref{eq:gibbsmeasure}.
+	The state $F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0)$ is the output of the CFTP algorithm, and was shown by Propp and Wilson \cite{Propp1996-cf} to be an exact sample from the chain's stationary distribution. To see why this is so, observe that by the monotonicity of $f$, if $F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0)$, then $F_{-k}(\sigma) = F_{-k}(\mathscr{B}_0)$ for any $\sigma \in \Omega$. If we let $\sigma_\pi$ be a random sample from the stationary distribution $\pi$, then $F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0) = F_{-k}(\sigma_\pi)$ must also have distribution $\pi$, which in our case is given by \eqref{eq:gibbsmeasure}.
 	
 	If we reverse the composition to construct
 	\begin{equation}
@@ -188,9 +191,9 @@
 	\begin{equation}
 		T_\mathrm{DIS} =  \min\{k \in \mathbb{N} : F_{k}(\mathscr{B}_0) = F_{k}(\mathscr{T}_0)\}.
 	\end{equation}
-	It can be shown
+	The forwards coupling time, $T_\mathrm{DIS}$, has the same distribution as the backwards coupling time, $T_\mathrm{BACK}$, although in general, $F_{k}(\mathscr{B}_0) = F_{k}(\mathscr{T}_0)$ does not have distribution \eqref{eq:gibbsmeasure}.
 
-	[EXTEND]
+	In practise, one runs the CFTP algorithm by starting both the top and bottom chains from some point in the past to time zero. This is repeated for increasingly more distant times in the past until both chains agree at time 0. The sequence of times at which one restarts this process need not be $-1, -2, -3, \dots$, rather, any monotonic natural sequence $a_1, a_2,\dots$ can  be used. See \cite{Levin2009-fo} \cite{Haggstrom2002-os} \cite{Jerrum1998-ph} for further discussion.
 
 	
 \section{Information percolation}
