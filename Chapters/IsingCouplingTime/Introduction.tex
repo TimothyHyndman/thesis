@@ -223,10 +223,11 @@
 	Previous to \cite{Lubetzky2016-wd}, the best result known for general graphs was that cutoff occurs with a $\mathcal{O}(1)$ window in the simple case when $\beta = 0$ \cite{Aldous1983-gz}. However, no results were known for $0 < \beta < \beta_c$, despite a conjecture by Levin et al. in 2004 \cite{Levin2010-jr} that cutoff occurs for all $\beta < \beta_c$ on all transitive graphs. On lattices, the first results to appear were due to Lubetzky and Sly in 2013 who established cutoff up to the critical temperature for dimensions $d \leq 2$ with only a $\mathcal{O}(\log \log n)$ window \cite{Lubetzky2013-yv}. 
 
 	Using information percolation, Lubetzky and Sly proved the existence of cutoff for the continous time Glauber dynamics for the Ising model with an $\mathcal{O}(1)$ window on $\mathbb{Z}^d$ for all temperatures up to the critical temperature. In a companion paper \cite{Lubetzky2017-nc}, they extended this result to include any graph, albeit this time not all the way up to the critical temperature.
-
-	[UP TO HERE]
 	
 	\subsection{The framework}
+	At its core, information percolation is a way of tracking how the dependencies of the final spins of the Glauber heat-bath dynamics percolate through the graph over time. The constructs which it uses are the update sequence and the update support function (sometimes called the update history).
+
+	[UP TO HERE]
 
 	\subsubsection{The update sequence}
 	We can encode each update with the tuple $(i, u, t)$, where $i$ is the	vertex that is updated, $t$ is the time of the update, and $u$ is the value of the uniform random variable that tells us whether $i$ is a plus or minus	according to \eqref{eq:plusorminusrules}. The \emph{update sequence} along 	an interval $(t_0, t_1]$ is the set of these tuples with $t_0 < t \leq t_1$. Given the state of our Markov Chain at time $t_0$, $Y_{t_0}$, the update sequence along $(t_0, t_1]$ contains all the information we need to contruct $Y_{t_1}$. In particular, given the update sequence along the interval $(0, t_1]$, $Y_{t_1}$ is a deterministic function of $Y_0$.
