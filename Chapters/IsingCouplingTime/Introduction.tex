@@ -258,6 +258,8 @@
 	[USE FIGURE HERE TO MAKE CLEAR]
 	To give some intuition to the definitions above, consider how we might construct the update history of a vertex $i$ from some target time $t^*$. We have at our disposal the update sequence along $(0, t^*]$ which we place in order of decreasing time. If vertex $i$ does not appear in the update sequence then we create a temporal edge between $(i, t^*)$ and $(i, 0)$ and our update history is complete - vertex $i$ was never updated and so it simply takes its initial value. Otherwise, we create temporal edge between $(i, t^*)$ and $(i, t_i)$ where $t_i$ is the last time vertex $i$ was updated. At this point we note from \eqref{eq:plusorminusrules} that the spin that vertex $i$ takes due to this update depends on the spins of its neighbours. So we add spatial edges from $(i, t_i)$ to $(j, t_i)$ for each $j\sim i$. Finally, we can iterate this process for each neighbour until every history has reached time $0$.
 
+	This construction certainly contains every vertex that might influence the final spin at $i$, that is, it contains $\mathcal{H}_i$ as a subgraph. However, it is possible for updates to occur that do not depend on neighbouring spins. These updates cause temporal edges leading up to them to terminate without branching out to the neighbouring vertices. We call these type of updates, \emph{oblivious updates}.
+
 	[UP TO HERE]
 
 	\subsubsection{Oblivious updates}
