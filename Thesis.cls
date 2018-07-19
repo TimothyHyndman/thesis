@@ -157,6 +157,7 @@
 }
 \newcommand*{\supervisorone}[1]{\def\supnameone{#1}}
 \newcommand*{\supervisortwo}[1]{\def\supnametwo{#1}}
+\newcommand*{\supervisorthree}[1]{\def\supnamethree{#1}}
 \newcommand*{\thesistitle}[1]{\def\ttitle{#1}}
 \newcommand*{\examiner}[1]{\def\examname{#1}}
 \newcommand*{\degree}[1]{\def\degreename{#1}}
@@ -186,6 +187,8 @@
 \supervisorone{Prof. Peter \textsc{Taylor}} % Your supervisor's name - this is used in the title page
 %-------------------------------------------------  
 \supervisortwo{Prof. Aurore \textsc{Delaigle}} % Your supervisor's name - this is used in the title page
+%-------------------------------------------------  
+\supervisorthree{Assoc. Prof. Tim \textsc{Garoni}} % Your supervisor's name - this is used in the title page
 %-------------------------------------------------   
 \examiner{} % Your examiner's name - this is not currently used anywhere in the template, cite it with \examname if you want it
 %-------------------------------------------------   
