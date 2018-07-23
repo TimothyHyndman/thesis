@@ -7,11 +7,11 @@
 
 \section{The Ising Model}
 \label{sec:Ising}
-	The Ising model was first studied by Ernst Ising in his 1924 thesis \cite{Ising1925-nd} under the supervision of Wilhelm Lenz who invented the model. It was originally motivated by the phenomenon of ferromagnetism but it has since been used in various other applications CITE. [Gas thingo, Potts model - image denoising, why is it popular etc]
+	The Ising model is named after Ernst Ising who studied it in his 1924 thesis \cite{Ising1925-nd} under the supervision of Wilhelm Lenz who invented the model. It was originally motivated by the phenomenon of ferromagnetism but it has since been used in various other applications CITE. [Gas thingo, Potts model - image denoising, why is it popular etc]
 
 	The Ising model has enjoyed a prominent position in the statistical physics literature. This is largely due to the existence of a phase transition [CITE], a sharp transition in the large scale behaviour of the model as a parameter moves past a critical value. Additionally, the Ising model is both relatively simple, and also mathematically tractable in some non-trivial cases [CITE]. These qualities are rare among models with a phase transition and so the Ising model has become somewhat of a staple for both studying phase transitions and testing new statistical mechanics techniques.
 
-	The model is a probability distribution on spin configurations - an assignment of $+1$ and $-1$ spins to each vertex in a finite graph $G = (V, E)$. The set of all possible configurations is
+	The model is a probability distribution on spin configurations - assignments of $+1$ and $-1$ spins to each vertex in a finite graph $G = (V, E)$. The set of all possible configurations is
 	\begin{equation}
 		\Omega = \{-1, +1\}^V
 	\end{equation}
@@ -38,7 +38,7 @@
 	[EXTEND]
 
 \section{Coupling from the Past}
-	One of the primary concerns regarding the Ising model is how to efficiently sample from the Gibbs measure. A direct approach is computationally intractable as the number of configurations grows exponentially in the size of the graph and so other methods must be employed instead. One such method is Markov Chain Monte Carlo (MCMC). This involves constructing a Markov chain whose states are elements of $\Omega$ and whose stationary distribution is given by \eqref{eq:gibbsmeasure}. One can then obtain a sample by running this Markov chain for long enough that the output has distribution sufficiently close to \eqref{eq:gibbsmeasure}.
+	One of the primary concerns regarding the Ising model is how to efficiently sample from the Gibbs measure. Calculating the normalizing constant for \eqref{eq:gibbsmeasure}, known as the partition function, is a \#P-complete problem \cite{Jerrum1993-ii}. As such a direct approach to sampling is computationally intractable and so other methods must be employed instead. One such method is Markov Chain Monte Carlo (MCMC). This involves constructing a Markov chain whose states are elements of $\Omega$ and whose stationary distribution is given by \eqref{eq:gibbsmeasure}. One can then obtain a sample by running this Markov chain for long enough that the output has distribution sufficiently close to \eqref{eq:gibbsmeasure}.
 	% The zero-field ferromagnetic Ising model on finite graph $G = (V, E)$ at 
 	% inverse temperature $\beta \geq 0$ has Gibbs measure
 	%
