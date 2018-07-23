@@ -46,7 +46,7 @@
 
 	An alternative to MCMC was introduced by Propp and Wilson called Coupling from the Past (CFTP) \cite{Propp1996-cf}. Unlike MCMC, CFTP not only has an automatically determined running time, but it has the additional advantage of outputting exact samples from the stationary distribution. This does not come without a cost - CFTP has a random running time. Therefore, a key question towards evaluating the effectiveness of CFTP is understanding the distribution of its running time, that is, the \emph{coupling time}.
 
-	In Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults}, we will investigate the coupling time for the Ising heat-bath Glauber dynamics, both on the cycle in Chapter \ref{Ch:1D}, and on any vertex transitive graph in Chapter \ref{Ch:GeneralResults}. Our main result in each chapter will be proving that, when appropriately scaled, the coupling time essentially converges to a Gumbel distribution as the size of the graph increases. 
+	In Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults}, we will investigate the coupling time for the Ising heat-bath Glauber dynamics, both on the cycle, at any temperature, in Chapter \ref{Ch:1D}, and on any vertex transitive graph, at sufficiently high temperatures, in Chapter \ref{Ch:GeneralResults}. Our main result in each chapter will be proving that, when appropriately scaled, the coupling time essentially converges to a Gumbel distribution as the size of the graph increases. 
 
 	\subsection{Ising heat-bath Glauber dynamics}
 	\label{sec:heat-bath glauber dynamics definition}
@@ -78,7 +78,7 @@
 	\end{equation}
 	Let $\mathscr{V}$ and $U$ be independent, with $\mathscr{V}$ uniform on $V$ and $U$ uniform on $[0,1]$. Then, updating our chain at rate $n = |V|$, and performing updates from $\sigma$ to $\sigma'$ according to $\sigma' = f(\sigma, \mathscr{V}, U)$, we recover the dynamics described in Section \ref{sec:heat-bath glauber dynamics definition}.
 
-	We also note that $f$ is monotonic. We define a partial ordering on $\Omega$ by writing that $\sigma \preceq \omega$ if $\sigma, \omega \in \Omega$ are such that $\sigma[i] \leq \omega[i]$ for all $i \in V$ (and similarly for $\sigma \succeq \omega$). Then for any fixed $i \in V$ and $u \in [0,1]$, if $\sigma \preceq \omega$ then $f(\sigma, i, u) \preceq f(\omega, i, u)$.
+	We also note that $f$ is monotonic, in the following sense. We define a partial ordering on $\Omega$ by writing that $\sigma \preceq \omega$ if $\sigma, \omega \in \Omega$ are such that $\sigma[i] \leq \omega[i]$ for all $i \in V$ (and similarly for $\sigma \succeq \omega$). Then for any fixed $i \in V$ and $u \in [0,1]$, if $\sigma \preceq \omega$ then $f(\sigma, i, u) \preceq f(\omega, i, u)$.
 	
 	Let $(\mathscr{V}_k, U_k)_{k \geq 1}$ be an i.i.d. sequence of copies of $(\mathscr{V}, U)$. Define top and bottom chains, $(\mathscr{T}_t)_{t\geq0}$ and $(\mathscr{B}_t)_{t\geq0}$, with initial states
 	\begin{align}
@@ -109,7 +109,7 @@
 
 		Let $T(N_n)$ be the random time it takes for a rate $\lambda$ Poisson clock to go off $N_n$ times (i.e. $N_n$ updates in a CTMC).
 
-		Then if
+		Then if there exists a deterministic sequence $w_n$ such that
 		\begin{equation}
 			\lim_{n \rightarrow \infty} \prob(T(N_n) < w_n) = L
 		\end{equation}	
@@ -181,7 +181,7 @@
 		T_\mathrm{BACK} = \min\{k \in \mathbb{N} : F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0)\}.
 	\end{equation}
 
-	The state $F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0)$ is the output of the CFTP algorithm, and was shown by Propp and Wilson \cite{Propp1996-cf} to be an exact sample from the chain's stationary distribution. To see why this is so, observe that by the monotonicity of $f$, if $F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0)$, then $F_{-k}(\sigma) = F_{-k}(\mathscr{B}_0)$ for any $\sigma \in \Omega$. If we let $\sigma_\pi$ be a random sample from the stationary distribution $\pi$, then $F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0) = F_{-k}(\sigma_\pi)$ must also have distribution $\pi$, which in our case is given by \eqref{eq:gibbsmeasure}.
+	The state $F_{-T_\mathrm{BACK}}(\mathscr{B}_0) = F_{-T_\mathrm{BACK}}(\mathscr{T}_0)$ is the output of the CFTP algorithm, and was shown by Propp and Wilson \cite{Propp1996-cf} to be an exact sample from the chain's stationary distribution. To see why this is so, observe that by the monotonicity of $f$, if $F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0)$, then $F_{-k}(\sigma) = F_{-k}(\mathscr{B}_0)$ for any $\sigma \in \Omega$. If we let $\sigma_\pi$ be a random sample from the stationary distribution $\pi$, then $F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0) = F_{-k}(\sigma_\pi)$ must also have distribution $\pi$, which in our case is given by \eqref{eq:gibbsmeasure}.
 	
 	If we reverse the composition to construct
 	\begin{equation}
@@ -191,7 +191,7 @@
 	\begin{equation}
 		T_\mathrm{DIS} =  \min\{k \in \mathbb{N} : F_{k}(\mathscr{B}_0) = F_{k}(\mathscr{T}_0)\}.
 	\end{equation}
-	The forwards coupling time, $T_\mathrm{DIS}$, has the same distribution as the backwards coupling time, $T_\mathrm{BACK}$, although in general, $F_{k}(\mathscr{B}_0) = F_{k}(\mathscr{T}_0)$ does not have distribution \eqref{eq:gibbsmeasure}.
+	The forwards coupling time, $T_\mathrm{DIS}$, has the same distribution as the backwards coupling time, $T_\mathrm{BACK}$, although in general, $F_{T_\mathrm{DIS}}(\mathscr{B}_0) = F_{T_\mathrm{DIS}}(\mathscr{T}_0)$ does not have distribution \eqref{eq:gibbsmeasure}.
 
 	In practise, one runs the CFTP algorithm by starting both the top and bottom chains from some point in the past to time zero. This is repeated for increasingly more distant times in the past until both chains agree at time 0. The sequence of times at which one restarts this process need not be $-1, -2, -3, \dots$, rather, any monotonic natural sequence $a_1, a_2,\dots$ can  be used. See \cite{Levin2009-fo} \cite{Haggstrom2002-os} \cite{Jerrum1998-ph} for further discussion.
 
@@ -220,9 +220,9 @@
 
 	Historically, proving cutoff has proven to be highly challenging. In a survey on the topic, Diaconis \cite{Diaconis1996-sz} wrote `proof of a cutoff is a difficult, delicate affair, requiring detailed knowledge of the chain, such as all eigenvalues and eigenvectors'. It is therefore worth noting the significant gap between the strength of the results regarding cutoff achieved using information percolation, and those that existed previously.
 
-	Previous to \cite{Lubetzky2016-wd}, the best result known for general graphs was that cutoff occurs with a $\mathcal{O}(1)$ window in the simple case when $\beta = 0$ \cite{Aldous1983-gz}. However, no results were known for $0 < \beta < \beta_c$, despite a conjecture by \citeauthor{Levin2010-jr} in 2004 \cite{Levin2010-jr} that cutoff occurs for all $\beta < \beta_c$ on all transitive graphs. On lattices, the first results to appear were due to Lubetzky and Sly in 2013 who established cutoff up to the critical temperature for dimensions $d \leq 2$ with only a $\mathcal{O}(\log \log n)$ window \cite{Lubetzky2013-yv}. 
+	Previous to \cite{Lubetzky2016-wd}, the best result known for general graphs was that cutoff occurs with a $\mathcal{O}(1)$ window in the simple case when $\beta = 0$ \cite{Aldous1983-gz}. However, no results were known for $\beta > 0$, despite a conjecture by \citeauthor{Levin2009-fo} in 2009 \cite[Section 23.2]{Levin2009-fo} that cutoff occurs on any sequence of transitive graphs when the mixing time is of order $\log n$ (as one would expect when $\beta < c_0$ for some $c_0 > 0$ that depends on the sequence of graphs). On lattices, the first results to appear were due to Lubetzky and Sly in 2013 who established cutoff up to the critical temperature for dimensions $d \leq 2$ with only a $\mathcal{O}(\log \log n)$ window \cite{Lubetzky2013-yv}. 
 
-	Using information percolation, Lubetzky and Sly proved the existence of cutoff for the continous time Glauber dynamics for the Ising model with an $\mathcal{O}(1)$ window on $\mathbb{Z}^d$ for all temperatures up to the critical temperature. In a companion paper \cite{Lubetzky2017-nc}, they extended this result to include any graph, albeit this time not all the way up to the critical temperature. Since these papers, information percolation has also been used to establish cutoff for the Swendsen-Wang dynamics on the lattice \cite{Nam2018-io}, suggesting that the technique is effective on a broader class of problems than simply Glauber dynamics for Ising.
+	Using information percolation, Lubetzky and Sly proved the existence of cutoff for the continous time Glauber dynamics for the Ising model with an $\mathcal{O}(1)$ window on $\mathbb{Z}^d$ for all temperatures up to the critical temperature. In a companion paper \cite{Lubetzky2017-nc}, they extended this result to include any graph for sufficiently high temperature. Since these papers, information percolation has also been used to establish cutoff for the Swendsen-Wang dynamics on the lattice \cite{Nam2018-io}, suggesting that the technique is effective on a broader class of problems than simply Glauber dynamics for Ising.
 	
 	\subsection{The framework}
 	At its core, information percolation is a way of tracking how the dependencies of the final spins of the Glauber heat-bath dynamics percolate through the graph over time. These dependencies are traced backwards through time from some designated time $t^*$ on the space-time slab $V \times [0, t^*]$ (see Figure [PUT IN FIGURE] for example) to create the update history. These histories are made in such a way so that, if for any $j \in V$ no path exists connecting $(i, t^*)$ to $(j, 0)$, then the spin of $i$ does not depend on the initial state (and thus at time $t^*$ vertex $i$ takes $+1$ and $-1$ spins with equal probability by symmetry). The main constructs used to create this history are the update sequence, and the update support function which we will now define.
@@ -250,7 +250,7 @@
 	\begin{equation}
 		\mathcal{H}_i(t) := \mathscr{F}(i, t, t^*).
 	\end{equation}
-	where $t^*$ is some target time that should be clear from context. We call this the \emph{update history of vertex $i$ at time $t$}. Tracing $\mathcal{H}_i(t)$ backwards in time from $t^*$ produces a subgraph of $\Omega \times [0, t^*]$ which we write as $\mathcal{H}_i$ and which we simply call the \emph{update history of vertex $i$}. To be slightly more precise, to produce $\mathcal{H}_i$ we connect $(j,t)$ to $(j,t')$ if $j \in \mathcal{H}_i(t)$ and there are no updates along $(t', t]$ and we connect $(j,t)$ to $(j',t)$ if there was an update at $(j, t)$, $j \in \mathcal{H}_i(t)$, $j' \notin \mathcal{H}_i(t)$, and $j' \in \mathcal{H}_i(t+\epsilon)$ for any sufficiently small $\epsilon > 0$.
+	where $t^*$ is some target time that should be clear from context. We call this the \emph{update history of vertex $i$ at time $t$}. Tracing $\mathcal{H}_i(t)$ backwards in time from $t^*$ produces a subgraph of $\Omega \times [0, t^*]$ which we write as $\mathcal{H}_i$ and which we simply call the \emph{update history of vertex $i$}. To be slightly more precise, to produce $\mathcal{H}_i$ we connect $(j,t)$ to $(j,t')$ if $j \in \mathcal{H}_i(t)$ and there are no updates of $j$ along $(t', t]$ and we connect $(j,t)$ to $(j',t)$ if there was an update at $(j, t)$, $j \in \mathcal{H}_i(t)$, $j' \notin \mathcal{H}_i(t)$, and $j' \in \mathcal{H}_i(t+\epsilon)$ for any sufficiently small $\epsilon > 0$.
 
 	% ALSO DEFINE UPDATE SUPPORT
 	
