@@ -33,6 +33,16 @@
 	\end{equation}
 
 	\subsection{The Phase Transition}
+	An in depth study of the Ising phase transition and its associated critical temperature will not be needed for this work. However, we will still wish to refer to it occasionally and so here we give a workable description of the phase transition on lattices.
+
+	Consider the Gibbs measure with zero-field \eqref{eq:gibbsmeasure} in the limits $\beta \downarrow 0$ and $\beta \uparrow \infty$. It is easy to see that in the former limit, the measure is uniform across all configurations and in the latter limit, the measure assigns all weight to the constant configurations $\sigma^- = (-1, -1, \dots, -1)$ and $\sigma^+ = (+1, +1, \dots, +1)$. This leads to the following overly simplistic description of the phase transition. It is the change in distribution that occurs as we increase the temperature; from distributions concentrated on states whose spins mostly agree, to distributions producing states which have roughly equal numbers of plus and minus spins.
+
+	To be slightly more concrete we define quantities called the magnetization and magnetization density. The \emph{magnetization} on a volume $\Lambda \subseteq V$ is defined as 
+	\begin{equation}
+		M_\Lambda(\sigma) = \sum_{i \in \Lambda} \sigma[i].
+	\end{equation}
+	Normalizing this gives the \emph{magnetization density}, $M_\Lambda(\sigma)/|\Lambda|$.
+
 	On most graphs [FIND OUT WHICH] the Ising model undergoes a phase transition at a critical inverse temperature $\beta_c = \beta_c(G)$ that is dependent on the graph. Roughly speaking, for $\beta < \beta_c$ (the high-temperature regime), the correlation of spins dies off quickly with the distance between them and for $\beta > \beta_c$ (the low-temperature regime), spins remain correlated at a large distance.
 
 	[EXTEND]
