@@ -41,11 +41,16 @@
 	\begin{equation}
 		M_\Lambda(\sigma) = \sum_{i \in \Lambda} \sigma[i].
 	\end{equation}
-	Normalizing this gives the \emph{magnetization density}, $M_\Lambda(\sigma)/|\Lambda|$.
+	Normalizing this gives the \emph{magnetization density}, $M_\Lambda(\sigma)/|\Lambda|$. On the $d$-dimensional torus with side length $L$, $G(L) = (\mathbb{Z}/L\mathbb{Z})^d$, the quantity
+	\begin{equation}
+		L(\beta) = \lim_{L \rightarrow \infty} \expect_\beta \left|\frac{M_{G(L)}(\sigma)}{|G(L)|} \right|
+		\label{eq:limitmagnetizationdensity}
+	\end{equation}
+	depends on the inverse temperature $\beta$. When $d = 1$, $L(\beta) = 0$ for any $\beta$ and there is no phase transition. However, when $d > 1$, there exists some critical $\beta_c(d)$ such that $L(\beta) = 0$ for $\beta < \beta_c(d)$ and $L(\beta) > 0$ for $\beta > \beta_c(d)$. This $\beta_c(d)$ is the critical inverse temperature at which we observe a phase transition.
 
-	On most graphs [FIND OUT WHICH] the Ising model undergoes a phase transition at a critical inverse temperature $\beta_c = \beta_c(G)$ that is dependent on the graph. Roughly speaking, for $\beta < \beta_c$ (the high-temperature regime), the correlation of spins dies off quickly with the distance between them and for $\beta > \beta_c$ (the low-temperature regime), spins remain correlated at a large distance.
+	% On most graphs [FIND OUT WHICH] the Ising model undergoes a phase transition at a critical inverse temperature $\beta_c = \beta_c(G)$ that is dependent on the graph. Roughly speaking, for $\beta < \beta_c$ (the high-temperature regime), the correlation of spins dies off quickly with the distance between them and for $\beta > \beta_c$ (the low-temperature regime), spins remain correlated at a large distance.
 
-	[EXTEND]
+	% [EXTEND]
 
 \section{Coupling from the Past}
 	One of the primary concerns regarding the Ising model is how to efficiently sample from the Gibbs measure. Calculating the normalizing constant for \eqref{eq:gibbsmeasure}, known as the partition function, is a \#P-complete problem \cite{Jerrum1993-ii}. As such a direct approach to sampling is computationally intractable and so other methods must be employed instead. One such method is Markov Chain Monte Carlo (MCMC). This involves constructing a Markov chain whose states are elements of $\Omega$ and whose stationary distribution is given by \eqref{eq:gibbsmeasure}. One can then obtain a sample by running this Markov chain for long enough that the output has distribution sufficiently close to \eqref{eq:gibbsmeasure}.
