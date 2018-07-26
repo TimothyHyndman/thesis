@@ -182,7 +182,7 @@
 %	defined as \examname above so you cite it as \examname
 %----------------------------------------------------------------------------------------
 
-\thesistitle{Topics in Probability} % Your thesis title - this is used in the title and abstract
+\thesistitle{The Coupling Time for the Ising Heat-Bath Dynamics \& Efficient Optimization for Statistical Inference} % Your thesis title - this is used in the title and abstract
 %-------------------------------------------------  
 \supervisorone{Prof. Peter \textsc{Taylor}} % Your supervisor's name - this is used in the title page
 %-------------------------------------------------  
