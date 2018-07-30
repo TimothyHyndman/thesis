@@ -279,8 +279,12 @@
 	\subsubsection{Oblivious updates}
 
 	Generally speaking, an update to a vertex is oblivious if we do not need to know the configuration of its neighbours to determine the spin of that vertex. More precisely, an update, $(\mathcal{V}, U, t)$, is oblivious if 
+	%for any $\sigma_1, \sigma_2 \in \Omega$, $\sigma_1' = f(\sigma_1, \mathcal{V}, U)$ and $\sigma_2' = f(\sigma_2, \mathcal{V}, U)$ are such that
+	% \begin{equation}
+	% 	\sigma_1'[\mathcal{V}] = \sigma_2'[\mathcal{V}].
+	% \end{equation}
 	\begin{equation}
-		f(\sigma, \mathcal{V}, U) = f(\sigma', \mathcal{V}, U)
+		f(\sigma, \mathcal{V}, U)[\mathcal{V}] = f(\sigma', \mathcal{V}, U)[\mathcal{V}]
 	\end{equation}
 	for all $\sigma, \sigma' \in \Omega$, where $f$ is as defined in \eqref{eq:plusorminusrules}.
 
@@ -289,17 +293,15 @@
 		\frac{\euler^{-\beta \Delta_i}}{\euler^{\beta \Delta_i} + \euler^{-\beta \Delta_i}} \leq p_i(\sigma) \leq \frac{\euler^{\beta \Delta_i}}{\euler^{\beta \Delta_i} + \euler^{-\beta \Delta_i}},
 	\end{equation}
 	with equality holding for the lower and upper limits when the neighbours have spins all minus and all plus respectively. So for a particular update $(\mathcal{V}, U, t)$, if $U \leq \frac{\euler^{-\beta \Delta_\mathcal{V}}}{\euler^{\beta \Delta_\mathcal{V}} + \euler^{-\beta \Delta_\mathcal{V}}}$ then $\mathcal{V}$ is updated to a plus regardless of the configuration of its neighbours. Hence $(\mathcal{V}, U, t)$ is an oblivious update. Similarly, if $U > \frac{\euler^{\beta \Delta_\mathcal{V}}}{\euler^{\beta \Delta_\mathcal{V}} + \euler^{-\beta \Delta_\mathcal{V}}}$ then $\mathcal{V}$ is updated to a minus regardless of the configuration of its neighbours and hence $(\mathcal{V}, U, t)$ is an oblivious update. It is easy to see that these are the only types of oblivious updates.
-
-	[UP TO HERE]
 	
 	The rate of these updates at vertex $i$ is
 	\begin{align}
 		\theta_i &= 1 - \left(\frac{\euler^{\beta \Delta_i}}{\euler^{\beta \Delta_i} + \euler^{-\beta \Delta_i}} - \frac{\euler^{-\beta \Delta_i}}{\euler^{\beta \Delta_i} + \euler^{-\beta \Delta_i}}\right)\\
 			&= 1 - \tanh(\beta \Delta_i).
 	\end{align}
-	If $G$ is a $\Delta$-regular graph then we can drop the subscript and write $\theta = 1 - \tanh(\beta \Delta)$ for the rate of oblivious updates at each vertex.
+	If $G$ is a $\Delta$-regular graph (as will be the case in the following chapters) then we can drop the subscript and write $\theta = 1 - \tanh(\beta \Delta)$ for the rate of oblivious updates at each vertex.
 
-	Of particular note is the effect of an oblivious update on the update history of a vertex. If $j \in \mathcal{H}_i(t)$, then an oblivious update $(j, u, t)$ removes $j$ from $\mathcal{H}_i(t)$ without adding any of its neighbours. These are not necessarily the only updates that can shrink the size of the update history of $i$, but they are essential in doing so.
+	As noted earlier, oblivious updates cause temporal edges leading up to them in the update history to terminate. If $j \in \mathcal{H}_i(t)$, then an oblivious update $(j, u, t)$ removes $j$ from $\mathcal{H}_i(t)$ without adding any of its neighbours. It is worth remarking that these are not necessarily the only updates that can shrink the size of the update history of $i$ [FIGURE?]. However, for our analysis they will be the only such updates we will be concerned with. Indeed, in Chapter \ref{Ch:1D} we will use a different coupling so that these are the only updates that shrink the size of the update history, and in Chapter \ref{Ch:GeneralResults} we will use an alternative construction that bounds the true update history, in which updates are either oblivious or branch out to all $\Delta$ neighbours.
 
 	
 
