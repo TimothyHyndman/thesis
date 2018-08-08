@@ -114,57 +114,91 @@
 	This is the main object of interest for our analysis. Note that the coupling time is not just a property of the Ising heat-bath process, but also of the coupling we have chosen. In Section \ref{sec:information percolation on the cycle} we will make a change to the coupling we use to make the analysis easier. Some care will need to be taken to verify that the coupling time is not affected by this change.
 
 	\subsection{Equivalence of Discrete and Continuous Coupling Time}
-	So far we have stated that the running time of CFTP has the same distribution as the coupling time. In fact, we have glossed over one important detail. Namely, CFTP is exclusively run in discrete time, and our coupling time is defined by the continuous time dynamics. Therefore, for our motivation to be reasonable, we would like to show some sort of equivalence between the distributions of the discrete and continuous coupling times. We do this via Claim \ref{claim:discrete vs continuous distributions}.l
+	So far we have stated that the running time of CFTP has the same distribution as the coupling time. In fact, we have glossed over one important detail. Namely, CFTP is exclusively run in discrete time, and our coupling time is defined by the continuous time dynamics. Therefore, for our motivation to be reasonable, we would like to show some sort of equivalence between the distributions of the discrete and continuous coupling times. We do this via Claim \ref{claim:discrete vs continuous distributions}.
 
-	\begin{claim}[UNPROVEN]
+	\begin{claim}
 	\label{claim:discrete vs continuous distributions}
-		Let $(N_n)_{n \in \mathbb{N}}$ be a sequence of positive random variables, and $(a_n)_{n \in \mathbb{N}}$ be a monotonic sequence of real numbers such that $N_n \geq a_n$ for all $n$ and 
+		Let $(N_n)_{n \in \mathbb{N}}$ be a sequence of positive random variables, and $(a_n)_{n \in \mathbb{N}}$ be a non-decreasing sequence of integers such that $N_n \geq a_n$ for all $n$ and $\lim_{n \rightarrow \infty} a_n = \infty$.	Define $T(n)$ be the random time it takes for a rate $\lambda$ Poisson clock to go off $n$ times (that is, the time it takes for $n$ updates to occur in a CTMC).
+
+		Then if there exists a deterministic sequence $w_n$ and constant $C$ such that
 		\begin{equation}
-			\lim_{n \rightarrow \infty} a_n = \infty.
+			\lim_{n\rightarrow \infty} \prob\left[\left|\frac{T(N_n)}{w_n}\right| > \frac{C}{2}\right]  = 0,
+			\label{eq:Z_n goes to zero}
 		\end{equation}
-
-		Let $T(n)$ be the random time it takes for a rate $\lambda$ Poisson clock to go off $n$ times (i.e. $n$ updates in a CTMC).
-
-		Then if there exists a deterministic sequence $w_n$ such that
+		and if there exists a constant $L$ such that
 		\begin{equation}
-			\lim_{n \rightarrow \infty} \prob(T(N_n) < w_n) = L
+			\lim_{n \rightarrow \infty} \prob(T(N_n) < w_n) = L,
 			\label{eq:limit CT is L}
 		\end{equation}	
-		for some $L$, we have
+		we have
 		\begin{equation}
 			\lim_{n \rightarrow \infty} \prob(N_n < \lambda w_n) = L.
 		\end{equation}
 		
 	\end{claim}
 	\begin{proof}
-		We have
+		By the triangle inequality,
 		\begin{align}
 			|\prob(N_n < \lambda w_n) - L| &\leq \left|\prob(N_n < \lambda w_n) - \prob\left(T(N_n) < w_n\right)\right| + \\
-				&\phantom{\leq \,} \left|\prob\left(T(N_n) < w_n\right) - L\right| \notag
+				&\phantom{\leq \,} \left|\prob\left(T(N_n) < w_n\right) - L\right|. \notag
 		\end{align}
 		From \eqref{eq:limit CT is L}, the latter term vanishes in the limit. The key then, is to bound
 		\begin{equation}
-			\left|\prob(N_n < \lambda w_n) - \prob\left(T(N_n) < w_n\right)\right| = \left|\prob\left(\frac{N_n}{\lambda w_n} < 1\right) - \prob\left(\frac{T(N_n)}{w_n} < 1\right)\right|.
+			\left|\prob(N_n < \lambda w_n) - \prob\left(T(N_n) < w_n\right)\right| = \left|\prob\left(Z_n < 1\right) - \prob\left(Y_n < 1\right)\right|
 		\end{equation}
-		To do this it will be sufficient to show that the limiting distributions of $N_n/(\lambda w_n)$ and $T(N_n)/w_n$ are equal.
+		(where we have introduced $Y_n = T(N_n)/w_n$ and $Z_n = N_n/(\lambda w_n)$ for ease of notation). To do this it will be sufficient to show that the limiting distributions of $Y_n$ and $Z_n$ are equal.
 
-		Since $T(n)$ is the sum of $n$ i.i.d. exponential random variables with rate $\lambda$, 
+		Note that $T(n)$ is the sum of $n$ i.i.d. exponential random variables with rate $\lambda$. It follows at once that
 		\begin{align}
-			\expect\left[T(n)\right] &= \frac{n}{\lambda},\\
-			\var\left[T(n)\right] &= \frac{n}{\lambda^2}.
+			\expect\left[T(n)\right] &= \frac{n}{\lambda},
+			&\var\left[T(n)\right] &= \frac{n}{\lambda^2}.
 		\end{align}
 		Hence
 		\begin{align}
-			\expect\left[\frac{\lambda T(n)}{n}\right] &= 1,\\
-			\var\left[\frac{\lambda T(n)}{n}\right] &= \frac{1}{n}.
+			\expect\left[\frac{\lambda T(n)}{n}\right] &= 1,
+			&\var\left[\frac{\lambda T(n)}{n}\right] &= \frac{1}{n}.
 		\end{align}
-		Now since $N_n \geq a_n$, for any $\epsilon_n > 0$,
+		Now since $N_n \geq a_n$, for any $\epsilon > 0$,
 		\begin{align}
-			\prob\left(\left|\frac{\lambda T(N_n)}{N_n} - 1\right| \geq \epsilon_n\right) &\leq \prob\left(\left|\frac{\lambda T(a_n)}{a_n} - 1\right| \geq \epsilon_n\right).\\
-			&\leq \frac{1}{a_n \epsilon_n^2}
+			\prob\left(\left|\frac{\lambda T(N_n)}{N_n} - 1\right| \geq \epsilon\right) &\leq \prob\left(\left|\frac{\lambda T(a_n)}{a_n} - 1\right| \geq \epsilon\right).\\
+			&\leq \frac{1}{a_n \epsilon^2}
+			\label{eq:Y_n/Z_n - 1 goes to 0}
 		\end{align}
 		where the last line comes from Chebyshev's inequality.
 
+		Then, for any $\epsilon > 0$,
+		\begin{align}
+			\prob\left(\left|Y_n - Z_n\right| \geq C \epsilon \right) &= \prob\left(\left|\frac{Y_n}{Z_n} - 1\right| \geq \frac{C}{|Z_n|} \epsilon \right)\\
+			&=  \prob\left(\left. \left|\frac{Y_n}{Z_n} - 1\right| \geq \frac{C}{|Z_n|} \epsilon \, \right| |Z_n| \leq C \right) \prob(|Z_n| \leq C) \notag \\
+			&\phantom{=}+  \prob\left(\left. \left|\frac{Y_n}{Z_n} - 1\right| \geq \frac{C}{|Z_n|} \epsilon \, \right| |Z_n| > C \right) \prob(|Z_n| > C)\\
+			&\leq \prob\left(\left|\frac{Y_n}{Z_n} - 1\right| \geq \epsilon \right) + \prob(|Z_n| > C).
+		\end{align}
+
+		Now if $|Y_n| \leq C/2$ and $|Y_n/Z_n - 1| \leq 1/2$, then $|Z_n| \leq C$. So
+		\begin{equation}
+			\prob(|Z_n| > C) \leq \prob(|Y_n| > C/2) + \prob\left(\left|\frac{Y_n}{Z_n} - 1\right| > \frac{1}{2}\right)
+		\end{equation}
+		and overall
+		\begin{equation}
+			\prob(|Y_n - Z_n| \geq C\epsilon) \leq \prob\left(\left|\frac{Y_n}{Z_n} - 1\right| \geq \epsilon \right) + \prob(|Y_n| > C/2) + \prob\left(\left|\frac{Y_n}{Z_n} - 1\right| > \frac{1}{2}\right)
+		\end{equation}
+		% \begin{align}
+		% 	\prob\left(\left|\frac{Y_n}{Z_n} - 1\right| \geq \epsilon_n\right)
+		% 	&= \prob\left(|Y_n - Z_n| \geq |Z_n| \epsilon_n \right)\\
+		% 	&= \prob\left(|Y_n - Z_n| \geq |Z_n| \epsilon_n \right | Z_n < C)\prob(Z_n < C) \notag \\
+		% 	&\phantom{=} +  \prob\left(|Y_n - Z_n| \geq |Z_n| \epsilon_n \right | Z_n \geq C)\prob(Z_n \geq C)\\
+		% 	&\leq \prob\left(|Y_n - Z_n| \geq C \epsilon_n \right | Z_n < C) + p_n\\
+		% 	&\leq \frac{1}{(1 - p_n)a_n \epsilon_n^2} + p_n
+		% \end{align}
+		which, from \eqref{eq:Z_n goes to zero} and \eqref{eq:Y_n/Z_n - 1 goes to 0}, goes to zero. Hence $Y_n$ and $Z_n$ converge in probability, and hence they converge in distribution as required.
+	\end{proof}
+
+	\begin{corollary}
+		$T$ and $T_\mathrm{DIS}$ have essentially the same limiting distribution (there's an extra $n$ somewhere).
+	\end{corollary}
+	\begin{proof}
+		Note that $T_\mathrm{DIS} \geq n$ since each vertex must be updated at least once for coupling to occur.
+		Also $T/(\ln n + z)$ has shrinking variance?
 	\end{proof}
 
 	\subsection{Summary of CFTP}
