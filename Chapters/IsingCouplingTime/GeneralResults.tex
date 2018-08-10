@@ -346,3 +346,19 @@ In \cite{Lubetzky2016-wd}, \citeauthor{Lubetzky2016-wd} proved something similar
 			\prob[\mathcal{H}_i(0) \nsubseteq B(i,l)] \leq \frac{\exp(z \Delta^2)}{n}
 	\end{equation}
 \end{corollary}
+
+\begin{lemma}
+	Blah
+\end{lemma}
+\begin{proof}
+	Write $\bar{\mathcal{H}}_i$ for the history at $i$ but it only has branching updates at rate 1. Write $d_j$ for the time of death of history $j$. Let $k = |i-j|$.
+	\begin{align}
+		\prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j) &= \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) \prob(d_j < c(k)) \notag \\
+		&\phantom{=}+ \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j \geq c(k)) \prob(d_j \geq c(k))\\
+		&\leq \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) + \prob(d_j \geq c(k))\\
+		&\leq \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) + \euler^{-(1 - \beta \Delta) c(k)}\\
+		&\leq 2\prob(\bar{\mathcal{H}}_i(t^* - c(k)) \nsubseteq B(i, k/2)) + \euler^{-(1 - \beta \Delta) c(k)}\\
+		&\leq \exp\left(c(k) \Delta^2 - k/2 \ln \Delta \right) + \euler^{-(1 - \beta \Delta) c(k)}\\
+	\end{align}
+	Choosing $c(k) = \ln(k)^2$ works so long as $\beta \Delta < 1$.
+\end{proof}
