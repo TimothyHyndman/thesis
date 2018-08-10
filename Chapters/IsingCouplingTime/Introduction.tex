@@ -177,7 +177,7 @@
 		\end{align}
 		where the last line comes from Chebyshev's inequality.
 
-		Then, for any $\epsilon > 0$,
+		Then, for any $\epsilon > 0$, and for some $C \in \mathbb{R}$,
 		\begin{align}
 			\prob\left(\left|Y_n - Z_n\right| \geq C \epsilon \right) &= \prob\left(\left|\frac{Y_n}{Z_n} - 1\right| \geq \frac{C}{|Z_n|} \epsilon \right)\\
 			&=  \prob\left(\left. \left|\frac{Y_n}{Z_n} - 1\right| \geq \frac{C}{|Z_n|} \epsilon \, \right| |Z_n| \leq C \right) \prob(|Z_n| \leq C) \notag \\
@@ -202,8 +202,15 @@
 		% \end{align}
 		which, from \eqref{eq:Y_n goes to zero} and \eqref{eq:Y_n/Z_n - 1 goes to 0}, goes to zero. Hence $Y_n$ and $Z_n$ converge in probability, and hence they converge in distribution as required.
 	\end{proof}
-	
+
+	Often the sequence $w_n$ of Claim \ref{claim:discrete vs continuous distributions} is of the form $w_n = w_n(z) = a_n z + b_n$ and we have that 
+	\begin{equation}
+		\lim_{n\rightarrow \infty} \prob(T_n \leq w_n(z)) = G(z)
+	\end{equation}
+	for some distribution $G(z)$. The following Lemma shows that if this is the case, in order for either \eqref{eq:Y_n goes to zero} or \eqref{eq:Z_n goes to zero} to hold, it is enough that $b_n$ dominates $a_n$.
+
 	\begin{lemma}
+	\label{lem: a_n/b_n goes to infty is enough}
 		If there exists sequences $a_n$ and $b_n$ such that $b_n/a_n \rightarrow \infty$ and
 		\begin{equation}
 			\prob\left(T_n < a_n z + b_n\right) \rightarrow G(z)
@@ -227,19 +234,15 @@
 		\begin{equation}
 			\lim_{n\rightarrow \infty} \left(\frac{T_n}{a_n z + b_n} \leq C\right) \geq G(x)
 		\end{equation}
-		and so 
+		and since $G(x)$ is a distribution
 		\begin{equation}
 			\lim_{n\rightarrow \infty} \left(\frac{T_n}{a_n z + b_n} \leq C \right) = 1
 		\end{equation}
 	\end{proof}
 
-	\begin{corollary}
-		$T$ and $T_\mathrm{DIS}$ have essentially the same limiting distribution (there's an extra $n$ somewhere).
-	\end{corollary}
-	\begin{proof}
-		Note that $T_\mathrm{DIS} \geq n$ since each vertex must be updated at least once for coupling to occur.
-		Also $T/(\ln n + z)$ has shrinking variance?
-	\end{proof}
+	\begin{remark}
+		We apply Claim \ref{claim:discrete vs continuous distributions} to the coupling time of the Glauber heat-bath dynamics in the following way. Take $N_n$ to be the discrete coupling time on a graph of size $n$. The continuous time coupling time is given by $T(N_n)$. Note that $N_n \geq n$ since each vertex must be updated at least once for coupling to occur. From Lemma \ref{lem: a_n/b_n goes to infty is enough} along with Theorems \ref{thm:Coupling Distribution on Cycle} and \ref{thm:Coupling Distribution on Lattice} we get that \eqref{eq:Y_n goes to zero} is satisfied. This means that, appropriately scaled, the discrete-time coupling time has the same limiting distribution as the continuous-time coupling time.
+	\end{remark}
 
 	\subsection{Summary of CFTP}
 	\label{sec:summary of CFTP}
