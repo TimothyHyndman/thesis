@@ -202,6 +202,36 @@
 		% \end{align}
 		which, from \eqref{eq:Y_n goes to zero} and \eqref{eq:Y_n/Z_n - 1 goes to 0}, goes to zero. Hence $Y_n$ and $Z_n$ converge in probability, and hence they converge in distribution as required.
 	\end{proof}
+	
+	\begin{lemma}
+		If there exists sequences $a_n$ and $b_n$ such that $b_n/a_n \rightarrow \infty$ and
+		\begin{equation}
+			\prob\left(T_n < a_n z + b_n\right) \rightarrow G(z)
+		\end{equation}
+		for some distribution function $G(z)$, then for all $C > 1$,
+		\begin{equation}
+			\lim_{n \rightarrow \infty} \prob\left(\frac{T_n}{a_n z + b_n} > C\right) = 0.
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		First observe that
+		\begin{align}
+			\prob\left(\frac{T_n}{a_n z + b_n} \leq C\right) &= \prob\left(T_n \leq C(a_n z + b_n)\right)\\
+			&= \prob\left(T_n \leq a_n(Cz + (C - 1) b_n/a_n) + b_n \right).
+		\end{align}
+		Since $b_n / a_n \rightarrow \infty$, and $C > 1$, for any $x\in \mathbb{R}$, there exists an $M \in \mathbb{N}$ such that for all $n > M$,
+		\begin{equation}
+			\prob\left(T_n \leq a_n(Cz + (C - 1) b_n/a_n) + b_n \right) \geq \prob\left(T_n \leq a_n x + b_n\right).
+		\end{equation}
+		Hence for all $x \in \mathbb{R}$,
+		\begin{equation}
+			\lim_{n\rightarrow \infty} \left(\frac{T_n}{a_n z + b_n} \leq C\right) \geq G(x)
+		\end{equation}
+		and so 
+		\begin{equation}
+			\lim_{n\rightarrow \infty} \left(\frac{T_n}{a_n z + b_n} \leq C \right) = 1
+		\end{equation}
+	\end{proof}
 
 	\begin{corollary}
 		$T$ and $T_\mathrm{DIS}$ have essentially the same limiting distribution (there's an extra $n$ somewhere).
