@@ -122,8 +122,8 @@
 \newtheorem{assumption}{}
 \renewcommand\theassumption{A\arabic{assumption}}
 
-\usepackage[centerlast,small,sc]{caption}
-\setlength{\captionmargin}{20pt}
+% \usepackage[centerlast,small,sc]{caption}
+% \setlength{\captionmargin}{20pt}
 
 \renewcommand{\topfraction}{0.85}
 \renewcommand{\bottomfraction}{.85}
@@ -143,11 +143,11 @@
 \usepackage{listings}
 \usepackage{lstpatch}
 
-\lstset{captionpos=b,
-        frame=tb,
-        basicstyle=\scriptsize\ttfamily,
-        showstringspaces=false,
-        keepspaces=true}
+% \lstset{captionpos=b,
+        % frame=tb,
+        % basicstyle=\scriptsize\ttfamily,
+        % showstringspaces=false,
+        % keepspaces=true}
 \usepackage[pdfpagemode={UseOutlines},bookmarks=true,bookmarksopen=true,
    bookmarksopenlevel=0,bookmarksnumbered=true,hypertexnames=false,
    colorlinks,linkcolor={blue},citecolor={blue},urlcolor={red},
