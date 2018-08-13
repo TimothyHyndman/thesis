@@ -1,0 +1,68 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\begin{document}
+\begin{tikzpicture}
+
+\def \n {12}
+\def \height {10}
+
+% Top and bottom nodes
+\foreach \s in {1,...,\n} {
+  \node (bottom\s) at ( \s , 0) [circle, draw] {};
+  \node (top\s) at (\s, \height) [circle, draw] {};
+}
+
+% Join nodes together
+\foreach \s in {2, ..., \n} {
+	\pgfmathparse{\s - 1}
+	\draw (bottom\pgfmathresult) -- (bottom\s);
+	\draw (top\pgfmathresult) -- (top\s);
+}
+
+%Nodes on edges
+\node (bottomleft) at (0, 0){};
+\node (bottomright) at (\n + 1, 0){};
+\node (topleft) at (0, \height){};
+\node (topright) at (\n + 1, \height){};
+\draw (bottomleft) -- (bottom1);
+\draw (bottomright) -- (bottom\n);
+\draw (topleft) -- (top1);
+\draw (topright) -- (top\n);
+
+
+%Updates
+\coordinate (H1_update01) at (3, 7.5);
+\coordinate (H1_update02) at (2, 6.9);
+\coordinate (H1_update03) at (4, 5);
+
+\coordinate (H2_update01) at (10, 9);
+\coordinate (H2_update02) at (11, 8);
+\coordinate (H2_update03) at (9, 7.2);
+\coordinate (H2_update04) at (10, 6);
+\coordinate (H2_update05) at (11, 5.4);
+\coordinate (H2_update06) at (8, 3);
+
+
+% Percolation
+\draw (top3) -- (H1_update01);
+\draw (H1_update02) -- ($(H1_update01) + (-1, 0)$) -- ($(H1_update01) + (1, 0)$) -- (H1_update03);
+
+\draw (top10) -- (H2_update01);
+\draw (H2_update02) -- ($(H2_update01) + (1, 0)$) -- ($(H2_update01) + (-1, 0)$) -- (H2_update03);
+\draw (H2_update04) -- ($(H2_update03) + (1, 0)$) -- ($(H2_update03) + (-1, 0)$) -- (H2_update06);
+\draw (H2_update05) -- ($(H2_update04) + (1, 0)$) -- ($(H2_update04) + (-1, 0)$) -- ($(H2_update06) + (1, 0)$);
+\draw (bottom9) -- ($(H2_update06) + (1, 0)$) -- ($(H2_update06) + (-1, 0)$) -- (bottom7);
+
+% Upper vertex labels
+\node at (3, \height + 0.5) [] {$i$};
+\node at (10, \height + 0.5) [] {$j$};
+
+
+% Time labels
+\node at (13,0) [] {\scriptsize$t_0$};
+\node at (13,\height) [] {\scriptsize$t_1$};
+
+\end{tikzpicture}
+\end{document}
