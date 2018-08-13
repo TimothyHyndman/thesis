@@ -343,26 +343,14 @@
 	
 	To give some intuition to the definitions above, consider how we might construct the update history of a vertex $i$ from some target time $t^*$. We have at our disposal the update sequence along $(0, t^*]$ which we place in order of decreasing time. If vertex $i$ does not appear in the update sequence then we create a temporal edge between $(i, t^*)$ and $(i, 0)$ and our update history is complete - vertex $i$ was never updated and so it simply takes its initial value. Otherwise, we create temporal edge between $(i, t^*)$ and $(i, t_i)$ where $t_i$ is the last time vertex $i$ was updated. At this point we note from \eqref{eq:plusorminusrules} that the spin that vertex $i$ takes due to this update depends on the spins of its neighbours. So we add spatial edges from $(i, t_i)$ to $(j, t_i)$ for each $j\sim i$. Finally, we can iterate this process for each neighbour until every history has reached time $0$.
 
-	In Figure \ref{fig:example percolation construction} we have followed this procedure to create the update history from a single vertex on the cycle. Note that on the cycle, the function defined in \eqref{eq:plusorminusrules} can be rewritten as
-	\begin{equation}
-		\sigma'[i] = 
-		\begin{cases}
-			1 & U \leq \theta/2,\\
-			\sigma[i-1] \vee \sigma[i+1] & \theta/2 < U \leq 1/2,\\
-			\sigma[i-1] \wedge \sigma[i+1] & 1/2 < U \leq 1 - \theta/2,\\
-			-1	& U > \theta/2.
-		\end{cases}
-	\end{equation}
-	We therefore represent each update $(\mathcal{V}, U, t)$ in the update sequence by placing at $(\mathcal{V}, t)$ one of the symbols $+$, $\vee$, $\wedge$, or $-$ choosen according to $U$. We then trace back from time $t^*$, branching to either side when we encounter a $\vee$ or $\wedge$, and terminating whenever we encounter a $+$ or $-$.
+	In Figure \ref{fig:example percolation construction} we have followed this procedure to show how we might create the update history from a single vertex on the cycle. This construction certainly contains every vertex that might influence the final spin at $i$, that is, it contains $\mathcal{H}_i$ as a subgraph. However, it is possible for updates to occur that do not depend on neighbouring spins. These updates cause temporal edges leading up to them to terminate without branching out to the neighbouring vertices. These type of updates are called \emph{oblivious updates}.
 
 	\begin{figure}
 		\centering
 		\includegraphics[width = 0.8\textwidth]{Figures/IsingCouplingTime/example_percolation_construction.pdf}
-		\caption[The update sequence for a section of the cycle and the corresponding update history from vertex i]{The update sequence for a section of the cycle and the corresponding update history from vertex $i$. For this particular update sequence, $i$ takes a final spin of $+1$ regardless of the initial configuration.}
+		\caption[A naive construction of the update history of i]{A naive construction of the update history of $i$. Each update $(\mathcal{V}, U, t)$ in the update sequence is represented by a $*$ at $(\mathcal{V}, t)$.}
 		\label{fig:example percolation construction}
 	\end{figure}
-
-	This construction certainly contains every vertex that might influence the final spin at $i$, that is, it contains $\mathcal{H}_i$ as a subgraph. However, it is possible for updates to occur that do not depend on neighbouring spins. These updates cause temporal edges leading up to them to terminate without branching out to the neighbouring vertices. These type of updates are called \emph{oblivious updates}.
 
 	\subsubsection{Oblivious updates}
 
@@ -389,9 +377,29 @@
 	\end{align}
 	If $G$ is a $\Delta$-regular graph (as will be the case in the following chapters) then we can drop the subscript and write $\theta = 1 - \tanh(\beta \Delta)$ for the rate of oblivious updates at each vertex.
 
-	As noted earlier, oblivious updates cause temporal edges leading up to them in the update history to terminate. If $j \in \mathcal{H}_i(t)$, then an oblivious update $(j, u, t)$ removes $j$ from $\mathcal{H}_i(t)$ without adding any of its neighbours. It is worth remarking that these are not necessarily the only updates that can shrink the size of the update history of $i$ (see for example Figure \ref{fig:nonoblivious shrink}). However, for our analysis they will be the only such updates we will be concerned with. Indeed, in Chapter \ref{Ch:1D} we will use a different coupling so that these are the only updates that shrink the size of the update history, and in Chapter \ref{Ch:GeneralResults} we will use an alternative construction that bounds the true update history, in which updates are either oblivious or branch out to all $\Delta$ neighbours.
+	As noted earlier, oblivious updates cause temporal edges leading up to them in the update history to terminate. If $j \in \mathcal{H}_i(t)$, then an oblivious update $(j, u, t)$ removes $j$ from $\mathcal{H}_i(t)$ without adding any of its neighbours. In Figure \ref{fig:example percolation construction oblivious} we construct an update history from a single vertex $i$ as in Figure \ref{fig:example percolation construction}, but this time terminate branches at oblivious updates. To help us represent the updates in our update sequence more precisely, note that on the cycle, the function defined in \eqref{eq:plusorminusrules} can be rewritten as
+	\begin{equation}
+		\sigma'[i] = 
+		\begin{cases}
+			1 & U \leq \theta/2,\\
+			\sigma[i-1] \vee \sigma[i+1] & \theta/2 < U \leq 1/2,\\
+			\sigma[i-1] \wedge \sigma[i+1] & 1/2 < U \leq 1 - \theta/2,\\
+			-1	& U > \theta/2.
+		\end{cases}
+	\end{equation}
+	We can therefore represent each update $(\mathcal{V}, U, t)$ in the update sequence by placing at $(\mathcal{V}, t)$ one of the symbols $+$, $\vee$, $\wedge$, or $-$ choosen according to $U$. We then trace back from time $t^*$, branching to either side when we encounter a $\vee$ or $\wedge$, and terminating whenever we encounter a $+$ or $-$.
 
-	\begin{figure}[t]
+	\begin{figure}
+		\centering
+		\includegraphics[width = 0.8\textwidth]{Figures/IsingCouplingTime/example_percolation_construction_oblivious.pdf}
+		\caption[The update sequence for a section of the cycle and the corresponding update history from vertex i]{The update sequence for a section of the cycle and the corresponding update history from vertex $i$. For this particular update sequence, $i$ takes a final spin of $+1$ regardless of the initial configuration.}
+		\label{fig:example percolation construction oblivious}
+	\end{figure}
+
+	
+	It is worth remarking that oblivious updates are not necessarily the only updates that can shrink the size of the update history of $i$ (see for example Figure \ref{fig:nonoblivious shrink}). However, for our analysis they will be the only such updates we will be concerned with. Indeed, in Chapter \ref{Ch:1D} we will use a different coupling so that these are the only updates that shrink the size of the update history, and in Chapter \ref{Ch:GeneralResults} we will use an alternative construction that bounds the true update history, in which updates are either oblivious or branch out to all $\Delta$ neighbours.
+
+	\begin{figure}
 		\centering
 		\includegraphics[width = 0.8\textwidth]{Figures/IsingCouplingTime/nonoblivious_shrink.pdf}
 		\caption[A non-oblivious update that shrinks the size of the update history]{A non-oblivious update that shrinks the size of the update history. On the right is written the final spin of $x_3$ as a function of the configuration at that time. The update $x_3 \mapsto x_2 \vee x_4$ causes the entire function to collapse to $x_4$, and so removes $x_1$ and $x_3$ from the update history.}
