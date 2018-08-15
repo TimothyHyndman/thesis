@@ -129,6 +129,8 @@
 			Z_n = \frac{N_n - \lambda b_n}{\lambda a_n}.
 		\end{equation}
 
+		Let $X$ be a random variable which doesn't place any mass at infinity.
+
 		Then $Y_n \convergedist X$ if and only if $Z_n \convergedist X$.
 
 
@@ -164,30 +166,37 @@
 			&= \left|\frac{T(N_n)}{a_n} - \frac{N_n}{\lambda a_n}\right|\\
 			&= \left|\frac{T(N_n) \lambda }{N_n} - 1\right|\frac{N_n}{\lambda a_n}.
 		\end{align}
-		So for any $\epsilon > 0, C > 1$
+		So for any $\epsilon > 0$
 		\begin{equation}
-			\prob(|Y_n - Z_n| > \epsilon) \leq \prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \epsilon\frac{a_n}{C b_n} \right) + \prob\left(\frac{N_n}{\lambda a_n} > \frac{C b_n}{a_n} \right).
+			\prob(|Y_n - Z_n| > \epsilon) \leq \prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right) + \prob\left(\frac{N_n}{\lambda a_n} > \frac{4 b_n}{a_n} \right).
 		\end{equation}
 		We will show that both of the terms on the right hand side vanish as $n \rightarrow \infty$. We start with the first of these.
 
 		Since $N_n \geq m_n$, 
 		\begin{align}
-			\prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \epsilon\frac{a_n}{C b_n} \right) &\leq \prob\left(\sup_{k \geq m_n}\left|\frac{T(k)\lambda}{k} - 1\right| > \epsilon\frac{a_n}{C b_n} \right)\\
+			\prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right) &\leq \prob\left(\sup_{k \geq m_n}\left|\frac{T(k)\lambda}{k} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right)\\
 			&= \prob\left(\bigcup_{k \geq m_n} \left\{ \left|\frac{T(k)\lambda}{k} - 1\right| > \epsilon\frac{a_n}{C b_n} \right\}\right)\\
-			&\leq \sum_{k = m_n}^\infty \prob\left(\left|\frac{T(k)\lambda}{k} - 1\right| > \epsilon\frac{a_n}{C b_n} \right).%\\
+			&\leq \sum_{k = m_n}^\infty \prob\left(\left|\frac{T(k)\lambda}{k} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right).%\\
 			% &\leq \sum_{k = m_n}^\infty
 		\end{align}
 
 		Note that $T(k)$ is the sum of $k$ i.i.d. exponential random variables with rate $\lambda$. blahblahblah...
 
-		Now
+		To bound the second term, we will treat the two directions of the proof separately. Firstly, assume that $Z_n \convergedist X$. Then
 		\begin{align}
-			\prob\left(\frac{N_n}{\lambda a_n} > \frac{C b_n}{a_n} \right) &= \prob\left(Z_n > (C - 1)\frac{b_n}{a_n} \right)
+			\prob\left(\frac{N_n}{\lambda a_n} > \frac{4 b_n}{a_n} \right) &= \prob\left(Z_n > 3\frac{b_n}{a_n} \right)
 		\end{align}
-		and since $b_n / a_n \rightarrow \infty$, $C > 1$, and $Z_n$ converges
+		and since $b_n / a_n \rightarrow \infty$, and $Z_n$ converges,
 		\begin{equation}
-			\lim_{n\rightarrow \infty} \prob\left(\frac{N_n}{\lambda a_n} > \frac{C b_n}{a_n} \right) = 0.
+			\lim_{n\rightarrow \infty} \prob\left(\frac{N_n}{\lambda a_n} > \frac{4 b_n}{a_n} \right) = 0.
 		\end{equation}
+		Otherwise, note that if $T(N_n)/a_n < \epsilon/2$ and $|T(N_n) \lambda / N_n - 1| < 1/2$, then $N_n / (\lambda a_n )< \epsilon$. So
+		\begin{align}
+			\prob\left(\frac{N_n}{\lambda a_n} > \frac{4 b_n}{a_n} \right) &\leq \prob\left(\frac{T(N_n)}{a_n} < \frac{2 b_n}{a_n}\right) + \prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \frac{1}{2}\right)\\
+			&= \prob\left(Y_n < \frac{b_n}{a_n}\right) + \prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \frac{1}{2}\right).
+		\end{align}
+		As above, since $a_n/b_n \rightarrow \infty$, and $Y_n$ converges, the first term vanishes in the limit, and the second obviously disappears.
+
 
 		
 	\end{proof}
@@ -197,37 +206,6 @@
 	% 	\lim_{n\rightarrow \infty} \prob(T_n \leq w_n(z)) = G(z)
 	% \end{equation}
 	% for some distribution $G(z)$. The following Lemma shows that if this is the case, in order for either \eqref{eq:Y_n goes to zero} or \eqref{eq:Z_n goes to zero} to hold, it is enough that $b_n$ dominates $a_n$.
-
-	\begin{lemma}
-	\label{lem: a_n/b_n goes to infty is enough}
-		If there exists sequences $a_n$ and $b_n$ such that $b_n/a_n \rightarrow \infty$ and
-		\begin{equation}
-			\prob\left(T_n < a_n z + b_n\right) \rightarrow G(z)
-		\end{equation}
-		for some distribution function $G(z)$, then for all $C > 1$,
-		\begin{equation}
-			\lim_{n \rightarrow \infty} \prob\left(\frac{T_n}{a_n z + b_n} > C\right) = 0.
-		\end{equation}
-	\end{lemma}
-	\begin{proof}
-		First observe that
-		\begin{align}
-			\prob\left(\frac{T_n}{a_n z + b_n} \leq C\right) &= \prob\left(T_n \leq C(a_n z + b_n)\right)\\
-			&= \prob\left(T_n \leq a_n(Cz + (C - 1) b_n/a_n) + b_n \right).
-		\end{align}
-		Since $b_n / a_n \rightarrow \infty$, and $C > 1$, for any $x\in \mathbb{R}$, there exists an $M \in \mathbb{N}$ such that for all $n > M$,
-		\begin{equation}
-			\prob\left(T_n \leq a_n(Cz + (C - 1) b_n/a_n) + b_n \right) \geq \prob\left(T_n \leq a_n x + b_n\right).
-		\end{equation}
-		Hence for all $x \in \mathbb{R}$,
-		\begin{equation}
-			\lim_{n\rightarrow \infty} \left(\frac{T_n}{a_n z + b_n} \leq C\right) \geq G(x)
-		\end{equation}
-		and since $G(x)$ is a distribution
-		\begin{equation}
-			\lim_{n\rightarrow \infty} \left(\frac{T_n}{a_n z + b_n} \leq C \right) = 1
-		\end{equation}
-	\end{proof}
 
 	% \begin{remark}
 	% 	We apply Claim \ref{claim:discrete vs continuous distributions} to the coupling time of the Glauber heat-bath dynamics in the following way. Take $N_n$ to be the discrete coupling time on a graph of size $n$. The continuous time coupling time is given by $T(N_n)$. Note that $N_n \geq n$ since each vertex must be updated at least once for coupling to occur. From Lemma \ref{lem: a_n/b_n goes to infty is enough} along with Theorems \ref{thm:Coupling Distribution on Cycle} and \ref{thm:Coupling Distribution on Lattice} we get that \eqref{eq:Y_n goes to zero} is satisfied. This means that, appropriately scaled, the discrete-time coupling time has the same limiting distribution as the continuous-time coupling time.
