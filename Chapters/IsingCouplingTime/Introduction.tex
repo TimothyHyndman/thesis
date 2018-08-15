@@ -118,96 +118,85 @@
 
 	\begin{claim}
 	\label{claim:discrete vs continuous distributions}
-		Let $(N_n)_{n \in \mathbb{N}}$ be a sequence of positive random variables, and $(a_n)_{n \in \mathbb{N}}$ be a non-decreasing sequence of integers such that $N_n \geq a_n$ for all $n$ and $\lim_{n \rightarrow \infty} a_n = \infty$.	Define $T(n)$ be the random time it takes for a rate $\lambda$ Poisson clock to go off $n$ times (this is the time it takes for $n$ updates to occur in a continuous-time Markov Chain).
+		Let $(N_n)_{n \in \mathbb{N}}$ be a sequence of positive random integers, and $(m_n)_{n \in \mathbb{N}}$ be a non-decreasing sequence of integers such that $N_n \geq m_n$ for all $n$ and $\lim_{n \rightarrow \infty} m_n = \infty$.	Define $T(n)$ be the random time it takes for a rate $\lambda$ Poisson clock to go off $n$ times (this is the time it takes for $n$ updates to occur in a continuous-time Markov Chain).
 
-		Assume there exists a deterministic sequence $w_n$ and constant $C$ such that either
+		Let $a_n$ and $b_n$ be positive deterministic sequences such that $b_n / a_n \rightarrow \infty$ and define
 		\begin{equation}
-			\lim_{n\rightarrow \infty} \prob\left[\left|\frac{T(N_n)}{w_n}\right| > C\right]  = 0,
-			\label{eq:Y_n goes to zero}
+			Y_n = \frac{T(N_n) - b_n}{a_n}
 		\end{equation}
-		or 
+		and 
 		\begin{equation}
-			\lim_{n\rightarrow \infty} \prob\left[\left|\frac{N_n}{\lambda w_n}\right| > C\right]  = 0.
-			\label{eq:Z_n goes to zero}
+			Z_n = \frac{N_n - \lambda b_n}{\lambda a_n}.
 		\end{equation}
-		Then
-		\begin{equation}
-			\lim_{n \rightarrow \infty} \prob(T(N_n) < w_n) = L
-			\label{eq:limit CT is L}
-		\end{equation}	
-		if and only if
-		\begin{equation}
-			\lim_{n \rightarrow \infty} \prob(N_n < \lambda w_n) = L.
-			\label{eq:limit DT is L}
-		\end{equation}
+
+		Then $Y_n \convergedist X$ if and only if $Z_n \convergedist X$.
+
+
+		% constant $C$ such that either
+		% \begin{equation}
+		% 	\lim_{n\rightarrow \infty} \prob\left[\left|\frac{T(N_n)}{w_n}\right| > C\right]  = 0,
+		% 	\label{eq:Y_n goes to zero}
+		% \end{equation}
+		% or 
+		% \begin{equation}
+		% 	\lim_{n\rightarrow \infty} \prob\left[\left|\frac{N_n}{\lambda w_n}\right| > C\right]  = 0.
+		% 	\label{eq:Z_n goes to zero}
+		% \end{equation}
+		% Then
+		% \begin{equation}
+		% 	\lim_{n \rightarrow \infty} \prob(T(N_n) < w_n) = L
+		% 	\label{eq:limit CT is L}
+		% \end{equation}	
+		% if and only if
+		% \begin{equation}
+		% 	\lim_{n \rightarrow \infty} \prob(N_n < \lambda w_n) = L.
+		% 	\label{eq:limit DT is L}
+		% \end{equation}
 	\end{claim}
 	\begin{proof}
-		By the triangle inequality,
+		In order to prove either direction, it is sufficient to show that for any $\epsilon > 0$,
+		\begin{equation}
+			\lim_{n\rightarrow \infty} \prob(|Y_n - Z_n| > \epsilon) = 0.
+		\end{equation}
+		First note that
 		\begin{align}
-			|\prob(N_n < \lambda w_n) - L| &\leq \left|\prob(N_n < \lambda w_n) - \prob\left(T(N_n) < w_n\right)\right| + \\
-				&\phantom{\leq \,} \left|\prob\left(T(N_n) < w_n\right) - L\right| \notag
+			|Y_n - Z_n| &= \left|\frac{T(N_n) - b_n}{a_n} - \frac{N_n - \lambda b_n}{\lambda a_n}\right|\\
+			&= \left|\frac{T(N_n)}{a_n} - \frac{N_n}{\lambda a_n}\right|\\
+			&= \left|\frac{T(N_n) \lambda }{N_n} - 1\right|\frac{N_n}{\lambda a_n}.
 		\end{align}
-		and also
+		So for any $\epsilon > 0, C > 1$
+		\begin{equation}
+			\prob(|Y_n - Z_n| > \epsilon) \leq \prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \epsilon\frac{a_n}{C b_n} \right) + \prob\left(\frac{N_n}{\lambda a_n} > \frac{C b_n}{a_n} \right).
+		\end{equation}
+		We will show that both of the terms on the right hand side vanish as $n \rightarrow \infty$. We start with the first of these.
+
+		Since $N_n \geq m_n$, 
 		\begin{align}
-			\left|\prob\left(T(N_n) < w_n\right) - L\right| &\leq \left|\prob(N_n < \lambda w_n) - \prob\left(T(N_n) < w_n\right)\right| + \\
-				&\phantom{\leq \,}|\prob(N_n < \lambda w_n) - L|.  \notag
+			\prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \epsilon\frac{a_n}{C b_n} \right) &\leq \prob\left(\sup_{k \geq m_n}\left|\frac{T(k)\lambda}{k} - 1\right| > \epsilon\frac{a_n}{C b_n} \right)\\
+			&= \prob\left(\bigcup_{k \geq m_n} \left\{ \left|\frac{T(k)\lambda}{k} - 1\right| > \epsilon\frac{a_n}{C b_n} \right\}\right)\\
+			&\leq \sum_{k = m_n}^\infty \prob\left(\left|\frac{T(k)\lambda}{k} - 1\right| > \epsilon\frac{a_n}{C b_n} \right).%\\
+			% &\leq \sum_{k = m_n}^\infty
 		\end{align}
 
-		From \eqref{eq:limit CT is L} and \eqref{eq:limit DT is L}, the latter terms in each of the above inequalities vanish in the limit. Therefore, the key to both directions of the proof is to show that
-		\begin{equation}
-			\left|\prob(N_n < \lambda w_n) - \prob\left(T(N_n) < w_n\right)\right| = \left|\prob\left(Z_n < 1\right) - \prob\left(Y_n < 1\right)\right|
-		\end{equation}
-		vanishes as $n \rightarrow \infty$. (We have introduced $Y_n = T(N_n)/w_n$ and $Z_n = N_n/(\lambda w_n)$ for ease of notation). To do this it will be sufficient to show that the limiting distributions of $Y_n$ and $Z_n$ are equal.
+		Note that $T(k)$ is the sum of $k$ i.i.d. exponential random variables with rate $\lambda$. blahblahblah...
 
-		Note that $T(n)$ is the sum of $n$ i.i.d. exponential random variables with rate $\lambda$. It follows at once that
+		Now
 		\begin{align}
-			\expect\left[T(n)\right] &= \frac{n}{\lambda},
-			&\var\left[T(n)\right] &= \frac{n}{\lambda^2}.
+			\prob\left(\frac{N_n}{\lambda a_n} > \frac{C b_n}{a_n} \right) &= \prob\left(Z_n > (C - 1)\frac{b_n}{a_n} \right)
 		\end{align}
-		Hence
-		\begin{align}
-			\expect\left[\frac{\lambda T(n)}{n}\right] &= 1,
-			&\var\left[\frac{\lambda T(n)}{n}\right] &= \frac{1}{n}.
-		\end{align}
-		Now since $N_n \geq a_n$, for any $\epsilon > 0$,
-		\begin{align}
-			\prob\left(\left|\frac{\lambda T(N_n)}{N_n} - 1\right| \geq \epsilon\right) &\leq \prob\left(\left|\frac{\lambda T(a_n)}{a_n} - 1\right| \geq \epsilon\right).\\
-			&\leq \frac{1}{a_n \epsilon^2}
-			\label{eq:Y_n/Z_n - 1 goes to 0}
-		\end{align}
-		where the last line comes from Chebyshev's inequality.
+		and since $b_n / a_n \rightarrow \infty$, $C > 1$, and $Z_n$ converges
+		\begin{equation}
+			\lim_{n\rightarrow \infty} \prob\left(\frac{N_n}{\lambda a_n} > \frac{C b_n}{a_n} \right) = 0.
+		\end{equation}
 
-		Then, for any $\epsilon > 0$, and for some $C \in \mathbb{R}$,
-		\begin{align}
-			\prob\left(\left|Y_n - Z_n\right| \geq C \epsilon \right) &= \prob\left(\left|\frac{Y_n}{Z_n} - 1\right| \geq \frac{C}{|Z_n|} \epsilon \right)\\
-			&=  \prob\left(\left. \left|\frac{Y_n}{Z_n} - 1\right| \geq \frac{C}{|Z_n|} \epsilon \, \right| |Z_n| \leq C \right) \prob(|Z_n| \leq C) \notag \\
-			&\phantom{=}+  \prob\left(\left. \left|\frac{Y_n}{Z_n} - 1\right| \geq \frac{C}{|Z_n|} \epsilon \, \right| |Z_n| > C \right) \prob(|Z_n| > C)\\
-			&\leq \prob\left(\left|\frac{Y_n}{Z_n} - 1\right| \geq \epsilon \right) + \prob(|Z_n| > C).
-		\end{align}
-		If \eqref{eq:Z_n goes to zero} holds then we are done. Otherwise, note that if $|Y_n| \leq C/2$ and $|Y_n/Z_n - 1| \leq 1/2$, then $|Z_n| \leq C$. So
-		\begin{equation}
-			\prob(|Z_n| > C) \leq \prob(|Y_n| > C/2) + \prob\left(\left|\frac{Y_n}{Z_n} - 1\right| > \frac{1}{2}\right)
-		\end{equation}
-		and overall
-		\begin{equation}
-			\prob(|Y_n - Z_n| \geq C\epsilon) \leq \prob\left(\left|\frac{Y_n}{Z_n} - 1\right| \geq \epsilon \right) + \prob(|Y_n| > C/2) + \prob\left(\left|\frac{Y_n}{Z_n} - 1\right| > \frac{1}{2}\right)
-		\end{equation}
-		% \begin{align}
-		% 	\prob\left(\left|\frac{Y_n}{Z_n} - 1\right| \geq \epsilon_n\right)
-		% 	&= \prob\left(|Y_n - Z_n| \geq |Z_n| \epsilon_n \right)\\
-		% 	&= \prob\left(|Y_n - Z_n| \geq |Z_n| \epsilon_n \right | Z_n < C)\prob(Z_n < C) \notag \\
-		% 	&\phantom{=} +  \prob\left(|Y_n - Z_n| \geq |Z_n| \epsilon_n \right | Z_n \geq C)\prob(Z_n \geq C)\\
-		% 	&\leq \prob\left(|Y_n - Z_n| \geq C \epsilon_n \right | Z_n < C) + p_n\\
-		% 	&\leq \frac{1}{(1 - p_n)a_n \epsilon_n^2} + p_n
-		% \end{align}
-		which, from \eqref{eq:Y_n goes to zero} and \eqref{eq:Y_n/Z_n - 1 goes to 0}, goes to zero. Hence $Y_n$ and $Z_n$ converge in probability, and hence they converge in distribution as required.
+		
 	\end{proof}
 
-	Often the sequence $w_n$ of Claim \ref{claim:discrete vs continuous distributions} is of the form $w_n = w_n(z) = a_n z + b_n$ and we have that 
-	\begin{equation}
-		\lim_{n\rightarrow \infty} \prob(T_n \leq w_n(z)) = G(z)
-	\end{equation}
-	for some distribution $G(z)$. The following Lemma shows that if this is the case, in order for either \eqref{eq:Y_n goes to zero} or \eqref{eq:Z_n goes to zero} to hold, it is enough that $b_n$ dominates $a_n$.
+	% Often the sequence $w_n$ of Claim \ref{claim:discrete vs continuous distributions} is of the form $w_n = w_n(z) = a_n z + b_n$ and we have that 
+	% \begin{equation}
+	% 	\lim_{n\rightarrow \infty} \prob(T_n \leq w_n(z)) = G(z)
+	% \end{equation}
+	% for some distribution $G(z)$. The following Lemma shows that if this is the case, in order for either \eqref{eq:Y_n goes to zero} or \eqref{eq:Z_n goes to zero} to hold, it is enough that $b_n$ dominates $a_n$.
 
 	\begin{lemma}
 	\label{lem: a_n/b_n goes to infty is enough}
@@ -240,9 +229,9 @@
 		\end{equation}
 	\end{proof}
 
-	\begin{remark}
-		We apply Claim \ref{claim:discrete vs continuous distributions} to the coupling time of the Glauber heat-bath dynamics in the following way. Take $N_n$ to be the discrete coupling time on a graph of size $n$. The continuous time coupling time is given by $T(N_n)$. Note that $N_n \geq n$ since each vertex must be updated at least once for coupling to occur. From Lemma \ref{lem: a_n/b_n goes to infty is enough} along with Theorems \ref{thm:Coupling Distribution on Cycle} and \ref{thm:Coupling Distribution on Lattice} we get that \eqref{eq:Y_n goes to zero} is satisfied. This means that, appropriately scaled, the discrete-time coupling time has the same limiting distribution as the continuous-time coupling time.
-	\end{remark}
+	% \begin{remark}
+	% 	We apply Claim \ref{claim:discrete vs continuous distributions} to the coupling time of the Glauber heat-bath dynamics in the following way. Take $N_n$ to be the discrete coupling time on a graph of size $n$. The continuous time coupling time is given by $T(N_n)$. Note that $N_n \geq n$ since each vertex must be updated at least once for coupling to occur. From Lemma \ref{lem: a_n/b_n goes to infty is enough} along with Theorems \ref{thm:Coupling Distribution on Cycle} and \ref{thm:Coupling Distribution on Lattice} we get that \eqref{eq:Y_n goes to zero} is satisfied. This means that, appropriately scaled, the discrete-time coupling time has the same limiting distribution as the continuous-time coupling time.
+	% \end{remark}
 
 	\subsection{Summary of CFTP}
 	\label{sec:summary of CFTP}
