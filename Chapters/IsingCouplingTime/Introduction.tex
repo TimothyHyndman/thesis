@@ -114,24 +114,24 @@
 	This is the main object of interest for our analysis. Note that the coupling time is not just a property of the Ising heat-bath process, but also of the coupling we have chosen. In Section \ref{sec:information percolation on the cycle} we will make a change to the coupling we use to make the analysis easier. Some care will need to be taken to verify that the coupling time is not affected by this change.
 
 	\subsection{Equivalence of Discrete and Continuous Coupling Time}
-	So far we have stated that the running time of CFTP has the same distribution as the coupling time. In fact, we have glossed over one important detail. Namely, CFTP is exclusively run in discrete time, and our coupling time is defined by the continuous time dynamics. Therefore, for our motivation to be reasonable, we would like to show some sort of equivalence between the distributions of the discrete and continuous coupling times. We do this via Claim \ref{claim:discrete vs continuous distributions}.
+	So far we have stated that the running time of CFTP has the same distribution as the coupling time. In fact, we have glossed over one important detail. Namely, CFTP is exclusively run in discrete time, and our coupling time is defined by the continuous time dynamics. Therefore, for our motivation to be reasonable, we would like to show some sort of equivalence between the distributions of the discrete and continuous coupling times. We do this via Claim \ref{claim:discrete vs continuous distributions} which first requires the following Lemma.
 
 	\begin{lemma}
 		\label{lem:T(k) bound}
 		Let $T(k)$ be the sum of $k$ i.i.d. rate $\lambda$ exponentials. For all $0 < \epsilon < 1$,
 		\begin{equation}
-			\prob\left(\left|\frac{T(k) \lambda}{k} - 1\right| \geq \epsilon \right) \leq 2 \exp\left(k (\log(1 + \epsilon) - \epsilon )\right)
+			\prob\left(\left|\frac{T(k) \lambda}{k} - 1\right| \geq \epsilon \right) \leq 2 \exp\left(-k \epsilon^2 /4\right)
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
 		\begin{align}
 			\prob\left(\left|\frac{T(k) \lambda}{k} - 1\right| \geq \epsilon \right) &= \prob\left(\frac{T(k) \lambda}{k} \leq 1 - \epsilon \right) + \prob\left(\frac{T(k) \lambda}{k} \geq 1 + \epsilon \right)
 		\end{align}
-		Now, the MGF of $T(k)$ is 
-		\begin{equation}
-			M_k(t) = \left(\frac{\lambda}{\lambda - t}\right)^k,
-		\end{equation}
-		for $t < \lambda$. Using a Chernoff bound, for all $0 <t < \lambda$,
+		Since $T(k)$ is the sum of $k$ i.i.d. rate $\lambda$ exponentials, its moment generating function is 
+		\begin{align}
+			M_k(t) &= \left(\frac{\lambda}{\lambda - t}\right)^k, &t < \lambda.
+		\end{align}
+		Using a Chernoff bound, for all $0 <t < \lambda$,
 		\begin{align}
 			\prob\left(\frac{T(k) \lambda}{k} \geq 1  + \epsilon\right) &= \prob\left(T(k) \geq \frac{k}{\lambda}(1  + \epsilon)\right)\\
 			&\leq \left(\frac{\lambda}{\lambda - t}\right)^k \exp\left(-\frac{t k}{\lambda}(1  + \epsilon)\right)\\
@@ -154,15 +154,22 @@
 		Overall,
 		\begin{align}
 			\prob\left(\left|\frac{T(k) \lambda}{k} - 1\right| \geq \epsilon \right) &\leq \exp\left(k(\log(1 - \epsilon) + \epsilon)\right) + \exp\left(k(\log(1 + \epsilon) - \epsilon)\right)\\
-			&\leq 2 \exp\left(k (\log(1 + \epsilon) - \epsilon )\right)
+			&\leq 2 \exp\left(k (\log(1 + \epsilon) - \epsilon )\right)\\
+			&\leq 2 \exp\left(-k \epsilon^2 /4\right)
 		\end{align}
+		for $0 < \epsilon < 1$.
 	\end{proof}
 
 	\begin{claim}
 	\label{claim:discrete vs continuous distributions}
 		Let $(N_n)_{n \in \mathbb{N}}$ be a sequence of positive random integers, and $(m_n)_{n \in \mathbb{N}}$ be a non-decreasing sequence of integers such that $N_n \geq m_n$ for all $n$ and $\lim_{n \rightarrow \infty} m_n = \infty$.	Define $T(n)$ be the random time it takes for a rate $\lambda$ Poisson clock to go off $n$ times (this is the time it takes for $n$ updates to occur in a continuous-time Markov Chain).
 
-		Let $a_n$ and $b_n$ be positive deterministic sequences such that $b_n / a_n \rightarrow \infty$ and define
+		Let $a_n$ and $b_n$ be positive deterministic sequences such that $b_n / a_n \rightarrow \infty$ and 
+		\begin{equation}
+			m_n \frac{a_n^2}{64 b_n^2} - \log\frac{b_n^2}{a_n^2} \rightarrow \infty.
+			\label{eq:m_n a_n b_n constraint}
+		\end{equation}
+		Define
 		\begin{equation}
 			Y_n = \frac{T(N_n) - b_n}{a_n}
 		\end{equation}
@@ -171,9 +178,7 @@
 			Z_n = \frac{N_n - \lambda b_n}{\lambda a_n}.
 		\end{equation}
 
-		Let $X$ be a random variable which doesn't place any mass at infinity.
-
-		Then $Y_n \convergedist X$ if and only if $Z_n \convergedist X$.
+		Let $X$ be a random variable which doesn't place any mass at infinity. Then $Y_n \convergedist X$ if and only if $Z_n \convergedist X$.
 
 
 		% constant $C$ such that either
@@ -224,16 +229,17 @@
 
 		From Lemma \ref{lem:T(k) bound},
 		\begin{align}
-			\sum_{k = m_n}^\infty \prob\left(\left|\frac{T(k)\lambda}{k} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right) &\leq 2 \sum_{k = m_n}^\infty \exp\left(k \left(\log\left(1 + \epsilon\frac{a_n}{4 b_n}\right) - \epsilon \frac{a_n}{4 b_n}\right)\right)\\
-			&= 2 \frac{\exp\left(m_n \left(\log\left(1 + \epsilon\frac{a_n}{4 b_n}\right) - \epsilon \frac{a_n}{4 b_n}\right)\right)}{1 - \exp\left(\log\left(1 + \epsilon\frac{a_n}{4 b_n}\right) - \epsilon \frac{a_n}{4 b_n} \right)}\\
-			&= 2 \frac{\exp\left(m_n \left(\log\left(1 + \epsilon\frac{a_n}{4 b_n}\right) - \epsilon \frac{a_n}{4 b_n}\right)\right)}{1 - \left(1 + \epsilon\frac{a_n}{4 b_n}\right)\exp\left(-\epsilon \frac{a_n}{4 b_n} \right)}
+			\sum_{k = m_n}^\infty \prob\left(\left|\frac{T(k)\lambda}{k} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right) &\leq 2 \sum_{k = m_n}^\infty \exp\left(-k\frac{a_n^2}{64b_n^2}\right)\\
+			&= 2 \frac{\exp\left(-a_n^2 (m_n-1) /\left(64b_n^2\right)\right)}{\exp\left(a_n^2/\left(64b_n^2\right)\right) - 1}.
 		\end{align}
+		Since $a_n/b_n \rightarrow 0$, for large enough $n$ we have $a_n < b_n$. We can then use that $x \leq \exp(x) - 1$ for $0 \leq x \leq 1$ to show that
+		\begin{align}
+		2 \frac{\exp\left(-a_n^2 (m_n-1) /\left(64b_n^2\right)\right)}{\exp\left(a_n^2/\left(64b_n^2\right)\right) - 1} &\leq \frac{128 b_n^2}{a_n^2} \exp\left(-a_n^2 (m_n-1) /\left(64b_n^2\right)\right)\\
+		&\leq 256 \frac{b_n^2}{a_n^2} \exp\left(-m_n a_n^2/\left(64b_n^2\right)\right)
+		\end{align}
+		where we have again used that for large enough $n$, $a_n < b_n$. By \eqref{eq:m_n a_n b_n constraint}, this goes to zero as $n \rightarrow \infty$.
 
-
-
-		[FINISH]
-
-		To bound the second term, we will treat the two directions of the proof separately. Firstly, assume that $Z_n \convergedist X$. Then
+		To bound the second term, we will treat the two directions of the proof separately. Firstly, assume that $Z_n \convergedist X$. Then note that
 		\begin{align}
 			\prob\left(\frac{N_n}{\lambda a_n} > \frac{4 b_n}{a_n} \right) &= \prob\left(Z_n > 3\frac{b_n}{a_n} \right)
 		\end{align}
@@ -246,7 +252,11 @@
 			\prob\left(\frac{N_n}{\lambda a_n} > \frac{4 b_n}{a_n} \right) &\leq \prob\left(\frac{T(N_n)}{a_n} < \frac{2 b_n}{a_n}\right) + \prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \frac{1}{2}\right)\\
 			&= \prob\left(Y_n < \frac{b_n}{a_n}\right) + \prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \frac{1}{2}\right).
 		\end{align}
-		As above, since $a_n/b_n \rightarrow \infty$, and $Y_n$ converges, the first term vanishes in the limit, and the second obviously disappears.
+		As above, since $a_n/b_n \rightarrow \infty$, and $Y_n$ converges, the first term vanishes in the limit, and the second disappears since 
+		\begin{equation}
+			\prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \frac{1}{2}\right) \leq \prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right)
+		\end{equation}
+		for large enough $n$.
 
 
 		
@@ -258,9 +268,13 @@
 	% \end{equation}
 	% for some distribution $G(z)$. The following Lemma shows that if this is the case, in order for either \eqref{eq:Y_n goes to zero} or \eqref{eq:Z_n goes to zero} to hold, it is enough that $b_n$ dominates $a_n$.
 
-	% \begin{remark}
-	% 	We apply Claim \ref{claim:discrete vs continuous distributions} to the coupling time of the Glauber heat-bath dynamics in the following way. Take $N_n$ to be the discrete coupling time on a graph of size $n$. The continuous time coupling time is given by $T(N_n)$. Note that $N_n \geq n$ since each vertex must be updated at least once for coupling to occur. From Lemma \ref{lem: a_n/b_n goes to infty is enough} along with Theorems \ref{thm:Coupling Distribution on Cycle} and \ref{thm:Coupling Distribution on Lattice} we get that \eqref{eq:Y_n goes to zero} is satisfied. This means that, appropriately scaled, the discrete-time coupling time has the same limiting distribution as the continuous-time coupling time.
-	% \end{remark}
+	\begin{remark}
+		We apply Claim \ref{claim:discrete vs continuous distributions} to the coupling time of the Glauber heat-bath dynamics in the following way. Take $N_n$ to be the discrete coupling time on a graph of size $n$. The continuous time coupling time is given by $T(N_n)$. Note that $N_n \geq m_n = n$ since each vertex must be updated at least once for coupling to occur. Finally Theorems \ref{thm:Coupling Distribution on Cycle} and \ref{thm:Coupling Distribution on Lattice} establish the limiting distribution of the continuous-time coupling time using scaling and shifting sequences $a_n$ and $b_n$ whos ratio is 
+		\begin{equation}
+			\frac{b_n}{a_n} = \log n
+		\end{equation}
+		and thus \eqref{eq:m_n a_n b_n constraint} is satisfied. This means that, appropriately scaled, the discrete-time coupling time has the same limiting distribution as the continuous-time coupling time.
+	\end{remark}
 
 	\subsection{Summary of CFTP}
 	\label{sec:summary of CFTP}
@@ -328,7 +342,7 @@
 	\begin{figure}
 		\centering
 		\includegraphics[width = 0.8\textwidth]{Figures/IsingCouplingTime/typical_percolation.pdf}
-		\caption{A section of the space-time slab $V \times [0, t^*]$ along with a typical appearance of the update histories for two vertices on the cycle. Time runs vertically from bottom to top, and the vertices are represented by circles, laid out horizontally. If there is a path in the update history of $v$ between points $(u, t)$ and $(v, t^*)$, then the spin of $v$ at time $t^*$ depends on the spin of $u$ at time $t$. In this example, since there is no path from vertex $(i, t^*)$ to time $0$, the final spin at $i$ does not depend on the initial configuration whereas the final spin at $j$ does.}
+		\caption[Typical appearance of the update histories for two vertices on the cycle]{A section of the space-time slab $V \times [0, t^*]$ along with a typical appearance of the update histories for two vertices on the cycle. Time runs vertically from bottom to top, and the vertices are represented by circles, laid out horizontally. If there is a path in the update history of $v$ between points $(u, t)$ and $(v, t^*)$, then the spin of $v$ at time $t^*$ depends on the spin of $u$ at time $t$. In this example, since there is no path from vertex $(i, t^*)$ to time $0$, the final spin at $i$ does not depend on the initial configuration whereas the final spin at $j$ does.}
 		\label{fig:typical percolation}
 	\end{figure}
 
