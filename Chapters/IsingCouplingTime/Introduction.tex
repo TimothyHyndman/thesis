@@ -116,6 +116,48 @@
 	\subsection{Equivalence of Discrete and Continuous Coupling Time}
 	So far we have stated that the running time of CFTP has the same distribution as the coupling time. In fact, we have glossed over one important detail. Namely, CFTP is exclusively run in discrete time, and our coupling time is defined by the continuous time dynamics. Therefore, for our motivation to be reasonable, we would like to show some sort of equivalence between the distributions of the discrete and continuous coupling times. We do this via Claim \ref{claim:discrete vs continuous distributions}.
 
+	\begin{lemma}
+		\label{lem:T(k) bound}
+		Let $T(k)$ be the sum of $k$ i.i.d. rate $\lambda$ exponentials. For all $0 < \epsilon < 1$,
+		\begin{equation}
+			\prob\left(\left|\frac{T(k) \lambda}{k} - 1\right| \geq \epsilon \right) \leq 2 \exp\left(k (\log(1 + \epsilon) - \epsilon )\right)
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		\begin{align}
+			\prob\left(\left|\frac{T(k) \lambda}{k} - 1\right| \geq \epsilon \right) &= \prob\left(\frac{T(k) \lambda}{k} \leq 1 - \epsilon \right) + \prob\left(\frac{T(k) \lambda}{k} \geq 1 + \epsilon \right)
+		\end{align}
+		Now, the MGF of $T(k)$ is 
+		\begin{equation}
+			M_k(t) = \left(\frac{\lambda}{\lambda - t}\right)^k,
+		\end{equation}
+		for $t < \lambda$. Using a Chernoff bound, for all $0 <t < \lambda$,
+		\begin{align}
+			\prob\left(\frac{T(k) \lambda}{k} \geq 1  + \epsilon\right) &= \prob\left(T(k) \geq \frac{k}{\lambda}(1  + \epsilon)\right)\\
+			&\leq \left(\frac{\lambda}{\lambda - t}\right)^k \exp\left(-\frac{t k}{\lambda}(1  + \epsilon)\right)\\
+			&= \exp\left(k\left(\ln(\lambda/(\lambda - t)) - t(1 + \epsilon)/\lambda\right)\right).
+		\end{align}
+		Taking $t = \lambda - \lambda/(1+\epsilon)$,
+		\begin{align}
+			\prob\left(\frac{T(k) \lambda}{k} \geq 1  + \epsilon\right) &\leq \exp\left(k(\log(1 + \epsilon) - \epsilon)\right).
+		\end{align}
+		Similarly, for all $t < 0$,
+		\begin{align}
+			\prob\left(\frac{T(k) \lambda}{k} \leq 1 - \epsilon \right) &= \prob\left(T(k) \leq \frac{k}{\lambda}(1  - \epsilon)\right)\\
+			&\leq \left(\frac{\lambda}{\lambda - t}\right)^k \exp\left(-\frac{t k}{\lambda}(1  - \epsilon)\right)\\
+			&= \exp\left(k\left(\ln(\lambda/(\lambda - t)) - t(1 - \epsilon)/\lambda\right)\right).
+		\end{align}
+		Taking $t = \lambda - \lambda/(1-\epsilon)$,
+		\begin{align}
+			\prob\left(\frac{T(k) \lambda}{k} \leq 1  - \epsilon\right) &\leq \exp\left(k(\log(1 - \epsilon) + \epsilon)\right).
+		\end{align}
+		Overall,
+		\begin{align}
+			\prob\left(\left|\frac{T(k) \lambda}{k} - 1\right| \geq \epsilon \right) &\leq \exp\left(k(\log(1 - \epsilon) + \epsilon)\right) + \exp\left(k(\log(1 + \epsilon) - \epsilon)\right)\\
+			&\leq 2 \exp\left(k (\log(1 + \epsilon) - \epsilon )\right)
+		\end{align}
+	\end{proof}
+
 	\begin{claim}
 	\label{claim:discrete vs continuous distributions}
 		Let $(N_n)_{n \in \mathbb{N}}$ be a sequence of positive random integers, and $(m_n)_{n \in \mathbb{N}}$ be a non-decreasing sequence of integers such that $N_n \geq m_n$ for all $n$ and $\lim_{n \rightarrow \infty} m_n = \infty$.	Define $T(n)$ be the random time it takes for a rate $\lambda$ Poisson clock to go off $n$ times (this is the time it takes for $n$ updates to occur in a continuous-time Markov Chain).
@@ -180,7 +222,16 @@
 			% &\leq \sum_{k = m_n}^\infty
 		\end{align}
 
-		Note that $T(k)$ is the sum of $k$ i.i.d. exponential random variables with rate $\lambda$. blahblahblah...
+		From Lemma \ref{lem:T(k) bound},
+		\begin{align}
+			\sum_{k = m_n}^\infty \prob\left(\left|\frac{T(k)\lambda}{k} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right) &\leq 2 \sum_{k = m_n}^\infty \exp\left(k \left(\log\left(1 + \epsilon\frac{a_n}{4 b_n}\right) - \epsilon \frac{a_n}{4 b_n}\right)\right)\\
+			&= 2 \frac{\exp\left(m_n \left(\log\left(1 + \epsilon\frac{a_n}{4 b_n}\right) - \epsilon \frac{a_n}{4 b_n}\right)\right)}{1 - \exp\left(\log\left(1 + \epsilon\frac{a_n}{4 b_n}\right) - \epsilon \frac{a_n}{4 b_n} \right)}\\
+			&= 2 \frac{\exp\left(m_n \left(\log\left(1 + \epsilon\frac{a_n}{4 b_n}\right) - \epsilon \frac{a_n}{4 b_n}\right)\right)}{1 - \left(1 + \epsilon\frac{a_n}{4 b_n}\right)\exp\left(-\epsilon \frac{a_n}{4 b_n} \right)}
+		\end{align}
+
+
+
+		[FINISH]
 
 		To bound the second term, we will treat the two directions of the proof separately. Firstly, assume that $Z_n \convergedist X$. Then
 		\begin{align}
