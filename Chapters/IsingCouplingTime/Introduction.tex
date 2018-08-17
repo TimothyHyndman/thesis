@@ -216,6 +216,7 @@
 		So for any $\epsilon > 0$
 		\begin{equation}
 			\prob(|Y_n - Z_n| > \epsilon) \leq \prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right) + \prob\left(\frac{N_n}{\lambda a_n} > \frac{4 b_n}{a_n} \right).
+			\label{eq:both terms difference Y_n Z_n}
 		\end{equation}
 		We will show that both of the terms on the right hand side vanish as $n \rightarrow \infty$. We start with the first of these.
 
@@ -227,23 +228,23 @@
 			% &\leq \sum_{k = m_n}^\infty
 		\end{align}
 
-		From Lemma \ref{lem:T(k) bound},
+		To apply Lemma \ref{lem:T(k) bound}, we need that $\epsilon a_n / (4b_n) < 1$. However, since $a_n/b_n \rightarrow 0$, we can ensure this holds by taking $n$ large enough. In fact, in what follows we will assume $n$ is large enough that $a_n < b_n$. Continuing,
 		\begin{align}
 			\sum_{k = m_n}^\infty \prob\left(\left|\frac{T(k)\lambda}{k} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right) &\leq 2 \sum_{k = m_n}^\infty \exp\left(-k\frac{a_n^2}{64b_n^2}\right)\\
 			&= 2 \frac{\exp\left(-a_n^2 (m_n-1) /\left(64b_n^2\right)\right)}{\exp\left(a_n^2/\left(64b_n^2\right)\right) - 1}.
 		\end{align}
-		Since $a_n/b_n \rightarrow 0$, for large enough $n$ we have $a_n < b_n$. We can then use that $x \leq \exp(x) - 1$ for $0 \leq x \leq 1$ to show that
+		Since $x \leq \exp(x) - 1$ for $0 \leq x \leq 1$,
 		\begin{align}
 		2 \frac{\exp\left(-a_n^2 (m_n-1) /\left(64b_n^2\right)\right)}{\exp\left(a_n^2/\left(64b_n^2\right)\right) - 1} &\leq \frac{128 b_n^2}{a_n^2} \exp\left(-a_n^2 (m_n-1) /\left(64b_n^2\right)\right)\\
 		&\leq 256 \frac{b_n^2}{a_n^2} \exp\left(-m_n a_n^2/\left(64b_n^2\right)\right)
 		\end{align}
-		where we have again used that for large enough $n$, $a_n < b_n$. By \eqref{eq:m_n a_n b_n constraint}, this goes to zero as $n \rightarrow \infty$.
+		where we have again used that $a_n < b_n$. By \eqref{eq:m_n a_n b_n constraint}, this goes to zero as $n \rightarrow \infty$.
 
-		To bound the second term, we will treat the two directions of the proof separately. Firstly, assume that $Z_n \convergedist X$. Then note that
+		To bound the second term in \eqref{eq:both terms difference Y_n Z_n}, we will treat the two directions of the proof separately. Firstly, assume that $Z_n \convergedist X$. Then note that
 		\begin{align}
 			\prob\left(\frac{N_n}{\lambda a_n} > \frac{4 b_n}{a_n} \right) &= \prob\left(Z_n > 3\frac{b_n}{a_n} \right)
 		\end{align}
-		and since $b_n / a_n \rightarrow \infty$, and $Z_n$ converges,
+		and since $b_n / a_n \rightarrow \infty$, and $Z_n$ converges to a distribution which places no mass at $\infty$,
 		\begin{equation}
 			\lim_{n\rightarrow \infty} \prob\left(\frac{N_n}{\lambda a_n} > \frac{4 b_n}{a_n} \right) = 0.
 		\end{equation}
@@ -252,7 +253,7 @@
 			\prob\left(\frac{N_n}{\lambda a_n} > \frac{4 b_n}{a_n} \right) &\leq \prob\left(\frac{T(N_n)}{a_n} < \frac{2 b_n}{a_n}\right) + \prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \frac{1}{2}\right)\\
 			&= \prob\left(Y_n < \frac{b_n}{a_n}\right) + \prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \frac{1}{2}\right).
 		\end{align}
-		As above, since $a_n/b_n \rightarrow \infty$, and $Y_n$ converges, the first term vanishes in the limit, and the second disappears since 
+		As above, since $a_n/b_n \rightarrow \infty$, and $Y_n$ converges to a distribution which places no mass at $\infty$, the first term vanishes in the limit. The second disappears since 
 		\begin{equation}
 			\prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \frac{1}{2}\right) \leq \prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right)
 		\end{equation}
