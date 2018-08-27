@@ -4,20 +4,23 @@
 
 \lhead{Chapter \ref{Ch:1D}. \emph{The Coupling Time on the Cycle}}
 
-	In this chapter we restrict ourselves to the Ising heat-bath dynamics on the cycle $(\mathbb{Z}/n\mathbb{Z})$. The main result is the following theorem whose proof is postponed till Section \ref{sec:proof thm coupling cycle}.
+	In this chapter we consider the Ising heat-bath Glauber dynamics (as described in Section \ref{sec:heat-bath glauber dynamics definition}) on the cycle $G_n = (\mathbb{Z}/n\mathbb{Z})$. The object of interest is the coupling time, $T_n$, which was defined in Section \ref{sec:the coupling time} but whose definition will be modified slightly in Section \ref{sec:information percolation on the cycle} to allow for simpler analysis. The main result establishes that $T_n$ converges in distribution to a Gumbel distribution at all temperatures. This confirms, for $d = 1$, a conjecture by \citeauthor{Collevecchio2017-nq} that the coupling time of the Ising heat-bath process on the lattice $G_L = (\mathbb{Z}/L\mathbb{Z})^d$ converges to a Gumbel distribution as $L \rightarrow \infty$ for all $\beta < \beta_C$ \cite[Conjecture 7.1]{Collevecchio2017-nq} (We treat higher dimensions, and more generally any vertex transitive graphs, in Chapter \ref{Ch:GeneralResults}).
 
 	\begin{theorem}
 	\label{thm:Coupling Distribution on Cycle}
-		Let $T_n$ be the coupling time for the continuous-time Ising heat-bath 
-		dynamics for the zero-field ferromagnetic Ising model on the cycle 
-		$(\mathbb{Z} / n\mathbb{Z})$. Then for any inverse-temperature $\beta$,
+		Let $T_n$ be the coupling time for the continuous-time Ising heat-bath Glauber dynamics for the zero-field ferromagnetic Ising model on the cycle $(\mathbb{Z} / n\mathbb{Z})$. Then for any inverse-temperature $\beta$,
 		\begin{equation}
-			\euler^{-\sqrt{\theta/(4 - 3\theta)}\euler^{-z}} \leq \lim_{n \rightarrow \infty} \prob[T_n < (z + \ln n)/\theta] \leq \euler^{-\euler^{-z}}
+			\lim_{n \rightarrow \infty} \prob\left[T_n < \frac{z + \ln n}{\theta}\right] = \euler^{-\lambda \euler^{-z}}
 		\end{equation}
-		where $\theta = 1 - \tanh(2\beta)$.
+		where $\theta = 1 - \tanh(2\beta)$ and $\lambda$ is a positive constant bounded by
+		\begin{equation}
+			\sqrt{\frac{\theta}{4 - 3\theta}} \leq \lambda \leq 1.
+		\end{equation}
 	\end{theorem}
 
-	The simplification of only looking at the Ising model on the cycle means that BLAHBLAHBLAH
+	The proof of Theorem \ref{thm:Coupling Distribution on Cycle} is the subject of Section \ref{sec:proof thm coupling cycle}. 
+
+	On the cycle, the heat-bath dynamics allow for a new set of updates rules that do not change the distribution of $T_n$ and result in update histories which do not branch out to multiple vertices.
 
 	\section{Information percolation on the cycle}
 	\label{sec:information percolation on the cycle}
