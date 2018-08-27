@@ -18,13 +18,15 @@
 		\end{equation}
 	\end{theorem}
 
-	The proof of Theorem \ref{thm:Coupling Distribution on Cycle} is the subject of Section \ref{sec:proof thm coupling cycle}. 
-
-	On the cycle, the heat-bath dynamics allow for a new set of updates rules that do not change the distribution of $T_n$ and result in update histories which do not branch out to multiple vertices.
+	We postpone the proof of Theorem \ref{thm:Coupling Distribution on Cycle} until Section \ref{sec:proof thm coupling cycle}. 
 
 	\section{Information percolation on the cycle}
 	\label{sec:information percolation on the cycle}
-	On the cycle, we will use a different coupling of $\mathscr{T}_t$ and $\mathscr{B}_t$ via a new set of update rules that will replace those from \eqref{eq:plusorminusrules}. The new update rules will ensure that each of the update histories never contain more than one vertex at any one time. However, since the coupling time is a property of the specific coupling we choose, we must also verify that these new rules do not affect $T$. 
+	% On the cycle, the heat-bath dynamics allow for a new set of updates rules, to replace those from \eqref{eq:plusorminusrules}. The changed update rules provide another construction for the coupling of $\mathscr{T}_t$ and $\mathscr{B}_t$ but preserve the distribution of the coupling time, $T_n$. We use these new update rules because they result in much simpler update histories.
+
+	On the cycle, we will use a different coupling of $\mathscr{T}_t$ and $\mathscr{B}_t$ via a new set of update rules that will replace those from \eqref{eq:plusorminusrules}. The new update rules simplify our update histories greatly by ensuring that each of the update histories never contain more than one vertex at any one time. However, we must be cautious. The coupling time is not just a property of the heat-bath dynamics, but also of the specific coupling we chose. Hence, we will have to verify that switching to our new rules does not change the distribution of $T_n$. 
+
+	[UP TO HERE]
 
 	The new update rules state that when vertex $i$ updates, a spin $\sigma_i'$ is chosen via
 	\begin{equation}
