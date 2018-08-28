@@ -290,19 +290,30 @@ and overall we have that
 \end{proof}
 
 \begin{lemma}
+	The number of vertices at distance $k$ on a degree $\Delta$ transitive graph is
+	\begin{equation}
+		???
+	\end{equation}
+\end{lemma}
+\begin{lemma}
 	On the $d$ dimensional lattice,
 	\begin{equation}
 		\sum_{k = b_n}^\infty \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \leq 
 	\end{equation}
 \end{lemma}
 \begin{proof}
-	From Lemma \ref{lem:intersecting histories bound given X_j = 1},
+	On the $d$ dimensional torus, the number of vertices at distance $k$ is no more than something like $k^d$ [NEED FIGURE THIS OUT AND PROVE IT].
 	\begin{align}
 		\sum_{j \in C_i} \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq \sum_{k = b_n}^\infty \sum_{j, |j - i| = k} \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \\
-		&\leq \sum_{k = b_n}^\infty \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1]\\
-		&\leq 2 \exp(z \Delta^2) \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})n^{\Delta^2 + 1} \Delta^{-k/2} \\
-		&\leq 
+		&\leq \sum_{k = b_n}^\infty k^d \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1]
 	\end{align}
+	From Lemma \ref{lem:intersecting histories bound given X_j = 1},
+	\begin{align}
+		\sum_{j \in C_i} \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq C(z, \Delta) n^{\Delta^2 + 1} \sum_{k = b_n}^\infty k^d \Delta^{-k/2} \\
+		&\leq C(z, \Delta) n^{\Delta^2 + 1} \sum_{k = b_n}^\infty k^d \exp(-\ln(\Delta) k/2)\\
+		&\approxeq C(z, \Delta) n^{\Delta^2 + 1} b_n^d \exp(-\ln(\Delta)b_n/2)
+	\end{align}
+	which goes to 0 for large enough $b_n$ [FIGURE OUT HOW BIG].
 \end{proof}
 
 % \begin{lemma}
