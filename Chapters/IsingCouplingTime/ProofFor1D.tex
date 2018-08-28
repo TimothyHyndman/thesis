@@ -14,13 +14,13 @@
 		\end{equation}
 		where $\theta = 1 - \tanh(2\beta)$ and $\lambda$ is a positive constant bounded by
 		\begin{equation}
-			\sqrt{\frac{\theta}{4 - 3\theta}} \leq \lambda \leq 1.
+			\frac{1}{2\sqrt{\frac{4}{\theta} - 1} - 1} \leq \lambda \leq 1.
 		\end{equation}
 	\end{theorem}
 
-	We postpone the proof of Theorem \ref{thm:Coupling Distribution on Cycle} until Section \ref{sec:proof thm coupling cycle}. 
+	The proof of Theorem \ref{thm:Coupling Distribution on Cycle} will be given in Section \ref{sec:proof thm coupling cycle} after the essential preliminaries are presented.
 
-	\section{Information percolation on the cycle}
+	\section{A new coupling on the cycle}
 	\label{sec:information percolation on the cycle}
 	% On the cycle, the heat-bath dynamics allow for a new set of updates rules, to replace those from \eqref{eq:plusorminusrules}. The changed update rules provide another construction for the coupling of $\mathscr{T}_t$ and $\mathscr{B}_t$ but preserve the distribution of the coupling time, $T_n$. We use these new update rules because they result in much simpler update histories.
 
@@ -121,7 +121,11 @@
 		\label{fig:example percolation construction rightleft}
 	\end{figure}
 
-	We now see that as $t$ decreases from $t^*$, $\mathcal{H}_i(t)$ is a continuous-time random walk that dies at rate $\theta$, moves left at rate $(1 - \theta)/2$, and moves right at rate $(1 - \theta)/2$. The probability that $\mathcal{H}_i(0) \neq \emptyset$ is simply the probability that the continuous-time random walk survives until time $t = 0$. So recalling \eqref{eq:prob equality of coupling and empty support}
+	We now see that as $t$ decreases from $t^*$, $\mathcal{H}_i(t)$ is a continuous-time random walk that dies at rate $\theta$, moves left at rate $(1 - \theta)/2$, and moves right at rate $(1 - \theta)/2$. The probability that $\mathcal{H}_i(0) \neq \emptyset$ is simply the probability that the continuous-time random walk survives until time $t = 0$.
+
+	[UP TO HERE]
+
+	So recalling \eqref{eq:prob equality of coupling and empty support}
 	\begin{equation}
 		\prob \left[ \mathscr{B}_{t^*}[i] \neq \mathscr{T}_{t^*}[i] \right] = 
 		\prob \left[ \mathcal{H}_i(0) \neq \emptyset \right] = 
@@ -229,13 +233,13 @@
 		\end{align}
 		where we have used the symmetry of $X_{i+k}$ and $X_{i -k}$ in the last step. From Lemma \ref{lem:X_i+k given X_i}, 
 		\begin{align}
-			\expect[U_i | X_i = 1] &\leq 2 \sum_{k = 1}^{b_n} \left(\frac{e^{-z}}{n} + \left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^k\right)\\
-				&< 2 \sum_{k = 1}^{b_n} \frac{e^{-z}}{n} + 2\sum_{k = 1}^\infty \left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^k\\
-				&= \frac{2 b_n}{n}e^{-z} + \sqrt{\frac{4}{\theta} - 3} - 1.
+			\expect[U_i | X_i = 1] &\leq 2 \sum_{k = 1}^{b_n} \left(\frac{e^{-z}}{n} + 2 \left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k\right)\\
+				&< 2 \sum_{k = 1}^{b_n} \frac{e^{-z}}{n} + 4\sum_{k = 1}^\infty \left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k\\
+				&= \frac{2 b_n}{n}e^{-z} + 2\left(\sqrt{\frac{4}{\theta} - 1} - 1\right).
 		\end{align}
 		Finally, as $n \rightarrow \infty$ the first term vanishes and
 		\begin{align}
-			\lim_{n \rightarrow \infty} \lambda \geq \sqrt{\frac{\theta}{4 - 3\theta}} e^{-z}.
+			\lim_{n \rightarrow \infty} \lambda \geq \frac{e^{-z}}{2\sqrt{\frac{4}{\theta} - 1} - 1}.
 		\end{align}
 	\end{proof}
 
@@ -304,12 +308,12 @@
 		\end{align}
 		From Lemma \ref{lem:X_i+k given X_i},
 		\begin{align}
-			\expect[Z_i | X_i = 1] &\leq 2 \sum_{k = b_n + 1}^{c_n} \left(\frac{e^{-z}}{n} + 2\left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^k\right)\\
-				&\leq \frac{2(c_n - b_n)\euler^{-z}}{n} + 4(c_n - b_n)\left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^{b_n + 1}.
+			\expect[Z_i | X_i = 1] &\leq 2 \sum_{k = b_n + 1}^{c_n} \left(\frac{e^{-z}}{n} + 2\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k\right)\\
+				&\leq \frac{2(c_n - b_n)\euler^{-z}}{n} + 4(c_n - b_n)\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^{b_n + 1}.
 		\end{align}
 		Altogether
 		\begin{equation}
-			\delta_4 \leq \frac{2(c_n - b_n)\euler^{-z}}{n} + 4(c_n - b_n)\left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^{b_n + 1} + \frac{2\euler^{-2z}c_n}{n}
+			\delta_4 \leq \frac{2(c_n - b_n)\euler^{-z}}{n} + 4(c_n - b_n)\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^{b_n + 1} + \frac{2\euler^{-2z}c_n}{n}
 		\end{equation}
 		which goes to $0$ as $n \rightarrow \infty$.
 	\end{proof}
@@ -364,20 +368,26 @@
 	\label{lem:A_ij bound conditioned}
 		Let $A_{i,j}$ be the event that the update history of vertex $i$ merges with the update history of vertex $j$. Then
 		\begin{equation}
-			\prob[A_{i,j}|X_{j} = 1] \leq 2\left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^k
+			\prob[A_{i,j}|X_{j} = 1] \leq 2\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k.
 		\end{equation}
 		where $k = |i - j|$.
 	\end{lemma}
 	\begin{proof}
-		We note that, while the update histories survive, the distance between the update histories of $i$ and $j$ is a birth and death process that starts at $k = |i - j|$ and has birth and death rates, $\lambda = \mu = 1 - \theta$. Let $P(t)$ be such a process and define $s_0  = \inf\{t : P(t) = 0\}$ to be the first time the process reaches zero (this corresponds to the update histories merging). Let $s_d$ be exponentially distributed with rate $\theta$ (this corresponds to the update history of vertex $i$ dying). Then
-		\begin{align}
-		 	\prob[A_{i,j} | X_j = 1] \leq 2 \prob_k(s_0 < s_d)
-		 \end{align} 
-		 where $\prob_k$ indicates that $P(0) = k$. The factor of two comes from the fact that the update histories may meet by going the other direction around the cycle.
+		We first must deal with the effect that conditioning on $X_j = 1$ has on the probability that the two update histories merge. For the history of vertex $j$ to survive, all updates along the history must be non-oblivious updates. We also note that conditioning on the history of vertex $j$ surviving should not result in an increase in the overall rate of updates (since each update is a chance that the history will die). By this reasoning, 
+		\begin{equation}
+			\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_j = 1] \leq \prob[\mathcal{H}_i \cap \bar{\mathcal{H}}_j]
+		\end{equation}
+		where $\bar{\mathcal{H}}_j$ is an undying random walk that starts at $j$ and going backwards in time from $t^*$ moves right at rate 1/2 and left at rate 1/2.
 
-		 At any time before $s_d$ there are three possibilities for what can happen to $P$ next. Either the next event is a birth with probability $(1 - \theta)/(2 - \theta)$, the next event is a death with the same probability or we reach time $s_d$ with probability $\theta/(2 - \theta)$. Writing $\zeta_k = \prob_k(s_0 < s_d)$ this gives us the recurrence relation
+		We note that, while $\mathcal{H}_i$ survives, the distance between $\mathcal{H}_i$ and $\bar{\mathcal{H}}_j$ is a birth and death process that starts at $k = |i - j|$ and has birth and death rates, $\lambda = \mu = (2 - \theta)/2$. Let $P(t)$ be such a process and define $s_0  = \inf\{t : P(t) = 0\}$ to be the first time the process reaches zero (this corresponds to the update histories merging). Let $s_d$ be exponentially distributed with rate $\theta$ (this corresponds to the update history of vertex $i$ dying). Then
+		\begin{align}
+		 	\prob[A_{i,j} | X_j = 1] \leq \prob[\mathcal{H}_i \cap \bar{\mathcal{H}}_j] \leq 2 \prob_k(s_0 < s_d)
+		 \end{align} 
+		 where $\prob_k$ indicates that $P(0) = k$. The factor of two comes from the fact that the update histories may meet by going in either direction around the cycle.
+
+		 At any time before $s_d$ there are three possibilities for what can happen to $P$ next. Either the next event is a birth with probability $(2 - \theta)/4$, the next event is a death with the same probability or we reach time $s_d$ with probability $\theta/2$. Writing $\zeta_k = \prob_k(s_0 < s_d)$ this gives us the recurrence relation
 		 \begin{align}
-		 	\zeta_k = \frac{1 - \theta}{2 - \theta} \zeta_{k-1} + \frac{1 - \theta}{2 - \theta} \zeta_{k+1}
+		 	\zeta_k = \frac{2 - \theta}{4} \zeta_{k-1} + \frac{2 - \theta}{4} \zeta_{k+1}
 		 \end{align}
 		 which is subject to the conditions 
 		 \begin{align}
@@ -388,12 +398,12 @@
 		 \end{align} 
 		 This recurrence has characteristic equation
 		 \begin{align}
-		 	x^2 - \frac{2 - \theta}{1 - \theta} x + 1 = 0
+		 	x^2 - \frac{4}{2 - \theta} x + 1 = 0
 		 \end{align}
 		 which has roots
 		 \begin{align}
-		 	r_1 &= \frac{2 - \theta + \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\\
-		 	r_2 &= \frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}
+		 	r_1 &= \frac{2 + \sqrt{\theta(4 - \theta)}}{2 - \theta}\\
+		 	r_2 &= \frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}
 		 \end{align}
 		 and so
 		 \begin{align}
@@ -401,7 +411,7 @@
 		 \end{align}
 		 where $a$ and $b$ are constants to be determined from \eqref{eq:zetacondition1_cond} and \eqref{eq:zetacondition2_cond}. We note that $r_1 \geq 1, \forall \theta \in [0,1]$ and so from \eqref{eq:zetacondition2_cond} we have that $a = 0$. Finally from \eqref{eq:zetacondition1_cond}, $b = 1$ and so
 		 \begin{equation}
-		 	\zeta_k = \left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^k.
+		 	\zeta_k = \left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k.
 		 \end{equation}
 	\end{proof}
 
@@ -409,7 +419,7 @@
 		\label{lem:X_i+k given X_i}
 		\begin{equation}
 			\label{eq:prob X_i+k = 1|X_i = 1}
-			\prob[X_{i+k} = 1| X_i = 1] \leq \frac{e^{-z}}{n} + 2\left(\frac{2 - \theta - \sqrt{4\theta - 3\theta^2}}{2(1 - \theta)}\right)^k.
+			\prob[X_{i+k} = 1| X_i = 1] \leq \frac{e^{-z}}{n} + 2\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k.
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
