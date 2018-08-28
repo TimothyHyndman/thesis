@@ -270,37 +270,75 @@ and overall we have that
 \begin{lemma}
 	\label{lem:intersecting histories bound given X_j = 1}
 	\begin{equation}
-		\prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset | X_j = 1] \leq 
+		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \leq  2 \exp(z \Delta^2) \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})\Delta^{-k/2} n^{\Delta^2 + 1}
+	\end{equation}
+	where $k = |i - j|$.
+\end{lemma}
+\begin{proof}
+	\begin{align}
+		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1]  &\leq \frac{\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset] }{\prob[X_i = 1]}\\
+		&\leq n \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z}) \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset].
+	\end{align}
+	Now letting $k = |i - j|$ denote the distance between $i$ and $j$,
+	\begin{equation}
+		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset] \leq 2 \prob[\mathcal{H}_i \nsubseteq B(i, k/2) ]
+	\end{equation}
+	since in order for $\mathcal{H}_i$ and $\mathcal{H}_j$ to intersect, at least one of them must extend beyond halfway the distance between $i$ and $j$. From Lemma \ref{cor:prob update function time 0 in B(i, l)},
+	\begin{align}
+		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq 2 \exp(z \Delta^2) \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})\Delta^{-k/2} n^{\Delta^2 + 1}
+	\end{align}
+\end{proof}
+
+\begin{lemma}
+	On the $d$ dimensional lattice,
+	\begin{equation}
+		\sum_{k = b_n}^\infty \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \leq 
 	\end{equation}
 \end{lemma}
 \begin{proof}
-The proof here is similar to that of Lemma \ref{lem:intersecting histories bound}. We first relax to our alternative histories
-\begin{equation}
-	\prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset | X_j = 1] \leq \prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_j = 1].
-\end{equation}
-By symmetry, 
-\begin{equation}
-	\prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_j = 1] = \prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_k = 1]
-\end{equation}
-and also
-\begin{equation}
-	\prob[X_j = 1] = \prob[X_k = 1].
-\end{equation}
-So 
-\begin{equation}
-	\prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_j = 1] \leq 2 \prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | \{X_j = 1\} \cup \{X_k = 1\}].
-\end{equation}
-
-We now define $W_s$ and $Y_s$ as before, except now conditioned on the event $\{X_j = 1\} \cup \{X_k = 1\}$. The effect of this conditioning is to forbid updates that reduce $W_s$ to $0$. 
-
-HANDWAVING: If we stop when $W_s = 1$ then we can ignore the conditioning???
-
-Define the stopping time 
-\begin{equation}
-	\tau = \inf\{s: \bar{W}_s = 1\}.
-\end{equation}
-
+	From Lemma \ref{lem:intersecting histories bound given X_j = 1},
+	\begin{align}
+		\sum_{j \in C_i} \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq \sum_{k = b_n}^\infty \sum_{j, |j - i| = k} \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \\
+		&\leq \sum_{k = b_n}^\infty \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1]\\
+		&\leq 2 \exp(z \Delta^2) \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})n^{\Delta^2 + 1} \Delta^{-k/2} \\
+		&\leq 
+	\end{align}
 \end{proof}
+
+% \begin{lemma}
+% 	\label{lem:intersecting histories bound given X_j = 1}
+% 	\begin{equation}
+% 		\prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset | X_j = 1] \leq 
+% 	\end{equation}
+% \end{lemma}
+% \begin{proof}
+% The proof here is similar to that of Lemma \ref{lem:intersecting histories bound}. We first relax to our alternative histories
+% \begin{equation}
+% 	\prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset | X_j = 1] \leq \prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_j = 1].
+% \end{equation}
+% By symmetry, 
+% \begin{equation}
+% 	\prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_j = 1] = \prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_k = 1]
+% \end{equation}
+% and also
+% \begin{equation}
+% 	\prob[X_j = 1] = \prob[X_k = 1].
+% \end{equation}
+% So 
+% \begin{equation}
+% 	\prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_j = 1] \leq 2 \prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | \{X_j = 1\} \cup \{X_k = 1\}].
+% \end{equation}
+
+% We now define $W_s$ and $Y_s$ as before, except now conditioned on the event $\{X_j = 1\} \cup \{X_k = 1\}$. The effect of this conditioning is to forbid updates that reduce $W_s$ to $0$. 
+
+% HANDWAVING: If we stop when $W_s = 1$ then we can ignore the conditioning???
+
+% Define the stopping time 
+% \begin{equation}
+% 	\tau = \inf\{s: \bar{W}_s = 1\}.
+% \end{equation}
+
+% \end{proof}
 
 In \cite{Lubetzky2016-wd}, \citeauthor{Lubetzky2016-wd} proved something similar...
 \begin{lemma}
@@ -338,6 +376,7 @@ In \cite{Lubetzky2016-wd}, \citeauthor{Lubetzky2016-wd} proved something similar
 \end{proof}
 
 \begin{corollary}
+\label{cor:prob update function time 0 in B(i, l)}
 	\begin{equation}
 		\prob[\mathcal{H}_i(0) \nsubseteq B(i,l)] \leq \Delta^{-l} n^{\Delta^2} \exp(z \Delta^2)
 	\end{equation}
