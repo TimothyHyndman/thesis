@@ -85,6 +85,7 @@ Fix $z$ and a time of interest $t^* = t_c(n) + z$.
 
 The following corollary is then straightfoward.
 \begin{corollary}
+\label{cor:magnetization of t star}
 	On any vertex transitive graph with degree $\Delta$, $m_{t^*}$ can be bounded as follows:
 
 	For $z \geq 0$,
@@ -422,25 +423,21 @@ This proof is closely based on that in \cite{Lubetzky2014-po}.
 	\end{equation}
 \end{lemma}
 \begin{proof}
-	We first relax to our alternative history construction by observing that
+	Firstly,
 	\begin{align}
-		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq \prob[\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset | X_i = 1]
+		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &= \frac{\prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \{X_i = 1\}]}{\prob[X_i = 1]}\\
+		&\leq n C_z \prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \{X_i = 1\}]
 	\end{align}
-	since $\mathcal{H}_i \subseteq \hat{\mathcal{H}}_i$ for any vertex $i$. Then 
+	where $C_z = \max(\euler^{z}, \euler^{(1 - \beta \Delta)z})$ and we have used Corollary \ref{cor:magnetization of t star}. 
+	We now relax to our alternative history construction by observing that since $\mathcal{H}_i \subseteq \hat{\mathcal{H}}_i$ for any vertex $i$, and
+	\begin{equation}
+		\left\{X_i = 1\right\} = \left\{\mathcal{H}_i(0) \neq \emptyset\right\},
+	\end{equation}
+	then
 	\begin{align}
-		\prob[\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset | X_i = 1] &= \frac{\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left\{X_i = 1\right\}\right]}{\prob[X_i = 1]}\\
-		&\leq n C_z \prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left\{X_i = 1\right\}\right]\\
-		&\leq n C_z \prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left(\left\{X_i = 1\right\} \cup \{X_j = 1\}\right)\right]
+		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq n C_z\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left\{\hat{\mathcal{H}}_i(0) \neq \emptyset\right\}\right],\\
+		&\leq n C_z\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left\{\hat{\mathcal{H}}_i(0) \cup \hat{\mathcal{H}}_j(0) \neq \emptyset\right\}\right].
 	\end{align}
-	where $C_z = \max(\euler^{z}, \euler^{(1 - \beta \Delta)z})$. We can again use our alternative history construction by using that
-	\begin{equation}
-		\left\{X_i = 1\right\} = \left\{\mathcal{H}_i(0) \neq \emptyset\right\} \subseteq \left\{\hat{\mathcal{H}}_i(0) \neq \emptyset\right\},
-	\end{equation}
-	and so
-	\begin{equation}
-		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1]
-		%\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left(\left\{X_i = 1\right\} \cup \{X_j = 1\}\right)\right] 
-		\leq n C_z\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left\{\hat{\mathcal{H}}_i(0) \cup \hat{\mathcal{H}}_j(0) \neq \emptyset\right\}\right].
-	\end{equation}
-	Now since each update in our histories can never remove more than one vertex at a time, if $\hat{\mathcal{H}}_i(0) \cup \hat{\mathcal{H}}_j(0) = \emptyset$, then there must be some time $t > 0$ at which $\hat{\mathcal{H}}_i(t) \cup \hat{\mathcal{H}}_j(t) = \{w\}$ for a single vertex $w$. Define $S$ to be the first such time
+
+	Now since each update in our histories can never remove more than one vertex at a time, if $\hat{\mathcal{H}}_i(0) \cup \hat{\mathcal{H}}_j(0) = \emptyset$, then there must be some time $t > 0$ at which $\hat{\mathcal{H}}_i(t) \cup \hat{\mathcal{H}}_j(t) = \{w\}$ for a single vertex $w$. Proceeding backwards from $t^*$, define $S$ to be the first such time this happens
 \end{proof}
