@@ -10,9 +10,9 @@
 	\label{thm:Coupling Distribution on Cycle}
 		Let $T_n$ be the coupling time for the continuous-time Ising heat-bath Glauber dynamics for the zero-field ferromagnetic Ising model on the cycle $(\mathbb{Z} / n\mathbb{Z})$. Then for any inverse-temperature $\beta$,
 		\begin{equation}
-			\lim_{n \rightarrow \infty} \prob\left[T_n < \frac{z + \ln n}{\theta}\right] = \euler^{-\lambda \euler^{-z}}
+			\lim_{n \rightarrow \infty} \prob\left[T_n < \frac{z + \ln n}{\theta}\right] = \euler^{-C_\theta \euler^{-z}}
 		\end{equation}
-		where $\theta = 1 - \tanh(2\beta)$ and $\lambda$ is a positive constant bounded by
+		where $\theta = 1 - \tanh(2\beta)$ and $C_\theta$ is a positive constant bounded by
 		\begin{equation}
 			\frac{1}{2\sqrt{\frac{4}{\theta} - 1} - 1} \leq \lambda \leq 1.
 		\end{equation}
@@ -121,20 +121,19 @@
 		\label{fig:example percolation construction rightleft}
 	\end{figure}
 
-	We now see that as $t$ decreases from $t^*$, $\mathcal{H}_i(t)$ is a continuous-time random walk that dies at rate $\theta$, moves left at rate $(1 - \theta)/2$, and moves right at rate $(1 - \theta)/2$. The probability that $\mathcal{H}_i(0) \neq \emptyset$ is simply the probability that the continuous-time random walk survives until time $t = 0$.
-
-	[UP TO HERE]
-
-	So recalling \eqref{eq:prob equality of coupling and empty support}
+	We now see that as $t$ decreases from $t^*$, $\mathcal{H}_i(t)$ is a continuous-time random walk that dies at rate $\theta$, moves left at rate $(1 - \theta)/2$, and moves right at rate $(1 - \theta)/2$. The probability that $\mathcal{H}_i(0) \neq \emptyset$ is simply the probability that the continuous-time random walk survives until time $t = 0$. This immediately gives us the following probability which we will use repeatedly in what follows. Recalling \eqref{eq:prob equality of coupling and empty support},
 	\begin{equation}
 		\prob \left[ \mathscr{B}_{t^*}[i] \neq \mathscr{T}_{t^*}[i] \right] = 
 		\prob \left[ \mathcal{H}_i(0) \neq \emptyset \right] = 
 		\euler^{-\theta t^*}.
 		\label{eq:1D bernoulli prob}
 	\end{equation}
+	since our histories die at rate $\theta$.
 
-	\section{Compound Poisson Approximation}
-	Fix $z$ and a time of interest, $t_* = (z + \ln n)/\theta$. For each vertex $i \in G$, we define indicators
+	\section{Problem Setup}
+	In order to prove Theorem \ref{thm:Coupling Distribution on Cycle}, we will actually prove a stronger statement using Theorem \ref{thm: compound poisson approximation}. The general idea is that at some fixed time $t^*$ we will count the number of vertices at which the bottom and top chains differ. This number is a random variable, which we will call $W$, and we can bound the total variation distance of its distribution with that of an appropriate compound poisson distribution. As a special case, we can use this bound as a bound on the probability that $W$ is zero. Of course, if $W$ is zero then the top and bottom chains must have coupled and so we can use this to establish Theorem \ref{thm:Coupling Distribution on Cycle}.
+
+	We now make precise the ideas stated above.	Fix $z$ and a time of interest, $t_* = (z + \ln n)/\theta$. For each vertex $i \in G$, define indicators
 	\begin{equation}
 		X_i = 
 		\begin{cases}
@@ -142,15 +141,7 @@
 			0 & \mathscr{B}_{t^*}[i] = \mathscr{T}_{t^*}[i]
 		\end{cases}
 	\end{equation}
-	and set $W = \sum_{i \in V} X_i$. Note that from \eqref{eq:1D bernoulli prob} we get
-	\begin{equation}
-		\label{eq:1D prob X_i}
-		\prob[X_i = 1] = \euler^{-\theta t_*} = \frac{e^{-z}}{n}.
-	\end{equation}
-
-	The random variable $W$ is closely related to the distribution of the coupling time $T$ in that the events $\{W = 0\}$ and $\{T \leq t^*\}$ are the same. We will show that the limiting distribution of $W$ as $n$ increases is compound Poisson using Theorem \ref{thm: compound poisson approximation} which we have taken from \cite{Barbour2001-nh} which in turn is based on Stein's method for the compound Poisson distribution, introduced in \cite{Barbour1992-mc}. Before stating the theorem as it applies to our problem, there are a few more quantities we need to define.
-
-	For each $i \in V$, decompose $W$ into $W = X_i + U_i + Z_i + W_i$ where
+	and set $W = \sum_{i \in V} X_i$. For each $i \in V$, decompose $W$ into $W = X_i + U_i + Z_i + W_i$ where
 	\begin{align}
 		U_i &= \sum_{j \in B_i} X_j, &
 		Z_i &= \sum_{j \in C_i} X_j, &
@@ -193,6 +184,14 @@
 		\left|\prob\left[T \leq \frac{z+\ln(n)}{\theta}\right] - \euler^{-\lambda}\right| \leq C_1 \delta_1 + C_2 \delta_4.
 		\label{eq:bound distance prob[w=0] and e^-lambda}
 	\end{equation}
+
+		Note that from \eqref{eq:1D bernoulli prob} we get
+	\begin{equation}
+		\label{eq:1D prob X_i}
+		\prob[X_i = 1] = \euler^{-\theta t_*} = \frac{e^{-z}}{n}.
+	\end{equation}
+
+	The random variable $W$ is closely related to the distribution of the coupling time $T$ in that the events $\{W = 0\}$ and $\{T \leq t^*\}$ are the same. We will show that the limiting distribution of $W$ as $n$ increases is compound Poisson using Theorem \ref{thm: compound poisson approximation} which we have taken from \cite{Barbour2001-nh} which in turn is based on Stein's method for the compound Poisson distribution, introduced in \cite{Barbour1992-mc}. Before stating the theorem as it applies to our problem, there are a few more quantities we need to define.
 
 	\section{Proof of Theorem \ref{thm:Coupling Distribution on Cycle}}
 	\label{sec:proof thm coupling cycle}
