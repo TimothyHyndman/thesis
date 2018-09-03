@@ -133,6 +133,8 @@
 	\section{Problem Setup}
 	In order to prove Theorem \ref{thm:Coupling Distribution on Cycle}, we will actually prove a stronger statement using Theorem \ref{thm: compound poisson approximation}. The general idea is that at some fixed time $t^*$ we will count the number of vertices at which the bottom and top chains differ. This number is a random variable, which we will call $W$, and we can bound the total variation distance of its distribution with that of an appropriate compound poisson distribution. As a special case, we can use this bound as a bound on the probability that $W$ is zero. Of course, if $W$ is zero then the top and bottom chains must have coupled and so we can use this to establish Theorem \ref{thm:Coupling Distribution on Cycle}.
 
+	Bounding the total variation distance between $W$ and the compound Poisson will be done using compound Poisson approximation as described in \cite{Barbour2001-nh}. This paper reviews a number of different methods by which approximations may be made. The specific method that we will employ is based on Stein's method for the compound Poisson distribution, introduced in \cite{Barbour1992-mc}.
+
 	We now make precise the ideas stated above.	Fix $z$ and a time of interest, $t_* = (z + \ln n)/\theta$. For each vertex $i \in G$, define indicators
 	\begin{equation}
 		X_i = 
@@ -141,7 +143,20 @@
 			0 & \mathscr{B}_{t^*}[i] = \mathscr{T}_{t^*}[i]
 		\end{cases}
 	\end{equation}
-	and set $W = \sum_{i \in V} X_i$. For each $i \in V$, decompose $W$ into $W = X_i + U_i + Z_i + W_i$ where
+	and set $W = \sum_{i \in V} X_i$.
+	Note that from \eqref{eq:1D bernoulli prob} we get
+	\begin{equation}
+		\label{eq:1D prob X_i}
+		\prob[X_i = 1] = \euler^{-\theta t_*} = \frac{e^{-z}}{n}.
+	\end{equation}
+	% We create vertex sets
+	% \begin{align}
+	% 	B_i &= \{j\neq i : |j - i| \leq b_n \},\\
+	% 	C_i &= \{j\notin B_i\cup \{i\}: |j - i| \leq c_n \},\\
+	% 	D_i &= V \setminus (B_i \cup C_i \cup \{i\}).
+	% \end{align}
+	% where $b_n = \ln(n)$ and $c_n = \ln(n)^2$. 
+	For each $i \in V$, decompose $W$ into $W = X_i + U_i + Z_i + W_i$ where
 	\begin{align}
 		U_i &= \sum_{j \in B_i} X_j, &
 		Z_i &= \sum_{j \in C_i} X_j, &
@@ -153,49 +168,46 @@
 		C_i &= \{j\notin B_i\cup \{i\}: |j - i| \leq c_n \},\\
 		D_i &= V \setminus (B_i \cup C_i \cup \{i\}).
 	\end{align}
-	We have some freedom in choosing $b_n$ and $c_n$, but they must be chosen such that various quantities go to zero as $n \rightarrow \infty$. One choice that will work in our circumstances is $b_n = \ln(n)$ and $c_n = \ln(n)^2$.
+	We have some freedom in choosing $b_n$ and $c_n$; they are chosen to control the assymptotics of various quantities to be defined later. For this chapter, we will choose $b_n = \ln(n)$ and $c_n = \ln(n)^2$.
 
-	Define the following which are the parameters of the approximating compound Poisson distribution to $W$.
+	We now define the quantities
 	\begin{align}
 		\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \indicator[ X_i + U_i \geq 1] \right],\\
-		\mu_l &= \frac{1}{l \lambda} \sum_{i \in V} \expect\left[ X_i \indicator[X_i + U_i = l] \right], && l\geq 1.
+		\mu_l &= \frac{1}{l \lambda} \sum_{i \in V} \expect\left[ X_i \indicator[X_i + U_i = l] \right], && l\geq 1,
 	\end{align}
-
-	Also define quantities
+	which will be the parameters of the approximating compound Poisson distribution to $W$. We also define
 	\begin{align}
 		\delta_1 &= \sum_{i \in V}  \sum_{k \geq 0} \prob[X_i = 1, U_i = k] \expect \left|\frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|,\\ 
 		% \delta_2 &= \\
 		% \delta_3 &= \\
-		\delta_4 &= \sum_{i \in V} \left( \expect[X_i Z_i] + \expect[X_i] \expect[X_i + U_i + Z_i] \right).
+		\delta_4 &= \sum_{i \in V} \left( \expect[X_i Z_i] + \expect[X_i] \expect[X_i + U_i + Z_i] \right),
 	\end{align}
-	which we require to vanish as $n \rightarrow \infty$.
+	% which we will require to vanish as $n \rightarrow \infty$.
+	which we desire to be small for the compound Poisson approximation to be good.
 
 	The following theorem (reworked from \cite{Barbour2001-nh}) bounds the distance between the distributions of $W$ and the approximating compound Poisson.
 
 	\begin{theorem}[\cite{Barbour2001-nh}]
 	\label{thm: compound poisson approximation}
-		Let $W$, $\lambda$, $\mu$, $\delta_1$ and $\delta_4$ be as defined above. Then there exist constants $C_1 = C_1(\lambda, \vect{\mu})$ and $C_2 = C_2(\lambda, \vect{\mu})$ such that
+		Let $W$, $\lambda$, $\vect{\mu}$, $\delta_1$ and $\delta_4$ be as defined above. Then
 		\begin{equation}
-			d_{\mathrm{TV}}(\mathscr{L}(W), \mathrm{CP}(\lambda, \vect{\mu})) \leq C_1 \delta_1 + C_2 \delta_4.
+			d_{\mathrm{TV}}(\mathscr{L}(W), \mathrm{CP}(\lambda, \vect{\mu})) \leq (\delta_1 + \delta_4)\euler^\lambda.
 		\end{equation}
 	\end{theorem}
-	As an immediate corollary, and from the equivalence of the events $\{W = 0\}$ and $\{T \leq t^*\}$, we get that
-	\begin{equation}
-		\left|\prob\left[T \leq \frac{z+\ln(n)}{\theta}\right] - \euler^{-\lambda}\right| \leq C_1 \delta_1 + C_2 \delta_4.
-		\label{eq:bound distance prob[w=0] and e^-lambda}
-	\end{equation}
-
-		Note that from \eqref{eq:1D bernoulli prob} we get
-	\begin{equation}
-		\label{eq:1D prob X_i}
-		\prob[X_i = 1] = \euler^{-\theta t_*} = \frac{e^{-z}}{n}.
-	\end{equation}
-
-	The random variable $W$ is closely related to the distribution of the coupling time $T$ in that the events $\{W = 0\}$ and $\{T \leq t^*\}$ are the same. We will show that the limiting distribution of $W$ as $n$ increases is compound Poisson using Theorem \ref{thm: compound poisson approximation} which we have taken from \cite{Barbour2001-nh} which in turn is based on Stein's method for the compound Poisson distribution, introduced in \cite{Barbour1992-mc}. Before stating the theorem as it applies to our problem, there are a few more quantities we need to define.
+	Note that $W$ is zero precisely when $T < t^*$ and so the events $\{W = 0\}$ and $\{T \leq t^*\}$ are the same. Furthermore, if $W'$ is compound Poisson with parameters $\lambda$ and $\vect{\mu}$ then $\prob[W' = 0] = \euler^{-\lambda}$. These observations lead to the following corollary of Theorem \ref{thm: compound poisson approximation}.
+	\begin{corollary}
+	\label{cor:bound distance prob[w=0] and e^-lambda}
+	Let $T_n$ be the coupling time of the continuous-time heat-bath Glauber dynamics for the zero-field Ising model at inverse-temperature $\beta$ on the cycle $(\mathbb{Z}/n\mathbb{Z})$ and let $\delta_1$, $\delta_4$ and $\lambda$ be as defined above. Then
+		\begin{equation}
+			\left|\prob\left[T_n \leq \frac{z+\ln(n)}{\theta}\right] - \euler^{-\lambda}\right| \leq (\delta_1 + \delta_4)\euler^\lambda,
+			\label{eq:bound distance prob[w=0] and e^-lambda}
+		\end{equation}
+		where $\theta = 1 - \tanh(2\beta)$.
+	\end{corollary}	
 
 	\section{Proof of Theorem \ref{thm:Coupling Distribution on Cycle}}
 	\label{sec:proof thm coupling cycle}
-	The proof of Theorem \ref{thm:Coupling Distribution on Cycle} comes as a result of equation \eqref{eq:bound distance prob[w=0] and e^-lambda} along with Lemmas \ref{lem:1Dlambda}, \ref{lem:delta1 goes to 0}, and \ref{lem:delta4 goes to 0} which bound the various quantities required.
+	The proof of Theorem \ref{thm:Coupling Distribution on Cycle} comes as a result of Corollary \ref{cor:bound distance prob[w=0] and e^-lambda} along with Lemmas \ref{lem:1Dlambda}, \ref{lem:delta1 goes to 0}, and \ref{lem:delta4 goes to 0} which bound the various quantities required.
 
 
 	\begin{lemma}
