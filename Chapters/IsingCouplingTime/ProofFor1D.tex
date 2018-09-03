@@ -207,16 +207,21 @@
 
 	\section{Proof of Theorem \ref{thm:Coupling Distribution on Cycle}}
 	\label{sec:proof thm coupling cycle}
-	The proof of Theorem \ref{thm:Coupling Distribution on Cycle} comes as a result of Corollary \ref{cor:bound distance prob[w=0] and e^-lambda} along with Lemmas \ref{lem:1Dlambda}, \ref{lem:delta1 goes to 0}, and \ref{lem:delta4 goes to 0} which bound the various quantities required.
+	In this section we use Corollary \ref{cor:bound distance prob[w=0] and e^-lambda} to prove Theorem \ref{thm:Coupling Distribution on Cycle} by bounding $\lambda$ and showing that $\delta_1$ and $\delta_4$ go to zero as $n \rightarrow \infty$. This is done in Lemmas \ref{lem:1Dlambda}, \ref{lem:delta1 goes to 0}, and \ref{lem:delta4 goes to 0}. The proofs of these require some additional lemmas which have been deferred to Section \ref{sec:additional lemmas 1D}.
 
-
+	We begin by bounding $\lambda$.
 	\begin{lemma}
 	\label{lem:1Dlambda}
 		Using the above setup
 		\begin{equation}
-			\sqrt{\frac{\theta}{4 - 3\theta}}\euler^{-z} \leq \lim_{n \rightarrow \infty} \lambda \leq \euler^{-z}.
+			\lim_{n \rightarrow \infty} \lambda = C_\theta \euler^{-z}
+		\end{equation}
+		where
+		\begin{equation}
+			\sqrt{\frac{\theta}{4 - 3\theta}} \leq C_\theta \leq 1.
 		\end{equation}
 	\end{lemma}
+	NEED TO SHOW THAT THING ACTUALLY CONVERGES
 	\begin{proof}
 		\begin{align}
 			\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \indicator[ X_i + U_i \geq 1] \right]\\
@@ -229,7 +234,7 @@
 		\begin{align}
 			\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] \leq 1
 		\end{align}
-		and so $\lambda \leq e^{-z}$.
+		and so $C_\theta \leq 1$.
 
 		By Jensen's inequality
 		\begin{align}
@@ -253,6 +258,8 @@
 			\lim_{n \rightarrow \infty} \lambda \geq \frac{e^{-z}}{2\sqrt{\frac{4}{\theta} - 1} - 1}.
 		\end{align}
 	\end{proof}
+
+	Blahblahblah, any remarks about $\lambda$ go here.
 
 	\begin{lemma}
 	\label{lem:delta1 goes to 0}
@@ -329,7 +336,8 @@
 		which goes to $0$ as $n \rightarrow \infty$.
 	\end{proof}
 
-	\subsection{Additional Lemmas}
+	\section{Additional Lemmas}
+	\label{sec:additional lemmas 1D}
 	\begin{lemma}
 		\label{lem: A_ij bound}
 		Let $A_{i,j}$ be the event that the update history of vertex $i$ merges with the update history of vertex $j$. Then
