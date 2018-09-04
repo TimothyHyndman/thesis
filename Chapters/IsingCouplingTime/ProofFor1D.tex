@@ -174,13 +174,14 @@
 	\begin{align}
 		\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \indicator[ X_i + U_i \geq 1] \right],\\
 		\mu_l &= \frac{1}{l \lambda} \sum_{i \in V} \expect\left[ X_i \indicator[X_i + U_i = l] \right], && l\geq 1,
+		\label{eq:mu definition}
 	\end{align}
 	which will be the parameters of the approximating compound Poisson distribution to $W$. We also define
 	\begin{align}
-		\delta_1 &= \sum_{i \in V}  \sum_{k \geq 0} \prob[X_i = 1, U_i = k] \expect \left|\frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|,\\ 
+		\delta_1 &= \sum_{i \in V}  \sum_{k \geq 0} \prob[X_i = 1, U_i = k] \expect \left|\frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|, \label{eq:1D delta_1 definition}\\ 
 		% \delta_2 &= \\
 		% \delta_3 &= \\
-		\delta_4 &= \sum_{i \in V} \left( \expect[X_i Z_i] + \expect[X_i] \expect[X_i + U_i + Z_i] \right),
+		\delta_4 &= \sum_{i \in V} \left( \expect[X_i Z_i] + \expect[X_i] \expect[X_i + U_i + Z_i] \right), \label{eq:1D delta_4 definition}
 	\end{align}
 	% which we will require to vanish as $n \rightarrow \infty$.
 	which we desire to be small for the compound Poisson approximation to be good.
@@ -194,7 +195,7 @@
 			d_{\mathrm{TV}}(\mathscr{L}(W), \mathrm{CP}(\lambda, \vect{\mu})) \leq (\delta_1 + \delta_4)\euler^\lambda.
 		\end{equation}
 	\end{theorem}
-	Note that $W$ is zero precisely when $T < t^*$ and so the events $\{W = 0\}$ and $\{T \leq t^*\}$ are the same. Furthermore, if $W'$ is compound Poisson with parameters $\lambda$ and $\vect{\mu}$ then $\prob[W' = 0] = \euler^{-\lambda}$. These observations lead to the following corollary of Theorem \ref{thm: compound poisson approximation}.
+	Note that $W$ is zero precisely when $T < t^*$ and so the events $\{W = 0\}$ and $\{T \leq t^*\}$ are the same. Furthermore, if $W'$ is compound Poisson with parameters $\lambda$ and $\vect{\mu}$, where $\vect{\mu}$ is supported only on the positive integers (as in \eqref{eq:mu definition}), then $\prob[W' = 0] = \euler^{-\lambda}$. These observations lead to the following corollary of Theorem \ref{thm: compound poisson approximation}.
 	\begin{corollary}
 	\label{cor:bound distance prob[w=0] and e^-lambda}
 	Let $T_n$ be the coupling time of the continuous-time heat-bath Glauber dynamics for the zero-field Ising model at inverse-temperature $\beta$ on the cycle $(\mathbb{Z}/n\mathbb{Z})$ and let $\delta_1$, $\delta_4$ and $\lambda$ be as defined above. Then
@@ -207,7 +208,7 @@
 
 	\section{Proof of Theorem \ref{thm:Coupling Distribution on Cycle}}
 	\label{sec:proof thm coupling cycle}
-	In this section we use Corollary \ref{cor:bound distance prob[w=0] and e^-lambda} to prove Theorem \ref{thm:Coupling Distribution on Cycle} by bounding $\lambda$ and showing that $\delta_1$ and $\delta_4$ go to zero as $n \rightarrow \infty$. This is done in Lemmas \ref{lem:1Dlambda}, \ref{lem:delta1 goes to 0}, and \ref{lem:delta4 goes to 0}. The proofs of these require some additional lemmas which have been deferred to Section \ref{sec:additional lemmas 1D}.
+	In this section we use Corollary \ref{cor:bound distance prob[w=0] and e^-lambda} to prove Theorem \ref{thm:Coupling Distribution on Cycle} by bounding $\lambda$ and showing that $\delta_1$ and $\delta_4$ go to zero as $n \rightarrow \infty$. This is done in Lemmas \ref{lem:1Dlambda}, \ref{lem:delta1 goes to 0}, and \ref{lem:delta4 goes to 0}. The proofs of these require some additional lemmas concerning properties of the update histories which have been deferred to Section \ref{sec:additional lemmas 1D}.
 
 	We begin by bounding $\lambda$.
 	\begin{lemma}
@@ -218,18 +219,19 @@
 		\end{equation}
 		where
 		\begin{equation}
-			\sqrt{\frac{\theta}{4 - 3\theta}} \leq C_\theta \leq 1.
+			\frac{1}{2\sqrt{\frac{4}{\theta} - 1} - 1} \leq C_\theta \leq 1.
 		\end{equation}
 	\end{lemma}
 	NEED TO SHOW THAT THING ACTUALLY CONVERGES
 	\begin{proof}
+	Beginning with the definition of $\lambda$, we have
 		\begin{align}
 			\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \indicator[ X_i + U_i \geq 1] \right]\\
 				&= \sum_{i = 1}^n \prob(X_i = 1) \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]\\
 				&= \sum_{i = 1}^n \frac{\euler^{-z}}{n} \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]\\
 				&= \euler^{-z} \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]
 		\end{align}
-		where we have used that $X_i$ is zero-one, \eqref{eq:1D prob X_i}, and the transitivity of the graph.
+		where we have used that $X_i$ is either zero or one, \eqref{eq:1D prob X_i}, and the transitivity of the graph in each step respectively.
 		Clearly 
 		\begin{align}
 			\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] \leq 1
@@ -241,7 +243,7 @@
 			\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] &\geq \frac{1}{\expect[1 + U_i | X_i = 1]}\\
 				&= \frac{1}{1 + \expect[U_i | X_i = 1]}.
 		\end{align}
-		so in order to find a lower bound for $\lambda$ we will find an upper bound to $\expect[U_i | X_i = 1]$. Now
+		so in order to find a lower bound for $C_\theta$ we will find an upper bound to $\expect[U_i | X_i = 1]$. Now
 		\begin{align}
 			\expect[U_i | X_i = 1] &= \sum_{j \in B_i} \prob[X_j = 1| X_i = 1]\\
 				&= \sum_{k=1}^{b_n} \sum_{|j - i| = k} \prob[X_j = 1| X_i = 1]\\
@@ -255,25 +257,33 @@
 		\end{align}
 		Finally, as $n \rightarrow \infty$ the first term vanishes and
 		\begin{align}
-			\lim_{n \rightarrow \infty} \lambda \geq \frac{e^{-z}}{2\sqrt{\frac{4}{\theta} - 1} - 1}.
+			\lim_{n \rightarrow \infty} C_\theta \geq \frac{1}{2\sqrt{\frac{4}{\theta} - 1} - 1}.
 		\end{align}
 	\end{proof}
 
-	Blahblahblah, any remarks about $\lambda$ go here.
+	The next two lemmas prove that $\delta_1$ and $\delta_4$ go to zero as $n \rightarrow \infty$. Since from Lemma \ref{lem:1Dlambda} we know that $\lambda$ is bounded above by a constant, this is enough for \eqref{eq:bound distance prob[w=0] and e^-lambda} to show that 
+	\begin{equation}
+		\lim_{n \rightarrow \infty} \prob\left[T_n < \frac{z + \ln n}{\theta}\right] = \euler^{-\lambda}.
+	\end{equation}
 
 	\begin{lemma}
 	\label{lem:delta1 goes to 0}
+		Let $\delta_1$ be as defined above in \eqref{eq:1D delta_1 definition}. Then
 		\begin{equation}
-			\lim_{n\rightarrow\infty} \delta_1 = 0
+			\lim_{n\rightarrow\infty} \delta_1 = 0.
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
+	Starting with the definition of $\delta_1$, we have
 		\begin{align}
-			\delta_1 &= \sum_{i = 1}^n \sum_{k = 0}^{2 b_n} \prob[X_i = 1, U_i = k] \expect \left| \frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|\\
+			\delta_1 &= %\sum_{i \in V}  \sum_{k \geq 0} \prob[X_i = 1, U_i = k] \expect \left|\frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|,\\
+			%&=
+			\sum_{i = 1}^n \sum_{k = 0}^{2 b_n} \prob[X_i = 1, U_i = k] \expect \left| \frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|,\\
 			&= n \sum_{k = 0}^{2 b_n} \expect \left|\prob[X_i = 1, U_i = k|W_i] - \prob[X_i = 1, U_i = k] \right|%\\
 			\label{eq: delta1 line 2}
 			% &\leq n \sup_{W_i} \sum_{k = 0}^{2 b_n} \left| \prob[X_i = 1, U_i = k|W_i] - \prob[X_i = 1, U_i = k] \right|
 		\end{align}
+		by the transitivity of the cycle.
 		Let $A$ be the event that the history of a vertex in $D_i$ merges with the history of a vertex in $B_i \cup \{i\}$. More formally,
 		\begin{equation}
 			A = \{ \exists j \in B_i \cup \{i\}, l \in D_i : \mathcal{H}_j \cap \mathcal{H}_l \neq \emptyset\}.
@@ -290,7 +300,7 @@
 			&= n (2b_n + 1) \expect\left[ \prob[A|W_i] + \prob[A] + \left|1 - \prob[A|W_i] - (1 - \prob[A])\right|\right]\\
 			&\leq n (2b_n + 1) \expect\left[ \prob[A|W_i] + \prob[A] + \prob[A|W_i] + \prob[A])\right]\\
 			&= 2 n (2b_n + 1) \left(\expect[\prob[A|W_i]] + \prob[A]\right)\\
-			&= 4 n (2b_n + 1) \prob[A]
+			&= 4 n (2b_n + 1) \prob[A].
 		\end{align}
 
 		Let $A_{j,k}$ denote the event that the histories of vertices $j$ and $k$ merge. That is,
@@ -307,37 +317,41 @@
 
 	\begin{lemma}
 	\label{lem:delta4 goes to 0}
+		Let $\delta_4$ be as defined above in \eqref{eq:1D delta_4 definition}. Then
 		\begin{equation}
-			\lim_{n\rightarrow\infty} \delta_4 = 0
+			\lim_{n\rightarrow\infty} \delta_4 = 0.
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
+		Starting with the definition of $\delta_4$, we have
 		\begin{align}
-			\delta_4 &= \sum_{i = 1}^n \left(\expect[X_i Z_i] + \expect[X_i]\expect[X_i + U_i + Z_i]\right)\\
-				&= \sum_{i=1}^n \expect[X_i Z_i] + \euler^{-z} \sum_{j \in \{i\}\cup B_i \cup C_i} \expect[X_j]\\
-				&= n \expect[X_i Z_i] + \frac{2\euler^{-2z}c_n}{n}\\
-				&= n \prob[X_i = 1] \expect[Z_i | X_i = 1] + \frac{2\euler^{-2z}c_n}{n}\\
-				&= \euler^{-z}\expect[Z_i | X_i = 1] + \frac{2\euler^{-2z}c_n}{n}
+			\delta_4 &= \sum_{i = 1}^n \left(\expect[X_i Z_i] + \expect[X_i]\expect[X_i + U_i + Z_i]\right),\\
+				&= n \prob[X_i = 1] \expect[Z_i | X_i = 1] + \euler^{-z} \hspace{-15pt} \sum_{j \in \{i\}\cup B_i \cup C_i} \hspace{-15pt} \expect[X_j],\\
+				% &= n \expect[X_i Z_i] + \frac{2\euler^{-2z}c_n}{n}\\
+				% &= n \prob[X_i = 1] \expect[Z_i | X_i = 1] + \frac{2\euler^{-2z}c_n}{n}\\
+				&= \euler^{-z}\expect[Z_i | X_i = 1] + \frac{(2c_n+1)\euler^{-2z}}{n}.
 		\end{align}
 		Now
 		\begin{align}
-			\expect[Z_i | X_i = 1] &= \sum_{j \in C_i} \prob[X_j = 1 | X_i = 1]\\
-			&= 2 \sum_{k = b_n + 1}^{c_n} \prob[X_{i+k} = 1 | X_i = 1]
+			\expect[Z_i | X_i = 1] &= \sum_{j \in C_i} \prob[X_j = 1 | X_i = 1],\\
+			&= 2 \sum_{k = b_n + 1}^{c_n} \prob[X_{i+k} = 1 | X_i = 1].
 		\end{align}
 		From Lemma \ref{lem:X_i+k given X_i},
 		\begin{align}
-			\expect[Z_i | X_i = 1] &\leq 2 \sum_{k = b_n + 1}^{c_n} \left(\frac{e^{-z}}{n} + 2\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k\right)\\
+			\expect[Z_i | X_i = 1] &\leq 2 \sum_{k = b_n + 1}^{c_n} \left(\frac{e^{-z}}{n} + 2\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k\right),\\
 				&\leq \frac{2(c_n - b_n)\euler^{-z}}{n} + 4(c_n - b_n)\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^{b_n + 1}.
 		\end{align}
-		Altogether
+		Altogether,
 		\begin{equation}
-			\delta_4 \leq \frac{2(c_n - b_n)\euler^{-z}}{n} + 4(c_n - b_n)\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^{b_n + 1} + \frac{2\euler^{-2z}c_n}{n}
+			\delta_4 \leq \frac{2(c_n - b_n)\euler^{-z}}{n} + 4(c_n - b_n)\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^{b_n + 1} + \frac{(2c_n + 1)\euler^{-2z}}{n}
 		\end{equation}
-		which goes to $0$ as $n \rightarrow \infty$.
+		which, recalling that $b_n = \ln(n)$ and $c_n = \ln(n)^2$, goes to $0$ as $n \rightarrow \infty$.
 	\end{proof}
 
 	\section{Additional Lemmas}
 	\label{sec:additional lemmas 1D}
+	This section contains the proofs for a number of lemmas concerning properties of the update histories on the cycle.
+
 	\begin{lemma}
 		\label{lem: A_ij bound}
 		Let $A_{i,j}$ be the event that the update history of vertex $i$ merges with the update history of vertex $j$. Then
