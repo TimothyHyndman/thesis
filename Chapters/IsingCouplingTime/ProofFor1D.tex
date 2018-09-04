@@ -455,9 +455,21 @@
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
-		There are two ways in which the update history of vertex $i+k$ can survive until time $0$. The update history can survive without intersecting with the update history of vertex $i$ or the update history of vertex $i+k$ can survive long enough to merge with the update history of vertex $i$ (whose surival we are conditioning on). (Note that these events are not mutually exclusive as the update history of vertex $i+k$ could merge with the update history of vertex $i$ after it reaches time $0$.) So we have
+		There are two ways in which the update history of vertex $i+k$ can survive until time $0$. The update history can survive without intersecting with the update history of vertex $i$ or the update history of vertex $i+k$ can merge with the update history of vertex $i$ (whose survival we are conditioning on). %(Note that these events are not mutually exclusive as the update history of vertex $i+k$ could merge with the update history of vertex $i$ after it reaches time $0$.) 
+		Breaking up the probability this way we have
 		\begin{align}
-			\prob[X_{i+k} = 1| X_i = 1] &\leq \prob[X_{i+k} = 1] + \prob[\mathcal{H}_i \cap \mathcal{H}_{i+k} \neq \emptyset | X_i = 1].
+			\prob[X_{i+k} = 1| X_i = 1] &= \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset | X_i = 1] \notag\\
+			&\phantom{=}+ \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} \neq \emptyset | X_i = 1].
+		\end{align}
+		If the histories of $i$ and $j$ do not intersect, then conditioning on $\mathcal{H}_i$ surviving does not affect the chance that $\mathcal{H}_j$ survives. However, conditioning on $\mathcal{H}_i$ surviving does make it more likely that the histories intersect. So
+		\begin{equation}
+			\prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset | X_i = 1] \leq \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset]
+		\end{equation}
+		and so
+		\begin{align}
+			\prob[X_{i+k} = 1| X_i = 1] &\leq \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset] \notag\\
+			&\phantom{=}+ \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} \neq \emptyset | X_i = 1],\\
+			&\leq \prob[X_{i+k} = 1] + \prob[\mathcal{H}_i \cap \mathcal{H}_{i+k} \neq \emptyset | X_i = 1].
 		\end{align}
 		The result follows from \eqref{eq:1D prob X_i} and Lemma \ref{lem:A_ij bound conditioned}.
 	\end{proof}
