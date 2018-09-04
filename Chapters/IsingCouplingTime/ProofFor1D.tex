@@ -354,18 +354,17 @@
 
 	\begin{lemma}
 		\label{lem: A_ij bound}
-		Let $A_{i,j}$ be the event that the update history of vertex $i$ merges with the update history of vertex $j$. Then
+		Let $i$ and $j$ be the indices of two vertices that are separated by distance $k$. The probability that the update history of vertex $i$ merges with the update history of vertex $j$ is bounded by
 		\begin{equation}
-			\prob[A_{i,j}] \leq 2\left(\frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}\right)^k
+			\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset] \leq 2\left(\frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}\right)^k.
 		\end{equation}
-		where $k = |i - j|$.
 	\end{lemma}
 	\begin{proof}
-		We note that, while the update histories survive, the distance between the update histories of $i$ and $j$ is a birth and death process that starts at $k = |i - j|$ and has birth and death rates, $\lambda = \mu = 1 - \theta$. Let $P(t)$ be such a process and define $s_0  = \inf\{t : P(t) = 0\}$ to be the first time the process reaches zero (this corresponds to the update histories merging). Let $s_d$ be exponentially distributed with rate $2\theta$ (this corresponds to the first time that one of the update histories dies). Then
+		We note that, while the update histories survive, the distance between the update histories of $i$ and $j$ is a birth and death process, travelling backwards in time from $t^*$, that starts at $k$ and has birth and death rates, $\lambda = \mu = 1 - \theta$. Let $P(t)$ be a birth and death process with these rates and define $s_0  = \inf\{t : P(t) = 0\}$ to be the first time the process reaches zero (this corresponds to the update histories merging). Let $s_d$ be exponentially distributed with rate $2\theta$ (this corresponds to the first time that one of the update histories dies). Then
 		\begin{align}
-		 	\prob[A_{i,j}] \leq 2 \prob_k(s_0 < s_d)
+		 	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset] \leq 2 \prob_k(s_0 < s_d),
 		 \end{align} 
-		 where $\prob_k$ indicates that $P(0) = k$. The factor of two comes from the fact that the update histories may meet by going the other direction around the cycle.
+		 where $\prob_k$ indicates that $P(0) = k$. The factor of two comes from the fact that the update histories may meet by going the other direction around the cycle. We also note that we allow $P(t)$ to continue beyond $t = t^*$, unlike our update histories which stop at time $0$. This does not present a problem as the effect of allowing this is to increase the size of our upper bound.
 
 		 At any time before $s_d$ there are three possibilities for what can happen to $P$ next. Either the next event is a birth with probability $(1 - \theta)/2$, the next event is a death with the same probability or we reach time $s_d$ with probability $\theta$. Writing $\zeta_k = \prob_k(s_0 < s_d)$ this gives us the recurrence relation
 		 \begin{align}
@@ -399,9 +398,9 @@
 
 	\begin{lemma}
 	\label{lem:A_ij bound conditioned}
-		Let $A_{i,j}$ be the event that the update history of vertex $i$ merges with the update history of vertex $j$. Then
+		Let $i$ and $j$ be the indices of two vertices that are separated by distance $k$. Then
 		\begin{equation}
-			\prob[A_{i,j}|X_{j} = 1] \leq 2\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k.
+			\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset|X_{j} = 1] \leq 2\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k.
 		\end{equation}
 		where $k = |i - j|$.
 	\end{lemma}
@@ -414,9 +413,9 @@
 
 		We note that, while $\mathcal{H}_i$ survives, the distance between $\mathcal{H}_i$ and $\bar{\mathcal{H}}_j$ is a birth and death process that starts at $k = |i - j|$ and has birth and death rates, $\lambda = \mu = (2 - \theta)/2$. Let $P(t)$ be such a process and define $s_0  = \inf\{t : P(t) = 0\}$ to be the first time the process reaches zero (this corresponds to the update histories merging). Let $s_d$ be exponentially distributed with rate $\theta$ (this corresponds to the update history of vertex $i$ dying). Then
 		\begin{align}
-		 	\prob[A_{i,j} | X_j = 1] \leq \prob[\mathcal{H}_i \cap \bar{\mathcal{H}}_j] \leq 2 \prob_k(s_0 < s_d)
+		 	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_j = 1] \leq \prob[\mathcal{H}_i \cap \bar{\mathcal{H}}_j] \leq 2 \prob_k(s_0 < s_d)
 		 \end{align} 
-		 where $\prob_k$ indicates that $P(0) = k$. The factor of two comes from the fact that the update histories may meet by going in either direction around the cycle.
+		 where $\prob_k$ indicates that $P(0) = k$. As in the proof of Lemma \ref{lem: A_ij bound}, the factor of two comes from the fact that the update histories may meet by going in either direction around the cycle and we note that we are allowing $P(t)$ to continue beyond $t = t^*$.
 
 		 At any time before $s_d$ there are three possibilities for what can happen to $P$ next. Either the next event is a birth with probability $(2 - \theta)/4$, the next event is a death with the same probability or we reach time $s_d$ with probability $\theta/2$. Writing $\zeta_k = \prob_k(s_0 < s_d)$ this gives us the recurrence relation
 		 \begin{align}
@@ -458,7 +457,7 @@
 	\begin{proof}
 		There are two ways in which the update history of vertex $i+k$ can survive until time $0$. The update history can survive without intersecting with the update history of vertex $i$ or the update history of vertex $i+k$ can survive long enough to merge with the update history of vertex $i$ (whose surival we are conditioning on). (Note that these events are not mutually exclusive as the update history of vertex $i+k$ could merge with the update history of vertex $i$ after it reaches time $0$.) So we have
 		\begin{align}
-			\prob[X_{i+k} = 1| X_i = 1] &\leq \prob[X_{i+k} = 1] + \prob[A_{i,i+k} | X_i = 1].
+			\prob[X_{i+k} = 1| X_i = 1] &\leq \prob[X_{i+k} = 1] + \prob[\mathcal{H}_i \cap \mathcal{H}_{i+k} \neq \emptyset | X_i = 1].
 		\end{align}
 		The result follows from \eqref{eq:1D prob X_i} and Lemma \ref{lem:A_ij bound conditioned}.
 	\end{proof}
