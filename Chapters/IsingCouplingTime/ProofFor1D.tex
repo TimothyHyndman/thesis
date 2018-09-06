@@ -347,7 +347,7 @@
 			\prob[A] &\leq \sum_{j = 1}^n \prob[\mathcal{H}_i \nsubseteq B(i, (c_n - b_n)/2) \times [0, t^*]]\\
 				&= n \prob\left[\bigcup_{u \in [0, t^*]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, (c_n - b_n)/2)\right]
 		\end{align}
-		Combining this with Lemma \ref{lem:prob history contained in ball}, we get that
+		Combining this with Lemma \ref{lem:1D prob history contained in ball}, we get that
 		\begin{equation}
 			\delta_1 \leq 4n^2(2b_n + 1) \exp\left(3(z + \ln n)/\theta - \ln 2(c_n - b_n) /2 \right)
 		\end{equation}
@@ -424,7 +424,7 @@
 
 	The following Lemma bounds how fast updates can percolate through the cycle. The proof is a slight modification of a similar one in \cite{Lubetzky2016-wd}.
 	\begin{lemma}
-	\label{lem:prob history contained in ball}
+	\label{lem:1D prob history contained in ball}
 		Let $B(i, l)$ indicate the set of vertices at distance $l$ or smaller from vertex $i$. The probability that the history of vertex $i$ escapes $B(i,l)$ in time $s$ is bounded by
 		\begin{equation}
 			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] \leq \exp\left(3s - l \ln 2 \right).
