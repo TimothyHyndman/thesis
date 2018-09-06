@@ -394,9 +394,9 @@
 		\begin{equation}
 			A_2 = \{\exists j \in D_i, \exists t \in [0, t^*] : \mathcal{H}_j(t) \cap C_i^c \neq \emptyset\}
 		\end{equation}
-		as well as their intersection
+		as well as their union
 		\begin{equation}
-			A = A_1 \cap A_2.
+			A = A_1 \cup A_2.
 		\end{equation}
 		Then
 		\begin{equation}
@@ -404,7 +404,11 @@
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
-		If $A_1^\complement$ holds then the events $\{X_1 = 1\}$ and $\{U_i = j\}$ depend only on the values of the update sequence inside $C_i^c$. If $A_2^\complement$ holds then the
+		If $A_1^\complement$ holds, then the events $\{X_1 = 1\}$ and $\{U_i = j\}$ depend only on the values of the update sequence inside $C_i^c$. If $A_2^\complement$ holds then the events $\{W_i = k\}$, $k \geq 0$, depend only on the values of the update sequence outside of $C_i^c$. Since the update sequences of each vertex are independent of each other vertex, if $A_2^\complement$ holds, conditioning on $W_i$ does not affect the update sequences inside $C_i^c$ and so 
+		\begin{equation}
+			\prob[X_i = 1, U_i = j | A^\complement, W_i] = \prob[X_i = 1, U_i = j | A^\complement].
+		\end{equation}
+		[WOULD BE NICE TO SAY THIS MORE MATHEMATICALLY.]
 	\end{proof}
 
 	\begin{lemma}
