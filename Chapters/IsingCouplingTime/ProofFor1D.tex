@@ -272,7 +272,7 @@
 		\end{equation}
 		as $n \rightarrow \infty$ exists. Since we already have bounds, it is sufficient to show that it is monotonic.
 
-		NEED TO SHOW THAT THING ACTUALLY CONVERGES
+		[NEED TO SHOW THAT THING ACTUALLY CONVERGES]
 
 	\end{proof}
 
@@ -301,7 +301,7 @@
 		by the transitivity of the cycle.
 		Let
 		\begin{equation}
-			C_i^c = \{j : |j - i| \leq (b_n - c_n)/2\}
+			C_i^c = \{j : |j - i| \leq (c_n + b_n)/2\}
 		\end{equation}
 		be the set of vertices within distance $(b_n + c_n)/2$ of $i$ and define the events
 		\begin{equation}
@@ -331,16 +331,27 @@
 			&= 4 n (2b_n + 1) \prob[A].
 		\end{align}
 
-		Let $A_{j,k}$ denote the event that the histories of vertices $j$ and $k$ merge. That is,
-		\begin{equation}
-			A_{j,k} = \{\mathcal{H}_j \cap \mathcal{H}_k \neq \emptyset\}.
-		\end{equation}
-		By a union bound,
+		% Let $A_{j,k}$ denote the event that the histories of vertices $j$ and $k$ merge. That is,
+		% \begin{equation}
+		% 	A_{j,k} = \{\mathcal{H}_j \cap \mathcal{H}_k \neq \emptyset\}.
+		% \end{equation}
+		% By a union bound,
+		% \begin{align}
+		% 	\delta_1 &\leq 4 n (2b_n + 1) \sum_{j \in B_i \cup \{i\}} \sum_{k \in D_i} \prob[A_{j,k}]\\
+		% 	&\leq 8n^2(2b_n + 1)^2  \left(\frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}\right)^{c_n - b_n}
+		% \end{align}
+		% by Lemma \ref{lem: A_ij bound}. This goes to $0$ as $n \rightarrow \infty$.
+		For either $A_1$ or $A_2$ to hold, there must exists a history that spreads at least distance $(c_n - b_n) / 2$ away from its starting vertex. 
+		By a union bound
 		\begin{align}
-			\delta_1 &\leq 4 n (2b_n + 1) \sum_{j \in B_i \cup \{i\}} \sum_{k \in D_i} \prob[A_{j,k}]\\
-			&\leq 8n^2(2b_n + 1)^2  \left(\frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}\right)^{c_n - b_n}
+			\prob[A] &\leq \sum_{j = 1}^n \prob[\mathcal{H}_i \nsubseteq B(i, (c_n - b_n)/2) \times [0, t^*]]\\
+				&= n \prob\left[\bigcup_{u \in [0, t^*]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, (c_n - b_n)/2)\right]
 		\end{align}
-		by Lemma \ref{lem: A_ij bound}. This goes to $0$ as $n \rightarrow \infty$.
+		Combining this with Lemma \ref{lem:prob history contained in ball}, we get that
+		\begin{equation}
+			\delta_1 \leq 4n^2(2b_n + 1) \exp\left(3(z + \ln n)/\theta - \ln 2(c_n - b_n) /2 \right)
+		\end{equation}
+		which goes to $0$ as $n \rightarrow \infty$.
 	\end{proof}
 
 	\begin{lemma}
@@ -411,49 +422,87 @@
 		[WOULD BE NICE TO SAY THIS MORE MATHEMATICALLY.]
 	\end{proof}
 
+	The following Lemma bounds how fast updates can percolate through the cycle. The proof is a slight modification of a similar one in \cite{Lubetzky2016-wd}.
 	\begin{lemma}
-		\label{lem: A_ij bound}
-		Let $i$ and $j$ be the indices of two vertices that are separated by distance $k$. The probability that the update history of vertex $i$ merges with the update history of vertex $j$ is bounded by
+	\label{lem:prob history contained in ball}
+		Let $B(i, l)$ indicate the set of vertices at distance $l$ or smaller from vertex $i$. The probability that the history of vertex $i$ escapes $B(i,l)$ in time $s$ is bounded by
 		\begin{equation}
-			\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset] \leq 2\left(\frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}\right)^k.
+			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] \leq \exp\left(3s - l \ln 2 \right).
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
-		We note that, while the update histories survive, the distance between the update histories of $i$ and $j$ is a birth and death process, travelling backwards in time from $t^*$, that starts at $k$ and has birth and death rates, $\lambda = \mu = 1 - \theta$. Let $P(t)$ be a birth and death process with these rates and define $s_0  = \inf\{t : P(t) = 0\}$ to be the first time the process reaches zero (this corresponds to the update histories merging). Let $s_d$ be exponentially distributed with rate $2\theta$ (this corresponds to the first time that one of the update histories dies). Then
+		Let $\mathcal{W} = \{\vect{w} = (w_1, w_2, \dots, w_l) : w_1 = i, ||w_{k-1} - w_k|| = 1\}$ be the set of length $l$ sequences of adjacent vertices starting at vertex $i$. If $\mathcal{H}_i$ contains any vertex outside $B(i, l)$ at a time $u \in [t^* - s, t^*]$ then there must be some sequence $w \in \mathcal{W}$ such that each $w_i$ was updated at some time $t^* > t_i > t^* - s$ and $t_{k-1} > t_k$. Call this event $M_w$. For any particular sequence $w$,
+		\begin{equation}
+			\prob[M_w] = \prob[\mathrm{Po}(s) \geq l]
+		\end{equation}
+		where $\mathrm{Po}(s)$ is Poisson with rate $s$. By a union bound over $\mathcal{W}$,
+		\begin{equation}
+			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] \leq 2^{l-1} \prob[\mathrm{Po}(s) \geq l].
+		\end{equation}
+		The moment generating function of a poisson random variable with rate $s$ is
+		\begin{equation}
+			M(t) = \exp\left(s\left(\euler^t - 1\right)\right).
+		\end{equation}
+		Using a Chernoff bound we have for every $t > 0$,
+		\begin{equation}
+			\prob[\mathrm{Po}(s) \geq l] \leq \exp\left(s\left(\euler^t - 1\right) - t l\right).
+		\end{equation}
+		Overall we have
 		\begin{align}
-		 	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset] \leq 2 \prob_k(s_0 < s_d),
-		 \end{align} 
-		 where $\prob_k$ indicates that $P(0) = k$. The factor of two comes from the fact that the update histories may meet by going the other direction around the cycle. We also note that we allow $P(t)$ to continue beyond $t = t^*$, unlike our update histories which stop at time $0$. This does not present a problem as the effect of allowing this is to increase the size of our upper bound.
-
-		 At any time before $s_d$ there are three possibilities for what can happen to $P$ next. Either the next event is a birth with probability $(1 - \theta)/2$, the next event is a death with the same probability or we reach time $s_d$ with probability $\theta$. Writing $\zeta_k = \prob_k(s_0 < s_d)$ this gives us the recurrence relation
-		 \begin{align}
-		 	\zeta_k = \frac{1 - \theta}{2} \zeta_{k-1} + \frac{1 - \theta}{2} \zeta_{k+1}
-		 \end{align}
-		 which is subject to the conditions 
-		 \begin{align}
-		 	\label{eq:zetacondition1}
-		 	\zeta_0 &= 1\\
-		 	\zeta_k &\leq 1, \, \forall k \in \mathbb{N}.
-		 	\label{eq:zetacondition2}
-		 \end{align} 
-		 This recurrence has characteristic equation
-		 \begin{align}
-		 	x^2 - \frac{2}{1 - \theta} x + 1 = 0
-		 \end{align}
-		 which has roots
-		 \begin{align}
-		 	r_1 &= \frac{1 + \sqrt{\theta(2 - \theta)}}{1 - \theta}\\
-		 	r_2 &= \frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}
-		 \end{align}
-		 and so
-		 \begin{align}
-		 	\zeta_k = a r_1^k + b r_2^k
-		 \end{align}
-		 where $a$ and $b$ are constants to be determined from \eqref{eq:zetacondition1} and \eqref{eq:zetacondition2}. We note that $r_1 \geq 1, \forall \theta \in [0,1]$ and so from \eqref{eq:zetacondition2} we have that $a = 0$. Finally from \eqref{eq:zetacondition1}, $b = 1$ and so
-		 \begin{equation}
-		 	\zeta_k = \left(\frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}\right)^k.
-		 \end{equation}
+			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] &\leq 2^{l-1} \exp\left(s\left(\euler^t - 1\right) - t l\right)\\
+			&\leq \exp\left(s\left(\euler^t - 1\right) + l (\ln 2 - t) \right).
+		\end{align}
+		Choosing $t = 2 \ln 2$,
+		\begin{align}
+			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] &\leq \exp\left(3 s - l \ln 2 \right).%\\
+			% &\leq \exp\left(s \Delta^2 - l \ln \Delta \right).
+		\end{align}
 	\end{proof}
+
+
+	% \begin{lemma}
+	% 	\label{lem: A_ij bound}
+	% 	Let $i$ and $j$ be the indices of two vertices that are separated by distance $k$. The probability that the update history of vertex $i$ merges with the update history of vertex $j$ is bounded by
+	% 	\begin{equation}
+	% 		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset] \leq 2\left(\frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}\right)^k.
+	% 	\end{equation}
+	% \end{lemma}
+	% \begin{proof}
+	% 	We note that, while the update histories survive, the distance between the update histories of $i$ and $j$ is a birth and death process, travelling backwards in time from $t^*$, that starts at $k$ and has birth and death rates, $\lambda = \mu = 1 - \theta$. Let $P(t)$ be a birth and death process with these rates and define $s_0  = \inf\{t : P(t) = 0\}$ to be the first time the process reaches zero (this corresponds to the update histories merging). Let $s_d$ be exponentially distributed with rate $2\theta$ (this corresponds to the first time that one of the update histories dies). Then
+	% 	\begin{align}
+	% 	 	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset] \leq 2 \prob_k(s_0 < s_d),
+	% 	 \end{align} 
+	% 	 where $\prob_k$ indicates that $P(0) = k$. The factor of two comes from the fact that the update histories may meet by going the other direction around the cycle. We also note that we allow $P(t)$ to continue beyond $t = t^*$, unlike our update histories which stop at time $0$. This does not present a problem as the effect of allowing this is to increase the size of our upper bound.
+
+	% 	 At any time before $s_d$ there are three possibilities for what can happen to $P$ next. Either the next event is a birth with probability $(1 - \theta)/2$, the next event is a death with the same probability or we reach time $s_d$ with probability $\theta$. Writing $\zeta_k = \prob_k(s_0 < s_d)$ this gives us the recurrence relation
+	% 	 \begin{align}
+	% 	 	\zeta_k = \frac{1 - \theta}{2} \zeta_{k-1} + \frac{1 - \theta}{2} \zeta_{k+1}
+	% 	 \end{align}
+	% 	 which is subject to the conditions 
+	% 	 \begin{align}
+	% 	 	\label{eq:zetacondition1}
+	% 	 	\zeta_0 &= 1\\
+	% 	 	\zeta_k &\leq 1, \, \forall k \in \mathbb{N}.
+	% 	 	\label{eq:zetacondition2}
+	% 	 \end{align} 
+	% 	 This recurrence has characteristic equation
+	% 	 \begin{align}
+	% 	 	x^2 - \frac{2}{1 - \theta} x + 1 = 0
+	% 	 \end{align}
+	% 	 which has roots
+	% 	 \begin{align}
+	% 	 	r_1 &= \frac{1 + \sqrt{\theta(2 - \theta)}}{1 - \theta}\\
+	% 	 	r_2 &= \frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}
+	% 	 \end{align}
+	% 	 and so
+	% 	 \begin{align}
+	% 	 	\zeta_k = a r_1^k + b r_2^k
+	% 	 \end{align}
+	% 	 where $a$ and $b$ are constants to be determined from \eqref{eq:zetacondition1} and \eqref{eq:zetacondition2}. We note that $r_1 \geq 1, \forall \theta \in [0,1]$ and so from \eqref{eq:zetacondition2} we have that $a = 0$. Finally from \eqref{eq:zetacondition1}, $b = 1$ and so
+	% 	 \begin{equation}
+	% 	 	\zeta_k = \left(\frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}\right)^k.
+	% 	 \end{equation}
+	% \end{proof}
 
 	\begin{lemma}
 	\label{lem:A_ij bound conditioned}
@@ -474,7 +523,10 @@
 		\begin{align}
 		 	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_j = 1] \leq \prob[\mathcal{H}_i \cap \bar{\mathcal{H}}_j] \leq 2 \prob_k(s_0 < s_d)
 		 \end{align} 
-		 where $\prob_k$ indicates that $P(0) = k$. As in the proof of Lemma \ref{lem: A_ij bound}, the factor of two comes from the fact that the update histories may meet by going in either direction around the cycle and we note that we are allowing $P(t)$ to continue beyond $t = t^*$.
+		 where $\prob_k$ indicates that $P(0) = k$. 
+		 The factor of two comes from the fact that the update histories may meet by going the other direction around the cycle. We also note that we allow $P(t)$ to continue beyond $t = t^*$, unlike our update histories which stop at time $0$. This does not present a problem as the effect of allowing this is to increase the size of our upper bound.
+
+		 % As in the proof of Lemma \ref{lem: A_ij bound}, the factor of two comes from the fact that the update histories may meet by going in either direction around the cycle and we note that we are allowing $P(t)$ to continue beyond $t = t^*$.
 
 		 At any time before $s_d$ there are three possibilities for what can happen to $P$ next. Either the next event is a birth with probability $(2 - \theta)/4$, the next event is a death with the same probability or we reach time $s_d$ with probability $\theta/2$. Writing $\zeta_k = \prob_k(s_0 < s_d)$ this gives us the recurrence relation
 		 \begin{align}
@@ -521,10 +573,14 @@
 			&\phantom{=}+ \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} \neq \emptyset | X_i = 1].
 		\end{align}
 		If the histories of $i$ and $j$ do not intersect, then conditioning on $\mathcal{H}_i$ surviving does not affect the chance that $\mathcal{H}_j$ survives. However, conditioning on $\mathcal{H}_i$ surviving does make it more likely that the histories intersect. So
+		% \begin{align}
+		% 	\prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset | X_i = 1] &\leq \prob[X_{i+k} = 1| \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset, X_i = 1]\\
+		% 	&\leq \prob[X_{i+k} = 1]
+		% \end{align}
 		\begin{equation}
 			\prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset | X_i = 1] \leq \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset]
 		\end{equation}
-		and so
+		[THIS NEEDS FIXING TOO] and so
 		\begin{align}
 			\prob[X_{i+k} = 1| X_i = 1] &\leq \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset] \notag\\
 			&\phantom{=}+ \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} \neq \emptyset | X_i = 1],\\
