@@ -222,7 +222,6 @@
 			\frac{1}{2\sqrt{\frac{4}{\theta} - 1} - 1} \leq C_\theta \leq 1.
 		\end{equation}
 	\end{lemma}
-	NEED TO SHOW THAT THING ACTUALLY CONVERGES
 	\begin{proof}
 	Beginning with the definition of $\lambda$, we have
 		\begin{align}
@@ -234,16 +233,17 @@
 		where we have used that $X_i$ is either zero or one, \eqref{eq:1D prob X_i}, and the transitivity of the graph in each step respectively.
 		Clearly 
 		\begin{align}
-			\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] \leq 1
+			\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] \leq 1.
 		\end{align}
-		and so $C_\theta \leq 1$.
+		% and so $C_\theta \leq 1$.
 
 		By Jensen's inequality
 		\begin{align}
 			\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] &\geq \frac{1}{\expect[1 + U_i | X_i = 1]}\\
 				&= \frac{1}{1 + \expect[U_i | X_i = 1]}.
 		\end{align}
-		so in order to find a lower bound for $C_\theta$ we will find an upper bound to $\expect[U_i | X_i = 1]$. Now
+		% so in order to find a lower bound for $C_\theta$ we will find an upper bound to $\expect[U_i | X_i = 1]$. 
+		Now
 		\begin{align}
 			\expect[U_i | X_i = 1] &= \sum_{j \in B_i} \prob[X_j = 1| X_i = 1]\\
 				&= \sum_{k=1}^{b_n} \sum_{|j - i| = k} \prob[X_j = 1| X_i = 1]\\
@@ -257,8 +257,17 @@
 		\end{align}
 		Finally, as $n \rightarrow \infty$ the first term vanishes and
 		\begin{align}
-			\lim_{n \rightarrow \infty} C_\theta \geq \frac{1}{2\sqrt{\frac{4}{\theta} - 1} - 1}.
+			\liminf_{n \rightarrow \infty} \expect \left[\frac{1}{1 + U_i}| X_i = 1\right] \geq \frac{1}{2\sqrt{\frac{4}{\theta} - 1} - 1}.
 		\end{align}
+
+		To complete the proof, we need to show that the limit of 
+		\begin{equation}
+			\expect \left[\frac{1}{1 + U_i}| X_i = 1\right]
+		\end{equation}
+		as $n \rightarrow \infty$ exists.
+
+		NEED TO SHOW THAT THING ACTUALLY CONVERGES
+
 	\end{proof}
 
 	The next two lemmas prove that $\delta_1$ and $\delta_4$ go to zero as $n \rightarrow \infty$. Since from Lemma \ref{lem:1Dlambda} we know that $\lambda$ is bounded above by a constant, this is enough for \eqref{eq:bound distance prob[w=0] and e^-lambda} to show that 
