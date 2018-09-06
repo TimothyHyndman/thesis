@@ -299,11 +299,24 @@
 			% &\leq n \sup_{W_i} \sum_{k = 0}^{2 b_n} \left| \prob[X_i = 1, U_i = k|W_i] - \prob[X_i = 1, U_i = k] \right|
 		\end{align}
 		by the transitivity of the cycle.
-		Let $A$ be the event that the history of a vertex in $D_i$ merges with the history of a vertex in $B_i \cup \{i\}$. More formally,
+		Let
 		\begin{equation}
-			A = \{ \exists j \in B_i \cup \{i\}, l \in D_i : \mathcal{H}_j \cap \mathcal{H}_l \neq \emptyset\}.
+			C_i^c = \{j : |j - i| \leq (b_n - c_n)/2\}
 		\end{equation}
-		We note that if $A$ does not happen, then $W_i$ cannot affect $X_i$ or $U_i$. That is,
+		be the set of vertices within distance $(b_n + c_n)/2$ of $i$ and define the events
+		\begin{equation}
+			A_1 = \{\exists j \in B_i \cup \{i\}, \exists t \in [0, t^*] : \mathcal{H}_j(t) \nsubseteq  C_i^c\}
+		\end{equation}
+		and
+		\begin{equation}
+			A_2 = \{\exists j \in D_i, \exists t \in [0, t^*] : \mathcal{H}_j(t) \cap C_i^c \neq \emptyset\}
+		\end{equation}
+		as well as their intersection
+		\begin{equation}
+			A = A_1 \cap A_2.
+		\end{equation}
+
+		From Lemma \ref{lem:conditioning on A removes conditioning on W},
 		\begin{equation}
 			\prob[X_i = 1, U_i = j | A^\complement, W_i] = \prob[X_i = 1, U_i = j | A^\complement].
 		\end{equation} 
@@ -366,6 +379,33 @@
 	\section{Additional Lemmas}
 	\label{sec:additional lemmas 1D}
 	This section contains the proofs for a number of lemmas concerning properties of the update histories on the cycle.
+
+	\begin{lemma}
+	\label{lem:conditioning on A removes conditioning on W}
+		Let $i$ be a vertex in the cycle and let
+		\begin{equation}
+			C_i^c = \{j : |j - i| \leq (b_n - c_n)/2\}
+		\end{equation}
+		be the set of vertices within distance $(b_n + c_n)/2$ of $i$. Define the events
+		\begin{equation}
+			A_1 = \{\exists j \in B_i \cup \{i\}, \exists t \in [0, t^*] : \mathcal{H}_j(t) \nsubseteq  C_i^c\}
+		\end{equation}
+		and
+		\begin{equation}
+			A_2 = \{\exists j \in D_i, \exists t \in [0, t^*] : \mathcal{H}_j(t) \cap C_i^c \neq \emptyset\}
+		\end{equation}
+		as well as their intersection
+		\begin{equation}
+			A = A_1 \cap A_2.
+		\end{equation}
+		Then
+		\begin{equation}
+			\prob[X_i = 1, U_i = j | A^\complement, W_i] = \prob[X_i = 1, U_i = j | A^\complement].
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		If $A_1^\complement$ holds then the events $\{X_1 = 1\}$ and $\{U_i = j\}$ depend only on the values of the update sequence inside $C_i^c$. If $A_2^\complement$ holds then the
+	\end{proof}
 
 	\begin{lemma}
 		\label{lem: A_ij bound}
