@@ -372,21 +372,21 @@
 				&= n \prob[X_i = 1] \expect[Z_i | X_i = 1] + \euler^{-z} \hspace{-15pt} \sum_{j \in \{i\}\cup B_i \cup C_i} \hspace{-15pt} \expect[X_j],\\
 				% &= n \expect[X_i Z_i] + \frac{2\euler^{-2z}c_n}{n}\\
 				% &= n \prob[X_i = 1] \expect[Z_i | X_i = 1] + \frac{2\euler^{-2z}c_n}{n}\\
-				&= \euler^{-z}\expect[Z_i | X_i = 1] + \frac{(2c_n+1)\euler^{-2z}}{n}.
+				&= \euler^{-z}\expect[Z_i | X_i = 1] + \frac{(2\lfloor c_n\rfloor+1)\euler^{-2z}}{n}.
 		\end{align}
 		Now
 		\begin{align}
 			\expect[Z_i | X_i = 1] &= \sum_{j \in C_i} \prob[X_j = 1 | X_i = 1],\\
-			&= 2 \sum_{k = b_n + 1}^{c_n} \prob[X_{i+k} = 1 | X_i = 1].
+			&= 2 \sum_{k = \lfloor b_n \rfloor + 1}^{\lfloor c_n\rfloor} \prob[X_{i+k} = 1 | X_i = 1].
 		\end{align}
 		From Lemma \ref{lem:X_i+k given X_i},
 		\begin{align}
-			\expect[Z_i | X_i = 1] &\leq 2 \sum_{k = b_n + 1}^{c_n} \left(\frac{e^{-z}}{n} + 2\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k\right),\\
-				&\leq \frac{2(c_n - b_n)\euler^{-z}}{n} + 4(c_n - b_n)\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^{b_n + 1}.
+			\expect[Z_i | X_i = 1] &\leq 2 \sum_{k = \lfloor b_n\rfloor + 1}^{\lfloor c_n\rfloor} \left(\frac{e^{-z}}{n} + 2\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k\right),\\
+				&\leq \frac{2(c_n - b_n + 1)\euler^{-z}}{n} + 4(c_n - b_n + 1)\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^{b_n + 1}.
 		\end{align}
 		Altogether,
 		\begin{equation}
-			\delta_4 \leq \frac{2(c_n - b_n)\euler^{-z}}{n} + 4(c_n - b_n)\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^{b_n + 1} + \frac{(2c_n + 1)\euler^{-2z}}{n}
+			\delta_4 \leq \frac{2(c_n - b_n + 1)\euler^{-z}}{n} + 4(c_n - b_n + 1)\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^{b_n + 1} + \frac{(2c_n + 1)\euler^{-2z}}{n}
 		\end{equation}
 		which, recalling that $b_n = \ln(n)$ and $c_n = \ln(n)^2$, goes to $0$ as $n \rightarrow \infty$.
 	\end{proof}
