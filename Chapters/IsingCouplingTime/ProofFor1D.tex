@@ -4,7 +4,13 @@
 
 \lhead{Chapter \ref{Ch:1D}. \emph{The Coupling Time on the Cycle}}
 
-	In this chapter we consider the Ising heat-bath Glauber dynamics (as described in Section \ref{sec:heat-bath glauber dynamics definition}) on the cycle $G_n = (\mathbb{Z}/n\mathbb{Z})$. The object of interest is the coupling time, $T_n$, which was defined in Section \ref{sec:the coupling time} but whose definition will be modified slightly in Section \ref{sec:information percolation on the cycle} to allow for simpler analysis. The main result establishes that $T_n$ converges in distribution to a Gumbel distribution at all temperatures. This confirms, for $d = 1$, a conjecture by \citeauthor{Collevecchio2017-nq} that the coupling time of the Ising heat-bath process on the lattice $G_L = (\mathbb{Z}/L\mathbb{Z})^d$ converges to a Gumbel distribution as $L \rightarrow \infty$ for all $\beta < \beta_C$ \cite[Conjecture 7.1]{Collevecchio2017-nq} (We treat higher dimensions, and more generally any vertex transitive graphs, in Chapter \ref{Ch:GeneralResults}). Of course, in one dimension, all temperatures are part of the high temperature regime [CITE], and likewise our result holds for any inverse-temperature $\beta$.
+	In this chapter we consider the Ising heat-bath Glauber dynamics (as described in Section \ref{sec:heat-bath glauber dynamics definition}) on the cycle $G_n = (\mathbb{Z}/n\mathbb{Z})$. The object of interest is the coupling time, $T_n$, which was defined in Section \ref{sec:the coupling time} but whose definition will be modified slightly in Section \ref{sec:information percolation on the cycle} to allow for simpler analysis. The main result is Theorem \ref{thm:Coupling Distribution on Cycle} which establishes that $T_n$ converges in distribution to a Gumbel distribution at all temperatures. This confirms, for $d = 1$, a conjecture by \citeauthor{Collevecchio2017-nq} that the coupling time of the Ising heat-bath process on the lattice $G_L = (\mathbb{Z}/L\mathbb{Z})^d$ converges to a Gumbel distribution as $L \rightarrow \infty$ for all $\beta < \beta_C$ \cite[Conjecture 7.1]{Collevecchio2017-nq} (We treat higher dimensions, and more generally any vertex transitive graphs, in Chapter \ref{Ch:GeneralResults}). Of course, in one dimension, all temperatures are part of the high temperature regime [CITE], and likewise our result holds for any inverse-temperature $\beta$.
+
+	There is some intuition behind why we might expect that the coupling time converges to a Gumbel distribution. It is based on the belief that when the temperature is in the high-temperature regime, the dynamics behave qualitatively as if $\beta = 0$. In the $\beta = 0$ case, the spins update independently of their neighbours, and thus the top and bottom chains can be coupled so that they agree on each vertex that has been updated. The coupling time is then precisely the time it takes for each vertex to be updated. This corresponds to the coupon collector's problem, which is known to have a Gumbel limit \cite{Erdos1961-ti}.
+
+	[WHAT IT MEANS]
+
+	[WHATS THE POINT?]
 
 	\begin{theorem}
 	\label{thm:Coupling Distribution on Cycle}
@@ -18,13 +24,7 @@
 		\end{equation}
 	\end{theorem}
 
-	The proof of Theorem \ref{thm:Coupling Distribution on Cycle} will be given in Section \ref{sec:proof thm coupling cycle} after the essential preliminaries are presented.
-
-	[INTUITIVE HANDWAVING 'ROADMAP' OF PROOF]
-
-	[WHAT IT MEANS]
-
-	[WHATS THE POINT?]
+	The proof of Theorem \ref{thm:Coupling Distribution on Cycle} will be given in Section \ref{sec:proof thm coupling cycle} after the essential preliminaries are presented. In Section \ref{sec:information percolation on the cycle} we describe some modified dynamics and show that the coupling time we construct from these has the same distribution as the coupling time defined in Section \ref{sec:the coupling time}. Then in Section \ref{sec:1D problem setup} we outline the overall approach to the proof and define some essential quantities. Finally, Section \ref{sec:additional lemmas 1D} contains additional lemmas that are used in Section \ref{sec:proof thm coupling cycle}.
 
 	\section{A new coupling on the cycle}
 	\label{sec:information percolation on the cycle}
@@ -137,6 +137,7 @@
 	since our histories die at rate $\theta$.
 
 	\section{Problem Setup}
+	\label{sec:1D problem setup}
 	In order to prove Theorem \ref{thm:Coupling Distribution on Cycle}, we will actually prove a stronger statement using Theorem \ref{thm: compound poisson approximation}. The general idea is that at some fixed time $t^*$ we will count the number of vertices at which the bottom and top chains differ. This number is a random variable, which we will call $W$, and we can bound the total variation distance of its distribution with that of an appropriate compound poisson distribution. As a special case, we can use this bound as a bound on the probability that $W$ is zero. Of course, if $W$ is zero then the top and bottom chains must have coupled and so we can use this to establish Theorem \ref{thm:Coupling Distribution on Cycle}.
 
 	Bounding the total variation distance between $W$ and the compound Poisson will be done using compound Poisson approximation as described in \cite{Barbour2001-nh}. This paper reviews a number of different methods by which approximations may be made. The specific method that we will employ is based on Stein's method for the compound Poisson distribution, introduced in \cite{Barbour1992-mc}.
