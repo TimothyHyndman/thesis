@@ -209,10 +209,70 @@ The following corollary is then straightfoward.
 \end{proof}
 
 \subsection{Additional Lemmas}
+% \begin{lemma}
+% 	\label{lem:intersecting histories bound}
+% 	\begin{equation}
+% 		\prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset] \leq \exp(2\alpha) \exp(-\lambda |j - k|).
+% 	\end{equation}
+% \end{lemma}
+% \begin{proof}
+% The following is based on the proof used in Section 3.2 of \cite{Lubetzky2014-po}.
+
+% We first relax our histories to our alternative construction by observing that
+% \begin{equation}
+% 	\prob[\mathcal{H}_j \cap \mathcal{H}_k \neq \emptyset] \leq \prob[\hat{\mathcal{H}}_j \cap \hat{\mathcal{H}}_k \neq \emptyset].
+% \end{equation}
+
+% Let $W_s = |\hat{\mathcal{H}}_{\{j, k\}} (t^* - s)|$ and let $Y_s = \#\left\{ \left( (u,t), (v,t) \right) \in \hat{\mathcal{H}}_{\{j, k\}}: t \in [t^* - s, t^*) \right\}$ count the total number of spatial edges observed in the history by time $t^* - s$. For $\hat{\mathcal{H}}_j$ and $\hat{\mathcal{H}}_k$ to intersect at time $t^* - s$, there must be enough spatial edges for the histories to reach each other. That is, we require that
+% \begin{equation}
+% 	Y_s \geq |i - j|.
+% \end{equation}
+
+% Initially, $W_0 = 2$ and $Y_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s)$ such that $\bar{W}_s \geq W_s$ and $\bar{Y}_s \geq Y_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s) = (2, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$, and at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$.
+
+% Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s \right)$ where $\alpha$ and $\lambda$ are some fixed constants yet to be determined. We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then
+% \begin{align}
+% 	\expect\left[Q_{s_0 + h} - Q_{s_0}| Q_{s_0}\right] &= h \theta \bar{W}_{s_0} \left(\exp(\alpha (\bar{W}_{s_0} - 1) + \lambda \bar{Y}_{s_0}) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0})\right) + \\
+% 	&\hphantom{= .} h (1 - \theta) \bar{W}_{s_0} \left( \exp(\alpha (\bar{W}_{s_0} + \Delta) + \lambda (\bar{Y}_{s_0} + \Delta)) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0}) \right) + \notag\\
+% 	&\hphantom{= .} \mathcal{O}(h^2) \notag\\
+% 	&= \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)h \bar{W}_{s_0} Q_{s_0} + \mathcal{O}(h^2).
+% \end{align}
+% Dividing through by $h$ and taking $h$ to $0$, we have
+% \begin{equation}
+% 	\left.\frac{d}{ds} \expect\left[Q_{s} | Q_{s_0}\right] \right|_{s = s_0} = \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)\bar{W}_{s_0} Q_{s_0}
+% \end{equation}
+% which is negative for $\theta$ sufficiently close to $1$. Hence $Q_s$ is a supermartingale for sufficiently large $\theta$.
+
+% Define the stopping time 
+% \begin{equation}
+% 	\tau = \inf\{s: \bar{W}_s = 0\}.
+% \end{equation}
+% Since $(\bar{W}_s, \bar{Y}_s) \geq (W_s, Y_s)$, we have that $W_\tau = 0$ which corresponds to the event that both histories, $\mathcal{H}_j$ and $\mathcal{H}_k$, have terminated by time $\tau$. Hence
+% \begin{equation}
+% 	\prob[\hat{\mathcal{H}}_j \cap \hat{\mathcal{H}}_k \neq \emptyset] \leq \prob[Y_\tau \geq |j-k|].
+% \end{equation}
+% Now
+% \begin{equation}
+% 	\expect[\exp(\lambda Y_\tau)] \leq \expect[\exp(\lambda\bar{Y}_\tau)].
+% \end{equation}
+% and from optional stopping [FIGURE THIS OUT PROPERLY],
+% \begin{align}
+% 	\expect[\exp(\lambda \bar{Y}_\tau )] &\leq \expect[Q_{0}]\\
+% 	&= \exp(2\alpha).
+% \end{align}
+% Hence 
+% \begin{equation}
+% 	\prob[Y_\tau \geq |j-k|] \leq \exp(2\alpha) \exp(-\lambda |j - k|)
+% \end{equation}
+% and overall we have that
+% \begin{equation}
+% 	\prob[\mathcal{H}_j \cap \mathcal{H}_k \neq \emptyset] \leq \exp(2\alpha) \exp(-\lambda |j - k|).
+% \end{equation}
+% \end{proof}
 \begin{lemma}
-	\label{lem:intersecting histories bound}
+	\label{lem:history escaping ball bound}
 	\begin{equation}
-		\prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset] \leq \exp(2\alpha) \exp(-\lambda |j - k|).
+		\prob[\mathcal{H}_{i} \not\subset B(i, l)] \leq \exp(\alpha) \exp(-\lambda l).
 	\end{equation}
 \end{lemma}
 \begin{proof}
@@ -220,15 +280,15 @@ The following is based on the proof used in Section 3.2 of \cite{Lubetzky2014-po
 
 We first relax our histories to our alternative construction by observing that
 \begin{equation}
-	\prob[\mathcal{H}_j \cap \mathcal{H}_k \neq \emptyset] \leq \prob[\hat{\mathcal{H}}_j \cap \hat{\mathcal{H}}_k \neq \emptyset].
+	\prob[\mathcal{H}_{i} \not\subset B(i, l)] \leq \prob[\hat{\mathcal{H}}_{i} \not\subset B(i, l)].
 \end{equation}
 
-Let $W_s = |\hat{\mathcal{H}}_{\{j, k\}} (t^* - s)|$ and let $Y_s = \#\left\{ \left( (u,t), (v,t) \right) \in \hat{\mathcal{H}}_{\{j, k\}}: t \in [t^* - s, t^*) \right\}$ count the total number of spatial edges observed in the history by time $t^* - s$. For $\hat{\mathcal{H}}_j$ and $\hat{\mathcal{H}}_k$ to intersect at time $t^* - s$, there must be enough spatial edges for the histories to reach each other. That is, we require that
+Let $W_s = |\hat{\mathcal{H}}_i (t^* - s)|$ and let $Y_s = \#\left\{ \left( (u,t), (v,t) \right) \in \hat{\mathcal{H}}_i: t \in [t^* - s, t^*) \right\}$ count the total number of spatial edges observed in the history by time $t^* - s$. For $\hat{\mathcal{H}}_i$ to extend beyond $B(i, l)$, there must be enough spatial edges. That is, we require that
 \begin{equation}
-	Y_s \geq |i - j|.
+	Y_s \geq l.
 \end{equation}
 
-Initially, $W_0 = 2$ and $Y_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s)$ such that $\bar{W}_s \geq W_s$ and $\bar{Y}_s \geq Y_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s) = (2, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$, and at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$.
+Initially, $W_0 = 1$ and $Y_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s)$ such that $\bar{W}_s \geq W_s$ and $\bar{Y}_s \geq Y_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s) = (1, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$, and at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$.
 
 Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s \right)$ where $\alpha$ and $\lambda$ are some fixed constants yet to be determined. We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then
 \begin{align}
@@ -247,9 +307,9 @@ Define the stopping time
 \begin{equation}
 	\tau = \inf\{s: \bar{W}_s = 0\}.
 \end{equation}
-Since $(\bar{W}_s, \bar{Y}_s) \geq (W_s, Y_s)$, we have that $W_\tau = 0$ which corresponds to the event that both histories, $\mathcal{H}_j$ and $\mathcal{H}_k$, have terminated by time $\tau$. Hence
+Since $(\bar{W}_s, \bar{Y}_s) \geq (W_s, Y_s)$, we have that $W_\tau = 0$ which corresponds to the event the history, $\hat{\mathcal{H}}_i$, has terminated by time $\tau$. Hence
 \begin{equation}
-	\prob[\hat{\mathcal{H}}_j \cap \hat{\mathcal{H}}_k \neq \emptyset] \leq \prob[Y_\tau \geq |j-k|].
+	\prob[\hat{\mathcal{H}}_{i} \not\subset B(i, l)] \leq \prob[Y_\tau \geq l].
 \end{equation}
 Now
 \begin{equation}
@@ -258,18 +318,17 @@ Now
 and from optional stopping [FIGURE THIS OUT PROPERLY],
 \begin{align}
 	\expect[\exp(\lambda \bar{Y}_\tau )] &\leq \expect[Q_{0}]\\
-	&= \exp(2\alpha).
+	&= \exp(\alpha).
 \end{align}
 Hence 
 \begin{equation}
-	\prob[Y_\tau \geq |j-k|] \leq \exp(2\alpha) \exp(-\lambda |j - k|)
+	\prob[Y_\tau \geq l] \leq \exp(\alpha) \exp(-\lambda l)
 \end{equation}
 and overall we have that
 \begin{equation}
-	\prob[\mathcal{H}_j \cap \mathcal{H}_k \neq \emptyset] \leq \exp(2\alpha) \exp(-\lambda |j - k|).
+	\prob[\mathcal{H}_i \not\subset B(i, l)] \leq \exp(\alpha) \exp(-\lambda l).
 \end{equation}
 \end{proof}
-
 % \begin{lemma}
 % 	\label{lem:intersecting histories bound given X_j = 1}
 % 	\begin{equation}
@@ -403,21 +462,21 @@ In \cite{Lubetzky2016-wd}, \citeauthor{Lubetzky2016-wd} proved something similar
 	\end{equation}
 \end{corollary}
 
-\begin{lemma}
-	Blah
-\end{lemma}
-\begin{proof}
-	Write $\bar{\mathcal{H}}_i$ for the history at $i$ but it only has branching updates at rate 1. Write $d_j$ for the time of death of history $j$. Let $k = |i-j|$.
-	\begin{align}
-		\prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j) &= \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) \prob(d_j < c(k)) \notag \\
-		&\phantom{=}+ \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j \geq c(k)) \prob(d_j \geq c(k))\\
-		&\leq \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) + \prob(d_j \geq c(k))\\
-		&\leq \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) + \euler^{-(1 - \beta \Delta) c(k)}\\
-		&\leq 2\prob(\bar{\mathcal{H}}_i(t^* - c(k)) \nsubseteq B(i, k/2)) + \euler^{-(1 - \beta \Delta) c(k)}\\
-		&\leq \exp\left(c(k) \Delta^2 - k/2 \ln \Delta \right) + \euler^{-(1 - \beta \Delta) c(k)}\\
-	\end{align}
-	Choosing $c(k) = \ln(k)^2$ works so long as $\beta \Delta < 1$.
-\end{proof}
+% \begin{lemma}
+% 	Blah
+% \end{lemma}
+% \begin{proof}
+% 	Write $\bar{\mathcal{H}}_i$ for the history at $i$ but it only has branching updates at rate 1. Write $d_j$ for the time of death of history $j$. Let $k = |i-j|$.
+% 	\begin{align}
+% 		\prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j) &= \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) \prob(d_j < c(k)) \notag \\
+% 		&\phantom{=}+ \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j \geq c(k)) \prob(d_j \geq c(k))\\
+% 		&\leq \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) + \prob(d_j \geq c(k))\\
+% 		&\leq \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) + \euler^{-(1 - \beta \Delta) c(k)}\\
+% 		&\leq 2\prob(\bar{\mathcal{H}}_i(t^* - c(k)) \nsubseteq B(i, k/2)) + \euler^{-(1 - \beta \Delta) c(k)}\\
+% 		&\leq \exp\left(c(k) \Delta^2 - k/2 \ln \Delta \right) + \euler^{-(1 - \beta \Delta) c(k)}\\
+% 	\end{align}
+% 	Choosing $c(k) = \ln(k)^2$ works so long as $\beta \Delta < 1$.
+% \end{proof}
 
 This proof is closely based on that in \cite{Lubetzky2014-po}.
 \begin{lemma}
@@ -507,8 +566,14 @@ This proof is closely based on that in \cite{Lubetzky2014-po}.
 	\begin{align}
 		\prob[X_j = 1 | A] &= \prob[X_j = 1 | \mathcal{H}_j \subset B(j, k/2)]\\
 			&\leq m_{t^*} \prob[\mathcal{H}_j \subset B(j, k/2)]^{-1}\\
-			&= \frac{m_{t^*}}{1 - \prob[\mathcal{H}_j \not\subset B(j, k/2)]}
+			&= \frac{m_{t^*}}{1 - \prob[\mathcal{H}_j \not\subset B(j, k/2)]}.
 	\end{align}
+	From Lemma \ref{lem:history escaping ball bound}, 
+	\begin{align}
+		\prob[X_j = 1 | A] &\leq \frac{m_{t^*}}{1 - \exp(\alpha -\lambda k/2)}\\
+		&\leq \frac{m_{t^*}}{1 - \exp(\alpha - \lambda/2)}
+	\end{align}
+	since $k \geq 1$.
 
 	% So these events are independent. Continuing
 	% \begin{align}
