@@ -201,11 +201,11 @@ The following corollary is then straightfoward.
 		\delta_4 &= \sum_{i = 1}^n \left(\expect[X_i Z_i] + \expect[X_i]\expect[X_i + U_i + Z_i]\right)\\
 			&= n \expect[X_i Z_i] + n m_{t^*}^2 \left(1 + |B_i| + |C_i|\right)\\
 			&= n m_{t^*} \expect[Z_i | X_i = 1] + n m_{t^*}^2 \left(1 + |B_i| + |C_i|\right)\\
-			&= n m_{t^*} \left(\sum_{j \in C_i} \prob[X_j = 1 | X_i = 1] + m_{t^*} \left(1 + |B_i| + |C_i|\right) \right)\\
-			&\leq n m_{t^*} \left(\sum_{j \in C_i} \left(m_{t^*} + \prob[\mathcal{H}_{j} \cap \mathcal{H}_i \neq \emptyset | X_i = 1\right) + m_{t^*} \left(1 + |B_i| + |C_i|\right) \right)
+			&= n m_{t^*} \left(\sum_{j \in C_i} \prob[X_j = 1 | X_i = 1] + m_{t^*} \left(1 + |B_i| + |C_i|\right) \right)%\\
+			% &\leq n m_{t^*} \left(\sum_{j \in C_i} \left(m_{t^*} + \prob[\mathcal{H}_{j} \cap \mathcal{H}_i \neq \emptyset | X_i = 1\right) + m_{t^*} \left(1 + |B_i| + |C_i|\right) \right)
 	\end{align}
 
-	NEED TO PROVE LEMMA \ref{lem:intersecting histories bound given X_j = 1}
+	% NEED TO PROVE LEMMA \ref{lem:intersecting histories bound given X_j = 1}
 \end{proof}
 
 \subsection{Additional Lemmas}
@@ -270,27 +270,27 @@ and overall we have that
 \end{equation}
 \end{proof}
 
-\begin{lemma}
-	\label{lem:intersecting histories bound given X_j = 1}
-	\begin{equation}
-		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \leq  2 \exp(z \Delta^2) \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})\Delta^{-k/2} n^{\Delta^2 + 1}
-	\end{equation}
-	where $k = |i - j|$.
-\end{lemma}
-\begin{proof}
-	\begin{align}
-		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1]  &\leq \frac{\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset] }{\prob[X_i = 1]}\\
-		&\leq n \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z}) \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset].
-	\end{align}
-	Now letting $k = |i - j|$ denote the distance between $i$ and $j$,
-	\begin{equation}
-		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset] \leq 2 \prob[\mathcal{H}_i \nsubseteq B(i, k/2) ]
-	\end{equation}
-	since in order for $\mathcal{H}_i$ and $\mathcal{H}_j$ to intersect, at least one of them must extend beyond halfway the distance between $i$ and $j$. From Lemma \ref{cor:prob update function time 0 in B(i, l)},
-	\begin{align}
-		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq 2 \exp(z \Delta^2) \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})\Delta^{-k/2} n^{\Delta^2 + 1}
-	\end{align}
-\end{proof}
+% \begin{lemma}
+% 	\label{lem:intersecting histories bound given X_j = 1}
+% 	\begin{equation}
+% 		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \leq  2 \exp(z \Delta^2) \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})\Delta^{-k/2} n^{\Delta^2 + 1}
+% 	\end{equation}
+% 	where $k = |i - j|$.
+% \end{lemma}
+% \begin{proof}
+% 	\begin{align}
+% 		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1]  &\leq \frac{\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset] }{\prob[X_i = 1]}\\
+% 		&\leq n \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z}) \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset].
+% 	\end{align}
+% 	Now letting $k = |i - j|$ denote the distance between $i$ and $j$,
+% 	\begin{equation}
+% 		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset] \leq 2 \prob[\mathcal{H}_i \nsubseteq B(i, k/2) ]
+% 	\end{equation}
+% 	since in order for $\mathcal{H}_i$ and $\mathcal{H}_j$ to intersect, at least one of them must extend beyond halfway the distance between $i$ and $j$. From Lemma \ref{cor:prob update function time 0 in B(i, l)},
+% 	\begin{align}
+% 		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq 2 \exp(z \Delta^2) \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})\Delta^{-k/2} n^{\Delta^2 + 1}
+% 	\end{align}
+% \end{proof}
 
 \begin{lemma}
 	The number of vertices at distance $k$ on a degree $\Delta$ transitive graph is
@@ -298,26 +298,26 @@ and overall we have that
 		???
 	\end{equation}
 \end{lemma}
-\begin{lemma}
-	On the $d$ dimensional lattice,
-	\begin{equation}
-		\sum_{k = b_n}^\infty \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \leq 
-	\end{equation}
-\end{lemma}
-\begin{proof}
-	On the $d$ dimensional torus, the number of vertices at distance $k$ is no more than something like $k^d$ [NEED FIGURE THIS OUT AND PROVE IT].
-	\begin{align}
-		\sum_{j \in C_i} \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq \sum_{k = b_n}^\infty \sum_{j, |j - i| = k} \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \\
-		&\leq \sum_{k = b_n}^\infty k^d \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1]
-	\end{align}
-	From Lemma \ref{lem:intersecting histories bound given X_j = 1},
-	\begin{align}
-		\sum_{j \in C_i} \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq C(z, \Delta) n^{\Delta^2 + 1} \sum_{k = b_n}^\infty k^d \Delta^{-k/2} \\
-		&\leq C(z, \Delta) n^{\Delta^2 + 1} \sum_{k = b_n}^\infty k^d \exp(-\ln(\Delta) k/2)\\
-		&\approxeq C(z, \Delta) n^{\Delta^2 + 1} b_n^d \exp(-\ln(\Delta)b_n/2)
-	\end{align}
-	which goes to 0 for large enough $b_n$ [FIGURE OUT HOW BIG].
-\end{proof}
+% \begin{lemma}
+% 	On the $d$ dimensional lattice,
+% 	\begin{equation}
+% 		\sum_{k = b_n}^\infty \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \leq 
+% 	\end{equation}
+% \end{lemma}
+% \begin{proof}
+% 	On the $d$ dimensional torus, the number of vertices at distance $k$ is no more than something like $k^d$ [NEED FIGURE THIS OUT AND PROVE IT].
+% 	\begin{align}
+% 		\sum_{j \in C_i} \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq \sum_{k = b_n}^\infty \sum_{j, |j - i| = k} \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \\
+% 		&\leq \sum_{k = b_n}^\infty k^d \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1]
+% 	\end{align}
+% 	From Lemma \ref{lem:intersecting histories bound given X_j = 1},
+% 	\begin{align}
+% 		\sum_{j \in C_i} \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq C(z, \Delta) n^{\Delta^2 + 1} \sum_{k = b_n}^\infty k^d \Delta^{-k/2} \\
+% 		&\leq C(z, \Delta) n^{\Delta^2 + 1} \sum_{k = b_n}^\infty k^d \exp(-\ln(\Delta) k/2)\\
+% 		&\approxeq C(z, \Delta) n^{\Delta^2 + 1} b_n^d \exp(-\ln(\Delta)b_n/2)
+% 	\end{align}
+% 	which goes to 0 for large enough $b_n$ [FIGURE OUT HOW BIG].
+% \end{proof}
 
 % \begin{lemma}
 % 	\label{lem:intersecting histories bound given X_j = 1}
@@ -482,7 +482,7 @@ This proof is closely based on that in \cite{Lubetzky2014-po}.
 		\prob[X_j = 1 | X_i = 1] &= \prob[X_j = 1 | X_i = 1, A] \prob[A|X_i = 1] \notag \\ 
 		&\phantom{=}  +\prob\left[X_j = 1 | X_i = 1, A^\complement\right] \prob\left[A^\complement|X_i = 1\right].
 	\end{align}
-	If we are conditioning on $A$, then the events $\{X_j = 1\}$ and $\{X_i = 1\}$ depend only on the update sequence within $B(j, k/2)$ and $B(i, k/2)$ resepctively. This means that
+	If we are conditioning on $A$, then the events $\{X_j = 1\}$ and $\{X_i = 1\}$ depend only on the update sequences within $B(j, k/2)$ and $B(i, k/2)$ respectively. This means that
 	\begin{equation}
 		\prob[X_j = 1 | X_i = 1, A] = \prob[X_j = 1 | A].
 	\end{equation}
@@ -500,15 +500,22 @@ This proof is closely based on that in \cite{Lubetzky2014-po}.
 \end{lemma}
 \begin{proof}
 	\begin{align}
-		\prob[X_j = 1 | A] &= \prob[X_j = 1 | \mathcal{H}_i \subset B(i, k/2), \mathcal{H}_j \subset B(j, k/2)]\\
-		&\leq \prob[X_j = 1]/\prob[\mathcal{H}_i \subset B(i, k/2), \mathcal{H}_j \subset B(j, k/2)]
+		\prob[X_j = 1 | A] &= \prob[X_j = 1 | \mathcal{H}_i \subset B(i, k/2), \mathcal{H}_j \subset B(j, k/2)]%\\
+		% &\leq \prob[X_j = 1]/\prob[\mathcal{H}_i \subset B(i, k/2), \mathcal{H}_j \subset B(j, k/2)]
 	\end{align}
-	The events $\{\mathcal{H}_i \subset B(i, k/2)\}$ and $\{\mathcal{H}_j \subset B(j, k/2)\}$ depend only the update sequence strictly within $B(i, k/2)$ and $B(j, k/2)$ respectively. So these events are independent. Continuing
+	The events $\{\mathcal{H}_i \subset B(i, k/2)\}$ and $\{\mathcal{H}_j \subset B(j, k/2)\}$ depend only the update sequence strictly within $B(i, k/2)$ and $B(j, k/2)$ respectively. When we condition on $\{\mathcal{H}_j \subset B(j, k/2)\}$ the event $\{X_j = 1\}$ depends only on the update sequence strictly within $B(j, k/2)$. So
 	\begin{align}
-		\prob[X_j = 1 | A] &\leq m_{t^*}^{-1} \prob[\mathcal{H}_i \subset B(i, k/2)]^{-2}\\
-		&\sim \frac{1}{n} (1 - n^{\Delta^2} \Delta^{-k/2})^{-2}
+		\prob[X_j = 1 | A] &= \prob[X_j = 1 | \mathcal{H}_j \subset B(j, k/2)]\\
+			&\leq m_{t^*} \prob[\mathcal{H}_j \subset B(j, k/2)]^{-1}\\
+			&= \frac{m_{t^*}}{1 - \prob[\mathcal{H}_j \not\subset B(j, k/2)]}
 	\end{align}
-	blergh
+
+	% So these events are independent. Continuing
+	% \begin{align}
+	% 	\prob[X_j = 1 | A] &\leq m_{t^*}^{-1} \prob[\mathcal{H}_i \subset B(i, k/2)]^{-2}\\
+	% 	&\sim \frac{1}{n} (1 - n^{\Delta^2} \Delta^{-k/2})^{-2}
+	% \end{align}
+	% blergh
 \end{proof}
 \begin{lemma}
 	\begin{equation}
@@ -516,5 +523,27 @@ This proof is closely based on that in \cite{Lubetzky2014-po}.
 	\end{equation}
 \end{lemma}
 \begin{proof}
-	blah
+	For ease of notation, let $A_i$ be the event
+	\begin{equation}
+		A_i = \{\mathcal{H}_i \subset B(j, k/2)\}.
+	\end{equation}
+	Obviously, 
+	\begin{equation}
+		A = A_i \cap A_j.
+	\end{equation}
+	Now
+	\begin{align}
+		\prob\left[A^\complement | X_i = 1\right] &\leq \prob\left[A_i^\complement | X_i = 1\right] + \prob\left[A_j^\complement | X_i = 1\right]\\
+		&= \prob\left[A_i^\complement | X_i = 1\right] + \prob\left[A_j^\complement | X_i = 1, A_i^\complement \right] \prob\left[A_i^\complement | X_i = 1\right] \notag \\
+		&\phantom{=} + \prob\left[A_j^\complement | X_i = 1, A_i \right] \prob\left[A_i | X_i = 1\right]\\
+		&\leq 2\prob\left[A_i^\complement | X_i = 1\right]+ \prob\left[A_j^\complement | X_i = 1, A_i \right].\\
+	\end{align}
+	If we condition on $A_i$ then the event $X_i = 1$ depends only on the update sequence strictly inside $B(i, k/2)$. Also note that the event $A_j$ depends only on the update sequence stricly inside $B(j, k/2)$. These update sequences are independent as they do not share any vertices and so
+	\begin{equation}
+		\prob\left[A_j^\complement | X_i = 1, A_i \right] = \prob\left[A_j^\complement \right]
+	\end{equation}
+	and we have
+	\begin{equation}
+		\prob\left[A^\complement | X_i = 1\right] \leq 2\prob\left[A_i^\complement | X_i = 1\right]+ \prob\left[A_j^\complement \right].
+	\end{equation}
 \end{proof}
