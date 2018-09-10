@@ -465,5 +465,56 @@ This proof is closely based on that in \cite{Lubetzky2014-po}.
 	\end{align}
 
 	Continue on like in Lemma \ref{lem:intersecting histories bound}.
-
+\end{proof}
+\begin{lemma}
+	Let $i$ and $j$ be the indices of two vertices at distance $k$. Then
+	\begin{equation}
+		\prob[X_j = 1 | X_i = 1] \leq
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	Let $B(i, l)$ denote the set of vertices within distance $l$ of vertex $i$. Let $A$ be the event
+	\begin{equation}
+		\{\mathcal{H}_i \subset B(i,k/2), \mathcal{H}_j \subset B(j, k/2)\}.
+	\end{equation}
+	By the law of total probability,
+	\begin{align}
+		\prob[X_j = 1 | X_i = 1] &= \prob[X_j = 1 | X_i = 1, A] \prob[A|X_i = 1] \notag \\ 
+		&\phantom{=}  +\prob\left[X_j = 1 | X_i = 1, A^\complement\right] \prob\left[A^\complement|X_i = 1\right].
+	\end{align}
+	If we are conditioning on $A$, then the events $\{X_j = 1\}$ and $\{X_i = 1\}$ depend only on the update sequence within $B(j, k/2)$ and $B(i, k/2)$ resepctively. This means that
+	\begin{equation}
+		\prob[X_j = 1 | X_i = 1, A] = \prob[X_j = 1 | A].
+	\end{equation}
+	So
+	\begin{align}
+		\prob[X_j = 1 | X_i = 1] &= \prob[X_j = 1 | A] \prob[A|X_i = 1] \notag \\ 
+		&\phantom{=}  +\prob\left[X_j = 1 | X_i = 1, A^\complement\right] \prob\left[A^\complement|X_i = 1\right]\\
+		&\leq \prob[X_j = 1 | A] + \prob\left[A^\complement | X_i = 1\right]
+	\end{align}
+\end{proof}
+\begin{lemma}
+	\begin{equation}
+		\prob[X_j = 1 | A] \leq 
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	\begin{align}
+		\prob[X_j = 1 | A] &= \prob[X_j = 1 | \mathcal{H}_i \subset B(i, k/2), \mathcal{H}_j \subset B(j, k/2)]\\
+		&\leq \prob[X_j = 1]/\prob[\mathcal{H}_i \subset B(i, k/2), \mathcal{H}_j \subset B(j, k/2)]
+	\end{align}
+	The events $\{\mathcal{H}_i \subset B(i, k/2)\}$ and $\{\mathcal{H}_j \subset B(j, k/2)\}$ depend only the update sequence strictly within $B(i, k/2)$ and $B(j, k/2)$ respectively. So these events are independent. Continuing
+	\begin{align}
+		\prob[X_j = 1 | A] &\leq m_{t^*}^{-1} \prob[\mathcal{H}_i \subset B(i, k/2)]^{-2}\\
+		&\sim \frac{1}{n} (1 - n^{\Delta^2} \Delta^{-k/2})^{-2}
+	\end{align}
+	blergh
+\end{proof}
+\begin{lemma}
+	\begin{equation}
+		\prob[A^\complement | X_i = 1] \leq 
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	blah
 \end{proof}
