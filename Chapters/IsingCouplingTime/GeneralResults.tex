@@ -208,7 +208,7 @@ The following corollary is then straightfoward.
 	% NEED TO PROVE LEMMA \ref{lem:intersecting histories bound given X_j = 1}
 \end{proof}
 
-\subsection{Additional Lemmas}
+\section{Additional Lemmas}
 % \begin{lemma}
 % 	\label{lem:intersecting histories bound}
 % 	\begin{equation}
@@ -478,53 +478,53 @@ In \cite{Lubetzky2016-wd}, \citeauthor{Lubetzky2016-wd} proved something similar
 % 	Choosing $c(k) = \ln(k)^2$ works so long as $\beta \Delta < 1$.
 % \end{proof}
 
-This proof is closely based on that in \cite{Lubetzky2014-po}.
-\begin{lemma}
-	\begin{equation}
-		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1]
-	\end{equation}
-\end{lemma}
-\begin{proof}
-	Firstly,
-	\begin{align}
-		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &= \frac{\prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \{X_i = 1\}]}{\prob[X_i = 1]}\\
-		&\leq m_{t^*}^{-1} \prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \{X_i = 1\}]\\
-		&\leq  m_{t^*}^{-1} \prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left(\{X_i = 1\} \cup \{X_j = 1\}\right)]\\
-		&= m_{t^*}^{-1} \prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}]
-	\end{align}
-	since
-	\begin{equation}
-		\left\{X_i = 1\right\} = \left\{\mathcal{H}_i(0) \neq \emptyset\right\}.
-	\end{equation}
-	% then
-	% \begin{align}
-	% 	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq m_{t^*}^{-1}\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left\{\mathcal{H}_i(0) \neq \emptyset\right\}\right],\\
-	% 	&\leq m_{t^*}^{-1}\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}\right].
-	% \end{align}
-	% \begin{align}
-	% 	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq n C_z\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left\{X_i = 1\right\}\right],\\
-	% 	&\leq n C_z\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left(\left\{X_i = 1\right\} \cup \left\{X_i = 1\right\}\right)\right].
-	% \end{align}
-	% Now since each update in our histories can never remove more than one vertex at a time, if $\hat{\mathcal{H}}_i(0) \cup \hat{\mathcal{H}}_j(0) = \emptyset$, then there must be some time $t > 0$ at which $\hat{\mathcal{H}}_i(t) \cup \hat{\mathcal{H}}_j(t) = \{w\}$ for a single vertex $w$. Proceeding backwards from $t^*$, define $S$ to be the first such time this happens, or put $S = 0$ if the histories always contain at least two vertices.
-	Proceeding backwards from $t^*$, define $S$ to be the random time at which $\mathcal{H}_i(t) \cup \mathcal{H}_j(t)$ first reduced to less than two vertices, or define $S = 0$ if the combined histories contain at least two vertices all the way to time $0$. Since $\mathcal{H}_i(S) \cup \mathcal{H}_j(S)$ contains at most one vertex,
-	\begin{equation}
-		\prob\left[\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset | S = t_s\right] \leq m_{t_s}.
-	\end{equation}
+% This proof is closely based on that in \cite{Lubetzky2014-po}.
+% \begin{lemma}
+% 	\begin{equation}
+% 		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1]
+% 	\end{equation}
+% \end{lemma}
+% \begin{proof}
+% 	Firstly,
+% 	\begin{align}
+% 		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &= \frac{\prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \{X_i = 1\}]}{\prob[X_i = 1]}\\
+% 		&\leq m_{t^*}^{-1} \prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \{X_i = 1\}]\\
+% 		&\leq  m_{t^*}^{-1} \prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left(\{X_i = 1\} \cup \{X_j = 1\}\right)]\\
+% 		&= m_{t^*}^{-1} \prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}]
+% 	\end{align}
+% 	since
+% 	\begin{equation}
+% 		\left\{X_i = 1\right\} = \left\{\mathcal{H}_i(0) \neq \emptyset\right\}.
+% 	\end{equation}
+% 	% then
+% 	% \begin{align}
+% 	% 	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq m_{t^*}^{-1}\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left\{\mathcal{H}_i(0) \neq \emptyset\right\}\right],\\
+% 	% 	&\leq m_{t^*}^{-1}\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}\right].
+% 	% \end{align}
+% 	% \begin{align}
+% 	% 	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq n C_z\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left\{X_i = 1\right\}\right],\\
+% 	% 	&\leq n C_z\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left(\left\{X_i = 1\right\} \cup \left\{X_i = 1\right\}\right)\right].
+% 	% \end{align}
+% 	% Now since each update in our histories can never remove more than one vertex at a time, if $\hat{\mathcal{H}}_i(0) \cup \hat{\mathcal{H}}_j(0) = \emptyset$, then there must be some time $t > 0$ at which $\hat{\mathcal{H}}_i(t) \cup \hat{\mathcal{H}}_j(t) = \{w\}$ for a single vertex $w$. Proceeding backwards from $t^*$, define $S$ to be the first such time this happens, or put $S = 0$ if the histories always contain at least two vertices.
+% 	Proceeding backwards from $t^*$, define $S$ to be the random time at which $\mathcal{H}_i(t) \cup \mathcal{H}_j(t)$ first reduced to less than two vertices, or define $S = 0$ if the combined histories contain at least two vertices all the way to time $0$. Since $\mathcal{H}_i(S) \cup \mathcal{H}_j(S)$ contains at most one vertex,
+% 	\begin{equation}
+% 		\prob\left[\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset | S = t_s\right] \leq m_{t_s}.
+% 	\end{equation}
 
-	FIX THIS STEP...  ASSUMING WE CAN DO THIS...
+% 	FIX THIS STEP...  ASSUMING WE CAN DO THIS...
 
-	\begin{align}
-		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq m_{t^*}^{-1} \expect[\indicator_{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset} m_S] \\
-		&\leq m_{t^*}^{-1} \expect[\indicator_{\chi(\mathcal{H}_{ij}) \geq k-1} m_S]\\
-		&\leq m_{t^*}^{-1} m_{t^*} \expect[\indicator_{\chi(\mathcal{H}_{ij}) \geq k-1} \euler^{t^* - S}]\\
-		&= \expect[\indicator_{\chi(\mathcal{H}_{ij}) \geq k-1} \euler^{t^* - S}]\\
-		&\leq \expect[\euler^{\chi(\mathcal{H}_{ij}) - (k-1)} \euler^{t^* - S}]\\
-		&\leq \euler^{-(k-1)} \expect[\euler^{\chi(\mathcal{H}_{ij}) + (1/2)L(\mathcal{H}_{ij}) + 1} ]\\
-		&= \euler^{-k + 2} \expect[\euler^{\chi(\mathcal{H}_{ij}) + (1/2)L(\mathcal{H}_{ij})} ]
-	\end{align}
+% 	\begin{align}
+% 		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq m_{t^*}^{-1} \expect[\indicator_{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset} m_S] \\
+% 		&\leq m_{t^*}^{-1} \expect[\indicator_{\chi(\mathcal{H}_{ij}) \geq k-1} m_S]\\
+% 		&\leq m_{t^*}^{-1} m_{t^*} \expect[\indicator_{\chi(\mathcal{H}_{ij}) \geq k-1} \euler^{t^* - S}]\\
+% 		&= \expect[\indicator_{\chi(\mathcal{H}_{ij}) \geq k-1} \euler^{t^* - S}]\\
+% 		&\leq \expect[\euler^{\chi(\mathcal{H}_{ij}) - (k-1)} \euler^{t^* - S}]\\
+% 		&\leq \euler^{-(k-1)} \expect[\euler^{\chi(\mathcal{H}_{ij}) + (1/2)L(\mathcal{H}_{ij}) + 1} ]\\
+% 		&= \euler^{-k + 2} \expect[\euler^{\chi(\mathcal{H}_{ij}) + (1/2)L(\mathcal{H}_{ij})} ]
+% 	\end{align}
 
-	Continue on like in Lemma \ref{lem:intersecting histories bound}.
-\end{proof}
+% 	Continue on like in Lemma \ref{lem:intersecting histories bound}.
+% \end{proof}
 \begin{lemma}
 	Let $i$ and $j$ be the indices of two vertices at distance $k$. Then
 	\begin{equation}
@@ -611,4 +611,22 @@ This proof is closely based on that in \cite{Lubetzky2014-po}.
 	\begin{equation}
 		\prob\left[A^\complement | X_i = 1\right] \leq 2\prob\left[A_i^\complement | X_i = 1\right]+ \prob\left[A_j^\complement \right].
 	\end{equation}
+\end{proof}
+\begin{lemma}
+	\begin{equation}
+		\prob\left[\mathcal{H}_i \not\subset B(i, l) | X_i = 1\right] \leq
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	\begin{align}
+		\prob\left[\mathcal{H}_i \not\subset B(i, l) | X_i = 1\right] &= m_{t^*}^{-1} \prob\left[\mathcal{H}_i \not\subset B(i, l), X_i = 1\right]\\
+		&\leq m_{t^*}^{-1} \prob\left[\chi(\mathcal{H}_i) \geq l, X_i = 1\right]\\
+		&\leq m_{t^*}^{-1} \prob\left[\chi(\mathcal{H}_i) \geq l, Z(\mathcal{H}_i) \geq t^*\right]\\
+		&= m_{t^*}^{-1} \expect\left[\indicator_{\chi(\mathcal{H}_i) \geq l} \indicator_{Z(\mathcal{H}_i) \geq t^*} \right]\\
+		&\leq m_{t^*}^{-1} \expect\left[\indicator_{\chi(\mathcal{H}_i) \geq l} \indicator_{Z(\mathcal{H}_i) \geq \ln(n) + z} \right]\\
+		&\leq m_{t^*}^{-1} \expect\left[\exp(\chi(\mathcal{H}_i) - l) \exp(Z(\mathcal{H}_i) - \ln(n) - z) \right]\\
+		&= m_{t^*}^{-1} \exp(-l) \exp(-z - \ln(n)) \expect\left[\exp(\chi(\mathcal{H}_i) + Z(\mathcal{H}_i)) \right]\\
+		&= \max(1, \exp(- \beta \Delta z)) \exp(-l) \expect\left[\exp(\chi(\mathcal{H}_i) + Z(\mathcal{H}_i)) \right]\\
+		&\leq C_z \euler^{-l} BLAH
+	\end{align}
 \end{proof}
