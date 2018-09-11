@@ -630,3 +630,53 @@ In \cite{Lubetzky2016-wd}, \citeauthor{Lubetzky2016-wd} proved something similar
 		&\leq C_z \euler^{-l} BLAH
 	\end{align}
 \end{proof}
+
+The following closely follows the statement and proof of \cite[Lemma 3.1]{Lubetzky2014-po}. [ONLY WORKS FOR $\eta < 1$]
+\begin{lemma}
+	Let 
+	\begin{equation}
+		\chi(\mathcal{H}_i) = \#\left\{ \left( (u,t), (v,t) \right) \in \mathcal{H}_i \right\}
+	\end{equation}
+	count the total number of horizontal edges in $\mathcal{H}_i$ and let 
+	\begin{equation}
+		\mathcal{L}(\mathcal{H}_i) = \sum_{i \in V} \int_{0}^{t^*} \indicator_{(i, t) \in \mathcal{H}_i} \intd t
+	\end{equation}
+	be the sum of the lengths of all the horizontal edges in $\mathcal{H}_i$. Then
+	\begin{equation}
+		\expect[\exp(\chi(\mathcal{H}_i) + \mathcal{L}(\mathcal{H}_i))] \leq 
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	We first relax our histories to our alternative construction by observing that
+	\begin{align}
+		&\chi(\mathcal{H}_i) \leq \chi(\hat{\mathcal{H}}_i), &Z(\mathcal{H}_i) \leq Z(\hat{\mathcal{H}}_i).
+	\end{align}
+
+
+	Let $W_s = |\hat{\mathcal{H}}_i (t^* - s)|$, let $Y_s = \chi(\hat{\mathcal{H}}_i \cap V \times [t^* - s, t^*])$ count the total number of spatial edges observed in the history by time $t^* - s$ and let $Z_s = \mathcal{L}(\hat{\mathcal{H}}_i \cap V \times [t^* - s, t^*])$. 
+
+	Initially, $W_0 = 1$, $Y_0 = 0$, and $Z_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. The length, $Z_s$, grows as $\intd Z_s = W_s \intd s$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s)$ such that $\bar{W}_s \geq W_s$, $\bar{Y}_s \geq Y_s$, and $\bar{Z}_s \geq Z_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s) = (1, 0, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$; at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$; and $\bar{Z}_s$ grows as $\intd \bar{Z}_s = \bar{W}_s \intd s$.
+
+	Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s + \eta \bar{Z}_s\right)$ where $\alpha$, $\lambda$, and $\eta$ are some fixed constants yet to be determined, and $\alpha > -\ln(1 - \eta)$. We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then [FIX THIS]
+	\begin{align}
+		\expect\left[Q_{s_0 + h} - Q_{s_0}| Q_{s_0}\right] &= h \theta \bar{W}_{s_0} \left(\exp(\alpha (\bar{W}_{s_0} - 1) + \lambda \bar{Y}_{s_0}) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0})\right) + \\
+		&\hphantom{= .} h (1 - \theta) \bar{W}_{s_0} \left( \exp(\alpha (\bar{W}_{s_0} + \Delta) + \lambda (\bar{Y}_{s_0} + \Delta)) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0}) \right) + \notag\\
+		&\hphantom{= .} \mathcal{O}(h^2) \notag\\
+		&= \left(\eta + \theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)h \bar{W}_{s_0} Q_{s_0} + \mathcal{O}(h^2).
+	\end{align}
+	Dividing through by $h$ and taking $h$ to $0$, we have
+	\begin{equation}
+		\left.\frac{d}{ds} \expect\left[Q_{s} | Q_{s_0}\right] \right|_{s = s_0} = \left(\eta + \theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)\bar{W}_{s_0} Q_{s_0}
+	\end{equation}
+	which is negative for $\theta$ sufficiently close to $1$. Hence $Q_s$ is a supermartingale for sufficiently large $\theta$.
+
+	Define the stopping time 
+	\begin{equation}
+		\tau = \inf\{s: \bar{W}_s = 0\}.
+	\end{equation}
+	Finally, from optional stopping [FIGURE THIS OUT PROPERLY],
+	\begin{align}
+		\expect[\exp(\lambda \bar{Y}_\tau )] &\leq \expect[Q_{0}]\\
+		&= \exp(\alpha).
+	\end{align}
+\end{proof}
