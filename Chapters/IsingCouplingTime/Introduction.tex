@@ -164,9 +164,9 @@
 	\label{claim:discrete vs continuous distributions}
 		Let $(N_n)_{n \in \mathbb{N}}$ be a sequence of positive random integers, and $(m_n)_{n \in \mathbb{N}}$ be a non-decreasing sequence of integers such that $N_n \geq m_n$ for all $n$ and $\lim_{n \rightarrow \infty} m_n = \infty$.	Define $T(n)$ be the random time it takes for a rate $\lambda$ Poisson clock to go off $n$ times (this is the time it takes for $n$ updates to occur in a continuous-time Markov Chain).
 
-		Let $a_n$ and $b_n$ be positive deterministic sequences such that $b_n / a_n \rightarrow \infty$ and 
+		Let $a_n$ and $b_n$ be positive deterministic sequences such that $b_n / a_n \rightarrow \infty$ and for any $\epsilon > 0$
 		\begin{equation}
-			m_n \frac{a_n^2}{64 b_n^2} - \log\frac{b_n^2}{a_n^2} \rightarrow \infty.
+			\epsilon \frac{m_n a_n^2}{b_n^2} - \log\frac{b_n^2}{a_n^2} \rightarrow \infty.
 			\label{eq:m_n a_n b_n constraint}
 		\end{equation}
 		Define
@@ -228,17 +228,19 @@
 			% &\leq \sum_{k = m_n}^\infty
 		\end{align}
 
-		To apply Lemma \ref{lem:T(k) bound}, we need that $\epsilon a_n / (4b_n) < 1$. However, since $a_n/b_n \rightarrow 0$, we can ensure this holds by taking $n$ large enough. In fact, in what follows we will assume $n$ is large enough that $a_n < b_n$. Continuing,
+		To apply Lemma \ref{lem:T(k) bound}, we need that $\epsilon a_n / (4b_n) < 1$. However, since $a_n/b_n \rightarrow 0$, we can ensure this holds by taking $n$ large enough. %In fact, in what follows we will assume $n$ is large enough that $a_n < b_n$. 
+		Continuing,
 		\begin{align}
-			\sum_{k = m_n}^\infty \prob\left(\left|\frac{T(k)\lambda}{k} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right) &\leq 2 \sum_{k = m_n}^\infty \exp\left(-k\frac{a_n^2}{64b_n^2}\right)\\
-			&= 2 \frac{\exp\left(-a_n^2 (m_n-1) /\left(64b_n^2\right)\right)}{\exp\left(a_n^2/\left(64b_n^2\right)\right) - 1}.
+			\sum_{k = m_n}^\infty \prob\left(\left|\frac{T(k)\lambda}{k} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right) &\leq 2 \sum_{k = m_n}^\infty \exp\left(-k \epsilon^2 \frac{a_n^2}{64b_n^2}\right)\\
+			&= 2 \frac{\exp\left(-\epsilon^2 a_n^2 (m_n-1) /\left(64b_n^2\right)\right)}{\exp\left(\epsilon^2 a_n^2/\left(64b_n^2\right)\right) - 1}.
 		\end{align}
-		Since $x \leq \exp(x) - 1$ for $0 \leq x \leq 1$,
+		Since $x \leq \exp(x) - 1$ for $0 \leq x \leq 1$, for sufficiently large $n$,
 		\begin{align}
-		2 \frac{\exp\left(-a_n^2 (m_n-1) /\left(64b_n^2\right)\right)}{\exp\left(a_n^2/\left(64b_n^2\right)\right) - 1} &\leq \frac{128 b_n^2}{a_n^2} \exp\left(-a_n^2 (m_n-1) /\left(64b_n^2\right)\right)\\
-		&\leq 256 \frac{b_n^2}{a_n^2} \exp\left(-m_n a_n^2/\left(64b_n^2\right)\right)
+		2 \frac{\exp\left(-\epsilon^2 a_n^2 (m_n-1) /\left(64b_n^2\right)\right)}{\exp\left(\epsilon^2 a_n^2/\left(64b_n^2\right)\right) - 1} &\leq \frac{128 b_n^2}{a_n^2 \epsilon^2} \exp\left(-\epsilon^2 a_n^2 (m_n-1) /\left(64b_n^2\right)\right)\\
+		&\leq 256 \frac{b_n^2}{a_n^2 \epsilon^2} \exp\left(-m_n \epsilon^2 a_n^2/\left(64b_n^2\right)\right)
 		\end{align}
-		where we have again used that $a_n < b_n$. By \eqref{eq:m_n a_n b_n constraint}, this goes to zero as $n \rightarrow \infty$.
+		%where we have again used that $a_n < b_n$. 
+		By \eqref{eq:m_n a_n b_n constraint}, this goes to zero as $n \rightarrow \infty$.
 
 		To bound the second term in \eqref{eq:both terms difference Y_n Z_n}, we will treat the two directions of the proof separately. Firstly, assume that $Z_n \convergedist X$. Then note that
 		\begin{align}
