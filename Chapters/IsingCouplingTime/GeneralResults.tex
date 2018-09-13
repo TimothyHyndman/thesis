@@ -209,66 +209,66 @@ The following corollary is then straightfoward.
 \end{proof}
 
 \section{Additional Lemmas}
-\begin{lemma}
-	\label{lem:intersecting histories bound}
-	\begin{equation}
-		\prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset] \leq \exp(2\alpha) \exp(-\lambda |j - k|).
-	\end{equation}
-\end{lemma}
-\begin{proof}
-The following is based on the proof used in Section 3.2 of \cite{Lubetzky2014-po}.
+% \begin{lemma}
+% 	\label{lem:intersecting histories bound}
+% 	\begin{equation}
+% 		\prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset] \leq \exp(2\alpha) \exp(-\lambda |j - k|).
+% 	\end{equation}
+% \end{lemma}
+% \begin{proof}
+% 	The following is based on the proof used in Section 3.2 of \cite{Lubetzky2014-po}.
 
-We first relax our histories to our alternative construction by observing that
-\begin{equation}
-	\prob[\mathcal{H}_j \cap \mathcal{H}_k \neq \emptyset] \leq \prob[\hat{\mathcal{H}}_j \cap \hat{\mathcal{H}}_k \neq \emptyset].
-\end{equation}
+% 	We first relax our histories to our alternative construction by observing that
+% 	\begin{equation}
+% 		\prob[\mathcal{H}_j \cap \mathcal{H}_k \neq \emptyset] \leq \prob[\hat{\mathcal{H}}_j \cap \hat{\mathcal{H}}_k \neq \emptyset].
+% 	\end{equation}
 
-Let $W_s = |\hat{\mathcal{H}}_{\{j, k\}} (t^* - s)|$ and let $Y_s = \#\left\{ \left( (u,t), (v,t) \right) \in \hat{\mathcal{H}}_{\{j, k\}}: t \in [t^* - s, t^*) \right\}$ count the total number of spatial edges observed in the history by time $t^* - s$. For $\hat{\mathcal{H}}_j$ and $\hat{\mathcal{H}}_k$ to intersect at time $t^* - s$, there must be enough spatial edges for the histories to reach each other. That is, we require that
-\begin{equation}
-	Y_s \geq |i - j|.
-\end{equation}
+% 	Let $W_s = |\hat{\mathcal{H}}_{\{j, k\}} (t^* - s)|$ and let $Y_s = \#\left\{ \left( (u,t), (v,t) \right) \in \hat{\mathcal{H}}_{\{j, k\}}: t \in [t^* - s, t^*) \right\}$ count the total number of spatial edges observed in the history by time $t^* - s$. For $\hat{\mathcal{H}}_j$ and $\hat{\mathcal{H}}_k$ to intersect at time $t^* - s$, there must be enough spatial edges for the histories to reach each other. That is, we require that
+% 	\begin{equation}
+% 		Y_s \geq |i - j|.
+% 	\end{equation}
 
-Initially, $W_0 = 2$ and $Y_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s)$ such that $\bar{W}_s \geq W_s$ and $\bar{Y}_s \geq Y_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s) = (2, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$, and at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$.
+% 	Initially, $W_0 = 2$ and $Y_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s)$ such that $\bar{W}_s \geq W_s$ and $\bar{Y}_s \geq Y_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s) = (2, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$, and at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$.
 
-Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s \right)$ where $\alpha$ and $\lambda$ are some fixed constants yet to be determined. We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then
-\begin{align}
-	\expect\left[Q_{s_0 + h} - Q_{s_0}| Q_{s_0}\right] &= h \theta \bar{W}_{s_0} \left(\exp(\alpha (\bar{W}_{s_0} - 1) + \lambda \bar{Y}_{s_0}) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0})\right) + \\
-	&\hphantom{= .} h (1 - \theta) \bar{W}_{s_0} \left( \exp(\alpha (\bar{W}_{s_0} + \Delta) + \lambda (\bar{Y}_{s_0} + \Delta)) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0}) \right) + \notag\\
-	&\hphantom{= .} \mathcal{O}(h^2) \notag\\
-	&= \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)h \bar{W}_{s_0} Q_{s_0} + \mathcal{O}(h^2).
-\end{align}
-Dividing through by $h$ and taking $h$ to $0$, we have
-\begin{equation}
-	\left.\frac{d}{ds} \expect\left[Q_{s} | Q_{s_0}\right] \right|_{s = s_0} = \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)\bar{W}_{s_0} Q_{s_0}
-\end{equation}
-which is negative for $\theta$ sufficiently close to $1$. Hence $Q_s$ is a supermartingale for sufficiently large $\theta$.
+% 	Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s \right)$ where $\alpha$ and $\lambda$ are some fixed constants yet to be determined. We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then
+% 	\begin{align}
+% 		\expect\left[Q_{s_0 + h} - Q_{s_0}| Q_{s_0}\right] &= h \theta \bar{W}_{s_0} \left(\exp(\alpha (\bar{W}_{s_0} - 1) + \lambda \bar{Y}_{s_0}) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0})\right) + \\
+% 		&\hphantom{= .} h (1 - \theta) \bar{W}_{s_0} \left( \exp(\alpha (\bar{W}_{s_0} + \Delta) + \lambda (\bar{Y}_{s_0} + \Delta)) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0}) \right) + \notag\\
+% 		&\hphantom{= .} \mathcal{O}(h^2) \notag\\
+% 		&= \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)h \bar{W}_{s_0} Q_{s_0} + \mathcal{O}(h^2).
+% 	\end{align}
+% 	Dividing through by $h$ and taking $h$ to $0$, we have
+% 	\begin{equation}
+% 		\left.\frac{d}{ds} \expect\left[Q_{s} | Q_{s_0}\right] \right|_{s = s_0} = \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)\bar{W}_{s_0} Q_{s_0}
+% 	\end{equation}
+% 	which is negative for $\theta$ sufficiently close to $1$. Hence $Q_s$ is a supermartingale for sufficiently large $\theta$.
 
-Define the stopping time 
-\begin{equation}
-	\tau = \inf\{s: \bar{W}_s = 0\}.
-\end{equation}
-Since $(\bar{W}_s, \bar{Y}_s) \geq (W_s, Y_s)$, we have that $W_\tau = 0$ which corresponds to the event that both histories, $\mathcal{H}_j$ and $\mathcal{H}_k$, have terminated by time $\tau$. Hence
-\begin{equation}
-	\prob[\hat{\mathcal{H}}_j \cap \hat{\mathcal{H}}_k \neq \emptyset] \leq \prob[Y_\tau \geq |j-k|].
-\end{equation}
-Now
-\begin{equation}
-	\expect[\exp(\lambda Y_\tau)] \leq \expect[\exp(\lambda\bar{Y}_\tau)].
-\end{equation}
-and from optional stopping [FIGURE THIS OUT PROPERLY],
-\begin{align}
-	\expect[\exp(\lambda \bar{Y}_\tau )] &\leq \expect[Q_{0}]\\
-	&= \exp(2\alpha).
-\end{align}
-Hence 
-\begin{equation}
-	\prob[Y_\tau \geq |j-k|] \leq \exp(2\alpha) \exp(-\lambda |j - k|)
-\end{equation}
-and overall we have that
-\begin{equation}
-	\prob[\mathcal{H}_j \cap \mathcal{H}_k \neq \emptyset] \leq \exp(2\alpha) \exp(-\lambda |j - k|).
-\end{equation}
-\end{proof}
+% 	Define the stopping time 
+% 	\begin{equation}
+% 		\tau = \inf\{s: \bar{W}_s = 0\}.
+% 	\end{equation}
+% 	Since $(\bar{W}_s, \bar{Y}_s) \geq (W_s, Y_s)$, we have that $W_\tau = 0$ which corresponds to the event that both histories, $\mathcal{H}_j$ and $\mathcal{H}_k$, have terminated by time $\tau$. Hence
+% 	\begin{equation}
+% 		\prob[\hat{\mathcal{H}}_j \cap \hat{\mathcal{H}}_k \neq \emptyset] \leq \prob[Y_\tau \geq |j-k|].
+% 	\end{equation}
+% 	Now
+% 	\begin{equation}
+% 		\expect[\exp(\lambda Y_\tau)] \leq \expect[\exp(\lambda\bar{Y}_\tau)].
+% 	\end{equation}
+% 	and from optional stopping [FIGURE THIS OUT PROPERLY],
+% 	\begin{align}
+% 		\expect[\exp(\lambda \bar{Y}_\tau )] &\leq \expect[Q_{0}]\\
+% 		&= \exp(2\alpha).
+% 	\end{align}
+% 	Hence 
+% 	\begin{equation}
+% 		\prob[Y_\tau \geq |j-k|] \leq \exp(2\alpha) \exp(-\lambda |j - k|)
+% 	\end{equation}
+% 	and overall we have that
+% 	\begin{equation}
+% 		\prob[\mathcal{H}_j \cap \mathcal{H}_k \neq \emptyset] \leq \exp(2\alpha) \exp(-\lambda |j - k|).
+% 	\end{equation}
+% \end{proof}
 
 \begin{lemma}
 	\label{lem:history escaping ball bound}
@@ -330,27 +330,27 @@ and overall we have that
 	\prob[\mathcal{H}_i \not\subset B(i, l)] \leq \exp(\alpha) \exp(-\lambda l).
 \end{equation}
 \end{proof}
-\begin{lemma}
-	\label{lem:intersecting histories bound given X_j = 1}
-	\begin{equation}
-		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \leq  2 \exp(z \Delta^2) \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})\Delta^{-k/2} n^{\Delta^2 + 1}
-	\end{equation}
-	where $k = |i - j|$.
-\end{lemma}
-\begin{proof}
-	\begin{align}
-		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1]  &\leq \frac{\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset] }{\prob[X_i = 1]}\\
-		&\leq n \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z}) \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset].
-	\end{align}
-	Now letting $k = |i - j|$ denote the distance between $i$ and $j$,
-	\begin{equation}
-		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset] \leq 2 \prob[\mathcal{H}_i \nsubseteq B(i, k/2) ]
-	\end{equation}
-	since in order for $\mathcal{H}_i$ and $\mathcal{H}_j$ to intersect, at least one of them must extend beyond halfway the distance between $i$ and $j$. From Lemma \ref{cor:prob update function time 0 in B(i, l)},
-	\begin{align}
-		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq 2 \exp(z \Delta^2) \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})\Delta^{-k/2} n^{\Delta^2 + 1}
-	\end{align}
-\end{proof}
+% \begin{lemma}
+% 	\label{lem:intersecting histories bound given X_j = 1}
+% 	\begin{equation}
+% 		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \leq  2 \exp(z \Delta^2) \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})\Delta^{-k/2} n^{\Delta^2 + 1}
+% 	\end{equation}
+% 	where $k = |i - j|$.
+% \end{lemma}
+% \begin{proof}
+% 	\begin{align}
+% 		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1]  &\leq \frac{\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset] }{\prob[X_i = 1]}\\
+% 		&\leq n \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z}) \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset].
+% 	\end{align}
+% 	Now letting $k = |i - j|$ denote the distance between $i$ and $j$,
+% 	\begin{equation}
+% 		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset] \leq 2 \prob[\mathcal{H}_i \nsubseteq B(i, k/2) ]
+% 	\end{equation}
+% 	since in order for $\mathcal{H}_i$ and $\mathcal{H}_j$ to intersect, at least one of them must extend beyond halfway the distance between $i$ and $j$. From Lemma \ref{cor:prob update function time 0 in B(i, l)},
+% 	\begin{align}
+% 		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq 2 \exp(z \Delta^2) \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})\Delta^{-k/2} n^{\Delta^2 + 1}
+% 	\end{align}
+% \end{proof}
 
 \begin{lemma}
 	The number of vertices at distance $k$ on a degree $\Delta$ transitive graph is
@@ -479,10 +479,140 @@ In \cite{Lubetzky2016-wd}, \citeauthor{Lubetzky2016-wd} proved something similar
 % 	Choosing $c(k) = \ln(k)^2$ works so long as $\beta \Delta < 1$.
 % \end{proof}
 
+
+% \begin{lemma}
+% 	Let $i$ and $j$ be the indices of two vertices at distance $k$. Then
+% 	\begin{equation}
+% 		\prob[X_j = 1 | X_i = 1] \leq
+% 	\end{equation}
+% \end{lemma}
+% \begin{proof}
+% 	Let $B(i, l)$ denote the set of vertices within distance $l$ of vertex $i$. Let $A$ be the event
+% 	\begin{equation}
+% 		\{\mathcal{H}_i \subset B(i,k/2), \mathcal{H}_j \subset B(j, k/2)\}.
+% 	\end{equation}
+% 	By the law of total probability,
+% 	\begin{align}
+% 		\prob[X_j = 1 | X_i = 1] &= \prob[X_j = 1 | X_i = 1, A] \prob[A|X_i = 1] \notag \\ 
+% 		&\phantom{=}  +\prob\left[X_j = 1 | X_i = 1, A^\complement\right] \prob\left[A^\complement|X_i = 1\right].
+% 	\end{align}
+% 	If we are conditioning on $A$, then the events $\{X_j = 1\}$ and $\{X_i = 1\}$ depend only on the update sequences within $B(j, k/2)$ and $B(i, k/2)$ respectively. This means that
+% 	\begin{equation}
+% 		\prob[X_j = 1 | X_i = 1, A] = \prob[X_j = 1 | A].
+% 	\end{equation}
+% 	So
+% 	\begin{align}
+% 		\prob[X_j = 1 | X_i = 1] &= \prob[X_j = 1 | A] \prob[A|X_i = 1] \notag \\ 
+% 		&\phantom{=}  +\prob\left[X_j = 1 | X_i = 1, A^\complement\right] \prob\left[A^\complement|X_i = 1\right]\\
+% 		&\leq \prob[X_j = 1 | A] + \prob\left[A^\complement | X_i = 1\right]
+% 	\end{align}
+% \end{proof}
+% \begin{lemma}
+% 	\begin{equation}
+% 		\prob[X_j = 1 | A] \leq 
+% 	\end{equation}
+% \end{lemma}
+% \begin{proof}
+% 	\begin{align}
+% 		\prob[X_j = 1 | A] &= \prob[X_j = 1 | \mathcal{H}_i \subset B(i, k/2), \mathcal{H}_j \subset B(j, k/2)]%\\
+% 		% &\leq \prob[X_j = 1]/\prob[\mathcal{H}_i \subset B(i, k/2), \mathcal{H}_j \subset B(j, k/2)]
+% 	\end{align}
+% 	The events $\{\mathcal{H}_i \subset B(i, k/2)\}$ and $\{\mathcal{H}_j \subset B(j, k/2)\}$ depend only the update sequence strictly within $B(i, k/2)$ and $B(j, k/2)$ respectively. When we condition on $\{\mathcal{H}_j \subset B(j, k/2)\}$ the event $\{X_j = 1\}$ depends only on the update sequence strictly within $B(j, k/2)$. So
+% 	\begin{align}
+% 		\prob[X_j = 1 | A] &= \prob[X_j = 1 | \mathcal{H}_j \subset B(j, k/2)]\\
+% 			&\leq m_{t^*} \prob[\mathcal{H}_j \subset B(j, k/2)]^{-1}\\
+% 			&= \frac{m_{t^*}}{1 - \prob[\mathcal{H}_j \not\subset B(j, k/2)]}.
+% 	\end{align}
+% 	From Lemma \ref{lem:history escaping ball bound}, 
+% 	\begin{align}
+% 		\prob[X_j = 1 | A] &\leq \frac{m_{t^*}}{1 - \exp(\alpha -\lambda k/2)}\\
+% 		&\leq \frac{m_{t^*}}{1 - \exp(\alpha - \lambda/2)}
+% 	\end{align}
+% 	since $k \geq 1$.
+
+% 	% So these events are independent. Continuing
+% 	% \begin{align}
+% 	% 	\prob[X_j = 1 | A] &\leq m_{t^*}^{-1} \prob[\mathcal{H}_i \subset B(i, k/2)]^{-2}\\
+% 	% 	&\sim \frac{1}{n} (1 - n^{\Delta^2} \Delta^{-k/2})^{-2}
+% 	% \end{align}
+% 	% blergh
+% \end{proof}
+% \begin{lemma}
+% 	\begin{equation}
+% 		\prob[A^\complement | X_i = 1] \leq 
+% 	\end{equation}
+% \end{lemma}
+% \begin{proof}
+% 	For ease of notation, let $A_i$ be the event
+% 	\begin{equation}
+% 		A_i = \{\mathcal{H}_i \subset B(j, k/2)\}.
+% 	\end{equation}
+% 	Obviously, 
+% 	\begin{equation}
+% 		A = A_i \cap A_j.
+% 	\end{equation}
+% 	Now
+% 	\begin{align}
+% 		\prob\left[A^\complement | X_i = 1\right] &\leq \prob\left[A_i^\complement | X_i = 1\right] + \prob\left[A_j^\complement | X_i = 1\right]\\
+% 		&= \prob\left[A_i^\complement | X_i = 1\right] + \prob\left[A_j^\complement | X_i = 1, A_i^\complement \right] \prob\left[A_i^\complement | X_i = 1\right] \notag \\
+% 		&\phantom{=} + \prob\left[A_j^\complement | X_i = 1, A_i \right] \prob\left[A_i | X_i = 1\right]\\
+% 		&\leq 2\prob\left[A_i^\complement | X_i = 1\right]+ \prob\left[A_j^\complement | X_i = 1, A_i \right].\\
+% 	\end{align}
+% 	If we condition on $A_i$ then the event $X_i = 1$ depends only on the update sequence strictly inside $B(i, k/2)$. Also note that the event $A_j$ depends only on the update sequence stricly inside $B(j, k/2)$. These update sequences are independent as they do not share any vertices and so
+% 	\begin{equation}
+% 		\prob\left[A_j^\complement | X_i = 1, A_i \right] = \prob\left[A_j^\complement \right]
+% 	\end{equation}
+% 	and we have
+% 	\begin{equation}
+% 		\prob\left[A^\complement | X_i = 1\right] \leq 2\prob\left[A_i^\complement | X_i = 1\right]+ \prob\left[A_j^\complement \right].
+% 	\end{equation}
+% \end{proof}
+% \begin{lemma}
+% 	\begin{equation}
+% 		\prob\left[\mathcal{H}_i \not\subset B(i, l) | X_i = 1\right] \leq
+% 	\end{equation}
+% \end{lemma}
+% \begin{proof}
+% 	\begin{align}
+% 		\prob\left[\mathcal{H}_i \not\subset B(i, l) | X_i = 1\right] &= m_{t^*}^{-1} \prob\left[\mathcal{H}_i \not\subset B(i, l), X_i = 1\right]\\
+% 		&\leq m_{t^*}^{-1} \prob\left[\chi(\mathcal{H}_i) \geq l, X_i = 1\right]\\
+% 		&\leq m_{t^*}^{-1} \prob\left[\chi(\mathcal{H}_i) \geq l, Z(\mathcal{H}_i) \geq t^*\right]\\
+% 		&= m_{t^*}^{-1} \expect\left[\indicator_{\chi(\mathcal{H}_i) \geq l} \indicator_{Z(\mathcal{H}_i) \geq t^*} \right]\\
+% 		&\leq m_{t^*}^{-1} \expect\left[\indicator_{\chi(\mathcal{H}_i) \geq l} \indicator_{Z(\mathcal{H}_i) \geq \ln(n) + z} \right]\\
+% 		&\leq m_{t^*}^{-1} \expect\left[\exp(\chi(\mathcal{H}_i) - l) \exp(Z(\mathcal{H}_i) - \ln(n) - z) \right]\\
+% 		&= m_{t^*}^{-1} \exp(-l) \exp(-z - \ln(n)) \expect\left[\exp(\chi(\mathcal{H}_i) + Z(\mathcal{H}_i)) \right]\\
+% 		&= \max(1, \exp(- \beta \Delta z)) \exp(-l) \expect\left[\exp(\chi(\mathcal{H}_i) + Z(\mathcal{H}_i)) \right]\\
+% 		&\leq C_z \euler^{-l} BLAH
+% 	\end{align}
+% \end{proof}
+\begin{lemma}
+	For any $0 < \epsilon < 1$, there exists an $\alpha$ such that for sufficiently small $\beta$,
+	\label{lem:nd X_j given X_i}
+	\begin{equation}
+		\prob[X_j = 1| X_i = 1] \leq C_{z, \epsilon} \exp(2 \alpha) n^{-\epsilon} + 
+	\end{equation}
+	where $k = |i - j|$ is the distance between vertices $i$ and $j$ and
+	\begin{equation}
+		C_{z, \epsilon} = \exp(-\epsilon z) \max(1, \euler^{\beta\Delta z}).
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	There are two ways in which the update history of vertex $j$ can survive until time $0$. The update history can survive without intersecting with the update history of vertex $i$ or the update history of vertex $j$ can merge with the update history of vertex $i$ (whose survival we are conditioning on). %(Note that these events are not mutually exclusive as the update history of vertex $i+k$ could merge with the update history of vertex $i$ after it reaches time $0$.) 
+	Breaking up the probability this way we have
+	\begin{align}
+		\prob[X_j = 1| X_i = 1] &= \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j = \emptyset | X_i = 1] \notag\\
+		&\phantom{=}+ \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1]\\
+		&\leq \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j = \emptyset | X_i = 1] + \prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1].
+	\end{align}
+
+	The result follows from Lemmas \ref{lem: prob X_j and no intersect given X_i = 1} and \ref{lem: prob intersect given X_i = 1}.
+\end{proof}
+
 This proof is closely based on that in \cite{Lubetzky2014-po}.
 \begin{lemma}
+	\label{lem: prob intersect given X_i = 1}
 	\begin{equation}
-		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1]
+		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \leq \euler^{-k + 2 + 2\alpha}.
 	\end{equation}
 \end{lemma}
 \begin{proof}
@@ -524,116 +654,48 @@ This proof is closely based on that in \cite{Lubetzky2014-po}.
 		&= \euler^{-k + 2} \expect[\euler^{\chi(\mathcal{H}_{ij}) + (1/2)L(\mathcal{H}_{ij})} ]
 	\end{align}
 
-	Continue on like in Lemma \ref{lem:intersecting histories bound}.
-\end{proof}
-\begin{lemma}
-	Let $i$ and $j$ be the indices of two vertices at distance $k$. Then
-	\begin{equation}
-		\prob[X_j = 1 | X_i = 1] \leq
-	\end{equation}
-\end{lemma}
-\begin{proof}
-	Let $B(i, l)$ denote the set of vertices within distance $l$ of vertex $i$. Let $A$ be the event
-	\begin{equation}
-		\{\mathcal{H}_i \subset B(i,k/2), \mathcal{H}_j \subset B(j, k/2)\}.
-	\end{equation}
-	By the law of total probability,
+	From Lemma \ref{lem:full submartingale thing}, there exists an $\alpha > \ln(2)$ such that for small enough $\beta$,
 	\begin{align}
-		\prob[X_j = 1 | X_i = 1] &= \prob[X_j = 1 | X_i = 1, A] \prob[A|X_i = 1] \notag \\ 
-		&\phantom{=}  +\prob\left[X_j = 1 | X_i = 1, A^\complement\right] \prob\left[A^\complement|X_i = 1\right].
-	\end{align}
-	If we are conditioning on $A$, then the events $\{X_j = 1\}$ and $\{X_i = 1\}$ depend only on the update sequences within $B(j, k/2)$ and $B(i, k/2)$ respectively. This means that
-	\begin{equation}
-		\prob[X_j = 1 | X_i = 1, A] = \prob[X_j = 1 | A].
-	\end{equation}
-	So
-	\begin{align}
-		\prob[X_j = 1 | X_i = 1] &= \prob[X_j = 1 | A] \prob[A|X_i = 1] \notag \\ 
-		&\phantom{=}  +\prob\left[X_j = 1 | X_i = 1, A^\complement\right] \prob\left[A^\complement|X_i = 1\right]\\
-		&\leq \prob[X_j = 1 | A] + \prob\left[A^\complement | X_i = 1\right]
-	\end{align}
-\end{proof}
-\begin{lemma}
-	\begin{equation}
-		\prob[X_j = 1 | A] \leq 
-	\end{equation}
-\end{lemma}
-\begin{proof}
-	\begin{align}
-		\prob[X_j = 1 | A] &= \prob[X_j = 1 | \mathcal{H}_i \subset B(i, k/2), \mathcal{H}_j \subset B(j, k/2)]%\\
-		% &\leq \prob[X_j = 1]/\prob[\mathcal{H}_i \subset B(i, k/2), \mathcal{H}_j \subset B(j, k/2)]
-	\end{align}
-	The events $\{\mathcal{H}_i \subset B(i, k/2)\}$ and $\{\mathcal{H}_j \subset B(j, k/2)\}$ depend only the update sequence strictly within $B(i, k/2)$ and $B(j, k/2)$ respectively. When we condition on $\{\mathcal{H}_j \subset B(j, k/2)\}$ the event $\{X_j = 1\}$ depends only on the update sequence strictly within $B(j, k/2)$. So
-	\begin{align}
-		\prob[X_j = 1 | A] &= \prob[X_j = 1 | \mathcal{H}_j \subset B(j, k/2)]\\
-			&\leq m_{t^*} \prob[\mathcal{H}_j \subset B(j, k/2)]^{-1}\\
-			&= \frac{m_{t^*}}{1 - \prob[\mathcal{H}_j \not\subset B(j, k/2)]}.
-	\end{align}
-	From Lemma \ref{lem:history escaping ball bound}, 
-	\begin{align}
-		\prob[X_j = 1 | A] &\leq \frac{m_{t^*}}{1 - \exp(\alpha -\lambda k/2)}\\
-		&\leq \frac{m_{t^*}}{1 - \exp(\alpha - \lambda/2)}
-	\end{align}
-	since $k \geq 1$.
-
-	% So these events are independent. Continuing
-	% \begin{align}
-	% 	\prob[X_j = 1 | A] &\leq m_{t^*}^{-1} \prob[\mathcal{H}_i \subset B(i, k/2)]^{-2}\\
-	% 	&\sim \frac{1}{n} (1 - n^{\Delta^2} \Delta^{-k/2})^{-2}
-	% \end{align}
-	% blergh
-\end{proof}
-\begin{lemma}
-	\begin{equation}
-		\prob[A^\complement | X_i = 1] \leq 
-	\end{equation}
-\end{lemma}
-\begin{proof}
-	For ease of notation, let $A_i$ be the event
-	\begin{equation}
-		A_i = \{\mathcal{H}_i \subset B(j, k/2)\}.
-	\end{equation}
-	Obviously, 
-	\begin{equation}
-		A = A_i \cap A_j.
-	\end{equation}
-	Now
-	\begin{align}
-		\prob\left[A^\complement | X_i = 1\right] &\leq \prob\left[A_i^\complement | X_i = 1\right] + \prob\left[A_j^\complement | X_i = 1\right]\\
-		&= \prob\left[A_i^\complement | X_i = 1\right] + \prob\left[A_j^\complement | X_i = 1, A_i^\complement \right] \prob\left[A_i^\complement | X_i = 1\right] \notag \\
-		&\phantom{=} + \prob\left[A_j^\complement | X_i = 1, A_i \right] \prob\left[A_i | X_i = 1\right]\\
-		&\leq 2\prob\left[A_i^\complement | X_i = 1\right]+ \prob\left[A_j^\complement | X_i = 1, A_i \right].\\
-	\end{align}
-	If we condition on $A_i$ then the event $X_i = 1$ depends only on the update sequence strictly inside $B(i, k/2)$. Also note that the event $A_j$ depends only on the update sequence stricly inside $B(j, k/2)$. These update sequences are independent as they do not share any vertices and so
-	\begin{equation}
-		\prob\left[A_j^\complement | X_i = 1, A_i \right] = \prob\left[A_j^\complement \right]
-	\end{equation}
-	and we have
-	\begin{equation}
-		\prob\left[A^\complement | X_i = 1\right] \leq 2\prob\left[A_i^\complement | X_i = 1\right]+ \prob\left[A_j^\complement \right].
-	\end{equation}
-\end{proof}
-\begin{lemma}
-	\begin{equation}
-		\prob\left[\mathcal{H}_i \not\subset B(i, l) | X_i = 1\right] \leq
-	\end{equation}
-\end{lemma}
-\begin{proof}
-	\begin{align}
-		\prob\left[\mathcal{H}_i \not\subset B(i, l) | X_i = 1\right] &= m_{t^*}^{-1} \prob\left[\mathcal{H}_i \not\subset B(i, l), X_i = 1\right]\\
-		&\leq m_{t^*}^{-1} \prob\left[\chi(\mathcal{H}_i) \geq l, X_i = 1\right]\\
-		&\leq m_{t^*}^{-1} \prob\left[\chi(\mathcal{H}_i) \geq l, Z(\mathcal{H}_i) \geq t^*\right]\\
-		&= m_{t^*}^{-1} \expect\left[\indicator_{\chi(\mathcal{H}_i) \geq l} \indicator_{Z(\mathcal{H}_i) \geq t^*} \right]\\
-		&\leq m_{t^*}^{-1} \expect\left[\indicator_{\chi(\mathcal{H}_i) \geq l} \indicator_{Z(\mathcal{H}_i) \geq \ln(n) + z} \right]\\
-		&\leq m_{t^*}^{-1} \expect\left[\exp(\chi(\mathcal{H}_i) - l) \exp(Z(\mathcal{H}_i) - \ln(n) - z) \right]\\
-		&= m_{t^*}^{-1} \exp(-l) \exp(-z - \ln(n)) \expect\left[\exp(\chi(\mathcal{H}_i) + Z(\mathcal{H}_i)) \right]\\
-		&= \max(1, \exp(- \beta \Delta z)) \exp(-l) \expect\left[\exp(\chi(\mathcal{H}_i) + Z(\mathcal{H}_i)) \right]\\
-		&\leq C_z \euler^{-l} BLAH
+		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq \euler^{-k + 2 + 2\alpha}.
 	\end{align}
 \end{proof}
 
-The following closely follows the statement and proof of \cite[Lemma 3.1]{Lubetzky2014-po}. [ONLY WORKS FOR $\eta < 1$]
 \begin{lemma}
+	\label{lem: prob X_j and no intersect given X_i = 1}
+	There exists an $\alpha$ such that for $\beta$ sufficiently small
+	\begin{equation}
+		\prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j = \emptyset| X_i = 1] \leq C_{z, \epsilon} \exp(2 \alpha) n^{-\epsilon}.
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	\begin{align}
+		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] &= m_{t^*}^{-1} \prob[X_j = 1, X_i = 1, \hist_i \cap \hist_j = \emptyset]\\
+		&\leq m_{t^*}^{-1} \prob\left[\frac{1}{2} \mathcal{L}(\hist_i \cup \hist_j) \geq t^*\right]\\
+		&= m_{t^*}^{-1} \prob\left[\frac{1+\epsilon}{2} \mathcal{L}(\hist_i \cup \hist_j) \geq (1+\epsilon) t^*\right]
+	\end{align}
+	for any $0 < \epsilon < 1$. Continuing
+	\begin{align}
+		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] &\leq m_{t^*}^{-1} \expect\left[\indicator_{(1+\epsilon)\mathcal{L}(\hist_i \cup \hist_j)/2 \geq (1+\epsilon)t^*}\right]\\
+		&= m_{t^*}^{-1} \expect\left[\exp((1+\epsilon)\mathcal{L}(\hist_i \cup \hist_j)/2 - (1+\epsilon)t^*)\right]\\
+		&= m_{t^*}^{-1} \exp(-(1+\epsilon)t^*) \expect\left[\exp\left(\frac{1+\epsilon}{2}\mathcal{L}(\hist_i \cup \hist_j\right)\right].
+	\end{align}
+	Since $t^* \geq \ln(n) + z$, and $m_{t^*} \geq \min(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})/n$,
+	\begin{align}
+		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] &\leq C_{z, \epsilon} n^{-\epsilon} \expect\left[\exp\left(\frac{1+\epsilon}{2}\mathcal{L}(\hist_i \cup \hist_j\right)\right]
+	\end{align}
+	where 
+	\begin{equation}
+		C_{z, \epsilon} = \exp(-\epsilon z) \max(1, \euler^{\beta\Delta z}).
+	\end{equation}
+	From Lemma \ref{lem:full submartingale thing}, there exists an $\alpha$ such that for $\beta$ sufficiently small
+	\begin{equation}
+		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] \leq C_{z, \epsilon} \exp(2 \alpha) n^{-\epsilon}.
+	\end{equation}
+\end{proof}
+
+The following is essentially a rewrite of \cite[Lemma 3.1]{Lubetzky2014-po}.
+\begin{lemma}
+	\label{lem:full submartingale thing}
 	Let 
 	\begin{equation}
 		\chi(\mathcal{H}_i) = \#\left\{ \left( (u,t), (v,t) \right) \in \mathcal{H}_i \right\}
@@ -642,9 +704,13 @@ The following closely follows the statement and proof of \cite[Lemma 3.1]{Lubetz
 	\begin{equation}
 		\mathcal{L}(\mathcal{H}_i) = \sum_{i \in V} \int_{0}^{t^*} \indicator_{(i, t) \in \mathcal{H}_i} \intd t
 	\end{equation}
-	be the sum of the lengths of all the horizontal edges in $\mathcal{H}_i$. Then
+	be the sum of the lengths of all the horizontal edges in $\hist_i$. Then for any $0<\eta<1$, $\lambda > 0$, $\alpha > -\ln(1 - \eta)$, there exists $\beta_0 = \beta_0(d, \eta, \lambda, \alpha)$ such that if $\beta < \beta_0$ then for any $A \subseteq V$,
 	\begin{equation}
-		\expect[\exp(\chi(\mathcal{H}_i) + \mathcal{L}(\mathcal{H}_i))] \leq 
+		\expect[\lambda \exp(\chi(\mathcal{H}_A) + \eta \mathcal{L}(\mathcal{H}_A))] \leq \exp(\alpha |A|)
+	\end{equation}
+	where $\hist_A$ is defined as
+	\begin{equation}
+		\hist_A = \bigcup_{i \in A} \hist_i.
 	\end{equation}
 \end{lemma}
 \begin{proof}
@@ -656,7 +722,7 @@ The following closely follows the statement and proof of \cite[Lemma 3.1]{Lubetz
 
 	Let $W_s = |\hat{\mathcal{H}}_i (t^* - s)|$, let $Y_s = \chi(\hat{\mathcal{H}}_i \cap V \times [t^* - s, t^*])$ count the total number of spatial edges observed in the history by time $t^* - s$ and let $Z_s = \mathcal{L}(\hat{\mathcal{H}}_i \cap V \times [t^* - s, t^*])$. 
 
-	Initially, $W_0 = 1$, $Y_0 = 0$, and $Z_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. The length, $Z_s$, grows as $\intd Z_s = W_s \intd s$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s)$ such that $\bar{W}_s \geq W_s$, $\bar{Y}_s \geq Y_s$, and $\bar{Z}_s \geq Z_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s) = (1, 0, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$; at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$; and $\bar{Z}_s$ grows as $\intd \bar{Z}_s = \bar{W}_s \intd s$.
+	Initially, $W_0 = 1$, $Y_0 = 0$, and $Z_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. The length, $Z_s$, grows as $\intd Z_s = W_s \intd s$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s)$ such that $\bar{W}_s \geq W_s$, $\bar{Y}_s \geq Y_s$, and $\bar{Z}_s \geq Z_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s) = (|A|, 0, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$; at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$; and $\bar{Z}_s$ grows as $\intd \bar{Z}_s = \bar{W}_s \intd s$.
 
 	Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s + \eta \bar{Z}_s\right)$ where $\alpha$, $\lambda$, and $\eta$ are some fixed constants yet to be determined, and $\alpha > -\ln(1 - \eta)$. We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then [FIX THIS]
 	\begin{align}
@@ -677,7 +743,7 @@ The following closely follows the statement and proof of \cite[Lemma 3.1]{Lubetz
 	\end{equation}
 	Finally, from optional stopping [FIGURE THIS OUT PROPERLY],
 	\begin{align}
-		\expect[\exp(\lambda \bar{Y}_\tau )] &\leq \expect[Q_{0}]\\
-		&= \exp(\alpha).
+		\expect[\exp(\lambda \bar{Y}_\tau  + \eta \bar{Z}_\tau)] &\leq \expect[Q_{0}]\\
+		&= \exp(\alpha |A|).
 	\end{align}
 \end{proof}
