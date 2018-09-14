@@ -147,8 +147,9 @@ The following corollary is then straightfoward.
 
 \begin{lemma}
 \label{lem:delta1 goes to 0 general}
+	Let $\delta_1$ be as defined above in [REF]. Then
 	\begin{equation}
-		\lim_{n\rightarrow\infty} \delta_1 = 0
+		\lim_{n\rightarrow\infty} \delta_1 = 0.
 	\end{equation}
 \end{lemma}
 \begin{proof}
@@ -198,9 +199,10 @@ The following corollary is then straightfoward.
 		\prob[A] &\leq \sum_{j = 1}^n \prob[\mathcal{H}_i \nsubseteq B(i, (c_n - b_n)/2) \times [0, t^*]]\\
 			&= n \prob\left[\bigcup_{u \in [0, t^*]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, (c_n - b_n)/2)\right]
 	\end{align}
-	Combining this with Lemma [SOMETHING], and recalling our choices of $b_n = \ln(L)$ and $c_n = \ln(L)^2$ we get that
+	Combining this with Lemma \ref{lem:prob history contained in ball}, and recalling our choices of $b_n = \ln(L)$ and $c_n = \ln(L)^2$ we get that
 	\begin{align}
-		\delta_1 &\leq 4 n^2 (|B_i| + 1) 
+		\delta_1 &\leq 4 n^2 (|B_i| + 1) \exp(t^* \Delta - \ln\Delta(c_n - b_n)/2)\\
+		&\leq 4n^{2 + \Delta/(1 - \beta \Delta)}(|B_i| + 1)\exp(\Delta z) \exp(-\ln \Delta (c_n - b_n)/2)
 	\end{align}
 	which goes to $0$ as $n \rightarrow \infty$.
 
@@ -225,17 +227,23 @@ The following corollary is then straightfoward.
 
 \begin{lemma}
 \label{lem:delta4 goes to 0 general}
+	Let $\delta_4$ be as defined above in [REF]. Then
 	\begin{equation}
-		\lim_{n\rightarrow\infty} \delta_4 = 0
+		\lim_{n\rightarrow\infty} \delta_4 = 0.
 	\end{equation}
 \end{lemma}
 \begin{proof}
+	Starting with the definition of $\delta_4$, we have
 	\begin{align}
 		\delta_4 &= \sum_{i = 1}^n \left(\expect[X_i Z_i] + \expect[X_i]\expect[X_i + U_i + Z_i]\right)\\
 			&= n \expect[X_i Z_i] + n m_{t^*}^2 \left(1 + |B_i| + |C_i|\right)\\
 			&= n m_{t^*} \expect[Z_i | X_i = 1] + n m_{t^*}^2 \left(1 + |B_i| + |C_i|\right)\\
-			&= n m_{t^*} \left(\sum_{j \in C_i} \prob[X_j = 1 | X_i = 1] + m_{t^*} \left(1 + |B_i| + |C_i|\right) \right)%\\
+			% &= n m_{t^*} \left(\sum_{j \in C_i} \prob[X_j = 1 | X_i = 1] + m_{t^*} \left(1 + |B_i| + |C_i|\right) \right)%\\
 			% &\leq n m_{t^*} \left(\sum_{j \in C_i} \left(m_{t^*} + \prob[\mathcal{H}_{j} \cap \mathcal{H}_i \neq \emptyset | X_i = 1\right) + m_{t^*} \left(1 + |B_i| + |C_i|\right) \right)
+	\end{align}
+	Now,
+	\begin{align}
+		\expect[Z_i | X_i = 1] &= 
 	\end{align}
 
 	% NEED TO PROVE LEMMA \ref{lem:intersecting histories bound given X_j = 1}
