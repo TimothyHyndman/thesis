@@ -55,7 +55,12 @@ So
 \begin{align}
 	m_t(i) = \prob[A_t].
 \end{align}
-Finally, given a target time $t^*$, $X_i$ is defined such that $\{X_i = 1\} = A_{t^*}$. So $\prob[X_i = 1] = m_{t^*}(i)$. This motivates the following restatement of part of Lemma 2.1 from \cite{Lubetzky2016-wd}.
+Finally, given a target time $t^*$, $X_i$ is defined such that $\{X_i = 1\} = A_{t^*}$. So 
+\begin{equation}
+	\label{eq:prob X_i = 1 is m_t*}
+	\prob[X_i = 1] = m_{t^*}(i).	
+\end{equation}
+This motivates the following restatement of part of Lemma 2.1 from \cite{Lubetzky2016-wd}.
 
 \begin{lemma}[\cite{Lubetzky2016-wd}, Lemma 2.1]
 	There exist some constant $c_{\beta, d} > 0$ such that for any $t > 0$,
@@ -120,7 +125,7 @@ The following corollary is then straightfoward.
 			&= \sum_{i = 1}^n \prob(X_i = 1) \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]\\
 			&= n m_{t^*} \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]
 	\end{align}
-	where we have used that $X_i$ is zero-one, \eqref{eq:1D prob X_i}, and the transitivity of the graph.
+	where we have used that $X_i$ is zero-one, \eqref{eq:prob X_i = 1 is m_t*}, and the transitivity of the graph.
 	Clearly 
 	\begin{align}
 		\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] \leq 1
@@ -147,17 +152,32 @@ The following corollary is then straightfoward.
 	\end{equation}
 \end{lemma}
 \begin{proof}
+	Starting with the definition of $\delta_1$, we have
 	\begin{align}
 		\delta_1 &= \sum_{i = 1}^n \sum_{k = 0}^{|B_i|} \prob[X_i = 1, U_i = k] \expect \left| \frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|\\
 		&= n \sum_{k = 0}^{|B_i|} \expect \left|\prob[X_i = 1, U_i = k|W_i] - \prob[X_i = 1, U_i = k] \right|%\\
 		\label{eq:nD delta1 line 2}
 		% &\leq n \sup_{W_i} \sum_{k = 0}^{2 b_n} \left| \prob[X_i = 1, U_i = k|W_i] - \prob[X_i = 1, U_i = k] \right|
 	\end{align}
-	Let $A$ be the event that the history of a vertex in $D_i$ merges with the history of a vertex in $B_i \cup \{i\}$. More formally,
+	by the transitivity of the graph.
+	Let
 	\begin{equation}
-		A = \{ \exists j \in B_i \cup \{i\}, l \in D_i : \mathcal{H}_j \cap \mathcal{H}_l \neq \emptyset\}.
+		C_i^c = \{j : |j - i| \leq (c_n + b_n)/2\}
 	\end{equation}
-	We note that if $A$ does not happen, then $W_i$ cannot affect $X_i$ or $U_i$. That is,
+	be the set of vertices within distance $(b_n + c_n)/2$ of $i$ and define the events
+	\begin{equation}
+		A_1 = \{\exists j \in B_i \cup \{i\}, \exists t \in [0, t^*] : \mathcal{H}_j(t) \nsubseteq  C_i^c\}
+	\end{equation}
+	and
+	\begin{equation}
+		A_2 = \{\exists j \in D_i, \exists t \in [0, t^*] : \mathcal{H}_j(t) \cap C_i^c \neq \emptyset\}
+	\end{equation}
+	as well as their intersection
+	\begin{equation}
+		A = A_1 \cap A_2.
+	\end{equation}
+
+	From Lemma \ref{lem:conditioning on A removes conditioning on W},
 	\begin{equation}
 		\prob[X_i = 1, U_i = j | A^\complement, W_i] = \prob[X_i = 1, U_i = j | A^\complement].
 	\end{equation} 
@@ -172,23 +192,35 @@ The following corollary is then straightfoward.
 		&= 4 n (|B_i| + 1) \prob[A]
 	\end{align}
 
-	By a union bound,
+	For either $A_1$ or $A_2$ to hold, there must exists a history that spreads at least distance $(c_n - b_n) / 2$ away from its starting vertex. 
+	By a union bound
 	\begin{align}
-		\delta_1 &\leq 4 n (|B_i| + 1) \sum_{j \in B_i \cup \{i\}} \sum_{k \in D_i} \prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset].
+		\prob[A] &\leq \sum_{j = 1}^n \prob[\mathcal{H}_i \nsubseteq B(i, (c_n - b_n)/2) \times [0, t^*]]\\
+			&= n \prob\left[\bigcup_{u \in [0, t^*]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, (c_n - b_n)/2)\right]
 	\end{align}
-
-	[FIX THIS LEMMA]
-	% From Lemma \ref{lem:intersecting histories bound},
+	Combining this with Lemma [SOMETHING], and recalling our choices of $b_n = \ln(L)$ and $c_n = \ln(L)^2$ we get that
 	\begin{align}
-		\delta_1 &\leq 4 n^2 (|B_i| + 1)^2 \exp(2\alpha) \exp(-\lambda(c_n - b_n)).
+		\delta_1 &\leq 4 n^2 (|B_i| + 1) 
 	\end{align}
+	which goes to $0$ as $n \rightarrow \infty$.
 
-	On the torus $(\mathbb{Z} / L \mathbb{Z})^d$, $n = L^d$, $c_n = \log(L)^2$, $b_n = \log(L)$, and $|B_i| \leq C \log(L)^d$. So
+	% By a union bound,
+	% \begin{align}
+	% 	\delta_1 &\leq 4 n (|B_i| + 1) \sum_{j \in B_i \cup \{i\}} \sum_{k \in D_i} \prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset].
+	% \end{align}
 
-	\begin{equation}
-		\delta_1 \leq C L^{2d} \log(L)^{2d} \exp(-\lambda(\log(L)^2 - \log(L))
-	\end{equation}
-	which goes to $0$ as $L \rightarrow \infty$.
+	% [FIX THIS LEMMA]
+	% % From Lemma \ref{lem:intersecting histories bound},
+	% \begin{align}
+	% 	\delta_1 &\leq 4 n^2 (|B_i| + 1)^2 \exp(2\alpha) \exp(-\lambda(c_n - b_n)).
+	% \end{align}
+
+	% On the torus $(\mathbb{Z} / L \mathbb{Z})^d$, $n = L^d$, $c_n = \log(L)^2$, $b_n = \log(L)$, and $|B_i| \leq C \log(L)^d$. So
+
+	% \begin{equation}
+	% 	\delta_1 \leq C L^{2d} \log(L)^{2d} \exp(-\lambda(\log(L)^2 - \log(L))
+	% \end{equation}
+	% which goes to $0$ as $L \rightarrow \infty$.
 \end{proof}
 
 \begin{lemma}
@@ -210,6 +242,60 @@ The following corollary is then straightfoward.
 \end{proof}
 
 \section{Additional Lemmas}
+The first of our additional Lemmas comes from \cite[Lemma 3.1]{Lubetzky2014-po}. We have slightly modified the statement and proof.
+\begin{lemma}[\cite{Lubetzky2014-po}]
+	\label{lem:full submartingale thing}
+	Let 
+	\begin{equation}
+		\chi(\mathcal{H}_i) = \#\left\{ \left( (u,t), (v,t) \right) \in \mathcal{H}_i \right\}
+	\end{equation}
+	count the total number of horizontal edges in $\mathcal{H}_i$ and let 
+	\begin{equation}
+		\mathcal{L}(\mathcal{H}_i) = \sum_{i \in V} \int_{0}^{t^*} \indicator_{(i, t) \in \mathcal{H}_i} \intd t
+	\end{equation}
+	be the sum of the lengths of all the horizontal edges in $\hist_i$. Then for any $0 \leq \eta < 1$, $\lambda \in \mathbb{R}$, $\alpha > -\ln(1 - \eta)$, there exists $\beta_0 = \beta_0(d, \eta, \lambda, \alpha)$ such that if $\beta < \beta_0$ then for any $A \subseteq V$,
+	\begin{equation}
+		\expect[\lambda \exp(\chi(\mathcal{H}_A) + \eta \mathcal{L}(\mathcal{H}_A))] \leq \exp(\alpha |A|)
+	\end{equation}
+	where $\hist_A$ is defined as
+	\begin{equation}
+		\hist_A = \bigcup_{i \in A} \hist_i.
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	We first relax our histories to our alternative construction by observing that
+	\begin{align}
+		&\chi(\mathcal{H}_i) \leq \chi(\hat{\mathcal{H}}_i), &Z(\mathcal{H}_i) \leq Z(\hat{\mathcal{H}}_i).
+	\end{align}
+
+
+	Let $W_s = |\hat{\mathcal{H}}_i (t^* - s)|$, let $Y_s = \chi(\hat{\mathcal{H}}_i \cap V \times [t^* - s, t^*])$ count the total number of spatial edges observed in the history by time $t^* - s$ and let $Z_s = \mathcal{L}(\hat{\mathcal{H}}_i \cap V \times [t^* - s, t^*])$. 
+
+	Initially, $W_0 = 1$, $Y_0 = 0$, and $Z_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. The length, $Z_s$, grows as $\intd Z_s = W_s \intd s$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s)$ such that $\bar{W}_s \geq W_s$, $\bar{Y}_s \geq Y_s$, and $\bar{Z}_s \geq Z_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s) = (|A|, 0, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$; at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$; and $\bar{Z}_s$ grows as $\intd \bar{Z}_s = \bar{W}_s \intd s$.
+
+	Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s + \eta \bar{Z}_s\right)$ where $\alpha$, $\lambda$, and $\eta$ are some fixed constants yet to be determined, and $\alpha > -\ln(1 - \eta)$. We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then [FIX THIS]
+	\begin{align}
+		\expect\left[Q_{s_0 + h} - Q_{s_0}| Q_{s_0}\right] &= h \theta \bar{W}_{s_0} \left(\exp(\alpha (\bar{W}_{s_0} - 1) + \lambda \bar{Y}_{s_0}) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0})\right) + \\
+		&\hphantom{= .} h (1 - \theta) \bar{W}_{s_0} \left( \exp(\alpha (\bar{W}_{s_0} + \Delta) + \lambda (\bar{Y}_{s_0} + \Delta)) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0}) \right) + \notag\\
+		&\hphantom{= .} \mathcal{O}(h^2) \notag\\
+		&= \left(\eta + \theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)h \bar{W}_{s_0} Q_{s_0} + \mathcal{O}(h^2).
+	\end{align}
+	Dividing through by $h$ and taking $h$ to $0$, we have
+	\begin{equation}
+		\left.\frac{d}{ds} \expect\left[Q_{s} | Q_{s_0}\right] \right|_{s = s_0} = \left(\eta + \theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)\bar{W}_{s_0} Q_{s_0}
+	\end{equation}
+	which is negative for $\theta$ sufficiently close to $1$. Hence $Q_s$ is a supermartingale for sufficiently large $\theta$.
+
+	Define the stopping time 
+	\begin{equation}
+		\tau = \inf\{s: \bar{W}_s = 0\}.
+	\end{equation}
+	Finally, from optional stopping [FIGURE THIS OUT PROPERLY],
+	\begin{align}
+		\expect[\exp(\lambda \bar{Y}_\tau  + \eta \bar{Z}_\tau)] &\leq \expect[Q_{0}]\\
+		&= \exp(\alpha |A|).
+	\end{align}
+\end{proof}
 % \begin{lemma}
 % 	\label{lem:intersecting histories bound}
 % 	\begin{equation}
@@ -271,66 +357,66 @@ The following corollary is then straightfoward.
 % 	\end{equation}
 % \end{proof}
 
-\begin{lemma}
-	\label{lem:history escaping ball bound}
-	\begin{equation}
-		\prob[\mathcal{H}_{i} \not\subset B(i, l)] \leq \exp(\alpha) \exp(-\lambda l).
-	\end{equation}
-\end{lemma}
-\begin{proof}
-The following is based on the proof used in Section 3.2 of \cite{Lubetzky2014-po}.
+% \begin{lemma}
+% 	\label{lem:history escaping ball bound}
+% 	\begin{equation}
+% 		\prob[\mathcal{H}_{i} \not\subset B(i, l)] \leq \exp(\alpha) \exp(-\lambda l).
+% 	\end{equation}
+% \end{lemma}
+% \begin{proof}
+% The following is based on the proof used in Section 3.2 of \cite{Lubetzky2014-po}.
 
-We first relax our histories to our alternative construction by observing that
-\begin{equation}
-	\prob[\mathcal{H}_{i} \not\subset B(i, l)] \leq \prob[\hat{\mathcal{H}}_{i} \not\subset B(i, l)].
-\end{equation}
+% We first relax our histories to our alternative construction by observing that
+% \begin{equation}
+% 	\prob[\mathcal{H}_{i} \not\subset B(i, l)] \leq \prob[\hat{\mathcal{H}}_{i} \not\subset B(i, l)].
+% \end{equation}
 
-Let $W_s = |\hat{\mathcal{H}}_i (t^* - s)|$ and let $Y_s = \#\left\{ \left( (u,t), (v,t) \right) \in \hat{\mathcal{H}}_i: t \in [t^* - s, t^*) \right\}$ count the total number of spatial edges observed in the history by time $t^* - s$. For $\hat{\mathcal{H}}_i$ to extend beyond $B(i, l)$, there must be enough spatial edges. That is, we require that
-\begin{equation}
-	Y_s \geq l.
-\end{equation}
+% Let $W_s = |\hat{\mathcal{H}}_i (t^* - s)|$ and let $Y_s = \#\left\{ \left( (u,t), (v,t) \right) \in \hat{\mathcal{H}}_i: t \in [t^* - s, t^*) \right\}$ count the total number of spatial edges observed in the history by time $t^* - s$. For $\hat{\mathcal{H}}_i$ to extend beyond $B(i, l)$, there must be enough spatial edges. That is, we require that
+% \begin{equation}
+% 	Y_s \geq l.
+% \end{equation}
 
-Initially, $W_0 = 1$ and $Y_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s)$ such that $\bar{W}_s \geq W_s$ and $\bar{Y}_s \geq Y_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s) = (1, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$, and at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$.
+% Initially, $W_0 = 1$ and $Y_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s)$ such that $\bar{W}_s \geq W_s$ and $\bar{Y}_s \geq Y_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s) = (1, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$, and at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$.
 
-Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s \right)$ where $\alpha$ and $\lambda$ are some fixed constants yet to be determined. We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then
-\begin{align}
-	\expect\left[Q_{s_0 + h} - Q_{s_0}| Q_{s_0}\right] &= h \theta \bar{W}_{s_0} \left(\exp(\alpha (\bar{W}_{s_0} - 1) + \lambda \bar{Y}_{s_0}) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0})\right) + \\
-	&\hphantom{= .} h (1 - \theta) \bar{W}_{s_0} \left( \exp(\alpha (\bar{W}_{s_0} + \Delta) + \lambda (\bar{Y}_{s_0} + \Delta)) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0}) \right) + \notag\\
-	&\hphantom{= .} \mathcal{O}(h^2) \notag\\
-	&= \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)h \bar{W}_{s_0} Q_{s_0} + \mathcal{O}(h^2).
-\end{align}
-Dividing through by $h$ and taking $h$ to $0$, we have
-\begin{equation}
-	\left.\frac{d}{ds} \expect\left[Q_{s} | Q_{s_0}\right] \right|_{s = s_0} = \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)\bar{W}_{s_0} Q_{s_0}
-\end{equation}
-which is negative for $\theta$ sufficiently close to $1$. Hence $Q_s$ is a supermartingale for sufficiently large $\theta$.
+% Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s \right)$ where $\alpha$ and $\lambda$ are some fixed constants yet to be determined. We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then
+% \begin{align}
+% 	\expect\left[Q_{s_0 + h} - Q_{s_0}| Q_{s_0}\right] &= h \theta \bar{W}_{s_0} \left(\exp(\alpha (\bar{W}_{s_0} - 1) + \lambda \bar{Y}_{s_0}) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0})\right) + \\
+% 	&\hphantom{= .} h (1 - \theta) \bar{W}_{s_0} \left( \exp(\alpha (\bar{W}_{s_0} + \Delta) + \lambda (\bar{Y}_{s_0} + \Delta)) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0}) \right) + \notag\\
+% 	&\hphantom{= .} \mathcal{O}(h^2) \notag\\
+% 	&= \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)h \bar{W}_{s_0} Q_{s_0} + \mathcal{O}(h^2).
+% \end{align}
+% Dividing through by $h$ and taking $h$ to $0$, we have
+% \begin{equation}
+% 	\left.\frac{d}{ds} \expect\left[Q_{s} | Q_{s_0}\right] \right|_{s = s_0} = \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)\bar{W}_{s_0} Q_{s_0}
+% \end{equation}
+% which is negative for $\theta$ sufficiently close to $1$. Hence $Q_s$ is a supermartingale for sufficiently large $\theta$.
 
-Define the stopping time 
-\begin{equation}
-	\tau = \inf\{s: \bar{W}_s = 0\}.
-\end{equation}
-Since $(\bar{W}_s, \bar{Y}_s) \geq (W_s, Y_s)$, we have that $W_\tau = 0$ which corresponds to the event the history, $\hat{\mathcal{H}}_i$, has terminated by time $\tau$. Hence
-\begin{equation}
-	\prob[\hat{\mathcal{H}}_{i} \not\subset B(i, l)] \leq \prob[Y_\tau \geq l].
-\end{equation}
-Now
-\begin{equation}
-	\expect[\exp(\lambda Y_\tau)] \leq \expect[\exp(\lambda\bar{Y}_\tau)].
-\end{equation}
-and from optional stopping [FIGURE THIS OUT PROPERLY],
-\begin{align}
-	\expect[\exp(\lambda \bar{Y}_\tau )] &\leq \expect[Q_{0}]\\
-	&= \exp(\alpha).
-\end{align}
-Hence 
-\begin{equation}
-	\prob[Y_\tau \geq l] \leq \exp(\alpha) \exp(-\lambda l)
-\end{equation}
-and overall we have that
-\begin{equation}
-	\prob[\mathcal{H}_i \not\subset B(i, l)] \leq \exp(\alpha) \exp(-\lambda l).
-\end{equation}
-\end{proof}
+% Define the stopping time 
+% \begin{equation}
+% 	\tau = \inf\{s: \bar{W}_s = 0\}.
+% \end{equation}
+% Since $(\bar{W}_s, \bar{Y}_s) \geq (W_s, Y_s)$, we have that $W_\tau = 0$ which corresponds to the event the history, $\hat{\mathcal{H}}_i$, has terminated by time $\tau$. Hence
+% \begin{equation}
+% 	\prob[\hat{\mathcal{H}}_{i} \not\subset B(i, l)] \leq \prob[Y_\tau \geq l].
+% \end{equation}
+% Now
+% \begin{equation}
+% 	\expect[\exp(\lambda Y_\tau)] \leq \expect[\exp(\lambda\bar{Y}_\tau)].
+% \end{equation}
+% and from optional stopping [FIGURE THIS OUT PROPERLY],
+% \begin{align}
+% 	\expect[\exp(\lambda \bar{Y}_\tau )] &\leq \expect[Q_{0}]\\
+% 	&= \exp(\alpha).
+% \end{align}
+% Hence 
+% \begin{equation}
+% 	\prob[Y_\tau \geq l] \leq \exp(\alpha) \exp(-\lambda l)
+% \end{equation}
+% and overall we have that
+% \begin{equation}
+% 	\prob[\mathcal{H}_i \not\subset B(i, l)] \leq \exp(\alpha) \exp(-\lambda l).
+% \end{equation}
+% \end{proof}
 % \begin{lemma}
 % 	\label{lem:intersecting histories bound given X_j = 1}
 % 	\begin{equation}
@@ -692,59 +778,4 @@ This proof is closely based on that in \cite{Lubetzky2014-po}.
 	\begin{equation}
 		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] \leq C_{z, \epsilon} \exp(2 \alpha) n^{-\epsilon}.
 	\end{equation}
-\end{proof}
-
-The following is essentially a rewrite of \cite[Lemma 3.1]{Lubetzky2014-po}.
-\begin{lemma}
-	\label{lem:full submartingale thing}
-	Let 
-	\begin{equation}
-		\chi(\mathcal{H}_i) = \#\left\{ \left( (u,t), (v,t) \right) \in \mathcal{H}_i \right\}
-	\end{equation}
-	count the total number of horizontal edges in $\mathcal{H}_i$ and let 
-	\begin{equation}
-		\mathcal{L}(\mathcal{H}_i) = \sum_{i \in V} \int_{0}^{t^*} \indicator_{(i, t) \in \mathcal{H}_i} \intd t
-	\end{equation}
-	be the sum of the lengths of all the horizontal edges in $\hist_i$. Then for any $0<\eta<1$, $\lambda > 0$, $\alpha > -\ln(1 - \eta)$, there exists $\beta_0 = \beta_0(d, \eta, \lambda, \alpha)$ such that if $\beta < \beta_0$ then for any $A \subseteq V$,
-	\begin{equation}
-		\expect[\lambda \exp(\chi(\mathcal{H}_A) + \eta \mathcal{L}(\mathcal{H}_A))] \leq \exp(\alpha |A|)
-	\end{equation}
-	where $\hist_A$ is defined as
-	\begin{equation}
-		\hist_A = \bigcup_{i \in A} \hist_i.
-	\end{equation}
-\end{lemma}
-\begin{proof}
-	We first relax our histories to our alternative construction by observing that
-	\begin{align}
-		&\chi(\mathcal{H}_i) \leq \chi(\hat{\mathcal{H}}_i), &Z(\mathcal{H}_i) \leq Z(\hat{\mathcal{H}}_i).
-	\end{align}
-
-
-	Let $W_s = |\hat{\mathcal{H}}_i (t^* - s)|$, let $Y_s = \chi(\hat{\mathcal{H}}_i \cap V \times [t^* - s, t^*])$ count the total number of spatial edges observed in the history by time $t^* - s$ and let $Z_s = \mathcal{L}(\hat{\mathcal{H}}_i \cap V \times [t^* - s, t^*])$. 
-
-	Initially, $W_0 = 1$, $Y_0 = 0$, and $Z_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. The length, $Z_s$, grows as $\intd Z_s = W_s \intd s$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s)$ such that $\bar{W}_s \geq W_s$, $\bar{Y}_s \geq Y_s$, and $\bar{Z}_s \geq Z_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s) = (|A|, 0, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$; at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$; and $\bar{Z}_s$ grows as $\intd \bar{Z}_s = \bar{W}_s \intd s$.
-
-	Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s + \eta \bar{Z}_s\right)$ where $\alpha$, $\lambda$, and $\eta$ are some fixed constants yet to be determined, and $\alpha > -\ln(1 - \eta)$. We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then [FIX THIS]
-	\begin{align}
-		\expect\left[Q_{s_0 + h} - Q_{s_0}| Q_{s_0}\right] &= h \theta \bar{W}_{s_0} \left(\exp(\alpha (\bar{W}_{s_0} - 1) + \lambda \bar{Y}_{s_0}) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0})\right) + \\
-		&\hphantom{= .} h (1 - \theta) \bar{W}_{s_0} \left( \exp(\alpha (\bar{W}_{s_0} + \Delta) + \lambda (\bar{Y}_{s_0} + \Delta)) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0}) \right) + \notag\\
-		&\hphantom{= .} \mathcal{O}(h^2) \notag\\
-		&= \left(\eta + \theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)h \bar{W}_{s_0} Q_{s_0} + \mathcal{O}(h^2).
-	\end{align}
-	Dividing through by $h$ and taking $h$ to $0$, we have
-	\begin{equation}
-		\left.\frac{d}{ds} \expect\left[Q_{s} | Q_{s_0}\right] \right|_{s = s_0} = \left(\eta + \theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)\bar{W}_{s_0} Q_{s_0}
-	\end{equation}
-	which is negative for $\theta$ sufficiently close to $1$. Hence $Q_s$ is a supermartingale for sufficiently large $\theta$.
-
-	Define the stopping time 
-	\begin{equation}
-		\tau = \inf\{s: \bar{W}_s = 0\}.
-	\end{equation}
-	Finally, from optional stopping [FIGURE THIS OUT PROPERLY],
-	\begin{align}
-		\expect[\exp(\lambda \bar{Y}_\tau  + \eta \bar{Z}_\tau)] &\leq \expect[Q_{0}]\\
-		&= \exp(\alpha |A|).
-	\end{align}
 \end{proof}
