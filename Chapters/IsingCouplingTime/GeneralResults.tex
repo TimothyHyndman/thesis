@@ -87,8 +87,14 @@ Fix $z$ and a time of interest $t^* = t_c(n) + z$.
 		\euler^{-2s} \leq \frac{\sum_i m_{t+s}[i]^2}{\sum_i m_t[i]^2} \leq \euler^{-2(1 - \beta \Delta)s}.
 	\end{equation}
 \end{lemma}
-
-The following corollary is then straightfoward.
+The following corollaries are then straightfoward.
+\begin{corollary}
+	\label{cor:exponential decay magnetization}
+	On any vertex transitive graph with degree $\Delta$, for any $t, s > 0$ we have
+	\begin{equation}
+		\euler^{-s} m_t \leq m_{t+s} \leq m_t \euler^{-(1 - \beta \Delta)s}.
+	\end{equation}
+\end{corollary}
 \begin{corollary}
 \label{cor:magnetization of t star}
 	On any vertex transitive graph with degree $\Delta$, $m_{t^*}$ can be bounded as follows:
@@ -272,6 +278,9 @@ The following corollary is then straightfoward.
 \end{proof}
 
 \section{Additional Lemmas}
+We introduce some additional notation in this section
+[DEFINE $\chi$, $\mathcal{L}$]
+
 The first of our additional Lemmas comes from \cite[Lemma 3.1]{Lubetzky2014-po}. We have slightly modified the statement and proof.
 \begin{lemma}[\cite{Lubetzky2014-po}]
 	\label{lem:full submartingale thing}
@@ -716,10 +725,10 @@ In \cite{Lubetzky2016-wd}, \citeauthor{Lubetzky2016-wd} proved something similar
 % 	\end{align}
 % \end{proof}
 \begin{lemma}
-	For any $0 < \epsilon < 1$, there exists an $\alpha$ such that for sufficiently small $\beta$,
+	There exists a constant $C_2 > 0$ and for any $0 < \epsilon < 1$, there exists a constant $C_1 > 0$ such that for sufficiently small $\beta$,
 	\label{lem:nd X_j given X_i}
 	\begin{equation}
-		\prob[X_j = 1| X_i = 1] \leq C_{z, \epsilon} \euler^{2 \alpha} n^{-\epsilon} + \euler^{-k + 2 + 2\alpha}.
+		\prob[X_j = 1| X_i = 1] \leq C_{z, \epsilon} C_1 n^{-\epsilon} + C_2 \euler^{-k}.
 	\end{equation}
 	where $k = |i - j|$ is the distance between vertices $i$ and $j$ and
 	\begin{equation}
@@ -741,9 +750,9 @@ In \cite{Lubetzky2016-wd}, \citeauthor{Lubetzky2016-wd} proved something similar
 This proof is closely based on that in \cite{Lubetzky2014-po}.
 \begin{lemma}
 	\label{lem: prob intersect given X_i = 1}
-	Let $i$ and $j$ be the indices of two vertices separated by distance $k$. Then
+	Let $i$ and $j$ be the indices of two vertices separated by distance $k$. Then there exists a $C$ such that for sufficiently small $\beta$,
 	\begin{equation}
-		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \leq \euler^{-k + 2 + 2\alpha}.
+		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \leq C\euler^{-k}.
 	\end{equation}
 \end{lemma}
 \begin{proof}
@@ -768,27 +777,60 @@ This proof is closely based on that in \cite{Lubetzky2014-po}.
 	% 	&\leq n C_z\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left(\left\{X_i = 1\right\} \cup \left\{X_i = 1\right\}\right)\right].
 	% \end{align}
 	% Now since each update in our histories can never remove more than one vertex at a time, if $\hat{\mathcal{H}}_i(0) \cup \hat{\mathcal{H}}_j(0) = \emptyset$, then there must be some time $t > 0$ at which $\hat{\mathcal{H}}_i(t) \cup \hat{\mathcal{H}}_j(t) = \{w\}$ for a single vertex $w$. Proceeding backwards from $t^*$, define $S$ to be the first such time this happens, or put $S = 0$ if the histories always contain at least two vertices.
-	Proceeding backwards from $t^*$, define $S$ to be the random time at which $\mathcal{H}_i(t) \cup \mathcal{H}_j(t)$ first reduced to less than two vertices, or define $S = 0$ if the combined histories contain at least two vertices all the way to time $0$. Since $\mathcal{H}_i(S) \cup \mathcal{H}_j(S)$ contains at most one vertex,
+	Proceeding backwards from $t^*$, define $S$ to be the random time at which $\mathcal{H}_i(t) \cup \mathcal{H}_j(t)$ first reduced to less than two vertices, or define $S = 0$ if the combined histories contain at least two vertices all the way to time $0$. 
+	Note that
 	\begin{equation}
-		\prob\left[\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset | S = t_s\right] \leq m_{t_s}.
+		\label{eq:prob union subset of}
+		\{\hist_i(0) \cup \hist_j(0) \neq \emptyset\} \subseteq \{\mathscr{F}(v, 0, S) \neq \emptyset\}
 	\end{equation}
-
-	FIX THIS STEP...  ASSUMING WE CAN DO THIS...
-
+	where $v$ is either the single vertex $v = \hist_i(S) \cup\hist_j(S)$ in the case that the histories coallesce to a single point at $S$, or any arbitrary single vertex otherwise.
+	We also note that
+	\begin{equation}
+		\label{eq:prob intersect subset of}
+		\{\hist_i \cap \hist_j \neq \emptyset\} \subseteq \{\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t^*]\right) \geq k - 1\}
+	\end{equation}
+	since there must be at least $k - 1$ branching edges for the histories to meet. The event on the right hand side of \eqref{eq:prob intersect subset of} depends only on the update sequence in $[S, t^*]$. The event on the right hand side of \eqref{eq:prob union subset of} depends only on the update sequence in $[0, S)$. Therefore, given $S$, these events are independent and
 	\begin{align}
-		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq m_{t^*}^{-1} \expect[\indicator_{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset} m_S] \\
-		&\leq m_{t^*}^{-1} \expect[\indicator_{\chi(\mathcal{H}_{ij}) \geq k-1} m_S]\\
-		&\leq m_{t^*}^{-1} m_{t^*} \expect[\indicator_{\chi(\mathcal{H}_{ij}) \geq k-1} \euler^{t^* - S}]\\
-		&= \expect[\indicator_{\chi(\mathcal{H}_{ij}) \geq k-1} \euler^{t^* - S}]\\
-		&\leq \expect[\euler^{\chi(\mathcal{H}_{ij}) - (k-1)} \euler^{t^* - S}]\\
-		&\leq \euler^{-(k-1)} \expect[\euler^{\chi(\mathcal{H}_{ij}) + (1/2)L(\mathcal{H}_{ij}) + 1} ]\\
-		&= \euler^{-k + 2} \expect[\euler^{\chi(\mathcal{H}_{ij}) + (1/2)L(\mathcal{H}_{ij})} ]
+		\prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}| S = t_s] &\leq \prob[\mathscr{F}(v, 0, S) \neq \emptyset | S = t_s] \prob[\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t^*]\right) \geq k - 1 | S = t_s]\\
+		&= m_{t_s}  \prob[\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t^*]\right) \geq k - 1 | S = t_s]
+	\end{align}
+	and so
+	\begin{align}
+		\prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}] &\leq \expect[\indicator_{\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t^*]\right) \geq k - 1 }m_S]\\
+		&\leq \expect[\indicator_{\chi(\hist_i \cup \hist_j) \geq k - 1} m_S].
+	\end{align}
+	% If $\mathcal{H}_i(S) \cup \mathcal{H}_j(S)$ contains exactly one vertex then the probability of survival from time $S$ to time $0$ is simply the magnetisation $m_S$. Otherwise, either $S = 0$ or $|\mathcal{H}_i(S) \cup \mathcal{H}_j(S)| = 0$. In the latter case the histories cannot reach time $0$ and in the former, 
+	% \begin{equation}
+	% 	\prob\left[\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset | S = 0\right] = 1 = m_{0}.
+	% \end{equation}
+	% Overall,
+	% \begin{equation}
+	% 	\prob\left[\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset | S = t_s\right] \leq m_{t_s}.
+	% \end{equation}
+	From Corollary \ref{cor:exponential decay magnetization}, 
+	\begin{equation}
+		m_S \leq \euler^{t^* - S} m_{t^*}
+	\end{equation}
+	and since $|\hist_i(t) \cup \hist_j(t)| \geq 2$ for $t \in (S, t^*]$,
+	\begin{equation}
+		t^* - S \leq \mathcal{L}(\hist_i \cup \hist_j)/2.
+	\end{equation}
+	So
+	\begin{align}
+		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] %&\leq m_{t^*}^{-1} \expect[\indicator_{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset} m_S] \\
+		% &\leq m_{t^*}^{-1} \expect[\indicator_{\chi(\mathcal{H}_{ij}) \geq k-1} m_S]\\
+		&\leq m_{t^*}^{-1} m_{t^*} \expect[\indicator_{\chi(\hist_i \cup \hist_j) \geq k-1} \euler^{\mathcal{L}(\hist_i\cup \hist_j)/2}]\\
+		% &= \expect[\indicator_{\chi(\mathcal{H}_{ij}) \geq k-1} \euler^{\mathcal{L}(\hist_i\cup \hist_j)/2}]\\
+		&\leq \expect[\euler^{\chi(\hist_i\cup \hist_j) - (k-1)} \euler^{\mathcal{L}(\hist_i\cup \hist_j)/2}]\\
+		% &\leq \euler^{-(k-1)} \expect[\euler^{\chi(\mathcal{H}_{ij}) + (1/2)L(\mathcal{H}_{ij}) + 1} ]\\
+		&= \euler^{-k + 1} \expect[\euler^{\chi(\hist_i\cup \hist_j) + L(\hist_i\cup \hist_j)/2} ]
 	\end{align}
 
 	From Lemma \ref{lem:full submartingale thing}, there exists an $\alpha > \ln(2)$ such that for small enough $\beta$,
 	\begin{align}
-		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq \euler^{-k + 2 + 2\alpha}.
+		\expect[\euler^{\chi(\hist_i\cup \hist_j) + L(\hist_i\cup \hist_j)/2} ] &\leq \euler^{2\alpha}
 	\end{align}
+	and we get the desired result by choosing $C = \exp(1 + 2\alpha)$.
 \end{proof}
 
 \begin{lemma}
