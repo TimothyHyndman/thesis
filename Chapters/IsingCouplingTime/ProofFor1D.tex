@@ -592,3 +592,17 @@
 		\end{align}
 		The result follows from \eqref{eq:1D prob X_i} and Lemma \ref{lem:A_ij bound conditioned}.
 	\end{proof}
+
+	\begin{lemma}
+		\label{lem:prob Xj and no intersect given Xi}
+		\begin{equation}
+			\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] \leq
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		To begin
+		\begin{align}
+			\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] &= n e^{z}\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset, X_i = 1].
+		\end{align}
+		Define $S$ to be the first time that the histories intersect, or define $S = 0$ if the histories do not intersect before time $0$.
+	\end{proof}
