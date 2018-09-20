@@ -509,6 +509,62 @@
 	% \end{proof}
 
 	\begin{lemma}
+		\label{lem:X_i+k given X_i}
+		Let $i$ and $j$ be the indices of two vertices on the cycle $(\mathbb{Z}/n\mathbb{Z})$ separated by distance $k$. Then
+		\begin{equation}
+			\label{eq:prob X_i+k = 1|X_i = 1}
+			\prob[X_j = 1| X_i = 1] \leq \frac{e^{-z}}{n} + 2\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k.
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		There are two ways in which the update history of vertex $j$ can survive until time $0$. The update history can survive without intersecting with the update history of vertex $i$ or the update history of vertex $j$ can merge with the update history of vertex $i$ (whose survival we are conditioning on). %(Note that these events are not mutually exclusive as the update history of vertex $i+k$ could merge with the update history of vertex $i$ after it reaches time $0$.) 
+		Breaking up the probability this way we have
+		\begin{align}
+			\prob[X_j = 1| X_i = 1] &= \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j = \emptyset | X_i = 1] \notag\\
+			&\phantom{=}+ \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1]\\
+			&\leq \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j = \emptyset | X_i = 1] %\notag\\
+			+ \prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1].
+		\end{align}
+		% If the histories of $i$ and $j$ do not intersect, then conditioning on $\mathcal{H}_i$ surviving does not affect the chance that $\mathcal{H}_j$ survives. However, conditioning on $\mathcal{H}_i$ surviving does make it more likely that the histories intersect. So
+		% % \begin{align}
+		% % 	\prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset | X_i = 1] &\leq \prob[X_{i+k} = 1| \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset, X_i = 1]\\
+		% % 	&\leq \prob[X_{i+k} = 1]
+		% % \end{align}
+		% \begin{equation}
+		% 	\prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset | X_i = 1] \leq \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset]
+		% \end{equation}
+		% [DOES THIS NEED FIXING?] and so
+		% \begin{align}
+		% 	\prob[X_{i+k} = 1| X_i = 1] &\leq \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset] \notag\\
+		% 	&\phantom{=}+ \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} \neq \emptyset | X_i = 1],\\
+		% 	&\leq \prob[X_{i+k} = 1] + \prob[\mathcal{H}_i \cap \mathcal{H}_{i+k} \neq \emptyset | X_i = 1].
+		% \end{align}
+		The result follows from Lemmas \ref{lem:prob Xj and no intersect given Xi} and \ref{lem:A_ij bound conditioned}.
+	\end{proof}
+
+	\begin{lemma}
+		\label{lem:prob Xj and no intersect given Xi}
+		Let $i$ and $j$ be the indices of two vertices on the cycle $(\mathbb{Z}/n\mathbb{Z})$. Then
+		\begin{equation}
+			\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] \leq \euler^{-z}/n.
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		To begin
+		\begin{align}
+			\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] &= \prob[X_i = 1]^{-1}\prob[X_i = 1, X_j = 1, \hist_i \cap\hist_j = \emptyset]\\
+			&= \frac{\prob[\hist_i(0) \cup \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset]}{\prob[\hist_i(0) \neq \emptyset]}.
+		\end{align}
+		Define $S$ to be the first time that the histories intersect, or define $S = 0$ if the histories do not intersect before time $0$. We construct a new history, $\hist_j'$, in the following way. Along the interval $[S, t^*)$, $\hist_j'$ is constructed from the update sequence in the exact same way as $\hist_j$. However, along the interval $[0, S)$, we replace the update sequence with an another i.i.d. copy of the update sequence. Note that we have constructed $\hist_j'$ to be independent of $\hist_i$. Also note that in the event $\{\hist_i \cap \hist_j = \emptyset\}$, we have $\hist_j = \hist_j'$ and so
+		\begin{align}
+			\prob[\hist_i(0) \cup \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset] &= \prob[\hist_i(0) \cup \hist_j'(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset]\\
+			&\leq \prob[\hist_i(0) \cup \hist_j'(0) \neq \emptyset]\\
+			&= \prob[\hist_i(0) \neq \emptyset] \prob[\hist_j'(0) \neq \emptyset]
+		\end{align}
+		since $\hist_i$ and $\hist_j'$ are independent. Since $\prob[\hist_j'(0) \neq \emptyset] = \prob[\hist_j(0) \neq \emptyset] = \euler^{-z}/n$ we get the desired result.
+	\end{proof}
+
+\begin{lemma}
 	\label{lem:A_ij bound conditioned}
 		Let $i$ and $j$ be the indices of two vertices that are separated by distance $k$. Then
 		\begin{equation}
@@ -560,49 +616,4 @@
 		 \begin{equation}
 		 	\zeta_k = \left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k.
 		 \end{equation}
-	\end{proof}
-
-	\begin{lemma}
-		\label{lem:X_i+k given X_i}
-		\begin{equation}
-			\label{eq:prob X_i+k = 1|X_i = 1}
-			\prob[X_{i+k} = 1| X_i = 1] \leq \frac{e^{-z}}{n} + 2\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k.
-		\end{equation}
-	\end{lemma}
-	\begin{proof}
-		There are two ways in which the update history of vertex $i+k$ can survive until time $0$. The update history can survive without intersecting with the update history of vertex $i$ or the update history of vertex $i+k$ can merge with the update history of vertex $i$ (whose survival we are conditioning on). %(Note that these events are not mutually exclusive as the update history of vertex $i+k$ could merge with the update history of vertex $i$ after it reaches time $0$.) 
-		Breaking up the probability this way we have
-		\begin{align}
-			\prob[X_{i+k} = 1| X_i = 1] &= \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset | X_i = 1] \notag\\
-			&\phantom{=}+ \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} \neq \emptyset | X_i = 1].
-		\end{align}
-		If the histories of $i$ and $j$ do not intersect, then conditioning on $\mathcal{H}_i$ surviving does not affect the chance that $\mathcal{H}_j$ survives. However, conditioning on $\mathcal{H}_i$ surviving does make it more likely that the histories intersect. So
-		% \begin{align}
-		% 	\prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset | X_i = 1] &\leq \prob[X_{i+k} = 1| \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset, X_i = 1]\\
-		% 	&\leq \prob[X_{i+k} = 1]
-		% \end{align}
-		\begin{equation}
-			\prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset | X_i = 1] \leq \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset]
-		\end{equation}
-		[DOES THIS NEED FIXING?] and so
-		\begin{align}
-			\prob[X_{i+k} = 1| X_i = 1] &\leq \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset] \notag\\
-			&\phantom{=}+ \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} \neq \emptyset | X_i = 1],\\
-			&\leq \prob[X_{i+k} = 1] + \prob[\mathcal{H}_i \cap \mathcal{H}_{i+k} \neq \emptyset | X_i = 1].
-		\end{align}
-		The result follows from \eqref{eq:1D prob X_i} and Lemma \ref{lem:A_ij bound conditioned}.
-	\end{proof}
-
-	\begin{lemma}
-		\label{lem:prob Xj and no intersect given Xi}
-		\begin{equation}
-			\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] \leq
-		\end{equation}
-	\end{lemma}
-	\begin{proof}
-		To begin
-		\begin{align}
-			\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] &= n e^{z}\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset, X_i = 1].
-		\end{align}
-		Define $S$ to be the first time that the histories intersect, or define $S = 0$ if the histories do not intersect before time $0$.
 	\end{proof}
