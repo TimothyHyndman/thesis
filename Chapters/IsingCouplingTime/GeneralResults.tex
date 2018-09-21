@@ -270,10 +270,13 @@ The following corollaries are then straightfoward.
 \end{proof}
 
 \section{Additional Lemmas}
-We introduce some additional notation in this section
+The first of our additional Lemmas comes from \cite[Lemma 3.1]{Lubetzky2014-po}. We have made our statement of the lemma slightly more precise and so we have rewritten both the lemma and proof out here along with our modifications. In particular, we have specified precisely how small $\beta$ must be for the statement to hold.
+
+The lemma is a 
 [DEFINE $\chi$, $\mathcal{L}$]
 
-The first of our additional Lemmas comes from \cite[Lemma 3.1]{Lubetzky2014-po}. We have slightly modified the statement and proof.
+[FIGURE OUT HOW SMALL BETA MUST BE]
+
 \begin{lemma}[\cite{Lubetzky2014-po}]
 	\label{lem:full submartingale thing}
 	Let 
@@ -284,9 +287,13 @@ The first of our additional Lemmas comes from \cite[Lemma 3.1]{Lubetzky2014-po}.
 	\begin{equation}
 		\mathcal{L}(\mathcal{H}_i) = \sum_{i \in V} \int_{0}^{t^*} \indicator_{(i, t) \in \mathcal{H}_i} \intd t
 	\end{equation}
-	be the sum of the lengths of all the horizontal edges in $\hist_i$. Then for any $0 \leq \eta < 1$, $\lambda \in \mathbb{R}$, $\alpha > -\ln(1 - \eta)$, there exists $\beta_0 = \beta_0(d, \eta, \lambda, \alpha)$ such that if $\beta < \beta_0$ then for any $A \subseteq V$,
+	be the sum of the lengths of all the horizontal edges in $\hist_i$. Then for any $0 \leq \eta < 1$, $\lambda \in \mathbb{R}$, $\alpha > -\ln(1 - \eta)$, if
 	\begin{equation}
-		\expect[\lambda \exp(\chi(\mathcal{H}_A) + \eta \mathcal{L}(\mathcal{H}_A))] \leq \exp(\alpha |A|)
+		\tanh(\beta\Delta) \leq \frac{1 - \eta - \euler^{-\alpha}}{\euler^{(\alpha+\lambda)\Delta} - \euler^{-\alpha}},
+	\end{equation}
+	then for any $A \subseteq V$,
+	\begin{equation}
+		\expect[\exp(\lambda \chi(\mathcal{H}_A) + \eta \mathcal{L}(\mathcal{H}_A))] \leq \exp(\alpha |A|)
 	\end{equation}
 	where $\hist_A$ is defined as
 	\begin{equation}
@@ -313,14 +320,24 @@ The first of our additional Lemmas comes from \cite[Lemma 3.1]{Lubetzky2014-po}.
 	\end{align}
 	Dividing through by $h$ and taking $h$ to $0$, we have
 	\begin{equation}
+		\label{eq:martingalederivative}
 		\left.\frac{d}{ds} \expect\left[Q_{s} | Q_{s_0}\right] \right|_{s = s_0} = \left(\eta + \theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)\bar{W}_{s_0} Q_{s_0}
 	\end{equation}
-	which is negative for $\theta$ sufficiently close to $1$. Hence $Q_s$ is a supermartingale for sufficiently large $\theta$.
-
+	which is non-positive when
+	\begin{equation}
+		\theta \geq \frac{\eta + \euler^{(\alpha + \lambda)\Delta} - 1}{\euler^{(\alpha + \lambda)\Delta} - \euler^{-\alpha}}
+	\end{equation}
+	or in terms of the inverse temperature, $\beta$, 
+	\begin{equation}
+		\label{eq:boundbeta for supermartingale}
+		\tanh(\beta\Delta) \leq \frac{1 - \eta - \euler^{-\alpha}}{\euler^{(\alpha+\lambda)\Delta} - \euler^{-\alpha}}.
+	\end{equation}
+	Hence $Q_s$ is a supermartingale when \eqref{eq:boundbeta for supermartingale} holds.
 	Define the stopping time 
 	\begin{equation}
 		\tau = \inf\{s: \bar{W}_s = 0\}.
 	\end{equation}
+	At this time, the histories have completely died out 
 	Finally, from optional stopping [FIGURE THIS OUT PROPERLY],
 	\begin{align}
 		\expect[\exp(\lambda \bar{Y}_\tau  + \eta \bar{Z}_\tau)] &\leq \expect[Q_{0}]\\
@@ -738,7 +755,7 @@ In \cite{Lubetzky2016-wd}, \citeauthor{Lubetzky2016-wd} proved something similar
 
 \begin{lemma}
 	\label{lem: prob X_j and no intersect given X_i = 1}
-	Let $i$ and $j$ be the indices of two vertices on the cycle $(\mathbb{Z}/n\mathbb{Z})$. Then
+	Let $i$ and $j$ be the indices of two vertices on a vertex transitive graph. Then
 	\begin{equation}
 		\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] \leq m_{t^*}
 	\end{equation}
@@ -835,8 +852,9 @@ This proof is closely based on that in \cite{Lubetzky2014-po}.
 	\end{equation}
 	since there must be at least $k - 1$ branching edges for the histories to meet. The event on the right hand side of \eqref{eq:prob intersect subset of} depends only on the update sequence in $[S, t^*]$. The event on the right hand side of \eqref{eq:prob union subset of} depends only on the update sequence in $[0, S)$. Therefore, given $S$, these events are independent and
 	\begin{align}
-		\prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}| S = t_s] &\leq \prob[\mathscr{F}(v, 0, S) \neq \emptyset | S = t_s] \prob[\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t^*]\right) \geq k - 1 | S = t_s]\\
-		&= m_{t_s}  \prob[\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t^*]\right) \geq k - 1 | S = t_s]
+		&\prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}| S = t_s] \notag \\
+		&\phantom{=}\leq \prob[\mathscr{F}(v, 0, S) \neq \emptyset | S = t_s] \prob[\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t^*]\right) \geq k - 1 | S = t_s]\\
+		&\phantom{=}= m_{t_s}  \prob[\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t^*]\right) \geq k - 1 | S = t_s]
 	\end{align}
 	and so
 	\begin{align}
@@ -870,7 +888,11 @@ This proof is closely based on that in \cite{Lubetzky2014-po}.
 		&= \euler^{-k + 1} \expect[\euler^{\chi(\hist_i\cup \hist_j) + L(\hist_i\cup \hist_j)/2} ]
 	\end{align}
 
-	From Lemma \ref{lem:full submartingale thing}, there exists an $\alpha > \ln(2)$ such that for small enough $\beta$,
+	From Lemma \ref{lem:full submartingale thing}, for any $\alpha > \ln(2)$ if
+	\begin{equation}
+		\tanh(\beta\Delta) \leq \frac{1-2\euler^{-\alpha}}{2(\euler^{\Delta(\alpha+1)} - \euler^{-\alpha})}
+	\end{equation}
+	then
 	\begin{align}
 		\expect[\euler^{\chi(\hist_i\cup \hist_j) + L(\hist_i\cup \hist_j)/2} ] &\leq \euler^{2\alpha}
 	\end{align}
