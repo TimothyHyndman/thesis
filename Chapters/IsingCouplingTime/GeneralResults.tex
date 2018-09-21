@@ -4,28 +4,37 @@
 
 \lhead{Chapter \ref{Ch:GeneralResults}. \emph{The Coupling Time on Vertex Transitive Graphs}}
 
-For the most part, this chapter will be similar in structure and content to Chapter \ref{Ch:1D}. The main difference is that we extend the family of graphs on which we consider the Ising heat-bath Glauber dynamics from the cycle to any vertex transtive graph. Again, the main result, Theorem \ref{thm:Coupling Distribution on Lattice}, concerns the coupling time, as defined in Section \ref{sec:the coupling time}, and establishes that at sufficiently high temperature (that is, for $\beta$ small enough), the coupling time converges in distribution to a Gumbel distribution. Restricting $\beta$ to be sufficiently small is a consequence of the increased generality of this chapter.
+For the most part, this chapter will be similar in structure and content to Chapter \ref{Ch:1D}. The main difference is that we extend the family of graphs on which we consider the Ising heat-bath Glauber dynamics from the cycle to any vertex transtive graph. Again, the main result, Theorem \ref{thm:Coupling Distribution on transitive graph}, concerns the coupling time, as defined in Section \ref{sec:the coupling time}, and establishes that at sufficiently high temperature (that is, for $\beta$ small enough), the coupling time converges in distribution to a Gumbel distribution. Restricting $\beta$ to be sufficiently small is a consequence of the increased generality of this chapter.
 
-
-In this chapter we prove the following theorem.
-
-\begin{conjecture}
-\label{thm:Coupling Distribution on Lattice}
-	Let $T_L$ be the coupling time for the continuous-time Ising heat-bath 
-	dynamics for the zero-field ferromagnetic Ising model on the torus
-	$(\mathbb{Z} / L \mathbb{Z})^d$. Then for any small enough 
-	inverse-temperature $\beta$,
-	\begin{equation}
-		\lim_{L \rightarrow \infty} \prob[T_L < a_L z + b_L] = \euler^{-\euler^{-z}}
-	\end{equation}
-	where $a_L$ and $b_L$ have yet to be determined.
-\end{conjecture}
-\begin{proof}
-\end{proof}
 
 Heuristically, in the high-temperature regime, we expect the dynamics to be similar to those when $\beta = 0$. This is like coupon collector blahblah etc...
 
+To state the main result we first must define a couple of quantities. Firstly, the \emph{magnetization at vertex $i$ at time $t$} is
+\begin{equation}
+	 	m_t(i) = \expect[\mathcal{T}_t[i]]
+\end{equation} 
+where $(\mathcal{T}_t)_{t \geq 0}$ is the dynamics starting from the all-plus configuration. Note that on transitive graphs, with which this chapter is concerned, we can drop the dependence on $i$ and simply write $m_t$ for the magnetization at any vertex at time $t$. This quantity is not to be confused with the magnetization on a volume (as mentioned in Section \ref{sec:the phase transition}) which has nothing to do with dynamics. The magnetization on a volume is a random variable given by the sum of all the spins on a given volume where the spins are distributed according to the Gibbs measure. In contrast, the magnetization at a vertex, as defined here, is a deterministic function of time that is a property of the Glauber dynamics.
+
+[WHAT GRAPHS ARE WE ON]
+
+We can now define the time
+\begin{equation}
+		t_c(n) = \inf\left\{ t > 0 : m_t = \frac{1}{n}\right\}.
+\end{equation}
+which is around the time it takes for the top and bottom chains to couple.
+
+\begin{theorem}
+\label{thm:Coupling Distribution on transitive graph}
+	Let $(G_n)$ be a family of vertex-transitive graphs, $G_n = (V, E)$ with $|V| = n$ vertices. Let $T_n$ be the coupling time for the continuous-time Ising heat-bath dynamics for the zero-field ferromagnetic Ising model on $G_n$. Then for any small enough inverse-temperature $\beta$,
+	\begin{equation}
+		\lim_{n \rightarrow \infty} \prob[T_n < z + t_c(n)] = \euler^{-\euler^{-z}}
+	\end{equation}.
+\end{theorem}
+
+The proof of Theorem \ref{thm:Coupling Distribution on transitive graph} will be given in Section \ref{sec:proof thm coupling nd} after the essential preliminaries are presented. In Section \ref{sec:information percolation in higher dimensions} we describe an alternative construction of the histories that can sometimes be easier to work with. Then in Section \ref{sec:nd problem setup}, we outline the overall approach to the proof. The method is very similar to the method used in Chapter \ref{Ch:1D} but there are some additional problems that are addressed. Finally, we defer results directly concerning the update histories to Section \ref{sec:additional lemmas nd}.
+
 \section{Information Percolation in higher dimensions}
+\label{sec:information percolation in higher dimensions}
 In the previous chapter, we showed that on the cycle, there was a coupling that made the update history of a single vertex to be a continuous-time random walk that died at rate $\theta$. On lattices of dimension $d > 2$, we can no longer use this coupling and so the updates histories are significantly more complex. 
 
 Recall from Section \ref{sec: definition update support function} that given a target time $t^*$, the update history of a vertex set $A$ at time $t$, $\mathcal{H}_A(t)$, is the set of vertices whose spins at time $t$ determine the spins of $A$ at time $t^*$. Developing this history backwards in time from $t = t^*$ produces a subgraph of $\Omega \times [0, t^*]$ which we write as $\mathcal{H}_A$ and call the update history of vertex set $A$. This history can be constructed using the update sequence along $(t, t^*]$. 
@@ -78,6 +87,7 @@ Finally, given a target time $t^*$, $X_i$ is defined such that $\{X_i = 1\} = A_
 % \end{corollary}
 
 \section{Setup}
+\label{sec:nd problem setup}
 Define the time
 \begin{equation}
 	t_c(n) = \inf\left\{ t > 0 : m_t = \frac{1}{n}\right\}.
@@ -122,783 +132,785 @@ The following corollaries are then straightfoward.
 	\end{equation}
 \end{corollary}
 
-\section{Proof of Theorem \ref{thm:Coupling Distribution on Lattice}}
-\begin{lemma}
-\label{lem:nDlambda}
-	Using the above setup
-	\begin{equation}
-		 \leq \lim_{n \rightarrow \infty} \lambda \leq n m_{t^*}
-	\end{equation}
-\end{lemma}
-\begin{proof}
-	\begin{align}
-		\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \indicator[ X_i + U_i \geq 1] \right]\\
-			&= \sum_{i = 1}^n \prob(X_i = 1) \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]\\
-			&= n m_{t^*} \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]
-	\end{align}
-	where we have used that $X_i$ is zero-one, \eqref{eq:prob X_i = 1 is m_t*}, and the transitivity of the graph.
-	Clearly 
-	\begin{align}
-		\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] \leq 1
-	\end{align}
-	and so $\lambda \leq n m_{t^*}$.
-
-	By Jensen's inequality
-	\begin{align}
-		\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] &\geq \frac{1}{\expect[1 + U_i | X_i = 1]}\\
-			&= \frac{1}{1 + \expect[U_i | X_i = 1]}.
-	\end{align}
-	so in order to find a lower bound for $\lambda$ we will find an upper bound to $\expect[U_i | X_i = 1]$. Now by Lemma \ref{lem:nd X_j given X_i}, there exists a $C$ such that for small enough $\beta$,
-	\begin{align}
-		\expect[U_i | X_i = 1] &= \sum_{j \in B_i} \prob[X_j = 1| X_i = 1]\\
-			% &= \sum_{k=1}^{\lfloor b_n \rfloor} \sum_{|j - i| = k} \prob[X_j = 1| X_i = 1]\\
-			& \leq |B_i| m_{t^*} + C\sum_{k=1}^{\lfloor b_n \rfloor} \sum_{|j - i| = k} \euler^{-k}.
-	\end{align}
-	From Lemmas \ref{lem:number vertices at distance k} and \ref{lem:size B_i},
-	\begin{align}
-		\expect[U_i | X_i = 1] &\leq |B_i|m_{t^*} + C \sum_{k=1}^{\lfloor b_n \rfloor} P(k) \euler^{-k}\\
-		&\leq |B_i|m_{t^*} + C \sum_{k=1}^{\infty} P(k) \euler^{-k}\\
-		&=
-	\end{align}
-	As $n \rightarrow \infty$, the first term vanishes and we are left with [COMPLETE]
-\end{proof}
-
-\begin{lemma}
-\label{lem:delta1 goes to 0 general}
-	Let $\delta_1$ be as defined above in [REF]. Then
-	\begin{equation}
-		\lim_{n\rightarrow\infty} \delta_1 = 0.
-	\end{equation}
-\end{lemma}
-\begin{proof}
-	Starting with the definition of $\delta_1$, we have
-	\begin{align}
-		\delta_1 &= \sum_{i = 1}^n \sum_{k = 0}^{|B_i|} \prob[X_i = 1, U_i = k] \expect \left| \frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|\\
-		&= n \sum_{k = 0}^{|B_i|} \expect \left|\prob[X_i = 1, U_i = k|W_i] - \prob[X_i = 1, U_i = k] \right|%\\
-		\label{eq:nD delta1 line 2}
-		% &\leq n \sup_{W_i} \sum_{k = 0}^{2 b_n} \left| \prob[X_i = 1, U_i = k|W_i] - \prob[X_i = 1, U_i = k] \right|
-	\end{align}
-	by the transitivity of the graph.
-	Let
-	\begin{equation}
-		C_i^c = \{j : |j - i| \leq (c_n + b_n)/2\}
-	\end{equation}
-	be the set of vertices within distance $(b_n + c_n)/2$ of $i$ and define the events
-	\begin{equation}
-		A_1 = \{\exists j \in B_i \cup \{i\}, \exists t \in [0, t^*] : \mathcal{H}_j(t) \nsubseteq  C_i^c\}
-	\end{equation}
-	and
-	\begin{equation}
-		A_2 = \{\exists j \in D_i, \exists t \in [0, t^*] : \mathcal{H}_j(t) \cap C_i^c \neq \emptyset\}
-	\end{equation}
-	as well as their intersection
-	\begin{equation}
-		A = A_1 \cap A_2.
-	\end{equation}
-
-	From Lemma \ref{lem:conditioning on A removes conditioning on W},
-	\begin{equation}
-		\prob[X_i = 1, U_i = j | A^\complement, W_i] = \prob[X_i = 1, U_i = j | A^\complement].
-	\end{equation} 
-	Continuing on from \eqref{eq:nD delta1 line 2}, we split the probabilities into
-	\begin{align}
-		\delta_1 &= n \sum_{k = 0}^{|B_i|} \expect \left| \prob[X_i = 1, U_i = k|W_i, A]\prob[A|W_i] - \prob[X_i = 1, U_i = k| A]\prob[A] + \vphantom{A^\complement} \right.\\
-		&\hphantom{= .} \left.\prob(X_i = 1, U_i = k | A^\complement) (\prob[A^\complement|W_i] - \prob[A^\complement]) \right| \notag \\
-		&\leq n (|B_i| + 1) \expect\left[ \prob[A|W_i] + \prob[A] + \left|\prob[A^\complement|W_i] - \prob[A^\complement]\right|\right]\\
-		&= n (|B_i| + 1) \expect\left[ \prob[A|W_i] + \prob[A] + \left|1 - \prob[A|W_i] - (1 - \prob[A])\right|\right]\\
-		&\leq n (|B_i| + 1) \expect\left[ \prob[A|W_i] + \prob[A] + \prob[A|W_i] + \prob[A])\right]\\
-		&= 2 n (|B_i| + 1) \left(\expect[\prob[A|W_i]] + \prob[A]\right)\\
-		&= 4 n (|B_i| + 1) \prob[A]
-	\end{align}
-
-	For either $A_1$ or $A_2$ to hold, there must exists a history that spreads at least distance $(c_n - b_n) / 2$ away from its starting vertex. 
-	By a union bound
-	\begin{align}
-		\prob[A] &\leq \sum_{j = 1}^n \prob[\mathcal{H}_i \nsubseteq B(i, (c_n - b_n)/2) \times [0, t^*]]\\
-			&= n \prob\left[\bigcup_{u \in [0, t^*]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, (c_n - b_n)/2)\right]
-	\end{align}
-	Combining this with Lemma \ref{lem:prob history contained in ball}, and recalling our choices of $b_n = \ln(L)$ and $c_n = \ln(L)^2$ we get that
-	\begin{align}
-		\delta_1 &\leq 4 n^2 (|B_i| + 1) \exp(t^* \Delta - \ln\Delta(c_n - b_n)/2)\\
-		&\leq 4n^{2 + \Delta/(1 - \beta \Delta)}(|B_i| + 1)\exp(\Delta z) \exp(-\ln \Delta (c_n - b_n)/2)
-	\end{align}
-	which goes to $0$ as $n \rightarrow \infty$.
-
-	% By a union bound,
-	% \begin{align}
-	% 	\delta_1 &\leq 4 n (|B_i| + 1) \sum_{j \in B_i \cup \{i\}} \sum_{k \in D_i} \prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset].
-	% \end{align}
-
-	% [FIX THIS LEMMA]
-	% % From Lemma \ref{lem:intersecting histories bound},
-	% \begin{align}
-	% 	\delta_1 &\leq 4 n^2 (|B_i| + 1)^2 \exp(2\alpha) \exp(-\lambda(c_n - b_n)).
-	% \end{align}
-
-	% On the torus $(\mathbb{Z} / L \mathbb{Z})^d$, $n = L^d$, $c_n = \log(L)^2$, $b_n = \log(L)$, and $|B_i| \leq C \log(L)^d$. So
-
-	% \begin{equation}
-	% 	\delta_1 \leq C L^{2d} \log(L)^{2d} \exp(-\lambda(\log(L)^2 - \log(L))
-	% \end{equation}
-	% which goes to $0$ as $L \rightarrow \infty$.
-\end{proof}
-
-\begin{lemma}
-\label{lem:delta4 goes to 0 general}
-	Let $\delta_4$ be as defined above in [REF]. Then
-	\begin{equation}
-		\lim_{n\rightarrow\infty} \delta_4 = 0.
-	\end{equation}
-\end{lemma}
-\begin{proof}
-	Starting with the definition of $\delta_4$, we have
-	\begin{align}
-		\delta_4 &= \sum_{i = 1}^n \left(\expect[X_i Z_i] + \expect[X_i]\expect[X_i + U_i + Z_i]\right)\\
-			&= n \expect[X_i Z_i] + n m_{t^*}^2 \left(1 + |B_i| + |C_i|\right)\\
-			&= n m_{t^*} \expect[Z_i | X_i = 1] + n m_{t^*}^2 \left(1 + |B_i| + |C_i|\right)\\
-			&\leq C_z \expect[Z_i | X_i = 1] + \frac{C_z^2}{n} \left(1 + |B_i| + |C_i|\right)
-			% &= n m_{t^*} \left(\sum_{j \in C_i} \prob[X_j = 1 | X_i = 1] + m_{t^*} \left(1 + |B_i| + |C_i|\right) \right)%\\
-			% &\leq n m_{t^*} \left(\sum_{j \in C_i} \left(m_{t^*} + \prob[\mathcal{H}_{j} \cap \mathcal{H}_i \neq \emptyset | X_i = 1\right) + m_{t^*} \left(1 + |B_i| + |C_i|\right) \right)
-	\end{align}
-	where 
-	\begin{equation}
-		C_z = \max(\euler^{-z}, \euler^{-(1 - \beta \Delta)z}).
-	\end{equation}
-	Now from Lemmas \ref{lem:size B_i} and \ref{lem:size C_i}, the second term above vanishes as $n \rightarrow \infty$. So we turn our attention to the first term. From Lemma \ref{lem:nd X_j given X_i}, there exists a $C > 0$ such that for small enough $\beta$,
-	\begin{align}
-		\expect[Z_i | X_i = 1] &= \sum_{j \in C_i} \prob[X_j = 1 | X_i = 1]\\
-			% &= \sum_{k = \lfloor b_n \rfloor + 1}^{\lfloor c_n \rfloor} \sum_{j: |i - j| = k} \prob[X_j = 1 | X_i = 1]\\
-			&\leq |C_i| \left(m_{t^*} + C \euler^{-b_n}\right)\\
-			&\leq |C_i| \left(\frac{C_z}{n} + \frac{C}{n}\right)
-	\end{align}
-	which goes to zero as $n \rightarrow \infty$.
-	% NEED TO PROVE LEMMA \ref{lem:intersecting histories bound given X_j = 1}
-\end{proof}
-
-\section{Additional Lemmas}
-The first of our additional Lemmas comes from \cite[Lemma 3.1]{Lubetzky2014-po}. We have made our statement of the lemma slightly more precise and so we have rewritten both the lemma and proof out here along with our modifications. In particular, we have specified precisely how small $\beta$ must be for the statement to hold.
-
-[DEFINE chi and L]
-
-\begin{lemma}[\cite{Lubetzky2014-po}]
-	\label{lem:full submartingale thing}
-	Let 
-	\begin{equation}
-		\chi(\mathcal{H}_i) = \#\left\{ \left( (u,t), (v,t) \right) \in \mathcal{H}_i \right\}
-	\end{equation}
-	count the total number of horizontal edges in $\mathcal{H}_i$ and let 
-	\begin{equation}
-		\mathcal{L}(\mathcal{H}_i) = \sum_{i \in V} \int_{0}^{t^*} \indicator_{(i, t) \in \mathcal{H}_i} \intd t
-	\end{equation}
-	be the sum of the lengths of all the horizontal edges in $\hist_i$. Then for any $0 \leq \eta < 1$, $\lambda \in \mathbb{R}$, $\alpha > -\ln(1 - \eta)$, if
-	\begin{equation}
-		\tanh(\beta\Delta) \leq \frac{1 - \eta - \euler^{-\alpha}}{\euler^{(\alpha+\lambda)\Delta} - \euler^{-\alpha}},
-	\end{equation}
-	then for any $A \subseteq V$,
-	\begin{equation}
-		\expect[\exp(\lambda \chi(\mathcal{H}_A) + \eta \mathcal{L}(\mathcal{H}_A))] \leq \exp(\alpha |A|)
-	\end{equation}
-	where $\hist_A$ is defined as
-	\begin{equation}
-		\hist_A = \bigcup_{i \in A} \hist_i.
-	\end{equation}
-\end{lemma}
-\begin{proof}
-	We first relax our histories to our alternative construction by observing that
-	\begin{align}
-		&\chi(\mathcal{H}_i) \leq \chi(\hat{\mathcal{H}}_i), &Z(\mathcal{H}_i) \leq Z(\hat{\mathcal{H}}_i).
-	\end{align}
-
-
-	Let $W_s = |\hat{\mathcal{H}}_i (t^* - s)|$, let $Y_s = \chi(\hat{\mathcal{H}}_i \cap V \times [t^* - s, t^*])$ count the total number of spatial edges observed in the history by time $t^* - s$ and let $Z_s = \mathcal{L}(\hat{\mathcal{H}}_i \cap V \times [t^* - s, t^*])$. 
-
-	Initially, $W_0 = 1$, $Y_0 = 0$, and $Z_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. The length, $Z_s$, grows as $\intd Z_s = W_s \intd s$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s)$ such that $\bar{W}_s \geq W_s$, $\bar{Y}_s \geq Y_s$, and $\bar{Z}_s \geq Z_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s) = (|A|, 0, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$; at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$; and $\bar{Z}_s$ grows as $\intd \bar{Z}_s = \bar{W}_s \intd s$.
-
-	Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s + \eta \bar{Z}_s\right)$ where $\alpha$, $\lambda$, and $\eta$ are some fixed constants yet to be determined, and $\alpha > -\ln(1 - \eta)$. We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then [FIX THIS]
-	\begin{align}
-		\expect\left[Q_{s_0 + h} - Q_{s_0}| Q_{s_0}\right] &= h \theta \bar{W}_{s_0} \left(\exp(\alpha (\bar{W}_{s_0} - 1) + \lambda \bar{Y}_{s_0}) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0})\right) + \\
-		&\hphantom{= .} h (1 - \theta) \bar{W}_{s_0} \left( \exp(\alpha (\bar{W}_{s_0} + \Delta) + \lambda (\bar{Y}_{s_0} + \Delta)) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0}) \right) + \notag\\
-		&\hphantom{= .} \mathcal{O}(h^2) \notag\\
-		&= \left(\eta + \theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)h \bar{W}_{s_0} Q_{s_0} + \mathcal{O}(h^2).
-	\end{align}
-	Dividing through by $h$ and taking $h$ to $0$, we have
-	\begin{equation}
-		\label{eq:martingalederivative}
-		\left.\frac{d}{ds} \expect\left[Q_{s} | Q_{s_0}\right] \right|_{s = s_0} = \left(\eta + \theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)\bar{W}_{s_0} Q_{s_0}
-	\end{equation}
-	which is non-positive when
-	\begin{equation}
-		\theta \geq \frac{\eta + \euler^{(\alpha + \lambda)\Delta} - 1}{\euler^{(\alpha + \lambda)\Delta} - \euler^{-\alpha}}
-	\end{equation}
-	or in terms of the inverse temperature, $\beta$, 
-	\begin{equation}
-		\label{eq:boundbeta for supermartingale}
-		\tanh(\beta\Delta) \leq \frac{1 - \eta - \euler^{-\alpha}}{\euler^{(\alpha+\lambda)\Delta} - \euler^{-\alpha}}.
-	\end{equation}
-	Hence $Q_s$ is a supermartingale when \eqref{eq:boundbeta for supermartingale} holds.
-	Define the stopping time 
-	\begin{equation}
-		\tau = \inf\{s: \bar{W}_s = 0\}.
-	\end{equation}
-	At this time, the histories have completely died out 
-	Finally, from optional stopping [FIGURE THIS OUT PROPERLY],
-	\begin{align}
-		\expect[\exp(\lambda \bar{Y}_\tau  + \eta \bar{Z}_\tau)] &\leq \expect[Q_{0}]\\
-		&= \exp(\alpha |A|).
-	\end{align}
-\end{proof}
-% \begin{lemma}
-% 	\label{lem:intersecting histories bound}
-% 	\begin{equation}
-% 		\prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset] \leq \exp(2\alpha) \exp(-\lambda |j - k|).
-% 	\end{equation}
-% \end{lemma}
-% \begin{proof}
-% 	The following is based on the proof used in Section 3.2 of \cite{Lubetzky2014-po}.
-
-% 	We first relax our histories to our alternative construction by observing that
-% 	\begin{equation}
-% 		\prob[\mathcal{H}_j \cap \mathcal{H}_k \neq \emptyset] \leq \prob[\hat{\mathcal{H}}_j \cap \hat{\mathcal{H}}_k \neq \emptyset].
-% 	\end{equation}
-
-% 	Let $W_s = |\hat{\mathcal{H}}_{\{j, k\}} (t^* - s)|$ and let $Y_s = \#\left\{ \left( (u,t), (v,t) \right) \in \hat{\mathcal{H}}_{\{j, k\}}: t \in [t^* - s, t^*) \right\}$ count the total number of spatial edges observed in the history by time $t^* - s$. For $\hat{\mathcal{H}}_j$ and $\hat{\mathcal{H}}_k$ to intersect at time $t^* - s$, there must be enough spatial edges for the histories to reach each other. That is, we require that
-% 	\begin{equation}
-% 		Y_s \geq |i - j|.
-% 	\end{equation}
-
-% 	Initially, $W_0 = 2$ and $Y_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s)$ such that $\bar{W}_s \geq W_s$ and $\bar{Y}_s \geq Y_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s) = (2, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$, and at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$.
-
-% 	Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s \right)$ where $\alpha$ and $\lambda$ are some fixed constants yet to be determined. We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then
-% 	\begin{align}
-% 		\expect\left[Q_{s_0 + h} - Q_{s_0}| Q_{s_0}\right] &= h \theta \bar{W}_{s_0} \left(\exp(\alpha (\bar{W}_{s_0} - 1) + \lambda \bar{Y}_{s_0}) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0})\right) + \\
-% 		&\hphantom{= .} h (1 - \theta) \bar{W}_{s_0} \left( \exp(\alpha (\bar{W}_{s_0} + \Delta) + \lambda (\bar{Y}_{s_0} + \Delta)) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0}) \right) + \notag\\
-% 		&\hphantom{= .} \mathcal{O}(h^2) \notag\\
-% 		&= \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)h \bar{W}_{s_0} Q_{s_0} + \mathcal{O}(h^2).
-% 	\end{align}
-% 	Dividing through by $h$ and taking $h$ to $0$, we have
-% 	\begin{equation}
-% 		\left.\frac{d}{ds} \expect\left[Q_{s} | Q_{s_0}\right] \right|_{s = s_0} = \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)\bar{W}_{s_0} Q_{s_0}
-% 	\end{equation}
-% 	which is negative for $\theta$ sufficiently close to $1$. Hence $Q_s$ is a supermartingale for sufficiently large $\theta$.
-
-% 	Define the stopping time 
-% 	\begin{equation}
-% 		\tau = \inf\{s: \bar{W}_s = 0\}.
-% 	\end{equation}
-% 	Since $(\bar{W}_s, \bar{Y}_s) \geq (W_s, Y_s)$, we have that $W_\tau = 0$ which corresponds to the event that both histories, $\mathcal{H}_j$ and $\mathcal{H}_k$, have terminated by time $\tau$. Hence
-% 	\begin{equation}
-% 		\prob[\hat{\mathcal{H}}_j \cap \hat{\mathcal{H}}_k \neq \emptyset] \leq \prob[Y_\tau \geq |j-k|].
-% 	\end{equation}
-% 	Now
-% 	\begin{equation}
-% 		\expect[\exp(\lambda Y_\tau)] \leq \expect[\exp(\lambda\bar{Y}_\tau)].
-% 	\end{equation}
-% 	and from optional stopping [FIGURE THIS OUT PROPERLY],
-% 	\begin{align}
-% 		\expect[\exp(\lambda \bar{Y}_\tau )] &\leq \expect[Q_{0}]\\
-% 		&= \exp(2\alpha).
-% 	\end{align}
-% 	Hence 
-% 	\begin{equation}
-% 		\prob[Y_\tau \geq |j-k|] \leq \exp(2\alpha) \exp(-\lambda |j - k|)
-% 	\end{equation}
-% 	and overall we have that
-% 	\begin{equation}
-% 		\prob[\mathcal{H}_j \cap \mathcal{H}_k \neq \emptyset] \leq \exp(2\alpha) \exp(-\lambda |j - k|).
-% 	\end{equation}
-% \end{proof}
-
-% \begin{lemma}
-% 	\label{lem:history escaping ball bound}
-% 	\begin{equation}
-% 		\prob[\mathcal{H}_{i} \not\subset B(i, l)] \leq \exp(\alpha) \exp(-\lambda l).
-% 	\end{equation}
-% \end{lemma}
-% \begin{proof}
-% The following is based on the proof used in Section 3.2 of \cite{Lubetzky2014-po}.
-
-% We first relax our histories to our alternative construction by observing that
-% \begin{equation}
-% 	\prob[\mathcal{H}_{i} \not\subset B(i, l)] \leq \prob[\hat{\mathcal{H}}_{i} \not\subset B(i, l)].
-% \end{equation}
-
-% Let $W_s = |\hat{\mathcal{H}}_i (t^* - s)|$ and let $Y_s = \#\left\{ \left( (u,t), (v,t) \right) \in \hat{\mathcal{H}}_i: t \in [t^* - s, t^*) \right\}$ count the total number of spatial edges observed in the history by time $t^* - s$. For $\hat{\mathcal{H}}_i$ to extend beyond $B(i, l)$, there must be enough spatial edges. That is, we require that
-% \begin{equation}
-% 	Y_s \geq l.
-% \end{equation}
-
-% Initially, $W_0 = 1$ and $Y_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s)$ such that $\bar{W}_s \geq W_s$ and $\bar{Y}_s \geq Y_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s) = (1, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$, and at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$.
-
-% Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s \right)$ where $\alpha$ and $\lambda$ are some fixed constants yet to be determined. We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then
-% \begin{align}
-% 	\expect\left[Q_{s_0 + h} - Q_{s_0}| Q_{s_0}\right] &= h \theta \bar{W}_{s_0} \left(\exp(\alpha (\bar{W}_{s_0} - 1) + \lambda \bar{Y}_{s_0}) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0})\right) + \\
-% 	&\hphantom{= .} h (1 - \theta) \bar{W}_{s_0} \left( \exp(\alpha (\bar{W}_{s_0} + \Delta) + \lambda (\bar{Y}_{s_0} + \Delta)) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0}) \right) + \notag\\
-% 	&\hphantom{= .} \mathcal{O}(h^2) \notag\\
-% 	&= \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)h \bar{W}_{s_0} Q_{s_0} + \mathcal{O}(h^2).
-% \end{align}
-% Dividing through by $h$ and taking $h$ to $0$, we have
-% \begin{equation}
-% 	\left.\frac{d}{ds} \expect\left[Q_{s} | Q_{s_0}\right] \right|_{s = s_0} = \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)\bar{W}_{s_0} Q_{s_0}
-% \end{equation}
-% which is negative for $\theta$ sufficiently close to $1$. Hence $Q_s$ is a supermartingale for sufficiently large $\theta$.
-
-% Define the stopping time 
-% \begin{equation}
-% 	\tau = \inf\{s: \bar{W}_s = 0\}.
-% \end{equation}
-% Since $(\bar{W}_s, \bar{Y}_s) \geq (W_s, Y_s)$, we have that $W_\tau = 0$ which corresponds to the event the history, $\hat{\mathcal{H}}_i$, has terminated by time $\tau$. Hence
-% \begin{equation}
-% 	\prob[\hat{\mathcal{H}}_{i} \not\subset B(i, l)] \leq \prob[Y_\tau \geq l].
-% \end{equation}
-% Now
-% \begin{equation}
-% 	\expect[\exp(\lambda Y_\tau)] \leq \expect[\exp(\lambda\bar{Y}_\tau)].
-% \end{equation}
-% and from optional stopping [FIGURE THIS OUT PROPERLY],
-% \begin{align}
-% 	\expect[\exp(\lambda \bar{Y}_\tau )] &\leq \expect[Q_{0}]\\
-% 	&= \exp(\alpha).
-% \end{align}
-% Hence 
-% \begin{equation}
-% 	\prob[Y_\tau \geq l] \leq \exp(\alpha) \exp(-\lambda l)
-% \end{equation}
-% and overall we have that
-% \begin{equation}
-% 	\prob[\mathcal{H}_i \not\subset B(i, l)] \leq \exp(\alpha) \exp(-\lambda l).
-% \end{equation}
-% \end{proof}
-% \begin{lemma}
-% 	\label{lem:intersecting histories bound given X_j = 1}
-% 	\begin{equation}
-% 		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \leq  2 \exp(z \Delta^2) \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})\Delta^{-k/2} n^{\Delta^2 + 1}
-% 	\end{equation}
-% 	where $k = |i - j|$.
-% \end{lemma}
-% \begin{proof}
-% 	\begin{align}
-% 		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1]  &\leq \frac{\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset] }{\prob[X_i = 1]}\\
-% 		&\leq n \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z}) \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset].
-% 	\end{align}
-% 	Now letting $k = |i - j|$ denote the distance between $i$ and $j$,
-% 	\begin{equation}
-% 		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset] \leq 2 \prob[\mathcal{H}_i \nsubseteq B(i, k/2) ]
-% 	\end{equation}
-% 	since in order for $\mathcal{H}_i$ and $\mathcal{H}_j$ to intersect, at least one of them must extend beyond halfway the distance between $i$ and $j$. From Lemma \ref{cor:prob update function time 0 in B(i, l)},
-% 	\begin{align}
-% 		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq 2 \exp(z \Delta^2) \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})\Delta^{-k/2} n^{\Delta^2 + 1}
-% 	\end{align}
-% \end{proof}
-
-\begin{lemma}
-	\label{lem:number vertices at distance k}
-	The number of vertices at distance $k$ on a degree $\Delta$ transitive graph is
-	\begin{equation}
-		P(k) = ???
-	\end{equation}
-\end{lemma}
-\begin{lemma}
-	\label{lem:size B_i}
-	The size of $B_i$ is bounded by 
-	\begin{equation}
-		|B_i| \leq b_n P(b_n)
-	\end{equation}
-\end{lemma}
-\begin{lemma}
-	\label{lem:size C_i}
-	The size of $C_i$ is bounded by 
-	\begin{equation}
-		|C_i| \leq c_nP(c_n)
-	\end{equation}
-\end{lemma}
-% \begin{lemma}
-% 	On the $d$ dimensional lattice,
-% 	\begin{equation}
-% 		\sum_{k = b_n}^\infty \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \leq 
-% 	\end{equation}
-% \end{lemma}
-% \begin{proof}
-% 	On the $d$ dimensional torus, the number of vertices at distance $k$ is no more than something like $k^d$ [NEED FIGURE THIS OUT AND PROVE IT].
-% 	\begin{align}
-% 		\sum_{j \in C_i} \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq \sum_{k = b_n}^\infty \sum_{j, |j - i| = k} \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \\
-% 		&\leq \sum_{k = b_n}^\infty k^d \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1]
-% 	\end{align}
-% 	From Lemma \ref{lem:intersecting histories bound given X_j = 1},
-% 	\begin{align}
-% 		\sum_{j \in C_i} \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq C(z, \Delta) n^{\Delta^2 + 1} \sum_{k = b_n}^\infty k^d \Delta^{-k/2} \\
-% 		&\leq C(z, \Delta) n^{\Delta^2 + 1} \sum_{k = b_n}^\infty k^d \exp(-\ln(\Delta) k/2)\\
-% 		&\approxeq C(z, \Delta) n^{\Delta^2 + 1} b_n^d \exp(-\ln(\Delta)b_n/2)
-% 	\end{align}
-% 	which goes to 0 for large enough $b_n$ [FIGURE OUT HOW BIG].
-% \end{proof}
-
-% \begin{lemma}
-% 	\label{lem:intersecting histories bound given X_j = 1}
-% 	\begin{equation}
-% 		\prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset | X_j = 1] \leq 
-% 	\end{equation}
-% \end{lemma}
-% \begin{proof}
-% The proof here is similar to that of Lemma \ref{lem:intersecting histories bound}. We first relax to our alternative histories
-% \begin{equation}
-% 	\prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset | X_j = 1] \leq \prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_j = 1].
-% \end{equation}
-% By symmetry, 
-% \begin{equation}
-% 	\prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_j = 1] = \prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_k = 1]
-% \end{equation}
-% and also
-% \begin{equation}
-% 	\prob[X_j = 1] = \prob[X_k = 1].
-% \end{equation}
-% So 
-% \begin{equation}
-% 	\prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_j = 1] \leq 2 \prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | \{X_j = 1\} \cup \{X_k = 1\}].
-% \end{equation}
-
-% We now define $W_s$ and $Y_s$ as before, except now conditioned on the event $\{X_j = 1\} \cup \{X_k = 1\}$. The effect of this conditioning is to forbid updates that reduce $W_s$ to $0$. 
-
-% HANDWAVING: If we stop when $W_s = 1$ then we can ignore the conditioning???
-
-% Define the stopping time 
-% \begin{equation}
-% 	\tau = \inf\{s: \bar{W}_s = 1\}.
-% \end{equation}
-
-% \end{proof}
-
-In \cite{Lubetzky2016-wd}, \citeauthor{Lubetzky2016-wd} proved something similar...
+\section{Proof of Theorem \ref{thm:Coupling Distribution on transitive graph}}
+\label{sec:proof thm coupling nd}
 	\begin{lemma}
-	\label{lem:prob history contained in ball}
-		Let $B(i, l)$ indicate the set of vertices at distance $l$ or smaller from vertex $i$. The probability that the history of vertex $i$ escapes $B(i,l)$ in time $s$ is bounded by
+	\label{lem:nDlambda}
+		Using the above setup
 		\begin{equation}
-			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] \leq \exp\left(s \Delta^2 - l \ln \Delta \right).
+			 \leq \lim_{n \rightarrow \infty} \lambda \leq n m_{t^*}
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
-		Let $\mathcal{W} = \{\vect{w} = (w_1, w_2, \dots, w_l) : w_1 = i, ||w_{k-1} - w_k|| = 1\}$ be the set of length $l$ sequences of adjacent vertices starting at vertex $i$. If $\mathcal{H}_i$ contains any vertex outside $B(i, l)$ at a time $u \in [t^* - s, t^*]$ then there must be some sequence $w \in \mathcal{W}$ such that each $w_i$ was updated at some time $t^* > t_i > t^* - s$ and $t_{k-1} > t_k$. Call this event $M_w$. For any particular sequence $w$,
-		\begin{equation}
-			\prob[M_w] = \prob[\mathrm{Po}(s) \geq l]
-		\end{equation}
-		where $\mathrm{Po}(s)$ is Poisson with rate $s$. By a union bound over $\mathcal{W}$,
-		\begin{equation}
-			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] \leq \Delta^{l-1} \prob[\mathrm{Po}(s) \geq l].
-		\end{equation}
-		The moment generating function of a poisson random variable with rate $s$ is
-		\begin{equation}
-			M(t) = \exp\left(s\left(\euler^t - 1\right)\right).
-		\end{equation}
-		Using a Chernoff bound we have for every $t > 0$,
-		\begin{equation}
-			\prob[\mathrm{Po}(s) \geq l] \leq \exp\left(s\left(\euler^t - 1\right) - t l\right).
-		\end{equation}
-		Overall we have
 		\begin{align}
-			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] &\leq \Delta^{l-1} \exp\left(s\left(\euler^t - 1\right) - t l\right)\\
-			&\leq \exp\left(s\left(\euler^t - 1\right) + l (\ln \Delta - t) \right).
+			\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \indicator[ X_i + U_i \geq 1] \right]\\
+				&= \sum_{i = 1}^n \prob(X_i = 1) \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]\\
+				&= n m_{t^*} \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]
 		\end{align}
-		Choosing $t = 2 \ln \Delta$,
+		where we have used that $X_i$ is zero-one, \eqref{eq:prob X_i = 1 is m_t*}, and the transitivity of the graph.
+		Clearly 
 		\begin{align}
-			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] &\leq \exp\left(s\left(\Delta^2 - 1\right) - l \ln \Delta \right)\\
-			&\leq \exp\left(s \Delta^2 - l \ln \Delta \right).
+			\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] \leq 1
 		\end{align}
+		and so $\lambda \leq n m_{t^*}$.
+
+		By Jensen's inequality
+		\begin{align}
+			\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] &\geq \frac{1}{\expect[1 + U_i | X_i = 1]}\\
+				&= \frac{1}{1 + \expect[U_i | X_i = 1]}.
+		\end{align}
+		so in order to find a lower bound for $\lambda$ we will find an upper bound to $\expect[U_i | X_i = 1]$. Now by Lemma \ref{lem:nd X_j given X_i}, there exists a $C$ such that for small enough $\beta$,
+		\begin{align}
+			\expect[U_i | X_i = 1] &= \sum_{j \in B_i} \prob[X_j = 1| X_i = 1]\\
+				% &= \sum_{k=1}^{\lfloor b_n \rfloor} \sum_{|j - i| = k} \prob[X_j = 1| X_i = 1]\\
+				& \leq |B_i| m_{t^*} + C\sum_{k=1}^{\lfloor b_n \rfloor} \sum_{|j - i| = k} \euler^{-k}.
+		\end{align}
+		From Lemmas \ref{lem:number vertices at distance k} and \ref{lem:size B_i},
+		\begin{align}
+			\expect[U_i | X_i = 1] &\leq |B_i|m_{t^*} + C \sum_{k=1}^{\lfloor b_n \rfloor} P(k) \euler^{-k}\\
+			&\leq |B_i|m_{t^*} + C \sum_{k=1}^{\infty} P(k) \euler^{-k}\\
+			&=
+		\end{align}
+		As $n \rightarrow \infty$, the first term vanishes and we are left with [COMPLETE]
 	\end{proof}
 
-% \begin{corollary}
-% \label{cor:prob update function time 0 in B(i, l)}
-% 	\begin{equation}
-% 		\prob[\mathcal{H}_i(0) \nsubseteq B(i,l)] \leq \Delta^{-l} n^{\Delta^2} \exp(z \Delta^2)
-% 	\end{equation}
-% 	For $l \geq \log(n)(\Delta^2 + 1)/\log(\Delta)$
-% 	\begin{equation}
-% 			\prob[\mathcal{H}_i(0) \nsubseteq B(i,l)] \leq \frac{\exp(z \Delta^2)}{n}
-% 	\end{equation}
-% \end{corollary}
+	\begin{lemma}
+	\label{lem:delta1 goes to 0 general}
+		Let $\delta_1$ be as defined above in [REF]. Then
+		\begin{equation}
+			\lim_{n\rightarrow\infty} \delta_1 = 0.
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		Starting with the definition of $\delta_1$, we have
+		\begin{align}
+			\delta_1 &= \sum_{i = 1}^n \sum_{k = 0}^{|B_i|} \prob[X_i = 1, U_i = k] \expect \left| \frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|\\
+			&= n \sum_{k = 0}^{|B_i|} \expect \left|\prob[X_i = 1, U_i = k|W_i] - \prob[X_i = 1, U_i = k] \right|%\\
+			\label{eq:nD delta1 line 2}
+			% &\leq n \sup_{W_i} \sum_{k = 0}^{2 b_n} \left| \prob[X_i = 1, U_i = k|W_i] - \prob[X_i = 1, U_i = k] \right|
+		\end{align}
+		by the transitivity of the graph.
+		Let
+		\begin{equation}
+			C_i^c = \{j : |j - i| \leq (c_n + b_n)/2\}
+		\end{equation}
+		be the set of vertices within distance $(b_n + c_n)/2$ of $i$ and define the events
+		\begin{equation}
+			A_1 = \{\exists j \in B_i \cup \{i\}, \exists t \in [0, t^*] : \mathcal{H}_j(t) \nsubseteq  C_i^c\}
+		\end{equation}
+		and
+		\begin{equation}
+			A_2 = \{\exists j \in D_i, \exists t \in [0, t^*] : \mathcal{H}_j(t) \cap C_i^c \neq \emptyset\}
+		\end{equation}
+		as well as their intersection
+		\begin{equation}
+			A = A_1 \cap A_2.
+		\end{equation}
 
-\begin{lemma}
-	Blah
-\end{lemma}
-\begin{proof}
-	Write $\bar{\mathcal{H}}_i$ for the history at $i$ but it only has branching updates at rate 1. Write $d_j$ for the time of death of history $j$. Let $k = |i-j|$.
-	\begin{align}
-		\prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j) &= \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) \prob(d_j < c(k)) \notag \\
-		&\phantom{=}+ \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j \geq c(k)) \prob(d_j \geq c(k))\\
-		&\leq \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) + \prob(d_j \geq c(k))\\
-		&\leq \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) + \euler^{-(1 - \beta \Delta) c(k)}\\
-		&\leq 2\prob(\bar{\mathcal{H}}_i(t^* - c(k)) \nsubseteq B(i, k/2)) + \euler^{-(1 - \beta \Delta) c(k)}\\
-		&\leq \exp\left(c(k) \Delta^2 - k/2 \ln \Delta \right) + \euler^{-(1 - \beta \Delta) c(k)}\\
-	\end{align}
-	Choosing $c(k) = \ln(k)^2$ works so long as $\beta \Delta < 1$.
-\end{proof}
+		From Lemma \ref{lem:conditioning on A removes conditioning on W},
+		\begin{equation}
+			\prob[X_i = 1, U_i = j | A^\complement, W_i] = \prob[X_i = 1, U_i = j | A^\complement].
+		\end{equation} 
+		Continuing on from \eqref{eq:nD delta1 line 2}, we split the probabilities into
+		\begin{align}
+			\delta_1 &= n \sum_{k = 0}^{|B_i|} \expect \left| \prob[X_i = 1, U_i = k|W_i, A]\prob[A|W_i] - \prob[X_i = 1, U_i = k| A]\prob[A] + \vphantom{A^\complement} \right.\\
+			&\hphantom{= .} \left.\prob(X_i = 1, U_i = k | A^\complement) (\prob[A^\complement|W_i] - \prob[A^\complement]) \right| \notag \\
+			&\leq n (|B_i| + 1) \expect\left[ \prob[A|W_i] + \prob[A] + \left|\prob[A^\complement|W_i] - \prob[A^\complement]\right|\right]\\
+			&= n (|B_i| + 1) \expect\left[ \prob[A|W_i] + \prob[A] + \left|1 - \prob[A|W_i] - (1 - \prob[A])\right|\right]\\
+			&\leq n (|B_i| + 1) \expect\left[ \prob[A|W_i] + \prob[A] + \prob[A|W_i] + \prob[A])\right]\\
+			&= 2 n (|B_i| + 1) \left(\expect[\prob[A|W_i]] + \prob[A]\right)\\
+			&= 4 n (|B_i| + 1) \prob[A]
+		\end{align}
+
+		For either $A_1$ or $A_2$ to hold, there must exists a history that spreads at least distance $(c_n - b_n) / 2$ away from its starting vertex. 
+		By a union bound
+		\begin{align}
+			\prob[A] &\leq \sum_{j = 1}^n \prob[\mathcal{H}_i \nsubseteq B(i, (c_n - b_n)/2) \times [0, t^*]]\\
+				&= n \prob\left[\bigcup_{u \in [0, t^*]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, (c_n - b_n)/2)\right]
+		\end{align}
+		Combining this with Lemma \ref{lem:prob history contained in ball}, and recalling our choices of $b_n = \ln(L)$ and $c_n = \ln(L)^2$ we get that
+		\begin{align}
+			\delta_1 &\leq 4 n^2 (|B_i| + 1) \exp(t^* \Delta - \ln\Delta(c_n - b_n)/2)\\
+			&\leq 4n^{2 + \Delta/(1 - \beta \Delta)}(|B_i| + 1)\exp(\Delta z) \exp(-\ln \Delta (c_n - b_n)/2)
+		\end{align}
+		which goes to $0$ as $n \rightarrow \infty$.
+
+		% By a union bound,
+		% \begin{align}
+		% 	\delta_1 &\leq 4 n (|B_i| + 1) \sum_{j \in B_i \cup \{i\}} \sum_{k \in D_i} \prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset].
+		% \end{align}
+
+		% [FIX THIS LEMMA]
+		% % From Lemma \ref{lem:intersecting histories bound},
+		% \begin{align}
+		% 	\delta_1 &\leq 4 n^2 (|B_i| + 1)^2 \exp(2\alpha) \exp(-\lambda(c_n - b_n)).
+		% \end{align}
+
+		% On the torus $(\mathbb{Z} / L \mathbb{Z})^d$, $n = L^d$, $c_n = \log(L)^2$, $b_n = \log(L)$, and $|B_i| \leq C \log(L)^d$. So
+
+		% \begin{equation}
+		% 	\delta_1 \leq C L^{2d} \log(L)^{2d} \exp(-\lambda(\log(L)^2 - \log(L))
+		% \end{equation}
+		% which goes to $0$ as $L \rightarrow \infty$.
+	\end{proof}
+
+	\begin{lemma}
+	\label{lem:delta4 goes to 0 general}
+		Let $\delta_4$ be as defined above in [REF]. Then
+		\begin{equation}
+			\lim_{n\rightarrow\infty} \delta_4 = 0.
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		Starting with the definition of $\delta_4$, we have
+		\begin{align}
+			\delta_4 &= \sum_{i = 1}^n \left(\expect[X_i Z_i] + \expect[X_i]\expect[X_i + U_i + Z_i]\right)\\
+				&= n \expect[X_i Z_i] + n m_{t^*}^2 \left(1 + |B_i| + |C_i|\right)\\
+				&= n m_{t^*} \expect[Z_i | X_i = 1] + n m_{t^*}^2 \left(1 + |B_i| + |C_i|\right)\\
+				&\leq C_z \expect[Z_i | X_i = 1] + \frac{C_z^2}{n} \left(1 + |B_i| + |C_i|\right)
+				% &= n m_{t^*} \left(\sum_{j \in C_i} \prob[X_j = 1 | X_i = 1] + m_{t^*} \left(1 + |B_i| + |C_i|\right) \right)%\\
+				% &\leq n m_{t^*} \left(\sum_{j \in C_i} \left(m_{t^*} + \prob[\mathcal{H}_{j} \cap \mathcal{H}_i \neq \emptyset | X_i = 1\right) + m_{t^*} \left(1 + |B_i| + |C_i|\right) \right)
+		\end{align}
+		where 
+		\begin{equation}
+			C_z = \max(\euler^{-z}, \euler^{-(1 - \beta \Delta)z}).
+		\end{equation}
+		Now from Lemmas \ref{lem:size B_i} and \ref{lem:size C_i}, the second term above vanishes as $n \rightarrow \infty$. So we turn our attention to the first term. From Lemma \ref{lem:nd X_j given X_i}, there exists a $C > 0$ such that for small enough $\beta$,
+		\begin{align}
+			\expect[Z_i | X_i = 1] &= \sum_{j \in C_i} \prob[X_j = 1 | X_i = 1]\\
+				% &= \sum_{k = \lfloor b_n \rfloor + 1}^{\lfloor c_n \rfloor} \sum_{j: |i - j| = k} \prob[X_j = 1 | X_i = 1]\\
+				&\leq |C_i| \left(m_{t^*} + C \euler^{-b_n}\right)\\
+				&\leq |C_i| \left(\frac{C_z}{n} + \frac{C}{n}\right)
+		\end{align}
+		which goes to zero as $n \rightarrow \infty$.
+		% NEED TO PROVE LEMMA \ref{lem:intersecting histories bound given X_j = 1}
+	\end{proof}
+
+\section{Additional Lemmas}
+\label{sec:additional lemmas nd}
+	The first of our additional Lemmas comes from \cite[Lemma 3.1]{Lubetzky2014-po}. We have made our statement of the lemma slightly more precise and so we have rewritten both the lemma and proof out here along with our modifications. In particular, we have specified precisely how small $\beta$ must be for the statement to hold.
+
+	[DEFINE chi and L]
+
+	\begin{lemma}[\cite{Lubetzky2014-po}]
+		\label{lem:full submartingale thing}
+		Let 
+		\begin{equation}
+			\chi(\mathcal{H}_i) = \#\left\{ \left( (u,t), (v,t) \right) \in \mathcal{H}_i \right\}
+		\end{equation}
+		count the total number of horizontal edges in $\mathcal{H}_i$ and let 
+		\begin{equation}
+			\mathcal{L}(\mathcal{H}_i) = \sum_{i \in V} \int_{0}^{t^*} \indicator_{(i, t) \in \mathcal{H}_i} \intd t
+		\end{equation}
+		be the sum of the lengths of all the horizontal edges in $\hist_i$. Then for any $0 \leq \eta < 1$, $\lambda \in \mathbb{R}$, $\alpha > -\ln(1 - \eta)$, if
+		\begin{equation}
+			\tanh(\beta\Delta) \leq \frac{1 - \eta - \euler^{-\alpha}}{\euler^{(\alpha+\lambda)\Delta} - \euler^{-\alpha}},
+		\end{equation}
+		then for any $A \subseteq V$,
+		\begin{equation}
+			\expect[\exp(\lambda \chi(\mathcal{H}_A) + \eta \mathcal{L}(\mathcal{H}_A))] \leq \exp(\alpha |A|)
+		\end{equation}
+		where $\hist_A$ is defined as
+		\begin{equation}
+			\hist_A = \bigcup_{i \in A} \hist_i.
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		We first relax our histories to our alternative construction by observing that
+		\begin{align}
+			&\chi(\mathcal{H}_i) \leq \chi(\hat{\mathcal{H}}_i), &Z(\mathcal{H}_i) \leq Z(\hat{\mathcal{H}}_i).
+		\end{align}
 
 
-% \begin{lemma}
-% 	Let $i$ and $j$ be the indices of two vertices at distance $k$. Then
-% 	\begin{equation}
-% 		\prob[X_j = 1 | X_i = 1] \leq
-% 	\end{equation}
-% \end{lemma}
-% \begin{proof}
-% 	Let $B(i, l)$ denote the set of vertices within distance $l$ of vertex $i$. Let $A$ be the event
-% 	\begin{equation}
-% 		\{\mathcal{H}_i \subset B(i,k/2), \mathcal{H}_j \subset B(j, k/2)\}.
-% 	\end{equation}
-% 	By the law of total probability,
-% 	\begin{align}
-% 		\prob[X_j = 1 | X_i = 1] &= \prob[X_j = 1 | X_i = 1, A] \prob[A|X_i = 1] \notag \\ 
-% 		&\phantom{=}  +\prob\left[X_j = 1 | X_i = 1, A^\complement\right] \prob\left[A^\complement|X_i = 1\right].
-% 	\end{align}
-% 	If we are conditioning on $A$, then the events $\{X_j = 1\}$ and $\{X_i = 1\}$ depend only on the update sequences within $B(j, k/2)$ and $B(i, k/2)$ respectively. This means that
-% 	\begin{equation}
-% 		\prob[X_j = 1 | X_i = 1, A] = \prob[X_j = 1 | A].
-% 	\end{equation}
-% 	So
-% 	\begin{align}
-% 		\prob[X_j = 1 | X_i = 1] &= \prob[X_j = 1 | A] \prob[A|X_i = 1] \notag \\ 
-% 		&\phantom{=}  +\prob\left[X_j = 1 | X_i = 1, A^\complement\right] \prob\left[A^\complement|X_i = 1\right]\\
-% 		&\leq \prob[X_j = 1 | A] + \prob\left[A^\complement | X_i = 1\right]
-% 	\end{align}
-% \end{proof}
-% \begin{lemma}
-% 	\begin{equation}
-% 		\prob[X_j = 1 | A] \leq 
-% 	\end{equation}
-% \end{lemma}
-% \begin{proof}
-% 	\begin{align}
-% 		\prob[X_j = 1 | A] &= \prob[X_j = 1 | \mathcal{H}_i \subset B(i, k/2), \mathcal{H}_j \subset B(j, k/2)]%\\
-% 		% &\leq \prob[X_j = 1]/\prob[\mathcal{H}_i \subset B(i, k/2), \mathcal{H}_j \subset B(j, k/2)]
-% 	\end{align}
-% 	The events $\{\mathcal{H}_i \subset B(i, k/2)\}$ and $\{\mathcal{H}_j \subset B(j, k/2)\}$ depend only the update sequence strictly within $B(i, k/2)$ and $B(j, k/2)$ respectively. When we condition on $\{\mathcal{H}_j \subset B(j, k/2)\}$ the event $\{X_j = 1\}$ depends only on the update sequence strictly within $B(j, k/2)$. So
-% 	\begin{align}
-% 		\prob[X_j = 1 | A] &= \prob[X_j = 1 | \mathcal{H}_j \subset B(j, k/2)]\\
-% 			&\leq m_{t^*} \prob[\mathcal{H}_j \subset B(j, k/2)]^{-1}\\
-% 			&= \frac{m_{t^*}}{1 - \prob[\mathcal{H}_j \not\subset B(j, k/2)]}.
-% 	\end{align}
-% 	From Lemma \ref{lem:history escaping ball bound}, 
-% 	\begin{align}
-% 		\prob[X_j = 1 | A] &\leq \frac{m_{t^*}}{1 - \exp(\alpha -\lambda k/2)}\\
-% 		&\leq \frac{m_{t^*}}{1 - \exp(\alpha - \lambda/2)}
-% 	\end{align}
-% 	since $k \geq 1$.
+		Let $W_s = |\hat{\mathcal{H}}_i (t^* - s)|$, let $Y_s = \chi(\hat{\mathcal{H}}_i \cap V \times [t^* - s, t^*])$ count the total number of spatial edges observed in the history by time $t^* - s$ and let $Z_s = \mathcal{L}(\hat{\mathcal{H}}_i \cap V \times [t^* - s, t^*])$. 
 
-% 	% So these events are independent. Continuing
-% 	% \begin{align}
-% 	% 	\prob[X_j = 1 | A] &\leq m_{t^*}^{-1} \prob[\mathcal{H}_i \subset B(i, k/2)]^{-2}\\
-% 	% 	&\sim \frac{1}{n} (1 - n^{\Delta^2} \Delta^{-k/2})^{-2}
-% 	% \end{align}
-% 	% blergh
-% \end{proof}
-% \begin{lemma}
-% 	\begin{equation}
-% 		\prob[A^\complement | X_i = 1] \leq 
-% 	\end{equation}
-% \end{lemma}
-% \begin{proof}
-% 	For ease of notation, let $A_i$ be the event
-% 	\begin{equation}
-% 		A_i = \{\mathcal{H}_i \subset B(j, k/2)\}.
-% 	\end{equation}
-% 	Obviously, 
-% 	\begin{equation}
-% 		A = A_i \cap A_j.
-% 	\end{equation}
-% 	Now
-% 	\begin{align}
-% 		\prob\left[A^\complement | X_i = 1\right] &\leq \prob\left[A_i^\complement | X_i = 1\right] + \prob\left[A_j^\complement | X_i = 1\right]\\
-% 		&= \prob\left[A_i^\complement | X_i = 1\right] + \prob\left[A_j^\complement | X_i = 1, A_i^\complement \right] \prob\left[A_i^\complement | X_i = 1\right] \notag \\
-% 		&\phantom{=} + \prob\left[A_j^\complement | X_i = 1, A_i \right] \prob\left[A_i | X_i = 1\right]\\
-% 		&\leq 2\prob\left[A_i^\complement | X_i = 1\right]+ \prob\left[A_j^\complement | X_i = 1, A_i \right].\\
-% 	\end{align}
-% 	If we condition on $A_i$ then the event $X_i = 1$ depends only on the update sequence strictly inside $B(i, k/2)$. Also note that the event $A_j$ depends only on the update sequence stricly inside $B(j, k/2)$. These update sequences are independent as they do not share any vertices and so
-% 	\begin{equation}
-% 		\prob\left[A_j^\complement | X_i = 1, A_i \right] = \prob\left[A_j^\complement \right]
-% 	\end{equation}
-% 	and we have
-% 	\begin{equation}
-% 		\prob\left[A^\complement | X_i = 1\right] \leq 2\prob\left[A_i^\complement | X_i = 1\right]+ \prob\left[A_j^\complement \right].
-% 	\end{equation}
-% \end{proof}
-% \begin{lemma}
-% 	\begin{equation}
-% 		\prob\left[\mathcal{H}_i \not\subset B(i, l) | X_i = 1\right] \leq
-% 	\end{equation}
-% \end{lemma}
-% \begin{proof}
-% 	\begin{align}
-% 		\prob\left[\mathcal{H}_i \not\subset B(i, l) | X_i = 1\right] &= m_{t^*}^{-1} \prob\left[\mathcal{H}_i \not\subset B(i, l), X_i = 1\right]\\
-% 		&\leq m_{t^*}^{-1} \prob\left[\chi(\mathcal{H}_i) \geq l, X_i = 1\right]\\
-% 		&\leq m_{t^*}^{-1} \prob\left[\chi(\mathcal{H}_i) \geq l, Z(\mathcal{H}_i) \geq t^*\right]\\
-% 		&= m_{t^*}^{-1} \expect\left[\indicator_{\chi(\mathcal{H}_i) \geq l} \indicator_{Z(\mathcal{H}_i) \geq t^*} \right]\\
-% 		&\leq m_{t^*}^{-1} \expect\left[\indicator_{\chi(\mathcal{H}_i) \geq l} \indicator_{Z(\mathcal{H}_i) \geq \ln(n) + z} \right]\\
-% 		&\leq m_{t^*}^{-1} \expect\left[\exp(\chi(\mathcal{H}_i) - l) \exp(Z(\mathcal{H}_i) - \ln(n) - z) \right]\\
-% 		&= m_{t^*}^{-1} \exp(-l) \exp(-z - \ln(n)) \expect\left[\exp(\chi(\mathcal{H}_i) + Z(\mathcal{H}_i)) \right]\\
-% 		&= \max(1, \exp(- \beta \Delta z)) \exp(-l) \expect\left[\exp(\chi(\mathcal{H}_i) + Z(\mathcal{H}_i)) \right]\\
-% 		&\leq C_z \euler^{-l} BLAH
-% 	\end{align}
-% \end{proof}
-\begin{lemma}
-	There exists a constant $C > 0$ such that for sufficiently small $\beta$,
-	\label{lem:nd X_j given X_i}
-	\begin{equation}
-		\prob[X_j = 1| X_i = 1] \leq m_{t^*} + C \euler^{-k}.
-	\end{equation}
-	where $k = |i - j|$ is the distance between vertices $i$ and $j$.
-\end{lemma}
-\begin{proof}
-	There are two ways in which the update history of vertex $j$ can survive until time $0$. The update history can survive without intersecting with the update history of vertex $i$ or the update history of vertex $j$ can merge with the update history of vertex $i$ (whose survival we are conditioning on). %(Note that these events are not mutually exclusive as the update history of vertex $i+k$ could merge with the update history of vertex $i$ after it reaches time $0$.) 
-	Breaking up the probability this way we have
-	\begin{align}
-		\prob[X_j = 1| X_i = 1] &= \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j = \emptyset | X_i = 1] \notag\\
-		&\phantom{=}+ \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1]\\
-		&\leq \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j = \emptyset | X_i = 1] + \prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1].
-	\end{align}
+		Initially, $W_0 = 1$, $Y_0 = 0$, and $Z_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. The length, $Z_s$, grows as $\intd Z_s = W_s \intd s$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s)$ such that $\bar{W}_s \geq W_s$, $\bar{Y}_s \geq Y_s$, and $\bar{Z}_s \geq Z_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s) = (|A|, 0, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$; at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$; and $\bar{Z}_s$ grows as $\intd \bar{Z}_s = \bar{W}_s \intd s$.
 
-	The result follows from Lemmas \ref{lem: prob X_j and no intersect given X_i = 1} and \ref{lem: prob intersect given X_i = 1}.
-\end{proof}
+		Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s + \eta \bar{Z}_s\right)$ where $\alpha$, $\lambda$, and $\eta$ are some fixed constants yet to be determined, and $\alpha > -\ln(1 - \eta)$. We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then [FIX THIS]
+		\begin{align}
+			\expect\left[Q_{s_0 + h} - Q_{s_0}| Q_{s_0}\right] &= h \theta \bar{W}_{s_0} \left(\exp(\alpha (\bar{W}_{s_0} - 1) + \lambda \bar{Y}_{s_0}) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0})\right) + \\
+			&\hphantom{= .} h (1 - \theta) \bar{W}_{s_0} \left( \exp(\alpha (\bar{W}_{s_0} + \Delta) + \lambda (\bar{Y}_{s_0} + \Delta)) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0}) \right) + \notag\\
+			&\hphantom{= .} \mathcal{O}(h^2) \notag\\
+			&= \left(\eta + \theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)h \bar{W}_{s_0} Q_{s_0} + \mathcal{O}(h^2).
+		\end{align}
+		Dividing through by $h$ and taking $h$ to $0$, we have
+		\begin{equation}
+			\label{eq:martingalederivative}
+			\left.\frac{d}{ds} \expect\left[Q_{s} | Q_{s_0}\right] \right|_{s = s_0} = \left(\eta + \theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)\bar{W}_{s_0} Q_{s_0}
+		\end{equation}
+		which is non-positive when
+		\begin{equation}
+			\theta \geq \frac{\eta + \euler^{(\alpha + \lambda)\Delta} - 1}{\euler^{(\alpha + \lambda)\Delta} - \euler^{-\alpha}}
+		\end{equation}
+		or in terms of the inverse temperature, $\beta$, 
+		\begin{equation}
+			\label{eq:boundbeta for supermartingale}
+			\tanh(\beta\Delta) \leq \frac{1 - \eta - \euler^{-\alpha}}{\euler^{(\alpha+\lambda)\Delta} - \euler^{-\alpha}}.
+		\end{equation}
+		Hence $Q_s$ is a supermartingale when \eqref{eq:boundbeta for supermartingale} holds.
+		Define the stopping time 
+		\begin{equation}
+			\tau = \inf\{s: \bar{W}_s = 0\}.
+		\end{equation}
+		At this time, the histories have completely died out 
+		Finally, from optional stopping [FIGURE THIS OUT PROPERLY],
+		\begin{align}
+			\expect[\exp(\lambda \bar{Y}_\tau  + \eta \bar{Z}_\tau)] &\leq \expect[Q_{0}]\\
+			&= \exp(\alpha |A|).
+		\end{align}
+	\end{proof}
+	% \begin{lemma}
+	% 	\label{lem:intersecting histories bound}
+	% 	\begin{equation}
+	% 		\prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset] \leq \exp(2\alpha) \exp(-\lambda |j - k|).
+	% 	\end{equation}
+	% \end{lemma}
+	% \begin{proof}
+	% 	The following is based on the proof used in Section 3.2 of \cite{Lubetzky2014-po}.
 
-\begin{lemma}
-	\label{lem: prob X_j and no intersect given X_i = 1}
-	Let $i$ and $j$ be the indices of two vertices on a vertex transitive graph. Then
-	\begin{equation}
-		\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] \leq m_{t^*}
-	\end{equation}
-\end{lemma}
-\begin{proof}
-	To begin
-	\begin{align}
-		\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] &= \prob[X_i = 1]^{-1}\prob[X_i = 1, X_j = 1, \hist_i \cap\hist_j = \emptyset]\\
-		&= \frac{\prob[\hist_i(0) \cup \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset]}{\prob[\hist_i(0) \neq \emptyset]}.
-	\end{align}
-	Define $S$ to be the first time that the histories intersect, or define $S = 0$ if the histories do not intersect before time $0$. We construct a new history, $\hist_j'$, in the following way. Along the interval $[S, t^*)$, $\hist_j'$ is constructed from the update sequence in the exact same way as $\hist_j$. However, along the interval $[0, S)$, we replace the update sequence with an another i.i.d. copy of the update sequence. Note that we have constructed $\hist_j'$ to be independent of $\hist_i$. Also note that in the event $\{\hist_i \cap \hist_j = \emptyset\}$, we have $\hist_j = \hist_j'$ and so
-	\begin{align}
-		\prob[\hist_i(0) \cup \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset] &= \prob[\hist_i(0) \cup \hist_j'(0) \neq \emptyset, \hist_i \cap \hist_j' = \emptyset]\\
-		&\leq \prob[\hist_i(0) \cup \hist_j'(0) \neq \emptyset]\\
-		&= \prob[\hist_i(0) \neq \emptyset] \prob[\hist_j'(0) \neq \emptyset]
-	\end{align}
-	since $\hist_i$ and $\hist_j'$ are independent. Since $\prob[\hist_j'(0) \neq \emptyset] = \prob[\hist_j(0) \neq \emptyset] = m_{t^*}$ we get the desired result.
-\end{proof}
+	% 	We first relax our histories to our alternative construction by observing that
+	% 	\begin{equation}
+	% 		\prob[\mathcal{H}_j \cap \mathcal{H}_k \neq \emptyset] \leq \prob[\hat{\mathcal{H}}_j \cap \hat{\mathcal{H}}_k \neq \emptyset].
+	% 	\end{equation}
 
-% \begin{lemma}
-% 	\label{lem: prob X_j and no intersect given X_i = 1}
-% 	There exists an $\alpha$ such that for $\beta$ sufficiently small
-% 	\begin{equation}
-% 		\prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j = \emptyset| X_i = 1] \leq C_{z, \epsilon} \exp(2 \alpha) n^{-\epsilon}.
-% 	\end{equation}
-% \end{lemma}
-% \begin{proof}
-% 	\begin{align}
-% 		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] &= m_{t^*}^{-1} \prob[X_j = 1, X_i = 1, \hist_i \cap \hist_j = \emptyset]\\
-% 		&\leq m_{t^*}^{-1} \prob\left[\frac{1}{2} \mathcal{L}(\hist_i \cup \hist_j) \geq t^*\right]\\
-% 		&= m_{t^*}^{-1} \prob\left[\frac{1+\epsilon}{2} \mathcal{L}(\hist_i \cup \hist_j) \geq (1+\epsilon) t^*\right]
-% 	\end{align}
-% 	for any $0 < \epsilon < 1$. Continuing
-% 	\begin{align}
-% 		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] &\leq m_{t^*}^{-1} \expect\left[\indicator_{(1+\epsilon)\mathcal{L}(\hist_i \cup \hist_j)/2 \geq (1+\epsilon)t^*}\right]\\
-% 		&= m_{t^*}^{-1} \expect\left[\exp((1+\epsilon)\mathcal{L}(\hist_i \cup \hist_j)/2 - (1+\epsilon)t^*)\right]\\
-% 		&= m_{t^*}^{-1} \exp(-(1+\epsilon)t^*) \expect\left[\exp\left(\frac{1+\epsilon}{2}\mathcal{L}(\hist_i \cup \hist_j\right)\right].
-% 	\end{align}
-% 	Since $t^* \geq \ln(n) + z$, and $m_{t^*} \geq \min(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})/n$,
-% 	\begin{align}
-% 		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] &\leq C_{z, \epsilon} n^{-\epsilon} \expect\left[\exp\left(\frac{1+\epsilon}{2}\mathcal{L}(\hist_i \cup \hist_j\right)\right]
-% 	\end{align}
-% 	where 
-% 	\begin{equation}
-% 		C_{z, \epsilon} = \exp(-\epsilon z) \max(1, \euler^{\beta\Delta z}).
-% 	\end{equation}
-% 	From Lemma \ref{lem:full submartingale thing}, there exists an $\alpha$ such that for $\beta$ sufficiently small
-% 	\begin{equation}
-% 		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] \leq C_{z, \epsilon} \exp(2 \alpha) n^{-\epsilon}.
-% 	\end{equation}
-% \end{proof}
+	% 	Let $W_s = |\hat{\mathcal{H}}_{\{j, k\}} (t^* - s)|$ and let $Y_s = \#\left\{ \left( (u,t), (v,t) \right) \in \hat{\mathcal{H}}_{\{j, k\}}: t \in [t^* - s, t^*) \right\}$ count the total number of spatial edges observed in the history by time $t^* - s$. For $\hat{\mathcal{H}}_j$ and $\hat{\mathcal{H}}_k$ to intersect at time $t^* - s$, there must be enough spatial edges for the histories to reach each other. That is, we require that
+	% 	\begin{equation}
+	% 		Y_s \geq |i - j|.
+	% 	\end{equation}
 
-This proof is closely based on that in \cite{Lubetzky2014-po}.
-\begin{lemma}
-	\label{lem: prob intersect given X_i = 1}
-	Let $i$ and $j$ be the indices of two vertices separated by distance $k$. Then there exists a $C$ such that for sufficiently small $\beta$,
-	\begin{equation}
-		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \leq C\euler^{-k}.
-	\end{equation}
-\end{lemma}
-\begin{proof}
-	Firstly,
-	\begin{align}
-		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &= \frac{\prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \{X_i = 1\}]}{\prob[X_i = 1]}\\
-		&\leq m_{t^*}^{-1} \prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \{X_i = 1\}]\\
-		&\leq  m_{t^*}^{-1} \prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left(\{X_i = 1\} \cup \{X_j = 1\}\right)]\\
-		&= m_{t^*}^{-1} \prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}]
-	\end{align}
-	since
-	\begin{equation}
-		\left\{X_i = 1\right\} = \left\{\mathcal{H}_i(0) \neq \emptyset\right\}.
-	\end{equation}
-	% then
-	% \begin{align}
-	% 	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq m_{t^*}^{-1}\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left\{\mathcal{H}_i(0) \neq \emptyset\right\}\right],\\
-	% 	&\leq m_{t^*}^{-1}\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}\right].
-	% \end{align}
-	% \begin{align}
-	% 	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq n C_z\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left\{X_i = 1\right\}\right],\\
-	% 	&\leq n C_z\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left(\left\{X_i = 1\right\} \cup \left\{X_i = 1\right\}\right)\right].
-	% \end{align}
-	% Now since each update in our histories can never remove more than one vertex at a time, if $\hat{\mathcal{H}}_i(0) \cup \hat{\mathcal{H}}_j(0) = \emptyset$, then there must be some time $t > 0$ at which $\hat{\mathcal{H}}_i(t) \cup \hat{\mathcal{H}}_j(t) = \{w\}$ for a single vertex $w$. Proceeding backwards from $t^*$, define $S$ to be the first such time this happens, or put $S = 0$ if the histories always contain at least two vertices.
-	Proceeding backwards from $t^*$, define $S$ to be the random time at which $\mathcal{H}_i(t) \cup \mathcal{H}_j(t)$ first reduced to less than two vertices, or define $S = 0$ if the combined histories contain at least two vertices all the way to time $0$. 
-	Note that
-	\begin{equation}
-		\label{eq:prob union subset of}
-		\{\hist_i(0) \cup \hist_j(0) \neq \emptyset\} \subseteq \{\mathscr{F}(v, 0, S) \neq \emptyset\}
-	\end{equation}
-	where $v$ is either the single vertex $v = \hist_i(S) \cup\hist_j(S)$ in the case that the histories coallesce to a single point at $S$, or any arbitrary single vertex otherwise.
-	We also note that
-	\begin{equation}
-		\label{eq:prob intersect subset of}
-		\{\hist_i \cap \hist_j \neq \emptyset\} \subseteq \{\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t^*]\right) \geq k - 1\}
-	\end{equation}
-	since there must be at least $k - 1$ branching edges for the histories to meet. The event on the right hand side of \eqref{eq:prob intersect subset of} depends only on the update sequence in $[S, t^*]$. The event on the right hand side of \eqref{eq:prob union subset of} depends only on the update sequence in $[0, S)$. Therefore, given $S$, these events are independent and
-	\begin{align}
-		&\prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}| S = t_s] \notag \\
-		&\phantom{=}\leq \prob[\mathscr{F}(v, 0, S) \neq \emptyset | S = t_s] \prob[\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t^*]\right) \geq k - 1 | S = t_s]\\
-		&\phantom{=}= m_{t_s}  \prob[\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t^*]\right) \geq k - 1 | S = t_s]
-	\end{align}
-	and so
-	\begin{align}
-		\prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}] &\leq \expect[\indicator_{\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t^*]\right) \geq k - 1 }m_S]\\
-		&\leq \expect[\indicator_{\chi(\hist_i \cup \hist_j) \geq k - 1} m_S].
-	\end{align}
-	% If $\mathcal{H}_i(S) \cup \mathcal{H}_j(S)$ contains exactly one vertex then the probability of survival from time $S$ to time $0$ is simply the magnetisation $m_S$. Otherwise, either $S = 0$ or $|\mathcal{H}_i(S) \cup \mathcal{H}_j(S)| = 0$. In the latter case the histories cannot reach time $0$ and in the former, 
+	% 	Initially, $W_0 = 2$ and $Y_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s)$ such that $\bar{W}_s \geq W_s$ and $\bar{Y}_s \geq Y_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s) = (2, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$, and at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$.
+
+	% 	Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s \right)$ where $\alpha$ and $\lambda$ are some fixed constants yet to be determined. We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then
+	% 	\begin{align}
+	% 		\expect\left[Q_{s_0 + h} - Q_{s_0}| Q_{s_0}\right] &= h \theta \bar{W}_{s_0} \left(\exp(\alpha (\bar{W}_{s_0} - 1) + \lambda \bar{Y}_{s_0}) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0})\right) + \\
+	% 		&\hphantom{= .} h (1 - \theta) \bar{W}_{s_0} \left( \exp(\alpha (\bar{W}_{s_0} + \Delta) + \lambda (\bar{Y}_{s_0} + \Delta)) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0}) \right) + \notag\\
+	% 		&\hphantom{= .} \mathcal{O}(h^2) \notag\\
+	% 		&= \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)h \bar{W}_{s_0} Q_{s_0} + \mathcal{O}(h^2).
+	% 	\end{align}
+	% 	Dividing through by $h$ and taking $h$ to $0$, we have
+	% 	\begin{equation}
+	% 		\left.\frac{d}{ds} \expect\left[Q_{s} | Q_{s_0}\right] \right|_{s = s_0} = \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)\bar{W}_{s_0} Q_{s_0}
+	% 	\end{equation}
+	% 	which is negative for $\theta$ sufficiently close to $1$. Hence $Q_s$ is a supermartingale for sufficiently large $\theta$.
+
+	% 	Define the stopping time 
+	% 	\begin{equation}
+	% 		\tau = \inf\{s: \bar{W}_s = 0\}.
+	% 	\end{equation}
+	% 	Since $(\bar{W}_s, \bar{Y}_s) \geq (W_s, Y_s)$, we have that $W_\tau = 0$ which corresponds to the event that both histories, $\mathcal{H}_j$ and $\mathcal{H}_k$, have terminated by time $\tau$. Hence
+	% 	\begin{equation}
+	% 		\prob[\hat{\mathcal{H}}_j \cap \hat{\mathcal{H}}_k \neq \emptyset] \leq \prob[Y_\tau \geq |j-k|].
+	% 	\end{equation}
+	% 	Now
+	% 	\begin{equation}
+	% 		\expect[\exp(\lambda Y_\tau)] \leq \expect[\exp(\lambda\bar{Y}_\tau)].
+	% 	\end{equation}
+	% 	and from optional stopping [FIGURE THIS OUT PROPERLY],
+	% 	\begin{align}
+	% 		\expect[\exp(\lambda \bar{Y}_\tau )] &\leq \expect[Q_{0}]\\
+	% 		&= \exp(2\alpha).
+	% 	\end{align}
+	% 	Hence 
+	% 	\begin{equation}
+	% 		\prob[Y_\tau \geq |j-k|] \leq \exp(2\alpha) \exp(-\lambda |j - k|)
+	% 	\end{equation}
+	% 	and overall we have that
+	% 	\begin{equation}
+	% 		\prob[\mathcal{H}_j \cap \mathcal{H}_k \neq \emptyset] \leq \exp(2\alpha) \exp(-\lambda |j - k|).
+	% 	\end{equation}
+	% \end{proof}
+
+	% \begin{lemma}
+	% 	\label{lem:history escaping ball bound}
+	% 	\begin{equation}
+	% 		\prob[\mathcal{H}_{i} \not\subset B(i, l)] \leq \exp(\alpha) \exp(-\lambda l).
+	% 	\end{equation}
+	% \end{lemma}
+	% \begin{proof}
+	% The following is based on the proof used in Section 3.2 of \cite{Lubetzky2014-po}.
+
+	% We first relax our histories to our alternative construction by observing that
 	% \begin{equation}
-	% 	\prob\left[\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset | S = 0\right] = 1 = m_{0}.
+	% 	\prob[\mathcal{H}_{i} \not\subset B(i, l)] \leq \prob[\hat{\mathcal{H}}_{i} \not\subset B(i, l)].
 	% \end{equation}
-	% Overall,
-	% \begin{equation}
-	% 	\prob\left[\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset | S = t_s\right] \leq m_{t_s}.
-	% \end{equation}
-	From Corollary \ref{cor:exponential decay magnetization}, 
-	\begin{equation}
-		m_S \leq \euler^{t^* - S} m_{t^*}
-	\end{equation}
-	and since $|\hist_i(t) \cup \hist_j(t)| \geq 2$ for $t \in (S, t^*]$,
-	\begin{equation}
-		t^* - S \leq \mathcal{L}(\hist_i \cup \hist_j)/2.
-	\end{equation}
-	So
-	\begin{align}
-		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] %&\leq m_{t^*}^{-1} \expect[\indicator_{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset} m_S] \\
-		% &\leq m_{t^*}^{-1} \expect[\indicator_{\chi(\mathcal{H}_{ij}) \geq k-1} m_S]\\
-		&\leq m_{t^*}^{-1} m_{t^*} \expect[\indicator_{\chi(\hist_i \cup \hist_j) \geq k-1} \euler^{\mathcal{L}(\hist_i\cup \hist_j)/2}]\\
-		% &= \expect[\indicator_{\chi(\mathcal{H}_{ij}) \geq k-1} \euler^{\mathcal{L}(\hist_i\cup \hist_j)/2}]\\
-		&\leq \expect[\euler^{\chi(\hist_i\cup \hist_j) - (k-1)} \euler^{\mathcal{L}(\hist_i\cup \hist_j)/2}]\\
-		% &\leq \euler^{-(k-1)} \expect[\euler^{\chi(\mathcal{H}_{ij}) + (1/2)L(\mathcal{H}_{ij}) + 1} ]\\
-		&= \euler^{-k + 1} \expect[\euler^{\chi(\hist_i\cup \hist_j) + L(\hist_i\cup \hist_j)/2} ]
-	\end{align}
 
-	From Lemma \ref{lem:full submartingale thing}, for any $\alpha > \ln(2)$ if
-	\begin{equation}
-		\tanh(\beta\Delta) \leq \frac{1-2\euler^{-\alpha}}{2(\euler^{\Delta(\alpha+1)} - \euler^{-\alpha})}
-	\end{equation}
-	then
-	\begin{align}
-		\expect[\euler^{\chi(\hist_i\cup \hist_j) + L(\hist_i\cup \hist_j)/2} ] &\leq \euler^{2\alpha}
-	\end{align}
-	and we get the desired result by choosing $C = \exp(1 + 2\alpha)$.
-\end{proof}
+	% Let $W_s = |\hat{\mathcal{H}}_i (t^* - s)|$ and let $Y_s = \#\left\{ \left( (u,t), (v,t) \right) \in \hat{\mathcal{H}}_i: t \in [t^* - s, t^*) \right\}$ count the total number of spatial edges observed in the history by time $t^* - s$. For $\hat{\mathcal{H}}_i$ to extend beyond $B(i, l)$, there must be enough spatial edges. That is, we require that
+	% \begin{equation}
+	% 	Y_s \geq l.
+	% \end{equation}
+
+	% Initially, $W_0 = 1$ and $Y_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s)$ such that $\bar{W}_s \geq W_s$ and $\bar{Y}_s \geq Y_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s) = (1, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$, and at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$.
+
+	% Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s \right)$ where $\alpha$ and $\lambda$ are some fixed constants yet to be determined. We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then
+	% \begin{align}
+	% 	\expect\left[Q_{s_0 + h} - Q_{s_0}| Q_{s_0}\right] &= h \theta \bar{W}_{s_0} \left(\exp(\alpha (\bar{W}_{s_0} - 1) + \lambda \bar{Y}_{s_0}) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0})\right) + \\
+	% 	&\hphantom{= .} h (1 - \theta) \bar{W}_{s_0} \left( \exp(\alpha (\bar{W}_{s_0} + \Delta) + \lambda (\bar{Y}_{s_0} + \Delta)) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0}) \right) + \notag\\
+	% 	&\hphantom{= .} \mathcal{O}(h^2) \notag\\
+	% 	&= \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)h \bar{W}_{s_0} Q_{s_0} + \mathcal{O}(h^2).
+	% \end{align}
+	% Dividing through by $h$ and taking $h$ to $0$, we have
+	% \begin{equation}
+	% 	\left.\frac{d}{ds} \expect\left[Q_{s} | Q_{s_0}\right] \right|_{s = s_0} = \left(\theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)\bar{W}_{s_0} Q_{s_0}
+	% \end{equation}
+	% which is negative for $\theta$ sufficiently close to $1$. Hence $Q_s$ is a supermartingale for sufficiently large $\theta$.
+
+	% Define the stopping time 
+	% \begin{equation}
+	% 	\tau = \inf\{s: \bar{W}_s = 0\}.
+	% \end{equation}
+	% Since $(\bar{W}_s, \bar{Y}_s) \geq (W_s, Y_s)$, we have that $W_\tau = 0$ which corresponds to the event the history, $\hat{\mathcal{H}}_i$, has terminated by time $\tau$. Hence
+	% \begin{equation}
+	% 	\prob[\hat{\mathcal{H}}_{i} \not\subset B(i, l)] \leq \prob[Y_\tau \geq l].
+	% \end{equation}
+	% Now
+	% \begin{equation}
+	% 	\expect[\exp(\lambda Y_\tau)] \leq \expect[\exp(\lambda\bar{Y}_\tau)].
+	% \end{equation}
+	% and from optional stopping [FIGURE THIS OUT PROPERLY],
+	% \begin{align}
+	% 	\expect[\exp(\lambda \bar{Y}_\tau )] &\leq \expect[Q_{0}]\\
+	% 	&= \exp(\alpha).
+	% \end{align}
+	% Hence 
+	% \begin{equation}
+	% 	\prob[Y_\tau \geq l] \leq \exp(\alpha) \exp(-\lambda l)
+	% \end{equation}
+	% and overall we have that
+	% \begin{equation}
+	% 	\prob[\mathcal{H}_i \not\subset B(i, l)] \leq \exp(\alpha) \exp(-\lambda l).
+	% \end{equation}
+	% \end{proof}
+	% \begin{lemma}
+	% 	\label{lem:intersecting histories bound given X_j = 1}
+	% 	\begin{equation}
+	% 		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \leq  2 \exp(z \Delta^2) \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})\Delta^{-k/2} n^{\Delta^2 + 1}
+	% 	\end{equation}
+	% 	where $k = |i - j|$.
+	% \end{lemma}
+	% \begin{proof}
+	% 	\begin{align}
+	% 		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1]  &\leq \frac{\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset] }{\prob[X_i = 1]}\\
+	% 		&\leq n \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z}) \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset].
+	% 	\end{align}
+	% 	Now letting $k = |i - j|$ denote the distance between $i$ and $j$,
+	% 	\begin{equation}
+	% 		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset] \leq 2 \prob[\mathcal{H}_i \nsubseteq B(i, k/2) ]
+	% 	\end{equation}
+	% 	since in order for $\mathcal{H}_i$ and $\mathcal{H}_j$ to intersect, at least one of them must extend beyond halfway the distance between $i$ and $j$. From Lemma \ref{cor:prob update function time 0 in B(i, l)},
+	% 	\begin{align}
+	% 		\prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq 2 \exp(z \Delta^2) \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})\Delta^{-k/2} n^{\Delta^2 + 1}
+	% 	\end{align}
+	% \end{proof}
+
+	\begin{lemma}
+		\label{lem:number vertices at distance k}
+		The number of vertices at distance $k$ on a degree $\Delta$ transitive graph is
+		\begin{equation}
+			P(k) = ???
+		\end{equation}
+	\end{lemma}
+	\begin{lemma}
+		\label{lem:size B_i}
+		The size of $B_i$ is bounded by 
+		\begin{equation}
+			|B_i| \leq b_n P(b_n)
+		\end{equation}
+	\end{lemma}
+	\begin{lemma}
+		\label{lem:size C_i}
+		The size of $C_i$ is bounded by 
+		\begin{equation}
+			|C_i| \leq c_nP(c_n)
+		\end{equation}
+	\end{lemma}
+	% \begin{lemma}
+	% 	On the $d$ dimensional lattice,
+	% 	\begin{equation}
+	% 		\sum_{k = b_n}^\infty \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \leq 
+	% 	\end{equation}
+	% \end{lemma}
+	% \begin{proof}
+	% 	On the $d$ dimensional torus, the number of vertices at distance $k$ is no more than something like $k^d$ [NEED FIGURE THIS OUT AND PROVE IT].
+	% 	\begin{align}
+	% 		\sum_{j \in C_i} \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq \sum_{k = b_n}^\infty \sum_{j, |j - i| = k} \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \\
+	% 		&\leq \sum_{k = b_n}^\infty k^d \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1]
+	% 	\end{align}
+	% 	From Lemma \ref{lem:intersecting histories bound given X_j = 1},
+	% 	\begin{align}
+	% 		\sum_{j \in C_i} \prob[\mathcal{H}_{i} \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq C(z, \Delta) n^{\Delta^2 + 1} \sum_{k = b_n}^\infty k^d \Delta^{-k/2} \\
+	% 		&\leq C(z, \Delta) n^{\Delta^2 + 1} \sum_{k = b_n}^\infty k^d \exp(-\ln(\Delta) k/2)\\
+	% 		&\approxeq C(z, \Delta) n^{\Delta^2 + 1} b_n^d \exp(-\ln(\Delta)b_n/2)
+	% 	\end{align}
+	% 	which goes to 0 for large enough $b_n$ [FIGURE OUT HOW BIG].
+	% \end{proof}
+
+	% \begin{lemma}
+	% 	\label{lem:intersecting histories bound given X_j = 1}
+	% 	\begin{equation}
+	% 		\prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset | X_j = 1] \leq 
+	% 	\end{equation}
+	% \end{lemma}
+	% \begin{proof}
+	% The proof here is similar to that of Lemma \ref{lem:intersecting histories bound}. We first relax to our alternative histories
+	% \begin{equation}
+	% 	\prob[\mathcal{H}_{j} \cap \mathcal{H}_k \neq \emptyset | X_j = 1] \leq \prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_j = 1].
+	% \end{equation}
+	% By symmetry, 
+	% \begin{equation}
+	% 	\prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_j = 1] = \prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_k = 1]
+	% \end{equation}
+	% and also
+	% \begin{equation}
+	% 	\prob[X_j = 1] = \prob[X_k = 1].
+	% \end{equation}
+	% So 
+	% \begin{equation}
+	% 	\prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | X_j = 1] \leq 2 \prob[\hat{\mathcal{H}}_{j} \cap \hat{\mathcal{H}}_k \neq \emptyset | \{X_j = 1\} \cup \{X_k = 1\}].
+	% \end{equation}
+
+	% We now define $W_s$ and $Y_s$ as before, except now conditioned on the event $\{X_j = 1\} \cup \{X_k = 1\}$. The effect of this conditioning is to forbid updates that reduce $W_s$ to $0$. 
+
+	% HANDWAVING: If we stop when $W_s = 1$ then we can ignore the conditioning???
+
+	% Define the stopping time 
+	% \begin{equation}
+	% 	\tau = \inf\{s: \bar{W}_s = 1\}.
+	% \end{equation}
+
+	% \end{proof}
+
+	In \cite{Lubetzky2016-wd}, \citeauthor{Lubetzky2016-wd} proved something similar...
+		\begin{lemma}
+		\label{lem:prob history contained in ball}
+			Let $B(i, l)$ indicate the set of vertices at distance $l$ or smaller from vertex $i$. The probability that the history of vertex $i$ escapes $B(i,l)$ in time $s$ is bounded by
+			\begin{equation}
+				\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] \leq \exp\left(s \Delta^2 - l \ln \Delta \right).
+			\end{equation}
+		\end{lemma}
+		\begin{proof}
+			Let $\mathcal{W} = \{\vect{w} = (w_1, w_2, \dots, w_l) : w_1 = i, ||w_{k-1} - w_k|| = 1\}$ be the set of length $l$ sequences of adjacent vertices starting at vertex $i$. If $\mathcal{H}_i$ contains any vertex outside $B(i, l)$ at a time $u \in [t^* - s, t^*]$ then there must be some sequence $w \in \mathcal{W}$ such that each $w_i$ was updated at some time $t^* > t_i > t^* - s$ and $t_{k-1} > t_k$. Call this event $M_w$. For any particular sequence $w$,
+			\begin{equation}
+				\prob[M_w] = \prob[\mathrm{Po}(s) \geq l]
+			\end{equation}
+			where $\mathrm{Po}(s)$ is Poisson with rate $s$. By a union bound over $\mathcal{W}$,
+			\begin{equation}
+				\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] \leq \Delta^{l-1} \prob[\mathrm{Po}(s) \geq l].
+			\end{equation}
+			The moment generating function of a poisson random variable with rate $s$ is
+			\begin{equation}
+				M(t) = \exp\left(s\left(\euler^t - 1\right)\right).
+			\end{equation}
+			Using a Chernoff bound we have for every $t > 0$,
+			\begin{equation}
+				\prob[\mathrm{Po}(s) \geq l] \leq \exp\left(s\left(\euler^t - 1\right) - t l\right).
+			\end{equation}
+			Overall we have
+			\begin{align}
+				\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] &\leq \Delta^{l-1} \exp\left(s\left(\euler^t - 1\right) - t l\right)\\
+				&\leq \exp\left(s\left(\euler^t - 1\right) + l (\ln \Delta - t) \right).
+			\end{align}
+			Choosing $t = 2 \ln \Delta$,
+			\begin{align}
+				\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] &\leq \exp\left(s\left(\Delta^2 - 1\right) - l \ln \Delta \right)\\
+				&\leq \exp\left(s \Delta^2 - l \ln \Delta \right).
+			\end{align}
+		\end{proof}
+
+	% \begin{corollary}
+	% \label{cor:prob update function time 0 in B(i, l)}
+	% 	\begin{equation}
+	% 		\prob[\mathcal{H}_i(0) \nsubseteq B(i,l)] \leq \Delta^{-l} n^{\Delta^2} \exp(z \Delta^2)
+	% 	\end{equation}
+	% 	For $l \geq \log(n)(\Delta^2 + 1)/\log(\Delta)$
+	% 	\begin{equation}
+	% 			\prob[\mathcal{H}_i(0) \nsubseteq B(i,l)] \leq \frac{\exp(z \Delta^2)}{n}
+	% 	\end{equation}
+	% \end{corollary}
+
+	\begin{lemma}
+		Blah
+	\end{lemma}
+	\begin{proof}
+		Write $\bar{\mathcal{H}}_i$ for the history at $i$ but it only has branching updates at rate 1. Write $d_j$ for the time of death of history $j$. Let $k = |i-j|$.
+		\begin{align}
+			\prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j) &= \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) \prob(d_j < c(k)) \notag \\
+			&\phantom{=}+ \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j \geq c(k)) \prob(d_j \geq c(k))\\
+			&\leq \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) + \prob(d_j \geq c(k))\\
+			&\leq \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) + \euler^{-(1 - \beta \Delta) c(k)}\\
+			&\leq 2\prob(\bar{\mathcal{H}}_i(t^* - c(k)) \nsubseteq B(i, k/2)) + \euler^{-(1 - \beta \Delta) c(k)}\\
+			&\leq \exp\left(c(k) \Delta^2 - k/2 \ln \Delta \right) + \euler^{-(1 - \beta \Delta) c(k)}\\
+		\end{align}
+		Choosing $c(k) = \ln(k)^2$ works so long as $\beta \Delta < 1$.
+	\end{proof}
+
+
+	% \begin{lemma}
+	% 	Let $i$ and $j$ be the indices of two vertices at distance $k$. Then
+	% 	\begin{equation}
+	% 		\prob[X_j = 1 | X_i = 1] \leq
+	% 	\end{equation}
+	% \end{lemma}
+	% \begin{proof}
+	% 	Let $B(i, l)$ denote the set of vertices within distance $l$ of vertex $i$. Let $A$ be the event
+	% 	\begin{equation}
+	% 		\{\mathcal{H}_i \subset B(i,k/2), \mathcal{H}_j \subset B(j, k/2)\}.
+	% 	\end{equation}
+	% 	By the law of total probability,
+	% 	\begin{align}
+	% 		\prob[X_j = 1 | X_i = 1] &= \prob[X_j = 1 | X_i = 1, A] \prob[A|X_i = 1] \notag \\ 
+	% 		&\phantom{=}  +\prob\left[X_j = 1 | X_i = 1, A^\complement\right] \prob\left[A^\complement|X_i = 1\right].
+	% 	\end{align}
+	% 	If we are conditioning on $A$, then the events $\{X_j = 1\}$ and $\{X_i = 1\}$ depend only on the update sequences within $B(j, k/2)$ and $B(i, k/2)$ respectively. This means that
+	% 	\begin{equation}
+	% 		\prob[X_j = 1 | X_i = 1, A] = \prob[X_j = 1 | A].
+	% 	\end{equation}
+	% 	So
+	% 	\begin{align}
+	% 		\prob[X_j = 1 | X_i = 1] &= \prob[X_j = 1 | A] \prob[A|X_i = 1] \notag \\ 
+	% 		&\phantom{=}  +\prob\left[X_j = 1 | X_i = 1, A^\complement\right] \prob\left[A^\complement|X_i = 1\right]\\
+	% 		&\leq \prob[X_j = 1 | A] + \prob\left[A^\complement | X_i = 1\right]
+	% 	\end{align}
+	% \end{proof}
+	% \begin{lemma}
+	% 	\begin{equation}
+	% 		\prob[X_j = 1 | A] \leq 
+	% 	\end{equation}
+	% \end{lemma}
+	% \begin{proof}
+	% 	\begin{align}
+	% 		\prob[X_j = 1 | A] &= \prob[X_j = 1 | \mathcal{H}_i \subset B(i, k/2), \mathcal{H}_j \subset B(j, k/2)]%\\
+	% 		% &\leq \prob[X_j = 1]/\prob[\mathcal{H}_i \subset B(i, k/2), \mathcal{H}_j \subset B(j, k/2)]
+	% 	\end{align}
+	% 	The events $\{\mathcal{H}_i \subset B(i, k/2)\}$ and $\{\mathcal{H}_j \subset B(j, k/2)\}$ depend only the update sequence strictly within $B(i, k/2)$ and $B(j, k/2)$ respectively. When we condition on $\{\mathcal{H}_j \subset B(j, k/2)\}$ the event $\{X_j = 1\}$ depends only on the update sequence strictly within $B(j, k/2)$. So
+	% 	\begin{align}
+	% 		\prob[X_j = 1 | A] &= \prob[X_j = 1 | \mathcal{H}_j \subset B(j, k/2)]\\
+	% 			&\leq m_{t^*} \prob[\mathcal{H}_j \subset B(j, k/2)]^{-1}\\
+	% 			&= \frac{m_{t^*}}{1 - \prob[\mathcal{H}_j \not\subset B(j, k/2)]}.
+	% 	\end{align}
+	% 	From Lemma \ref{lem:history escaping ball bound}, 
+	% 	\begin{align}
+	% 		\prob[X_j = 1 | A] &\leq \frac{m_{t^*}}{1 - \exp(\alpha -\lambda k/2)}\\
+	% 		&\leq \frac{m_{t^*}}{1 - \exp(\alpha - \lambda/2)}
+	% 	\end{align}
+	% 	since $k \geq 1$.
+
+	% 	% So these events are independent. Continuing
+	% 	% \begin{align}
+	% 	% 	\prob[X_j = 1 | A] &\leq m_{t^*}^{-1} \prob[\mathcal{H}_i \subset B(i, k/2)]^{-2}\\
+	% 	% 	&\sim \frac{1}{n} (1 - n^{\Delta^2} \Delta^{-k/2})^{-2}
+	% 	% \end{align}
+	% 	% blergh
+	% \end{proof}
+	% \begin{lemma}
+	% 	\begin{equation}
+	% 		\prob[A^\complement | X_i = 1] \leq 
+	% 	\end{equation}
+	% \end{lemma}
+	% \begin{proof}
+	% 	For ease of notation, let $A_i$ be the event
+	% 	\begin{equation}
+	% 		A_i = \{\mathcal{H}_i \subset B(j, k/2)\}.
+	% 	\end{equation}
+	% 	Obviously, 
+	% 	\begin{equation}
+	% 		A = A_i \cap A_j.
+	% 	\end{equation}
+	% 	Now
+	% 	\begin{align}
+	% 		\prob\left[A^\complement | X_i = 1\right] &\leq \prob\left[A_i^\complement | X_i = 1\right] + \prob\left[A_j^\complement | X_i = 1\right]\\
+	% 		&= \prob\left[A_i^\complement | X_i = 1\right] + \prob\left[A_j^\complement | X_i = 1, A_i^\complement \right] \prob\left[A_i^\complement | X_i = 1\right] \notag \\
+	% 		&\phantom{=} + \prob\left[A_j^\complement | X_i = 1, A_i \right] \prob\left[A_i | X_i = 1\right]\\
+	% 		&\leq 2\prob\left[A_i^\complement | X_i = 1\right]+ \prob\left[A_j^\complement | X_i = 1, A_i \right].\\
+	% 	\end{align}
+	% 	If we condition on $A_i$ then the event $X_i = 1$ depends only on the update sequence strictly inside $B(i, k/2)$. Also note that the event $A_j$ depends only on the update sequence stricly inside $B(j, k/2)$. These update sequences are independent as they do not share any vertices and so
+	% 	\begin{equation}
+	% 		\prob\left[A_j^\complement | X_i = 1, A_i \right] = \prob\left[A_j^\complement \right]
+	% 	\end{equation}
+	% 	and we have
+	% 	\begin{equation}
+	% 		\prob\left[A^\complement | X_i = 1\right] \leq 2\prob\left[A_i^\complement | X_i = 1\right]+ \prob\left[A_j^\complement \right].
+	% 	\end{equation}
+	% \end{proof}
+	% \begin{lemma}
+	% 	\begin{equation}
+	% 		\prob\left[\mathcal{H}_i \not\subset B(i, l) | X_i = 1\right] \leq
+	% 	\end{equation}
+	% \end{lemma}
+	% \begin{proof}
+	% 	\begin{align}
+	% 		\prob\left[\mathcal{H}_i \not\subset B(i, l) | X_i = 1\right] &= m_{t^*}^{-1} \prob\left[\mathcal{H}_i \not\subset B(i, l), X_i = 1\right]\\
+	% 		&\leq m_{t^*}^{-1} \prob\left[\chi(\mathcal{H}_i) \geq l, X_i = 1\right]\\
+	% 		&\leq m_{t^*}^{-1} \prob\left[\chi(\mathcal{H}_i) \geq l, Z(\mathcal{H}_i) \geq t^*\right]\\
+	% 		&= m_{t^*}^{-1} \expect\left[\indicator_{\chi(\mathcal{H}_i) \geq l} \indicator_{Z(\mathcal{H}_i) \geq t^*} \right]\\
+	% 		&\leq m_{t^*}^{-1} \expect\left[\indicator_{\chi(\mathcal{H}_i) \geq l} \indicator_{Z(\mathcal{H}_i) \geq \ln(n) + z} \right]\\
+	% 		&\leq m_{t^*}^{-1} \expect\left[\exp(\chi(\mathcal{H}_i) - l) \exp(Z(\mathcal{H}_i) - \ln(n) - z) \right]\\
+	% 		&= m_{t^*}^{-1} \exp(-l) \exp(-z - \ln(n)) \expect\left[\exp(\chi(\mathcal{H}_i) + Z(\mathcal{H}_i)) \right]\\
+	% 		&= \max(1, \exp(- \beta \Delta z)) \exp(-l) \expect\left[\exp(\chi(\mathcal{H}_i) + Z(\mathcal{H}_i)) \right]\\
+	% 		&\leq C_z \euler^{-l} BLAH
+	% 	\end{align}
+	% \end{proof}
+	\begin{lemma}
+		There exists a constant $C > 0$ such that for sufficiently small $\beta$,
+		\label{lem:nd X_j given X_i}
+		\begin{equation}
+			\prob[X_j = 1| X_i = 1] \leq m_{t^*} + C \euler^{-k}.
+		\end{equation}
+		where $k = |i - j|$ is the distance between vertices $i$ and $j$.
+	\end{lemma}
+	\begin{proof}
+		There are two ways in which the update history of vertex $j$ can survive until time $0$. The update history can survive without intersecting with the update history of vertex $i$ or the update history of vertex $j$ can merge with the update history of vertex $i$ (whose survival we are conditioning on). %(Note that these events are not mutually exclusive as the update history of vertex $i+k$ could merge with the update history of vertex $i$ after it reaches time $0$.) 
+		Breaking up the probability this way we have
+		\begin{align}
+			\prob[X_j = 1| X_i = 1] &= \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j = \emptyset | X_i = 1] \notag\\
+			&\phantom{=}+ \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1]\\
+			&\leq \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j = \emptyset | X_i = 1] + \prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1].
+		\end{align}
+
+		The result follows from Lemmas \ref{lem: prob X_j and no intersect given X_i = 1} and \ref{lem: prob intersect given X_i = 1}.
+	\end{proof}
+
+	\begin{lemma}
+		\label{lem: prob X_j and no intersect given X_i = 1}
+		Let $i$ and $j$ be the indices of two vertices on a vertex transitive graph. Then
+		\begin{equation}
+			\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] \leq m_{t^*}
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		To begin
+		\begin{align}
+			\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] &= \prob[X_i = 1]^{-1}\prob[X_i = 1, X_j = 1, \hist_i \cap\hist_j = \emptyset]\\
+			&= \frac{\prob[\hist_i(0) \cup \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset]}{\prob[\hist_i(0) \neq \emptyset]}.
+		\end{align}
+		Define $S$ to be the first time that the histories intersect, or define $S = 0$ if the histories do not intersect before time $0$. We construct a new history, $\hist_j'$, in the following way. Along the interval $[S, t^*)$, $\hist_j'$ is constructed from the update sequence in the exact same way as $\hist_j$. However, along the interval $[0, S)$, we replace the update sequence with an another i.i.d. copy of the update sequence. Note that we have constructed $\hist_j'$ to be independent of $\hist_i$. Also note that in the event $\{\hist_i \cap \hist_j = \emptyset\}$, we have $\hist_j = \hist_j'$ and so
+		\begin{align}
+			\prob[\hist_i(0) \cup \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset] &= \prob[\hist_i(0) \cup \hist_j'(0) \neq \emptyset, \hist_i \cap \hist_j' = \emptyset]\\
+			&\leq \prob[\hist_i(0) \cup \hist_j'(0) \neq \emptyset]\\
+			&= \prob[\hist_i(0) \neq \emptyset] \prob[\hist_j'(0) \neq \emptyset]
+		\end{align}
+		since $\hist_i$ and $\hist_j'$ are independent. Since $\prob[\hist_j'(0) \neq \emptyset] = \prob[\hist_j(0) \neq \emptyset] = m_{t^*}$ we get the desired result.
+	\end{proof}
+
+	% \begin{lemma}
+	% 	\label{lem: prob X_j and no intersect given X_i = 1}
+	% 	There exists an $\alpha$ such that for $\beta$ sufficiently small
+	% 	\begin{equation}
+	% 		\prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j = \emptyset| X_i = 1] \leq C_{z, \epsilon} \exp(2 \alpha) n^{-\epsilon}.
+	% 	\end{equation}
+	% \end{lemma}
+	% \begin{proof}
+	% 	\begin{align}
+	% 		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] &= m_{t^*}^{-1} \prob[X_j = 1, X_i = 1, \hist_i \cap \hist_j = \emptyset]\\
+	% 		&\leq m_{t^*}^{-1} \prob\left[\frac{1}{2} \mathcal{L}(\hist_i \cup \hist_j) \geq t^*\right]\\
+	% 		&= m_{t^*}^{-1} \prob\left[\frac{1+\epsilon}{2} \mathcal{L}(\hist_i \cup \hist_j) \geq (1+\epsilon) t^*\right]
+	% 	\end{align}
+	% 	for any $0 < \epsilon < 1$. Continuing
+	% 	\begin{align}
+	% 		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] &\leq m_{t^*}^{-1} \expect\left[\indicator_{(1+\epsilon)\mathcal{L}(\hist_i \cup \hist_j)/2 \geq (1+\epsilon)t^*}\right]\\
+	% 		&= m_{t^*}^{-1} \expect\left[\exp((1+\epsilon)\mathcal{L}(\hist_i \cup \hist_j)/2 - (1+\epsilon)t^*)\right]\\
+	% 		&= m_{t^*}^{-1} \exp(-(1+\epsilon)t^*) \expect\left[\exp\left(\frac{1+\epsilon}{2}\mathcal{L}(\hist_i \cup \hist_j\right)\right].
+	% 	\end{align}
+	% 	Since $t^* \geq \ln(n) + z$, and $m_{t^*} \geq \min(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})/n$,
+	% 	\begin{align}
+	% 		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] &\leq C_{z, \epsilon} n^{-\epsilon} \expect\left[\exp\left(\frac{1+\epsilon}{2}\mathcal{L}(\hist_i \cup \hist_j\right)\right]
+	% 	\end{align}
+	% 	where 
+	% 	\begin{equation}
+	% 		C_{z, \epsilon} = \exp(-\epsilon z) \max(1, \euler^{\beta\Delta z}).
+	% 	\end{equation}
+	% 	From Lemma \ref{lem:full submartingale thing}, there exists an $\alpha$ such that for $\beta$ sufficiently small
+	% 	\begin{equation}
+	% 		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] \leq C_{z, \epsilon} \exp(2 \alpha) n^{-\epsilon}.
+	% 	\end{equation}
+	% \end{proof}
+
+	This proof is closely based on that in \cite{Lubetzky2014-po}.
+	\begin{lemma}
+		\label{lem: prob intersect given X_i = 1}
+		Let $i$ and $j$ be the indices of two vertices separated by distance $k$. Then there exists a $C$ such that for sufficiently small $\beta$,
+		\begin{equation}
+			\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \leq C\euler^{-k}.
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		Firstly,
+		\begin{align}
+			\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &= \frac{\prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \{X_i = 1\}]}{\prob[X_i = 1]}\\
+			&\leq m_{t^*}^{-1} \prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \{X_i = 1\}]\\
+			&\leq  m_{t^*}^{-1} \prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left(\{X_i = 1\} \cup \{X_j = 1\}\right)]\\
+			&= m_{t^*}^{-1} \prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}]
+		\end{align}
+		since
+		\begin{equation}
+			\left\{X_i = 1\right\} = \left\{\mathcal{H}_i(0) \neq \emptyset\right\}.
+		\end{equation}
+		% then
+		% \begin{align}
+		% 	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq m_{t^*}^{-1}\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left\{\mathcal{H}_i(0) \neq \emptyset\right\}\right],\\
+		% 	&\leq m_{t^*}^{-1}\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}\right].
+		% \end{align}
+		% \begin{align}
+		% 	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] &\leq n C_z\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left\{X_i = 1\right\}\right],\\
+		% 	&\leq n C_z\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left(\left\{X_i = 1\right\} \cup \left\{X_i = 1\right\}\right)\right].
+		% \end{align}
+		% Now since each update in our histories can never remove more than one vertex at a time, if $\hat{\mathcal{H}}_i(0) \cup \hat{\mathcal{H}}_j(0) = \emptyset$, then there must be some time $t > 0$ at which $\hat{\mathcal{H}}_i(t) \cup \hat{\mathcal{H}}_j(t) = \{w\}$ for a single vertex $w$. Proceeding backwards from $t^*$, define $S$ to be the first such time this happens, or put $S = 0$ if the histories always contain at least two vertices.
+		Proceeding backwards from $t^*$, define $S$ to be the random time at which $\mathcal{H}_i(t) \cup \mathcal{H}_j(t)$ first reduced to less than two vertices, or define $S = 0$ if the combined histories contain at least two vertices all the way to time $0$. 
+		Note that
+		\begin{equation}
+			\label{eq:prob union subset of}
+			\{\hist_i(0) \cup \hist_j(0) \neq \emptyset\} \subseteq \{\mathscr{F}(v, 0, S) \neq \emptyset\}
+		\end{equation}
+		where $v$ is either the single vertex $v = \hist_i(S) \cup\hist_j(S)$ in the case that the histories coallesce to a single point at $S$, or any arbitrary single vertex otherwise.
+		We also note that
+		\begin{equation}
+			\label{eq:prob intersect subset of}
+			\{\hist_i \cap \hist_j \neq \emptyset\} \subseteq \{\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t^*]\right) \geq k - 1\}
+		\end{equation}
+		since there must be at least $k - 1$ branching edges for the histories to meet. The event on the right hand side of \eqref{eq:prob intersect subset of} depends only on the update sequence in $[S, t^*]$. The event on the right hand side of \eqref{eq:prob union subset of} depends only on the update sequence in $[0, S)$. Therefore, given $S$, these events are independent and
+		\begin{align}
+			&\prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}| S = t_s] \notag \\
+			&\phantom{=}\leq \prob[\mathscr{F}(v, 0, S) \neq \emptyset | S = t_s] \prob[\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t^*]\right) \geq k - 1 | S = t_s]\\
+			&\phantom{=}= m_{t_s}  \prob[\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t^*]\right) \geq k - 1 | S = t_s]
+		\end{align}
+		and so
+		\begin{align}
+			\prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}] &\leq \expect[\indicator_{\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t^*]\right) \geq k - 1 }m_S]\\
+			&\leq \expect[\indicator_{\chi(\hist_i \cup \hist_j) \geq k - 1} m_S].
+		\end{align}
+		% If $\mathcal{H}_i(S) \cup \mathcal{H}_j(S)$ contains exactly one vertex then the probability of survival from time $S$ to time $0$ is simply the magnetisation $m_S$. Otherwise, either $S = 0$ or $|\mathcal{H}_i(S) \cup \mathcal{H}_j(S)| = 0$. In the latter case the histories cannot reach time $0$ and in the former, 
+		% \begin{equation}
+		% 	\prob\left[\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset | S = 0\right] = 1 = m_{0}.
+		% \end{equation}
+		% Overall,
+		% \begin{equation}
+		% 	\prob\left[\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset | S = t_s\right] \leq m_{t_s}.
+		% \end{equation}
+		From Corollary \ref{cor:exponential decay magnetization}, 
+		\begin{equation}
+			m_S \leq \euler^{t^* - S} m_{t^*}
+		\end{equation}
+		and since $|\hist_i(t) \cup \hist_j(t)| \geq 2$ for $t \in (S, t^*]$,
+		\begin{equation}
+			t^* - S \leq \mathcal{L}(\hist_i \cup \hist_j)/2.
+		\end{equation}
+		So
+		\begin{align}
+			\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] %&\leq m_{t^*}^{-1} \expect[\indicator_{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset} m_S] \\
+			% &\leq m_{t^*}^{-1} \expect[\indicator_{\chi(\mathcal{H}_{ij}) \geq k-1} m_S]\\
+			&\leq m_{t^*}^{-1} m_{t^*} \expect[\indicator_{\chi(\hist_i \cup \hist_j) \geq k-1} \euler^{\mathcal{L}(\hist_i\cup \hist_j)/2}]\\
+			% &= \expect[\indicator_{\chi(\mathcal{H}_{ij}) \geq k-1} \euler^{\mathcal{L}(\hist_i\cup \hist_j)/2}]\\
+			&\leq \expect[\euler^{\chi(\hist_i\cup \hist_j) - (k-1)} \euler^{\mathcal{L}(\hist_i\cup \hist_j)/2}]\\
+			% &\leq \euler^{-(k-1)} \expect[\euler^{\chi(\mathcal{H}_{ij}) + (1/2)L(\mathcal{H}_{ij}) + 1} ]\\
+			&= \euler^{-k + 1} \expect[\euler^{\chi(\hist_i\cup \hist_j) + L(\hist_i\cup \hist_j)/2} ]
+		\end{align}
+
+		From Lemma \ref{lem:full submartingale thing}, for any $\alpha > \ln(2)$ if
+		\begin{equation}
+			\tanh(\beta\Delta) \leq \frac{1-2\euler^{-\alpha}}{2(\euler^{\Delta(\alpha+1)} - \euler^{-\alpha})}
+		\end{equation}
+		then
+		\begin{align}
+			\expect[\euler^{\chi(\hist_i\cup \hist_j) + L(\hist_i\cup \hist_j)/2} ] &\leq \euler^{2\alpha}
+		\end{align}
+		and we get the desired result by choosing $C = \exp(1 + 2\alpha)$.
+	\end{proof}
