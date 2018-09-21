@@ -164,9 +164,9 @@
 	\label{claim:discrete vs continuous distributions}
 		Let $(N_n)_{n \in \mathbb{N}}$ be a sequence of positive random integers, and $(m_n)_{n \in \mathbb{N}}$ be a non-decreasing sequence of integers such that $N_n \geq m_n$ for all $n$ and $\lim_{n \rightarrow \infty} m_n = \infty$.	Define $T(n)$ be the random time it takes for a rate $\lambda$ Poisson clock to go off $n$ times (this is the time it takes for $n$ updates to occur in a continuous-time Markov Chain).
 
-		Let $a_n$ and $b_n$ be positive deterministic sequences such that $b_n / a_n \rightarrow \infty$ and for any $\epsilon > 0$
+		Let $a_n$ and $b_n$ be positive deterministic sequences such that $b_n / a_n \rightarrow \infty$ and for any $c > 0$
 		\begin{equation}
-			\epsilon \frac{m_n a_n^2}{b_n^2} - \log\frac{b_n^2}{a_n^2} \rightarrow \infty.
+			\frac{m_n a_n^2}{b_n^2} - c \log\frac{b_n}{a_n} \rightarrow \infty.
 			\label{eq:m_n a_n b_n constraint}
 		\end{equation}
 		Define

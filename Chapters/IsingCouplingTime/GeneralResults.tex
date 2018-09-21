@@ -258,22 +258,14 @@ The following corollaries are then straightfoward.
 	\begin{equation}
 		C_z = \max(\euler^{-z}, \euler^{-(1 - \beta \Delta)z}).
 	\end{equation}
-	Now from Lemmas \ref{lem:size B_i} and \ref{lem:size C_i}, the second term above vanishes as $n \rightarrow \infty$. So we turn our attention to the first term. We have
+	Now from Lemmas \ref{lem:size B_i} and \ref{lem:size C_i}, the second term above vanishes as $n \rightarrow \infty$. So we turn our attention to the first term. From Lemma \ref{lem:nd X_j given X_i}, there exists a $C > 0$ such that for small enough $\beta$,
 	\begin{align}
 		\expect[Z_i | X_i = 1] &= \sum_{j \in C_i} \prob[X_j = 1 | X_i = 1]\\
-			&= \sum_{k = \lfloor b_n \rfloor + 1}^{\lfloor c_n \rfloor} \sum_{j: |i - j| = k} \prob[X_j = 1 | X_i = 1].
+			% &= \sum_{k = \lfloor b_n \rfloor + 1}^{\lfloor c_n \rfloor} \sum_{j: |i - j| = k} \prob[X_j = 1 | X_i = 1]\\
+			&\leq |C_i| \left(m_{t^*} + C \euler^{-b_n}\right)\\
+			&\leq |C_i| \left(\frac{C_z}{n} + \frac{C}{n}\right)
 	\end{align}
-	By Lemma \ref{lem:nd X_j given X_i}, for any $0 < \epsilon < 1$, there exists an $\alpha$ such that for sufficiently small $\beta$,
-	\begin{align}
-		\expect[Z_i | X_i = 1] &\leq \sum_{k = \lfloor b_n \rfloor + 1}^{\lfloor c_n \rfloor} \sum_{j: |i - j| = k} \left( C_{z, \epsilon} \euler^{2 \alpha} n^{-\epsilon} + \euler^{-k + 2 + 2\alpha}\right)\\
-		&\leq \sum_{k = \lfloor b_n \rfloor + 1}^{\lfloor c_n \rfloor} P(k) \left( C_{z, \epsilon} \euler^{2 \alpha} n^{-\epsilon} + \euler^{-k + 2 + 2\alpha}\right)\\
-		&\leq (c_n - b_n + 1) P(b_n) \left( C_{z, \epsilon} \euler^{2 \alpha} n^{-\epsilon} + \euler^{-b_n + 2 + 2\alpha}\right)
-	\end{align}
-	where
-	\begin{equation}
-		C_{z, \epsilon} = \exp(-\epsilon z) \max(1, \euler^{\beta\Delta z}).
-	\end{equation}
-
+	which goes to zero as $n \rightarrow \infty$.
 	% NEED TO PROVE LEMMA \ref{lem:intersecting histories bound given X_j = 1}
 \end{proof}
 
@@ -725,15 +717,12 @@ In \cite{Lubetzky2016-wd}, \citeauthor{Lubetzky2016-wd} proved something similar
 % 	\end{align}
 % \end{proof}
 \begin{lemma}
-	There exists a constant $C_2 > 0$ and for any $0 < \epsilon < 1$, there exists a constant $C_1 > 0$ such that for sufficiently small $\beta$,
+	There exists a constant $C > 0$ such that for sufficiently small $\beta$,
 	\label{lem:nd X_j given X_i}
 	\begin{equation}
-		\prob[X_j = 1| X_i = 1] \leq C_{z, \epsilon} C_1 n^{-\epsilon} + C_2 \euler^{-k}.
+		\prob[X_j = 1| X_i = 1] \leq m_{t^*} + C \euler^{-k}.
 	\end{equation}
-	where $k = |i - j|$ is the distance between vertices $i$ and $j$ and
-	\begin{equation}
-		C_{z, \epsilon} = \exp(-\epsilon z) \max(1, \euler^{\beta\Delta z}).
-	\end{equation}
+	where $k = |i - j|$ is the distance between vertices $i$ and $j$.
 \end{lemma}
 \begin{proof}
 	There are two ways in which the update history of vertex $j$ can survive until time $0$. The update history can survive without intersecting with the update history of vertex $i$ or the update history of vertex $j$ can merge with the update history of vertex $i$ (whose survival we are conditioning on). %(Note that these events are not mutually exclusive as the update history of vertex $i+k$ could merge with the update history of vertex $i$ after it reaches time $0$.) 
@@ -746,6 +735,61 @@ In \cite{Lubetzky2016-wd}, \citeauthor{Lubetzky2016-wd} proved something similar
 
 	The result follows from Lemmas \ref{lem: prob X_j and no intersect given X_i = 1} and \ref{lem: prob intersect given X_i = 1}.
 \end{proof}
+
+\begin{lemma}
+	\label{lem: prob X_j and no intersect given X_i = 1}
+	Let $i$ and $j$ be the indices of two vertices on the cycle $(\mathbb{Z}/n\mathbb{Z})$. Then
+	\begin{equation}
+		\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] \leq m_{t^*}
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	To begin
+	\begin{align}
+		\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] &= \prob[X_i = 1]^{-1}\prob[X_i = 1, X_j = 1, \hist_i \cap\hist_j = \emptyset]\\
+		&= \frac{\prob[\hist_i(0) \cup \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset]}{\prob[\hist_i(0) \neq \emptyset]}.
+	\end{align}
+	Define $S$ to be the first time that the histories intersect, or define $S = 0$ if the histories do not intersect before time $0$. We construct a new history, $\hist_j'$, in the following way. Along the interval $[S, t^*)$, $\hist_j'$ is constructed from the update sequence in the exact same way as $\hist_j$. However, along the interval $[0, S)$, we replace the update sequence with an another i.i.d. copy of the update sequence. Note that we have constructed $\hist_j'$ to be independent of $\hist_i$. Also note that in the event $\{\hist_i \cap \hist_j = \emptyset\}$, we have $\hist_j = \hist_j'$ and so
+	\begin{align}
+		\prob[\hist_i(0) \cup \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset] &= \prob[\hist_i(0) \cup \hist_j'(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset]\\
+		&\leq \prob[\hist_i(0) \cup \hist_j'(0) \neq \emptyset]\\
+		&= \prob[\hist_i(0) \neq \emptyset] \prob[\hist_j'(0) \neq \emptyset]
+	\end{align}
+	since $\hist_i$ and $\hist_j'$ are independent. Since $\prob[\hist_j'(0) \neq \emptyset] = \prob[\hist_j(0) \neq \emptyset] = m_{t^*}$ we get the desired result.
+\end{proof}
+
+% \begin{lemma}
+% 	\label{lem: prob X_j and no intersect given X_i = 1}
+% 	There exists an $\alpha$ such that for $\beta$ sufficiently small
+% 	\begin{equation}
+% 		\prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j = \emptyset| X_i = 1] \leq C_{z, \epsilon} \exp(2 \alpha) n^{-\epsilon}.
+% 	\end{equation}
+% \end{lemma}
+% \begin{proof}
+% 	\begin{align}
+% 		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] &= m_{t^*}^{-1} \prob[X_j = 1, X_i = 1, \hist_i \cap \hist_j = \emptyset]\\
+% 		&\leq m_{t^*}^{-1} \prob\left[\frac{1}{2} \mathcal{L}(\hist_i \cup \hist_j) \geq t^*\right]\\
+% 		&= m_{t^*}^{-1} \prob\left[\frac{1+\epsilon}{2} \mathcal{L}(\hist_i \cup \hist_j) \geq (1+\epsilon) t^*\right]
+% 	\end{align}
+% 	for any $0 < \epsilon < 1$. Continuing
+% 	\begin{align}
+% 		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] &\leq m_{t^*}^{-1} \expect\left[\indicator_{(1+\epsilon)\mathcal{L}(\hist_i \cup \hist_j)/2 \geq (1+\epsilon)t^*}\right]\\
+% 		&= m_{t^*}^{-1} \expect\left[\exp((1+\epsilon)\mathcal{L}(\hist_i \cup \hist_j)/2 - (1+\epsilon)t^*)\right]\\
+% 		&= m_{t^*}^{-1} \exp(-(1+\epsilon)t^*) \expect\left[\exp\left(\frac{1+\epsilon}{2}\mathcal{L}(\hist_i \cup \hist_j\right)\right].
+% 	\end{align}
+% 	Since $t^* \geq \ln(n) + z$, and $m_{t^*} \geq \min(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})/n$,
+% 	\begin{align}
+% 		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] &\leq C_{z, \epsilon} n^{-\epsilon} \expect\left[\exp\left(\frac{1+\epsilon}{2}\mathcal{L}(\hist_i \cup \hist_j\right)\right]
+% 	\end{align}
+% 	where 
+% 	\begin{equation}
+% 		C_{z, \epsilon} = \exp(-\epsilon z) \max(1, \euler^{\beta\Delta z}).
+% 	\end{equation}
+% 	From Lemma \ref{lem:full submartingale thing}, there exists an $\alpha$ such that for $\beta$ sufficiently small
+% 	\begin{equation}
+% 		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] \leq C_{z, \epsilon} \exp(2 \alpha) n^{-\epsilon}.
+% 	\end{equation}
+% \end{proof}
 
 This proof is closely based on that in \cite{Lubetzky2014-po}.
 \begin{lemma}
@@ -831,37 +875,4 @@ This proof is closely based on that in \cite{Lubetzky2014-po}.
 		\expect[\euler^{\chi(\hist_i\cup \hist_j) + L(\hist_i\cup \hist_j)/2} ] &\leq \euler^{2\alpha}
 	\end{align}
 	and we get the desired result by choosing $C = \exp(1 + 2\alpha)$.
-\end{proof}
-
-\begin{lemma}
-	\label{lem: prob X_j and no intersect given X_i = 1}
-	There exists an $\alpha$ such that for $\beta$ sufficiently small
-	\begin{equation}
-		\prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j = \emptyset| X_i = 1] \leq C_{z, \epsilon} \exp(2 \alpha) n^{-\epsilon}.
-	\end{equation}
-\end{lemma}
-\begin{proof}
-	\begin{align}
-		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] &= m_{t^*}^{-1} \prob[X_j = 1, X_i = 1, \hist_i \cap \hist_j = \emptyset]\\
-		&\leq m_{t^*}^{-1} \prob\left[\frac{1}{2} \mathcal{L}(\hist_i \cup \hist_j) \geq t^*\right]\\
-		&= m_{t^*}^{-1} \prob\left[\frac{1+\epsilon}{2} \mathcal{L}(\hist_i \cup \hist_j) \geq (1+\epsilon) t^*\right]
-	\end{align}
-	for any $0 < \epsilon < 1$. Continuing
-	\begin{align}
-		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] &\leq m_{t^*}^{-1} \expect\left[\indicator_{(1+\epsilon)\mathcal{L}(\hist_i \cup \hist_j)/2 \geq (1+\epsilon)t^*}\right]\\
-		&= m_{t^*}^{-1} \expect\left[\exp((1+\epsilon)\mathcal{L}(\hist_i \cup \hist_j)/2 - (1+\epsilon)t^*)\right]\\
-		&= m_{t^*}^{-1} \exp(-(1+\epsilon)t^*) \expect\left[\exp\left(\frac{1+\epsilon}{2}\mathcal{L}(\hist_i \cup \hist_j\right)\right].
-	\end{align}
-	Since $t^* \geq \ln(n) + z$, and $m_{t^*} \geq \min(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})/n$,
-	\begin{align}
-		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] &\leq C_{z, \epsilon} n^{-\epsilon} \expect\left[\exp\left(\frac{1+\epsilon}{2}\mathcal{L}(\hist_i \cup \hist_j\right)\right]
-	\end{align}
-	where 
-	\begin{equation}
-		C_{z, \epsilon} = \exp(-\epsilon z) \max(1, \euler^{\beta\Delta z}).
-	\end{equation}
-	From Lemma \ref{lem:full submartingale thing}, there exists an $\alpha$ such that for $\beta$ sufficiently small
-	\begin{equation}
-		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] \leq C_{z, \epsilon} \exp(2 \alpha) n^{-\epsilon}.
-	\end{equation}
 \end{proof}
