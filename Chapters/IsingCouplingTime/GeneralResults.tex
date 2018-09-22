@@ -19,7 +19,8 @@ where $(\mathcal{T}_t)_{t \geq 0}$ is the dynamics starting from the all-plus co
 
 We can now define the time
 \begin{equation}
-		t_c(n) = \inf\left\{ t > 0 : m_t = \frac{1}{n}\right\}.
+	\label{eq:definition t_c(n)}
+	t_c(n) = \inf\left\{ t > 0 : m_t = \frac{1}{n}\right\}.
 \end{equation}
 which is around the time it takes for the top and bottom chains to couple.
 
@@ -27,8 +28,8 @@ which is around the time it takes for the top and bottom chains to couple.
 \label{thm:Coupling Distribution on transitive graph}
 	Let $(G_n)$ be a family of vertex-transitive graphs, $G_n = (V, E)$ with $|V| = n$ vertices. Let $T_n$ be the coupling time for the continuous-time Ising heat-bath dynamics for the zero-field ferromagnetic Ising model on $G_n$. Then for any small enough inverse-temperature $\beta$,
 	\begin{equation}
-		\lim_{n \rightarrow \infty} \prob[T_n < z + t_c(n)] = \euler^{-\euler^{-z}}
-	\end{equation}.
+		\lim_{n \rightarrow \infty} \prob[T_n < z + t_c(n)] = \euler^{-\euler^{-z}}.
+	\end{equation}
 \end{theorem}
 
 The proof of Theorem \ref{thm:Coupling Distribution on transitive graph} will be given in Section \ref{sec:proof thm coupling nd} after the essential preliminaries are presented. In Section \ref{sec:information percolation in higher dimensions} we describe an alternative construction of the histories that can sometimes be easier to work with. Then in Section \ref{sec:nd problem setup}, we outline the overall approach to the proof. The method is very similar to the method used in Chapter \ref{Ch:1D} but there are some additional problems that are addressed. Finally, we defer results directly concerning the update histories to Section \ref{sec:additional lemmas nd}.
@@ -86,15 +87,10 @@ Finally, given a target time $t^*$, $X_i$ is defined such that $\{X_i = 1\} = A_
 % 	\end{equation}
 % \end{corollary}
 
-\section{Setup}
-\label{sec:nd problem setup}
-Define the time
+We end this section with some results concerning the magnetization, and in particular, the magnetization at time
 \begin{equation}
-	t_c(n) = \inf\left\{ t > 0 : m_t = \frac{1}{n}\right\}.
+	t^* = t_c(n) + z.
 \end{equation}
-Fix $z$ and a time of interest $t^* = t_c(n) + z$.
-
-[DEFINE $X_i, U_i, W_i$ etc]
 
 \begin{lemma}[\cite{Lubetzky2017-nc}, Claim 3.3]
 	On any graph with maximum degree $\Delta$, for any $t, s > 0$ we have
@@ -124,16 +120,84 @@ The following corollaries are then straightfoward.
 		\frac{\euler^{-(1 - \beta \Delta)z}}{n} \leq m_{t^*} \leq \frac{\euler^{-z}}{n}.
 	\end{equation}
 \end{corollary}
-
+Bearing in mind that $m_0 = 1$, we also obtain a bound on $t_c(n)$.
 \begin{corollary}
 	On any vertex transitive graph with degree $\Delta$, for $\beta < 1/\Delta$
 	\begin{equation}
-		\ln(n) \leq t_c(n) \leq \frac{\ln(n)}{1 - \beta \Delta}
+		\ln(n) \leq t_c(n) \leq \frac{\ln(n)}{1 - \beta \Delta}.
 	\end{equation}
 \end{corollary}
 
+\section{Setup}
+\label{sec:nd problem setup}
+As in Chapter \ref{Ch:1D}, we prove Theorem \ref{thm:Coupling Distribution on transitive graph} through the use of a stronger statement in Theorem \ref{thm: nd compound poisson approximation}.
+
+[BLAHBLAH OVERVIEW (MAYBE JUST REFER BACK TO OTHER CHAPTER)]
+
+Recalling the definition of $t_c(n)$ in \eqref{eq:definition t_c(n)}, fix $z$ and a time of interest $t^* = t_c(n) + z$. From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and $\mu$ exactly as in Chapter \ref{Ch:1D} but using our new definition for $t^*$. For convenience, we repeat the definitions here.
+
+For each vertex $i \in V$, define indicators
+	\begin{equation}
+		X_i = 
+		\begin{cases}
+			1 & \mathscr{B}_{t^*}[i] \neq \mathscr{T}_{t^*}[i],\\
+			0 & \mathscr{B}_{t^*}[i] = \mathscr{T}_{t^*}[i]
+		\end{cases}
+	\end{equation}
+	and set $W = \sum_{i \in V} X_i$.
+	For each $i \in V$, decompose $W$ into $W = X_i + U_i + Z_i + W_i$ where
+	\begin{align}
+		U_i &= \sum_{j \in B_i} X_j, &
+		Z_i &= \sum_{j \in C_i} X_j, &
+		W_i &= \sum_{j \in D_i} X_j.
+	\end{align}
+	and $B_i, C_i$, and $D_i$ are the vertex sets
+	\begin{align}
+		B_i &= \{j\neq i : |j - i| \leq b_n \},\\
+		C_i &= \{j\notin B_i\cup \{i\}: |j - i| \leq c_n \},\\
+		D_i &= V \setminus (B_i \cup C_i \cup \{i\}).
+	\end{align}
+	As in Chapter \ref{Ch:1D}, we have some freedom in choosing $b_n$ and $c_n$ but we will again choose $b_n = \ln(n)$ and $c_n = \ln(n)^2$.
+
+	We now define the quantities
+	\begin{align}
+		\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \indicator[ X_i + U_i \geq 1] \right],\\
+		\mu_l &= \frac{1}{l \lambda} \sum_{i \in V} \expect\left[ X_i \indicator[X_i + U_i = l] \right], && l\geq 1,
+		% \label{eq:mu definition}
+	\end{align}
+	which will be the parameters of the approximating compound Poisson distribution to $W$. We also define
+	\begin{align}
+		\delta_1 &= \sum_{i \in V}  \sum_{k \geq 0} \prob[X_i = 1, U_i = k] \expect \left|\frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|, \\ 
+		% \delta_2 &= \\
+		% \delta_3 &= \\
+		\delta_4 &= \sum_{i \in V} \left( \expect[X_i Z_i] + \expect[X_i] \expect[X_i + U_i + Z_i] \right),
+	\end{align}
+	% which we will require to vanish as $n \rightarrow \infty$.
+	which we desire to be small for the compound Poisson approximation to be good.
+
+	The following theorem (reworked from \cite{Barbour2001-nh}) bounds the distance between the distributions of $W$ and the approximating compound Poisson.
+
+	\begin{theorem}[\cite{Barbour2001-nh}]
+	\label{thm: nd compound poisson approximation}
+		Let $W$, $\lambda$, $\vect{\mu}$, $\delta_1$ and $\delta_4$ be as defined above. Then
+		\begin{equation}
+			d_{\mathrm{TV}}(\mathscr{L}(W), \mathrm{CP}(\lambda, \vect{\mu})) \leq (\delta_1 + \delta_4)\euler^\lambda.
+		\end{equation}
+	\end{theorem}
+	As per the discussion proceeding Theorem \ref{thm: compound poisson approximation}, we obtain the following as a corollary to Theorem \ref{thm: nd compound poisson approximation}.
+	\begin{corollary}
+		\label{cor:nd bound distance prob[w=0] and e^-lambda}
+		Let $T_n$ be the coupling time of the continuous-time heat-bath Glauber dynamics for the zero-field Ising model at inverse-temperature $\beta$ on the graph $G_n$ and let $\delta_1$, $\delta_4$ and $\lambda$ be as defined above. Then
+		\begin{equation}
+			\left|\prob\left[T_n \leq z + t_c(n)\right] - \euler^{-\lambda}\right| \leq (\delta_1 + \delta_4)\euler^\lambda,
+			\label{eq:nd bound distance prob[w=0] and e^-lambda}
+		\end{equation}
+		where $\theta = 1 - \tanh(2\beta)$.
+	\end{corollary}
+
 \section{Proof of Theorem \ref{thm:Coupling Distribution on transitive graph}}
 \label{sec:proof thm coupling nd}
+	In this section we use Corollary \ref{cor:nd bound distance prob[w=0] and e^-lambda} to prove Theorem \ref{thm:Coupling Distribution on transitive graph} by bounding $\lambda$ and showing that $\delta_1$ and $\delta_4$ go to zero as $n \rightarrow \infty$. This is done in Lemmas \ref{lem:nDlambda}, \ref{lem:delta1 goes to 0 general}, and \ref{lem:delta4 goes to 0 general}. The proofs of these require some additional lemmas concerning properties of the update histories which have been deferred to Section \ref{sec:additional lemmas nd}.
 	\begin{lemma}
 	\label{lem:nDlambda}
 		Using the above setup
