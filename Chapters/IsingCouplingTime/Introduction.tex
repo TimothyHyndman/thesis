@@ -371,9 +371,22 @@
 
 	For ease of notation, we will often use the shorthand
 	\begin{equation}
-		\mathcal{H}_i(t) := \mathscr{F}(i, t, t^*).
+		\mathcal{H}_i(t) := \mathscr{F}(i, t, t^*)
 	\end{equation}
 	where $t^*$ is some target time that should be clear from context. We call this the \emph{update history of vertex $i$ at time $t$}. Tracing $\mathcal{H}_i(t)$ backwards in time from $t^*$ produces a subgraph of $\Omega \times [0, t^*]$ which we write as $\mathcal{H}_i$ and which we simply call the \emph{update history of vertex $i$}. To be slightly more precise, to produce $\mathcal{H}_i$ we connect $(j,t)$ to $(j,t')$ if $j \in \mathcal{H}_i(t)$ and there are no updates of $j$ along $(t', t]$ and we connect $(j,t)$ to $(j',t)$ if there was an update at $(j, t)$, $j \in \mathcal{H}_i(t)$, $j' \notin \mathcal{H}_i(t)$, and $j' \in \mathcal{H}_i(t+\epsilon)$ for any sufficiently small $\epsilon > 0$.
+
+	Similarly, we also use 
+	\begin{equation}
+		\hist_A(t) := \mathscr{F}(A, t, t^*)
+	\end{equation}
+	for the update history of a vertex set $A$ at time $t$ and $\hist_A$ for the update history of vertex set $A$. Note that
+	\begin{equation}
+		\hist_A(t) = \bigcup_{i \in A} \hist_i(t)
+	\end{equation}
+	and 
+	\begin{equation}
+		\hist_A = \bigcup_{i \in A} \hist_i.
+	\end{equation}
 
 	% ALSO DEFINE UPDATE SUPPORT
 	
