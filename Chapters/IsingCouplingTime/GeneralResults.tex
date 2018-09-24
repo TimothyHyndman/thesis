@@ -170,10 +170,10 @@ For each vertex $i \in V$, define indicators
 	\end{align}
 	which will be the parameters of the approximating compound Poisson distribution to $W$. We also define
 	\begin{align}
-		\delta_1 &= \sum_{i \in V}  \sum_{k \geq 0} \prob[X_i = 1, U_i = k] \expect \left|\frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|, \\ 
+		\delta_1 &= \sum_{i \in V}  \sum_{k \geq 0} \prob[X_i = 1, U_i = k] \expect \left|\frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|, \label{eq:delta1 nD}\\ 
 		% \delta_2 &= \\
 		% \delta_3 &= \\
-		\delta_4 &= \sum_{i \in V} \left( \expect[X_i Z_i] + \expect[X_i] \expect[X_i + U_i + Z_i] \right),
+		\delta_4 &= \sum_{i \in V} \left( \expect[X_i Z_i] + \expect[X_i] \expect[X_i + U_i + Z_i] \right), \label{eq:delta4 nD}
 	\end{align}
 	% which we will require to vanish as $n \rightarrow \infty$.
 	which we desire to be small for the compound Poisson approximation to be good.
@@ -243,7 +243,7 @@ For each vertex $i \in V$, define indicators
 
 	\begin{lemma}
 	\label{lem:delta1 goes to 0 general}
-		Let $\delta_1$ be as defined above in [REF]. Then
+		Let $\delta_1$ be as defined above in \eqref{eq:delta1 nD}. Then
 		\begin{equation}
 			\lim_{n\rightarrow\infty} \delta_1 = 0.
 		\end{equation}
@@ -323,7 +323,7 @@ For each vertex $i \in V$, define indicators
 
 	\begin{lemma}
 	\label{lem:delta4 goes to 0 general}
-		Let $\delta_4$ be as defined above in [REF]. Then
+		Let $\delta_4$ be as defined above in \eqref{eq:delta4 nD}. Then
 		\begin{equation}
 			\lim_{n\rightarrow\infty} \delta_4 = 0.
 		\end{equation}
