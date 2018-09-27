@@ -352,8 +352,8 @@
 		\end{align}
 		Combining this with Lemma \ref{lem:1D prob history contained in ball}, and recalling our choices of $b_n = \ln(n)$ and $c_n = \ln(n)^2$ we get that
 		\begin{align}
-			\delta_1 &\leq 4n^2(2\lfloor b_n\rfloor + 1) \exp\left(3(z + \ln n)/\theta - \ln 2(c_n - b_n) /2 \right)\\
-			&\leq 8 \exp(3z/\theta) n^{3+ 3/\theta + \ln2/2 -\ln n / 2}
+			\delta_1 &\leq 4n^2(2\lfloor b_n\rfloor + 1) \exp\left((z + \ln n)/\theta - \ln 2(c_n - b_n) /2 \right)\\
+			&\leq 8 \exp(z/\theta) n^{3+ 1/\theta + \ln2/2 -\ln n \ln 2/ 2}
 		\end{align}
 		which goes to $0$ as $n \rightarrow \infty$.
 	\end{proof}
@@ -429,19 +429,19 @@
 	The following Lemma bounds how fast updates can percolate through the cycle. The proof is a slight modification of a similar one in \cite{Lubetzky2016-wd}.
 	\begin{lemma}
 	\label{lem:1D prob history contained in ball}
-		Let $B(i, l)$ indicate the set of vertices at distance $l$ or smaller from vertex $i$. The probability that the history of vertex $i$ escapes $B(i,l)$ in time $s$ is bounded by
+		Consider the update histories on the cycle.	Let $B(i, l)$ indicate the set of vertices at integer distance $l$ or smaller from vertex $i$. The probability that the history of vertex $i$ escapes $B(i,l)$ in time $s$ is bounded by
 		\begin{equation}
-			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] \leq \exp\left(3s - l \ln 2 \right).
+			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] \leq \exp\left(s - l \ln 2 \right).
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
-		Let $\mathcal{W} = \{\vect{w} = (w_1, w_2, \dots, w_l) : w_1 = i, ||w_{k-1} - w_k|| = 1\}$ be the set of length $l$ sequences of adjacent vertices starting at vertex $i$. If $\mathcal{H}_i$ contains any vertex outside $B(i, l)$ at a time $u \in [t^* - s, t^*]$ then there must be some sequence $w \in \mathcal{W}$ such that each $w_i$ was updated at some time $t^* > t_i > t^* - s$ and $t_{k-1} > t_k$. Call this event $M_w$. For any particular sequence $w$,
+		Let $\vect{w}^- = (i, i-1, \dots, i- l)$ and $\vect{w}^+ = (i, i+1, \dots, i+ l)$ denote the sequences of adjacent vertices starting at vertex $i$ and extending distance $l$ to the left and right respectively. For $\hist_i$ to contain any vertex outside $B(i, l)$ at a time $u \in [t^* - s, t^*]$ then either each $w_k^-$ was updated at some time $t^* > t_k \geq t^* - s$ with $t_{k-1} > t_k$ or each $w_k^+$ was updated at some time $t^* > t_k \geq t^* - s$ with $t_{k-1} > t_k$. Call the first event $M_-$ and the second $M_+$. We have
 		\begin{equation}
-			\prob[M_w] = \prob[\mathrm{Po}(s) \geq l]
+			\prob[M_-] = \prob[M_+] = \prob[\mathrm{Po}(s) \geq  l ]
 		\end{equation}
-		where $\mathrm{Po}(s)$ is Poisson with rate $s$. By a union bound over $\mathcal{W}$,
+		where $\mathrm{Po}(s)$ is Poisson with rate $s$. By a union bound,
 		\begin{equation}
-			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] \leq 2^{l-1} \prob[\mathrm{Po}(s) \geq l].
+			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] \leq 2 \prob[\mathrm{Po}(s) \geq  l].
 		\end{equation}
 		The moment generating function of a poisson random variable with rate $s$ is
 		\begin{equation}
@@ -453,12 +453,11 @@
 		\end{equation}
 		Overall we have
 		\begin{align}
-			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] &\leq 2^{l-1} \exp\left(s\left(\euler^t - 1\right) - t l\right)\\
-			&\leq \exp\left(s\left(\euler^t - 1\right) + l (\ln 2 - t) \right).
+			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] &\leq 2\exp\left(s\left(\euler^t - 1\right) - t l\right).
 		\end{align}
-		Choosing $t = 2 \ln 2$,
+		Choosing $t = \ln 2$,
 		\begin{align}
-			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] &\leq \exp\left(3 s - l \ln 2 \right).%\\
+			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] &\leq \exp\left(s - l \ln 2 \right).%\\
 			% &\leq \exp\left(s \Delta^2 - l \ln \Delta \right).
 		\end{align}
 	\end{proof}
