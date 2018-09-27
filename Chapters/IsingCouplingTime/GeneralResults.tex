@@ -20,6 +20,8 @@ To state the main result we first must define the graphs on which it is valid. L
 where $\Delta_n$ is the vertex degree of $G_n$.
 In this chapter we consider sequences of vertex-transtitive graphs $(G_n) \in \mathscr{G}$. Note that $P$ and $Q$ polynomial in $k$ is enough for $(G_n)$ to be in $\mathscr{G}$. This includes the $d$-dimensional square lattices.
 
+[MAKE THIS BETTER AFTER TIM HAS GOT BACK ABOUT THIS]
+
 We now define a couple of quantities. Firstly, the \emph{magnetization at vertex $i$ at time $t$} is
 \begin{equation}
 	 	m_t(i) = \expect[\mathcal{T}_t[i]]
@@ -100,7 +102,7 @@ We end this section with some results concerning the magnetization, and in parti
 \begin{equation}
 	t^* = t_c(n) + z.
 \end{equation}
-
+The following comes from \cite{Lubetzky2017-nc} and is valid on any graph, not just transitive ones.
 \begin{lemma}[\cite{Lubetzky2017-nc}, Claim 3.3]
 	On any graph with maximum degree $\Delta$, for any $t, s > 0$ we have
 	\begin{equation}
@@ -140,6 +142,8 @@ Bearing in mind that $m_0 = 1$, we also obtain a bound on $t_c(n)$.
 \section{Setup}
 \label{sec:nd problem setup}
 As in Chapter \ref{Ch:1D}, we prove Theorem \ref{thm:Coupling Distribution on transitive graph} through the use of a stronger statement in Theorem \ref{thm: nd compound poisson approximation}.
+
+[UP TO HERE]
 
 [BLAHBLAH OVERVIEW (MAYBE JUST REFER BACK TO OTHER CHAPTER)]
 
@@ -705,9 +709,9 @@ For each vertex $i \in V$, define indicators
 	% 			\prob[\mathcal{H}_i(0) \nsubseteq B(i,l)] \leq \frac{\exp(z \Delta^2)}{n}
 	% 	\end{equation}
 	% \end{corollary}
-
+	[IF WE CAN SOMEHOW SHOW THAT $\prob[\hist_i \cap \hist_j \neq \emptyset|X_1 =1] \leq \prob[\bar{\hist}_i \cap\hist_j]$ THEN THIS GIVES US A BIGGER RANGE OF TEMPERATURES.]
 	\begin{lemma}
-		Blah
+		blah
 	\end{lemma}
 	\begin{proof}
 		Write $\bar{\mathcal{H}}_i$ for the history at $i$ but it only has branching updates at rate 1. Write $d_j$ for the time of death of history $j$. Let $k = |i-j|$.
