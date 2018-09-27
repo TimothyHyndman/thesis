@@ -14,7 +14,8 @@ Our result partially confirms the conjecture by \citeauthor{Collevecchio2017-nq}
 
 To state the main result we first must define the graphs on which it is valid. Let $(G_{n})$ be a sequence of vertex-transitive graphs with $n$ vertices. Let $P_n(k)$ denote the number of vertices at distance $k$ from a vertex $i$ in $G_n$ and let $Q_n(k)$ denote the number of vertices at distance $k$ or less from a vertex $i$ in $G_n$. Define
 \begin{equation}
-	\mathscr{G} = \left\{(G_n) : \forall n \Delta_n = C_1, Q_n(\ln^2(n))/n \rightarrow 0, \lim_{n \rightarrow \infty}\sum_{k = 1}^\infty P_n(k)\euler^{-k} = C_2, C_1, C_2 \in \mathbb{R}\right\}
+	\mathscr{G} = \left\{(G_n) : \forall n \Delta_n = C_1, Q_n(\ln^2(n))/n \rightarrow 0, \lim_{n \rightarrow \infty}\sum_{k = 1}^\infty P_n(k)\euler^{-k} = C_2, C_1, C_2 > 0\right\}
+	\label{eq:set valid graphs}
 \end{equation}
 where $\Delta_n$ is the vertex degree of $G_n$.
 In this chapter we consider sequences of vertex-transtitive graphs $(G_n) \in \mathscr{G}$. Note that $P$ and $Q$ polynomial in $k$ is enough for $(G_n)$ to be in $\mathscr{G}$. This includes the $d$-dimensional square lattices.
@@ -208,12 +209,13 @@ For each vertex $i \in V$, define indicators
 	In this section we use Corollary \ref{cor:nd bound distance prob[w=0] and e^-lambda} to prove Theorem \ref{thm:Coupling Distribution on transitive graph} by bounding $\lambda$ and showing that $\delta_1$ and $\delta_4$ go to zero as $n \rightarrow \infty$. This is done in Lemmas \ref{lem:nDlambda}, \ref{lem:delta1 goes to 0 general}, and \ref{lem:delta4 goes to 0 general}. The proofs of these require some additional lemmas concerning properties of the update histories which have been deferred to Section \ref{sec:additional lemmas nd}.
 	\begin{lemma}
 	\label{lem:nDlambda}
-		Using the above setup
+		Using the above setup, there exists a constant $C \in (0,1)$ such that
 		\begin{equation}
-			 \leq \lim_{n \rightarrow \infty} \lambda \leq n m_{t^*}
+			 C \min(\euler^{-z}, \euler^{-(1 - \beta\Delta)z}) \leq \lim_{n \rightarrow \infty} \lambda \leq \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z}).
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
+		Starting with the definition of $\lambda$, we have
 		\begin{align}
 			\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \indicator[ X_i + U_i \geq 1] \right]\\
 				&= \sum_{i = 1}^n \prob(X_i = 1) \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]\\
@@ -224,26 +226,31 @@ For each vertex $i \in V$, define indicators
 		\begin{align}
 			\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] \leq 1
 		\end{align}
-		and so $\lambda \leq n m_{t^*}$.
+		and so $\lambda \leq n m_{t^*} \leq \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})$.
 
 		By Jensen's inequality
 		\begin{align}
 			\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] &\geq \frac{1}{\expect[1 + U_i | X_i = 1]}\\
 				&= \frac{1}{1 + \expect[U_i | X_i = 1]}.
 		\end{align}
-		so in order to find a lower bound for $\lambda$ we will find an upper bound to $\expect[U_i | X_i = 1]$. Now by Lemma \ref{lem:nd X_j given X_i}, there exists a $C$ such that for small enough $\beta$,
+		so in order to find a lower bound for $\lambda$ we will find an upper bound to $\expect[U_i | X_i = 1]$. Now by Lemma \ref{lem:nd X_j given X_i}, there exists a $C_1>0$ such that for small enough $\beta$,
 		\begin{align}
 			\expect[U_i | X_i = 1] &= \sum_{j \in B_i} \prob[X_j = 1| X_i = 1]\\
 				% &= \sum_{k=1}^{\lfloor b_n \rfloor} \sum_{|j - i| = k} \prob[X_j = 1| X_i = 1]\\
-				& \leq |B_i| m_{t^*} + C\sum_{k=1}^{\lfloor b_n \rfloor} \sum_{|j - i| = k} \euler^{-k}.
+				& \leq |B_i| m_{t^*} + C_1\sum_{k=1}^{\lfloor b_n \rfloor} \sum_{|j - i| = k} \euler^{-k}.
 		\end{align}
-		From Lemmas \ref{lem:number vertices at distance k} and \ref{lem:size B_i},
+		From \eqref{eq:set valid graphs},
 		\begin{align}
-			\expect[U_i | X_i = 1] &\leq |B_i|m_{t^*} + C \sum_{k=1}^{\lfloor b_n \rfloor} P(k) \euler^{-k}\\
-			&\leq |B_i|m_{t^*} + C \sum_{k=1}^{\infty} P(k) \euler^{-k}\\
-			&=
+			\expect[U_i | X_i = 1] &\leq |B_i|m_{t^*} + C_1 \sum_{k=1}^{\lfloor b_n \rfloor} P_n(k) \euler^{-k}\\
+			&\leq |B_i|m_{t^*} + C_1 \sum_{k=1}^{\infty} P_n(k) \euler^{-k}\\
+			&= |B_i|/n + C_2
 		\end{align}
-		As $n \rightarrow \infty$, the first term vanishes and we are left with [COMPLETE]
+		for some $C_2 > 0$.
+		As $n \rightarrow \infty$, the first term vanishes and we are left with \begin{align}
+			\lambda &\geq \frac{1}{1 + C_2} n m_{t^*}\\
+				&\geq C \min(\euler^{-z}, \euler^{-(1 - \beta\Delta)z}) 
+		\end{align}
+		for some $C \in (0, 1)$.
 	\end{proof}
 
 	\begin{lemma}
@@ -300,7 +307,7 @@ For each vertex $i \in V$, define indicators
 			\prob[A] &\leq \sum_{j = 1}^n \prob[\mathcal{H}_i \nsubseteq B(i, (c_n - b_n)/2) \times [0, t^*]]\\
 				&= n \prob\left[\bigcup_{u \in [0, t^*]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, (c_n - b_n)/2)\right]
 		\end{align}
-		Combining this with Lemma \ref{lem:prob history contained in ball}, and recalling our choices of $b_n = \ln(L)$ and $c_n = \ln(L)^2$ we get that
+		Combining this with Lemma \ref{lem:prob history contained in ball}, and recalling our choices of $b_n = \ln(n)$ and $c_n = \ln(n)^2$ we get that
 		\begin{align}
 			\delta_1 &\leq 4 n^2 (|B_i| + 1) \exp(t^* \Delta - \ln\Delta(c_n - b_n)/2)\\
 			&\leq 4n^{2 + \Delta/(1 - \beta \Delta)}(|B_i| + 1)\exp(\Delta z) \exp(-\ln \Delta (c_n - b_n)/2)
@@ -347,7 +354,7 @@ For each vertex $i \in V$, define indicators
 		\begin{equation}
 			C_z = \max(\euler^{-z}, \euler^{-(1 - \beta \Delta)z}).
 		\end{equation}
-		Now from Lemmas \ref{lem:size B_i} and \ref{lem:size C_i}, the second term above vanishes as $n \rightarrow \infty$. So we turn our attention to the first term. From Lemma \ref{lem:nd X_j given X_i}, there exists a $C > 0$ such that for small enough $\beta$,
+		Now from \eqref{eq:set valid graphs}, the second term above vanishes as $n \rightarrow \infty$. So we turn our attention to the first term. From Lemma \ref{lem:nd X_j given X_i}, there exists a $C > 0$ such that for small enough $\beta$,
 		\begin{align}
 			\expect[Z_i | X_i = 1] &= \sum_{j \in C_i} \prob[X_j = 1 | X_i = 1]\\
 				% &= \sum_{k = \lfloor b_n \rfloor + 1}^{\lfloor c_n \rfloor} \sum_{j: |i - j| = k} \prob[X_j = 1 | X_i = 1]\\
@@ -574,27 +581,27 @@ For each vertex $i \in V$, define indicators
 	% 	\end{align}
 	% \end{proof}
 
-	\begin{lemma}
-		\label{lem:number vertices at distance k}
-		The number of vertices at distance $k$ on a degree $\Delta$ transitive graph is
-		\begin{equation}
-			P(k) = ???
-		\end{equation}
-	\end{lemma}
-	\begin{lemma}
-		\label{lem:size B_i}
-		The size of $B_i$ is bounded by 
-		\begin{equation}
-			|B_i| \leq b_n P(b_n)
-		\end{equation}
-	\end{lemma}
-	\begin{lemma}
-		\label{lem:size C_i}
-		The size of $C_i$ is bounded by 
-		\begin{equation}
-			|C_i| \leq c_nP(c_n)
-		\end{equation}
-	\end{lemma}
+	% \begin{lemma}
+	% 	\label{lem:number vertices at distance k}
+	% 	The number of vertices at distance $k$ on a degree $\Delta$ transitive graph is
+	% 	\begin{equation}
+	% 		P(k) = ???
+	% 	\end{equation}
+	% \end{lemma}
+	% \begin{lemma}
+	% 	\label{lem:size B_i}
+	% 	The size of $B_i$ is bounded by 
+	% 	\begin{equation}
+	% 		|B_i| \leq b_n P(b_n)
+	% 	\end{equation}
+	% \end{lemma}
+	% \begin{lemma}
+	% 	\label{lem:size C_i}
+	% 	The size of $C_i$ is bounded by 
+	% 	\begin{equation}
+	% 		|C_i| \leq c_nP(c_n)
+	% 	\end{equation}
+	% \end{lemma}
 	% \begin{lemma}
 	% 	On the $d$ dimensional lattice,
 	% 	\begin{equation}
