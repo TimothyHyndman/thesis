@@ -12,9 +12,14 @@ Our result partially confirms the conjecture by \citeauthor{Collevecchio2017-nq}
 
 [MENTION ONE LEMMA WHERE WE NEED BETA SMALL IS VERY SIMILAR TO THEIR LEMMA?]
 
-[WHAT GRAPHS ARE WE ON]
+To state the main result we first must define the graphs on which it is valid. Let $(G_{n})$ be a sequence of vertex-transitive graphs with $n$ vertices. Let $P_n(k)$ denote the number of vertices at distance $k$ from a vertex $i$ in $G_n$ and let $Q_n(k)$ denote the number of vertices at distance $k$ or less from a vertex $i$ in $G_n$. Define
+\begin{equation}
+	\mathscr{G} = \left\{(G_n) : \forall n \Delta_n = C_1, Q_n(\ln^2(n))/n \rightarrow 0, \lim_{n \rightarrow \infty}\sum_{k = 1}^\infty P_n(k)\euler^{-k} = C_2, C_1, C_2 \in \mathbb{R}\right\}
+\end{equation}
+where $\Delta_n$ is the vertex degree of $G_n$.
+In this chapter we consider sequences of vertex-transtitive graphs $(G_n) \in \mathscr{G}$. Note that $P$ and $Q$ polynomial in $k$ is enough for $(G_n)$ to be in $\mathscr{G}$. This includes the $d$-dimensional square lattices.
 
-To state the main result we first must define a couple of quantities. Firstly, the \emph{magnetization at vertex $i$ at time $t$} is
+We now define a couple of quantities. Firstly, the \emph{magnetization at vertex $i$ at time $t$} is
 \begin{equation}
 	 	m_t(i) = \expect[\mathcal{T}_t[i]]
 \end{equation} 
@@ -29,7 +34,7 @@ which is around the time it takes for the top and bottom chains to couple.
 
 \begin{theorem}
 \label{thm:Coupling Distribution on transitive graph}
-	Let $(G_n)$ be a family of vertex-transitive graphs, $G_n = (V, E)$ with $|V| = n$ vertices. Let $T_n$ be the coupling time for the continuous-time Ising heat-bath dynamics for the zero-field ferromagnetic Ising model on $G_n$. Then for any small enough inverse-temperature $\beta$,
+	Let $(G_n) \in \mathscr{G}$ be a sequence of vertex-transitive graphs, $G_n = (V, E)$ with $|V| = n$ vertices. Let $T_n$ be the coupling time for the continuous-time Ising heat-bath dynamics for the zero-field ferromagnetic Ising model on $G_n$. Then for any small enough inverse-temperature $\beta$,
 	\begin{equation}
 		\lim_{n \rightarrow \infty} \prob[T_n < z + t_c(n)] = \euler^{-\euler^{-z}}.
 	\end{equation}
