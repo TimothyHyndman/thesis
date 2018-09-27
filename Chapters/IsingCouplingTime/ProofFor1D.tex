@@ -352,8 +352,8 @@
 		\end{align}
 		Combining this with Lemma \ref{lem:1D prob history contained in ball}, and recalling our choices of $b_n = \ln(n)$ and $c_n = \ln(n)^2$ we get that
 		\begin{align}
-			\delta_1 &\leq 4n^2(2\lfloor b_n\rfloor + 1) \exp\left((z + \ln n)/\theta - \ln 2(c_n - b_n) /2 \right)\\
-			&\leq 8 \exp(z/\theta) n^{3+ 1/\theta + \ln2/2 -\ln n \ln 2/ 2}
+			\delta_1 &\leq 8n^2(2\lfloor b_n\rfloor + 1) \exp\left((z + \ln n)/\theta - \ln 2(c_n - b_n) /2 \right)\\
+			&\leq 16 \exp(z/\theta) n^{3+ 1/\theta + \ln2/2 -\ln n \ln 2/ 2}
 		\end{align}
 		which goes to $0$ as $n \rightarrow \infty$.
 	\end{proof}
@@ -431,7 +431,7 @@
 	\label{lem:1D prob history contained in ball}
 		Consider the update histories on the cycle.	Let $B(i, l)$ indicate the set of vertices at integer distance $l$ or smaller from vertex $i$. The probability that the history of vertex $i$ escapes $B(i,l)$ in time $s$ is bounded by
 		\begin{equation}
-			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] \leq \exp\left(s - l \ln 2 \right).
+			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] \leq 2\exp\left(s - l \ln 2 \right).
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
@@ -457,7 +457,7 @@
 		\end{align}
 		Choosing $t = \ln 2$,
 		\begin{align}
-			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] &\leq \exp\left(s - l \ln 2 \right).%\\
+			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] &\leq 2\exp\left(s - l \ln 2 \right).%\\
 			% &\leq \exp\left(s \Delta^2 - l \ln \Delta \right).
 		\end{align}
 	\end{proof}
