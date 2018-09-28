@@ -367,7 +367,7 @@ For each vertex $i \in V$, define indicators
 
 \section{Additional Lemmas}
 \label{sec:additional lemmas nd}
-	The first of our additional Lemmas comes from \cite[Lemma 3.1]{Lubetzky2014-po}. We have made our statement of the lemma slightly more precise and so we have rewritten both the lemma and proof out here along with our modifications. In particular, we have specified precisely how small $\beta$ must be for the statement to hold.
+	The first of our additional Lemmas comes from \cite[Lemma 3.1]{Lubetzky2015-po}. We have made our statement of the lemma slightly more precise and so we have rewritten both the lemma and proof out here along with our modifications. In particular, we have specified precisely how small $\beta$ must be for the statement to hold.
 
 	The Lemma concerns two quantities, $\chi(\hist_A)$ and $\mathcal{L}(\hist_A)$ which in some sense measure the horizontal and vertical size of $\hist_A$ respectively. 
 	Define
@@ -380,7 +380,7 @@ For each vertex $i \in V$, define indicators
 	\end{equation}
 	which is the sum of the lengths of all the temporal edges in $\hist_i$. 
 
-	\begin{lemma}[\cite{Lubetzky2014-po}]
+	\begin{lemma}[\cite{Lubetzky2015-po}]
 		\label{lem:full submartingale thing}
 		For any $0 \leq \eta < 1$, $\lambda \in \mathbb{R}$, $\alpha > -\ln(1 - \eta)$, if
 		\begin{equation}
@@ -706,22 +706,33 @@ For each vertex $i \in V$, define indicators
 	% 			\prob[\mathcal{H}_i(0) \nsubseteq B(i,l)] \leq \frac{\exp(z \Delta^2)}{n}
 	% 	\end{equation}
 	% \end{corollary}
-	[IF WE CAN SOMEHOW SHOW THAT $\prob[\hist_i \cap \hist_j \neq \emptyset|X_1 =1] \leq \prob[\bar{\hist}_i \cap\hist_j]$ THEN THIS GIVES US A BIGGER RANGE OF TEMPERATURES.]
-	\begin{lemma}
-		blah
-	\end{lemma}
-	\begin{proof}
-		Write $\bar{\mathcal{H}}_i$ for the history at $i$ but it only has branching updates at rate 1. Write $d_j$ for the time of death of history $j$. Let $k = |i-j|$.
-		\begin{align}
-			\prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j) &= \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) \prob(d_j < c(k)) \notag \\
-			&\phantom{=}+ \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j \geq c(k)) \prob(d_j \geq c(k))\\
-			&\leq \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) + \prob(d_j \geq c(k))\\
-			&\leq \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) + \euler^{-(1 - \beta \Delta) c(k)}\\
-			&\leq 2\prob(\bar{\mathcal{H}}_i(t^* - c(k)) \nsubseteq B(i, k/2)) + \euler^{-(1 - \beta \Delta) c(k)}\\
-			&\leq \exp\left(c(k) \Delta^2 - k/2 \ln \Delta \right) + \euler^{-(1 - \beta \Delta) c(k)}\\
-		\end{align}
-		Choosing $c(k) = \ln(k)^2$ works so long as $\beta \Delta < 1$.
-	\end{proof}
+
+
+	%--------------------------------------------------------------------------
+	% COULD USE THIS BIT MAYBE BUT NEED TO PROVE SOME STUFF TO GET IT TO WORK
+	%--------------------------------------------------------------------------
+
+	% [IF WE CAN SOMEHOW SHOW THAT $\prob[\hist_i \cap \hist_j \neq \emptyset|X_1 =1] \leq \prob[\bar{\hist}_i \cap\hist_j]$ THEN THIS GIVES US A BIGGER RANGE OF TEMPERATURES.]
+	% \begin{lemma}
+	% 	blah
+	% \end{lemma}
+	% \begin{proof}
+	% 	Write $\bar{\mathcal{H}}_i$ for the history at $i$ but it only has branching updates at rate 1. Write $d_j$ for the time of death of history $j$. Let $k = |i-j|$.
+	% 	\begin{align}
+	% 		\prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j) &= \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) \prob(d_j < c(k)) \notag \\
+	% 		&\phantom{=}+ \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j \geq c(k)) \prob(d_j \geq c(k))\\
+	% 		&\leq \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) + \prob(d_j \geq c(k))\\
+	% 		&\leq \prob(\bar{\mathcal{H}}_i \cap \mathcal{H}_j | d_j < c(k)) + \euler^{-(1 - \beta \Delta) c(k)}\\
+	% 		&\leq 2\prob(\bar{\mathcal{H}}_i(t^* - c(k)) \nsubseteq B(i, k/2)) + \euler^{-(1 - \beta \Delta) c(k)}\\
+	% 		&\leq \exp\left(c(k) \Delta^2 - k/2 \ln \Delta \right) + \euler^{-(1 - \beta \Delta) c(k)}\\
+	% 	\end{align}
+	% 	Choosing $c(k) = \ln(k)^2$ works so long as $\beta \Delta < 1$.
+	% \end{proof}
+
+	%--------------------------------------------------------------------------
+	%--------------------------------------------------------------------------
+
+
 
 
 	% \begin{lemma}
@@ -904,7 +915,16 @@ For each vertex $i \in V$, define indicators
 	% 	\end{equation}
 	% \end{proof}
 
-	This proof is closely based on that in \cite{Lubetzky2014-po}.
+	Lemma \ref{lem: prob intersect given X_i = 1} contains some similarities to the proof contained in \cite[Lemma 2.1]{Lubetzky2015-po}. Indeed, the quantity 
+	\begin{equation}
+		\prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}]
+	\end{equation}
+	which appears in \eqref{eq:prob in red star} below, is equivalent to the  expression
+	\begin{equation}
+		\prob[A \in \mathrm{RED}_A^*]
+	\end{equation}
+	when $A = \{i, j\}$ using the notation of that paper. We use their method to bound this probability, but add some extra steps for clarity.
+	
 	\begin{lemma}
 		\label{lem: prob intersect given X_i = 1}
 		Let $i$ and $j$ be the indices of two vertices separated by distance $k$. Then there exists a $C$ such that for sufficiently small $\beta$,
@@ -919,6 +939,7 @@ For each vertex $i \in V$, define indicators
 			&\leq m_{t^*}^{-1} \prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \{X_i = 1\}]\\
 			&\leq  m_{t^*}^{-1} \prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left(\{X_i = 1\} \cup \{X_j = 1\}\right)]\\
 			&= m_{t^*}^{-1} \prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}]
+			\label{eq:prob in red star}
 		\end{align}
 		since
 		\begin{equation}
