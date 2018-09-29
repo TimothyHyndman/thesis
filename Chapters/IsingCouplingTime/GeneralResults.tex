@@ -39,8 +39,17 @@ which is around the time it takes for the top and bottom chains to couple.
 \label{thm:Coupling Distribution on transitive graph}
 	Let $(G_n) \in \mathscr{G}$ be a sequence of vertex-transitive graphs, $G_n = (V, E)$ with $|V| = n$ vertices. Let $T_n$ be the coupling time for the continuous-time Ising heat-bath dynamics for the zero-field ferromagnetic Ising model on $G_n$. Then for any small enough inverse-temperature $\beta$,
 	\begin{equation}
-		\lim_{n \rightarrow \infty} \prob[T_n < z + t_c(n)] = \euler^{-\euler^{-z}}.
+		\lim_{n \rightarrow \infty} \prob[T_n < z + t_c(n)] = \euler^{-C_\beta\euler^{-C_z z}}
 	\end{equation}
+	for some
+	\begin{equation}
+		C_\beta \in \left(0,1\right]
+	\end{equation}
+	and
+	\begin{equation}
+		C_z \in \left[1 - \beta \Delta, 1\right].
+	\end{equation}
+
 \end{theorem}
 
 The proof of Theorem \ref{thm:Coupling Distribution on transitive graph} will be given in Section \ref{sec:proof thm coupling nd} after the essential preliminaries are presented. In Section \ref{sec:information percolation in higher dimensions} we describe an alternative construction of the histories that can sometimes be easier to work with. Then in Section \ref{sec:nd problem setup}, we outline the overall approach to the proof. The method is very similar to the method used in Chapter \ref{Ch:1D} but there are some additional problems that are addressed. Finally, we defer results directly concerning the update histories to Section \ref{sec:additional lemmas nd}.
@@ -251,6 +260,13 @@ For each vertex $i \in V$, define indicators
 				&\geq C \min(\euler^{-z}, \euler^{-(1 - \beta\Delta)z}) 
 		\end{align}
 		for some $C \in (0, 1)$.
+	\end{proof}
+
+	\begin{lemma}
+		[LAMBDA CONVERGES]
+	\end{lemma}
+	\begin{proof}
+		
 	\end{proof}
 
 	\begin{lemma}

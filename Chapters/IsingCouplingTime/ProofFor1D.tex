@@ -226,9 +226,9 @@
 		\begin{equation}
 			\lim_{n \rightarrow \infty} \lambda = C_\theta \euler^{-z}
 		\end{equation}
-		where
+		for some
 		\begin{equation}
-			\frac{1}{2\sqrt{\frac{4}{\theta} - 1} - 1} \leq C_\theta \leq 1.
+			C_\theta \in \left[\frac{1}{2\sqrt{\frac{4}{\theta} - 1} - 1}, 1\right].
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
@@ -268,15 +268,18 @@
 		\begin{align}
 			\liminf_{n \rightarrow \infty} \expect \left[\frac{1}{1 + U_i}| X_i = 1\right] \geq \frac{1}{2\sqrt{\frac{4}{\theta} - 1} - 1}.
 		\end{align}
-
-		To complete the proof, we need to show that the limit of 
-		\begin{equation}
-			\expect \left[\frac{1}{1 + U_i}| X_i = 1\right]
-		\end{equation}
-		as $n \rightarrow \infty$ exists. Since we already have bounds, it is sufficient to show that it is monotonic.
-
+	\end{proof}
+	
+	To complete the proof, we need to show that the limit of 
+	\begin{equation}
+		\expect \left[\frac{1}{1 + U_i}| X_i = 1\right]
+	\end{equation}
+	as $n \rightarrow \infty$ exists. Since we already have bounds, it is sufficient to show that it is monotonic.
+	\begin{lemma}
+		[LAMBDA CONVERGES]
+	\end{lemma}
+	\begin{proof}
 		[NEED TO SHOW THAT THING ACTUALLY CONVERGES]
-
 	\end{proof}
 
 	The next two lemmas prove that $\delta_1$ and $\delta_4$ go to zero as $n \rightarrow \infty$. Since from Lemma \ref{lem:1Dlambda} we know that $\lambda$ is bounded above by a constant, this is enough for \eqref{eq:bound distance prob[w=0] and e^-lambda} to show that 
