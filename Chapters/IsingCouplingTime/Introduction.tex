@@ -7,16 +7,16 @@
 
 \section{The Ising Model}
 \label{sec:Ising}
-	The Ising model is named after Ernst Ising who studied it in his 1924 thesis \cite{Ising1925-nd} under the supervision of Wilhelm Lenz who invented the model \cite{Lenz1920-bn}. It was originally motivated by the phenomenon of ferromagnetism but it has since been re-interpreted to apply to numerous other situations in both physics and other fields \footnote{See \cite[notes of Section 1.4.2]{Friedli2017-xm} for a list of references concerning this.}.
+	The Ising model is named after Ernst Ising who studied it in his 1924 thesis \cite{Ising1925-nd} under the supervision of Wilhelm Lenz, who introduced the model in \cite{Lenz1920-bn}. It was originally motivated by the phenomenon of ferromagnetism but it has since found application to apply to numerous other situations in both physics and other fields \footnote{See \cite[notes of Section 1.4.2]{Friedli2017-xm} for a list of references concerning this.}.
 
-	The Ising model has enjoyed a prominent position in the statistical physics literature. This is largely due to the existence of a phase transition, a sharp transition in the large scale behaviour of the model as a parameter moves past a critical value. The transition was first shown to exist by Rudolph Peierls \cite{Peierls1936-pu} in what was the first proof of the existence of a phase transition for any model in statistical mechanics.
+	The Ising model occupies a prominent position in the statistical physics literature. This is largely due to the existence of a phase transition; a sharp transition in the large scale behaviour of the model as a parameter crosses a critical value. The transition was first shown to exist by Rudolph Peierls \cite{Peierls1936-pu} in what was the first proof of the existence of a phase transition for any model with purely local interactions in statistical mechanics.
 	Additionally, the Ising model is both relatively simple, and also mathematically tractable in some non-trivial cases \cite{Onsager1944-li}. These qualities are rare among models with a phase transition and so the Ising model has become somewhat of a staple for both studying phase transitions and testing new statistical mechanics techniques.
 
 	The model is a probability distribution on spin configurations - assignments of $+1$ and $-1$ spins to each vertex in a finite graph $G = (V, E)$. The set of all possible configurations is
 	\begin{equation}
 		\Omega = \{-1, +1\}^V
 	\end{equation}
-	and for a particular configuration, $\sigma \in \Omega$, we refer to the spin of a particular vertex $i \in V$ with $\sigma[i]$. Each configuration has an associated energy, given by 
+	and for a particular configuration, $\sigma \in \Omega$, we refer to the spin of a particular vertex $i \in V$ as $\sigma[i]$. Each configuration has an associated energy, given by 
 	\begin{equation}
 		H_{G, \beta, h}(\sigma) = -\beta \sum_{ij \in E} \sigma[i] \sigma[j] - h\sum_{i \in V} \sigma[i]
 	\end{equation}
@@ -37,7 +37,7 @@
 	\label{sec:the phase transition}
 	An in depth study of the Ising phase transition and its associated critical temperature will not be needed for this work. However, we will still wish to refer to it occasionally and so here we give a workable description of the phase transition on lattices.
 
-	Consider the Gibbs measure with zero-field \eqref{eq:gibbsmeasure} in the limits $\beta \downarrow 0$ and $\beta \uparrow \infty$. It is easy to see that in the former limit, the measure is uniform across all configurations and in the latter limit, the measure assigns all weight to the constant configurations $\sigma^- = (-1, -1, \dots, -1)$ and $\sigma^+ = (+1, +1, \dots, +1)$. This leads to the following overly simplistic description of the phase transition. It is the change in distribution that occurs as we increase the temperature; from distributions concentrated on states whose spins mostly agree, to distributions producing states which have roughly equal numbers of plus and minus spins.
+	Consider the Gibbs measure with zero-field \eqref{eq:gibbsmeasure} in the limits $\beta \downarrow 0$ and $\beta \uparrow \infty$. It is easy to see that in the former limit, the measure is uniform across all configurations and in the latter limit, the measure assigns all weight to the constant configurations $\sigma^- = (-1, -1, \dots, -1)$ and $\sigma^+ = (+1, +1, \dots, +1)$. This leads to the following overly simplistic description of the phase transition. It is an abrupt change in distribution that occurs as we increase the temperature; from distributions concentrated on states whose spins mostly agree, to distributions producing states which have roughly equal numbers of plus and minus spins.
 
 	To be slightly more concrete we define quantities called the magnetization and magnetization density. The \emph{magnetization} on a volume $\Lambda \subseteq V$ is defined as 
 	\begin{equation}
@@ -45,31 +45,31 @@
 	\end{equation}
 	Normalizing this gives the \emph{magnetization density}, $M_\Lambda(\sigma)/|\Lambda|$. On the $d$-dimensional torus with side length $L$, $G(L) = (\mathbb{Z}/L\mathbb{Z})^d$, the quantity
 	\begin{equation}
-		L(\beta) = \lim_{L \rightarrow \infty} \expect_\beta \left|\frac{M_{G(L)}(\sigma)}{|G(L)|} \right|
+		m(\beta) = \lim_{L \rightarrow \infty} \expect_\beta \left|\frac{M_{G(L)}(\sigma)}{|G(L)|} \right|
 		\label{eq:limitmagnetizationdensity}
 	\end{equation}
-	depends on the inverse temperature $\beta$. When $d = 1$, $L(\beta) = 0$ for any $\beta$ and there is no phase transition. However, when $d > 1$, there exists some critical $\beta_c(d)$ such that $L(\beta) = 0$ for $\beta < \beta_c(d)$ and $L(\beta) > 0$ for $\beta > \beta_c(d)$ \cite{Friedli2017-xm}. This $\beta_c(d)$ is the critical inverse temperature at which we observe a phase transition.
+	depends on the inverse temperature $\beta$. When $d = 1$, $m(\beta) = 0$ for any $\beta$ and there is no phase transition. However, when $d > 1$, there exists some critical $\beta_c(d)$ such that $m(\beta) = 0$ for $\beta < \beta_c(d)$ and $m(\beta) > 0$ for $\beta > \beta_c(d)$ \cite{Friedli2017-xm}. This $\beta_c(d)$ is the critical inverse temperature at which we observe a phase transition.
 
 	% On most graphs [FIND OUT WHICH] the Ising model undergoes a phase transition at a critical inverse temperature $\beta_c = \beta_c(G)$ that is dependent on the graph. Roughly speaking, for $\beta < \beta_c$ (the high-temperature regime), the correlation of spins dies off quickly with the distance between them and for $\beta > \beta_c$ (the low-temperature regime), spins remain correlated at a large distance.
 
 	% [EXTEND]
 
 \section{Coupling from the Past}
-	One of the primary concerns regarding the Ising model is how to efficiently sample from the Gibbs measure. Calculating the normalizing constant for \eqref{eq:gibbsmeasure}, known as the partition function, is a \#P-complete problem \cite{Jerrum1993-ii}. As such a direct approach to sampling is computationally intractable and so other methods must be employed instead. One such method is Markov Chain Monte Carlo (MCMC). This involves constructing a Markov chain whose states are elements of $\Omega$ and whose stationary distribution is given by \eqref{eq:gibbsmeasure}. One can then obtain a sample by running this Markov chain for long enough that the output has distribution sufficiently close to \eqref{eq:gibbsmeasure}.
+	One of the central challenges regarding the Ising model is how to efficiently sample from the Gibbs measure. Calculating the normalizing constant for \eqref{eq:gibbsmeasure}, known as the partition function, is a \#P-complete problem \cite{Jerrum1993-ii}. As such a direct approach to sampling is expected to be computationally intractable in general, and so other methods must be employed instead. One such method is Markov Chain Monte Carlo (MCMC). This involves constructing a Markov chain whose states are elements of $\Omega$ and whose stationary distribution is given by \eqref{eq:gibbsmeasure}. One can then obtain a sample by running this Markov chain for long enough that the output has distribution sufficiently close to \eqref{eq:gibbsmeasure}.
 	% The zero-field ferromagnetic Ising model on finite graph $G = (V, E)$ at 
 	% inverse temperature $\beta \geq 0$ has Gibbs measure
 	%
-	One difficulty in using MCMC is that, initially, one does not know how long to run the chain for. In principal, bounds on this time can be achieved, but in practise, proving these bounds can be very challenging.
+	One difficulty in using MCMC is that one does not know a priori what constitutes "long enough". In principal, bounds on this time can be obtained, but in practise, proving these bounds can be very challenging.
 
-	An alternative to MCMC was introduced by Propp and Wilson called Coupling from the Past (CFTP) \cite{Propp1996-cf}. Unlike MCMC, CFTP not only has an automatically determined running time, but it has the additional advantage of outputting exact samples from the stationary distribution. This does not come without a cost - CFTP has a random running time. Therefore, a key question towards evaluating the effectiveness of CFTP is understanding the distribution of its running time, that is, the \emph{coupling time}.
+	An alternative to classical MCMC called Coupling from the Past (CFTP) was introduced by Propp and Wilson \cite{Propp1996-cf}. Unlike MCMC, CFTP not only has an automatically determined running time, but it has the additional advantage of outputting exact samples from the stationary distribution. This does not come without a cost - CFTP has a random running time. Therefore, a key question towards evaluating the effectiveness of CFTP is understanding the distribution of its running time, that is, the \emph{coupling time}.
 
-	In Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults}, we will investigate the coupling time for the Ising heat-bath Glauber dynamics, both on the cycle, at any temperature, in Chapter \ref{Ch:1D}, and on any vertex transitive graph, at sufficiently high temperatures, in Chapter \ref{Ch:GeneralResults}. Our main result in each chapter will be proving that, when appropriately scaled, the coupling time essentially converges to a Gumbel distribution as the size of the graph increases. 
+	In Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults}, we will investigate the coupling time for the Ising heat-bath Glauber dynamics, both on the cycle, at any temperature, in Chapter \ref{Ch:1D}, and on any vertex transitive graph, at sufficiently high temperatures, in Chapter \ref{Ch:GeneralResults}. Our main result in each chapter will be proving that, when appropriately scaled, the distribution of the coupling time essentially converges to a Gumbel as the size of the graph increases. 
 
 	\subsection{Ising heat-bath Glauber dynamics}
 	\label{sec:heat-bath glauber dynamics definition}
 	The continuous-time heat-bath Glauber dynamics for the Ising model is a Markov chain whose states are elements of $\Omega$ and whose stationary distribution is given by \eqref{eq:gibbsmeasure}. For a given graph $G = (V, E)$, and a given inverse temperature, $\beta$, we can describe the dynamics as follows. 
 
-	Initialize every vertex in $V$ with a spin (for example, we could start in the all-plus configuration). To each vertex in $V$ we give an i.i.d.\ rate-one Poisson clock. Define the probability 
+	Initialize every vertex in $V$ with a spin (for example, we could start in the all-plus configuration). To each vertex in $V$ we give an independent rate-one Poisson clock. For $\sigma \in \Omega$ and $i \in V$, define the probability 
 	\begin{equation}
 		p_i(\sigma) = \frac{\euler^{\beta S_i(\sigma)}}{\euler^{\beta S_i(\sigma)} + \euler^{-\beta S_i(\sigma)}}
 		\label{eq:define p_i}
@@ -80,9 +80,13 @@
 	\end{equation}
 	is the sum of the spins of the neighbours of $i$, and $j \sim i$ denotes that $j$ is connected to $i$ with some edge $ij \in E$. Let $\sigma_t$ denote the spin configuration at time $t$. When the clock of vertex $i$ rings at some time $t$, we update $\sigma_t[i]$ to $+1$ with probability $p_i(\sigma_t)$, and to $-1$ otherwise.
 
+	The probability $p_i(\sigma)$ is constructed so that it gives the probability that vertex $i$ is $+1$ if we sample it from $\pi$ \eqref{eq:gibbsmeasure} conditioned on every other vertex having its spin fixed by $\sigma$. Note that this causes the dynamics to have $\pi$ as its stationary distribution.
+
 	\subsection{The Coupling Time}
 	\label{sec:the coupling time}
-	We now describe the two coupled chains from which we define the coupling time of the Ising heat-bath Glauber dynamics. In order to do this, it will prove convenient to use a random mapping representation for the jump process. This will also help us outline an implementation of CFTP for our coupling.
+	[THIS NEEDS A BIT OF REWRITING. DEFINE BOTH DISCRETE AND CONTINUOUS RMR. TALK ABOUT BOTH WAYS OF DOING THIS. GENERATE $V_K$ SEQUENCE VIA POISSON CLOCKS. START WITH DISCRETE, THEN USUAL, THEN N CLOCKS.]
+
+	We now describe the two coupled chains from which we define the coupling time of the Ising heat-bath Glauber dynamics. In order to do this, we introduce a random mapping representation for the jump process. This will also help us outline an implementation of CFTP.
 
 	Define $f: \Omega \times V \times [0,1] \mapsto \Omega$ via $f(\sigma, i, u) = \sigma'$ where $\sigma'[j] = \sigma[j]$ for $j \neq i$ and
 	\begin{equation}
@@ -115,59 +119,15 @@
 	This is the main object of interest for our analysis. Note that the coupling time is not just a property of the Ising heat-bath process, but also of the coupling we have chosen. In Section \ref{sec:information percolation on the cycle} we will make a change to the coupling we use to make the analysis easier. Some care will need to be taken to verify that the coupling time is not affected by this change.
 
 	\subsection{Equivalence of Discrete and Continuous Coupling Time}
-	So far we have stated that the running time of CFTP has the same distribution as the coupling time. In fact, we have glossed over one important detail. Namely, CFTP is exclusively run in discrete time, and our coupling time is defined by the continuous time dynamics. Therefore, for our motivation to be reasonable, we would like to show some sort of equivalence between the distributions of the discrete and continuous coupling times. We do this via Claim \ref{claim:discrete vs continuous distributions} which first requires the following Lemma.
+	So far we have stated that the running time of CFTP has the same distribution as the coupling time. In fact, we have glossed over one important detail. Namely, CFTP is exclusively run in discrete time, and our coupling time is defined by the continuous time dynamics. Therefore, for our motivation to be reasonable, we would like to show some sort of equivalence between the distributions of the discrete and continuous coupling times. We do this via Proposition \ref{claim:discrete vs continuous distributions}. 
 
-	\begin{lemma}
-		\label{lem:T(k) bound}
-		Let $T(k)$ be the sum of $k$ i.i.d. rate $\lambda$ exponentials. For all $0 < \epsilon < 1$,
-		\begin{equation}
-			\prob\left(\left|\frac{T(k) \lambda}{k} - 1\right| \geq \epsilon \right) \leq 2 \exp\left(-k \epsilon^2 /4\right)
-		\end{equation}
-	\end{lemma}
-	\begin{proof}
-		\begin{align}
-			\prob\left(\left|\frac{T(k) \lambda}{k} - 1\right| \geq \epsilon \right) &= \prob\left(\frac{T(k) \lambda}{k} \leq 1 - \epsilon \right) + \prob\left(\frac{T(k) \lambda}{k} \geq 1 + \epsilon \right)
-		\end{align}
-		Since $T(k)$ is the sum of $k$ i.i.d. rate $\lambda$ exponentials, its moment generating function is 
-		\begin{align}
-			M_k(t) &= \left(\frac{\lambda}{\lambda - t}\right)^k, &t < \lambda.
-		\end{align}
-		Using a Chernoff bound, for all $0 <t < \lambda$,
-		\begin{align}
-			\prob\left(\frac{T(k) \lambda}{k} \geq 1  + \epsilon\right) &= \prob\left(T(k) \geq \frac{k}{\lambda}(1  + \epsilon)\right)\\
-			&\leq \left(\frac{\lambda}{\lambda - t}\right)^k \exp\left(-\frac{t k}{\lambda}(1  + \epsilon)\right)\\
-			&= \exp\left(k\left(\ln(\lambda/(\lambda - t)) - t(1 + \epsilon)/\lambda\right)\right).
-		\end{align}
-		Taking $t = \lambda - \lambda/(1+\epsilon)$,
-		\begin{align}
-			\prob\left(\frac{T(k) \lambda}{k} \geq 1  + \epsilon\right) &\leq \exp\left(k(\log(1 + \epsilon) - \epsilon)\right).
-		\end{align}
-		Similarly, for all $t < 0$,
-		\begin{align}
-			\prob\left(\frac{T(k) \lambda}{k} \leq 1 - \epsilon \right) &= \prob\left(T(k) \leq \frac{k}{\lambda}(1  - \epsilon)\right)\\
-			&\leq \left(\frac{\lambda}{\lambda - t}\right)^k \exp\left(-\frac{t k}{\lambda}(1  - \epsilon)\right)\\
-			&= \exp\left(k\left(\ln(\lambda/(\lambda - t)) - t(1 - \epsilon)/\lambda\right)\right).
-		\end{align}
-		Taking $t = \lambda - \lambda/(1-\epsilon)$,
-		\begin{align}
-			\prob\left(\frac{T(k) \lambda}{k} \leq 1  - \epsilon\right) &\leq \exp\left(k(\log(1 - \epsilon) + \epsilon)\right).
-		\end{align}
-		Overall,
-		\begin{align}
-			\prob\left(\left|\frac{T(k) \lambda}{k} - 1\right| \geq \epsilon \right) &\leq \exp\left(k(\log(1 - \epsilon) + \epsilon)\right) + \exp\left(k(\log(1 + \epsilon) - \epsilon)\right)\\
-			&\leq 2 \exp\left(k (\log(1 + \epsilon) - \epsilon )\right)\\
-			&\leq 2 \exp\left(-k \epsilon^2 /4\right)
-		\end{align}
-		for $0 < \epsilon < 1$.
-	\end{proof}
-
-	\begin{claim}
+	\begin{proposition}
 	\label{claim:discrete vs continuous distributions}
-		Let $(N_n)_{n \in \mathbb{N}}$ be a sequence of positive random integers, and $(m_n)_{n \in \mathbb{N}}$ be a non-decreasing sequence of integers such that $N_n \geq m_n$ for all $n$ and $\lim_{n \rightarrow \infty} m_n = \infty$.	Define $T(n)$ be the random time it takes for a rate $\lambda$ Poisson clock to go off $n$ times (this is the time it takes for $n$ updates to occur in a continuous-time Markov Chain).
+		Let $(N_n)_{n \in \mathbb{N}}$ be a sequence of positive integer-valued random variables, and $(m_n)_{n \in \mathbb{N}}$ be a non-decreasing sequence of integers such that $N_n \geq m_n$ for all $n$ and $\lim_{n \rightarrow \infty} m_n = \infty$. Let $T(n)$ be the random time it takes for a rate $\lambda$ Poisson clock to go off $n$ times. That is, $T(n) \sim \mathrm{Erlang}(n, \lambda)$.
 
-		Let $a_n$ and $b_n$ be positive deterministic sequences such that $b_n / a_n \rightarrow \infty$ and for any $c > 0$
+		Let $a_n$ and $b_n$ be positive deterministic sequences such that $b_n / a_n \rightarrow \infty$ and
 		\begin{equation}
-			\frac{m_n a_n^2}{b_n^2} - c \log\frac{b_n}{a_n} \rightarrow \infty.
+			\frac{b_n^2}{a_n^2}\log\frac{b_n}{a_n} = o(m_n).
 			\label{eq:m_n a_n b_n constraint}
 		\end{equation}
 		Define
@@ -179,7 +139,7 @@
 			Z_n = \frac{N_n - \lambda b_n}{\lambda a_n}.
 		\end{equation}
 
-		Let $X$ be a random variable which doesn't place any mass at infinity. Then $Y_n \convergedist X$ if and only if $Z_n \convergedist X$.
+		Let $X$ be a random variable with continuous distribution function. Then $Y_n \convergedist X$ if and only if $Z_n \convergedist X$.
 
 
 		% constant $C$ such that either
@@ -202,11 +162,70 @@
 		% 	\lim_{n \rightarrow \infty} \prob(N_n < \lambda w_n) = L.
 		% 	\label{eq:limit DT is L}
 		% \end{equation}
-	\end{claim}
+	\end{proposition}
+
+	To prove Proposition \ref{claim:discrete vs continuous distributions} we first require the following Lemma.
+	\begin{lemma}
+		\label{lem:T(k) bound}
+		Let $T(k)$ be the sum of $k$ i.i.d. rate $\lambda$ exponentials. For all $\epsilon > 0$,
+		\begin{equation}
+			\prob\left(\left|\frac{T(k) \lambda}{k} - 1\right| \geq \epsilon \right) \leq 2 \exp\left(-k \epsilon^2 /4\right)
+		\end{equation}
+	\end{lemma}
 	\begin{proof}
-		In order to prove either direction, it is sufficient to show that for any $\epsilon > 0$,
+	For all $\epsilon > 0$,
+		\begin{align}
+			\prob\left(\left|\frac{T(k) \lambda}{k} - 1\right| \geq \epsilon \right) &= \prob\left(\frac{T(k) \lambda}{k} \leq 1 - \epsilon \right) + \prob\left(\frac{T(k) \lambda}{k} \geq 1 + \epsilon \right).
+		\end{align}
+		Since $T(k)$ is the sum of $k$ i.i.d. rate $\lambda$ exponentials, its moment generating function is 
+		\begin{align}
+			M_k(t) &= \left(\frac{\lambda}{\lambda - t}\right)^k, &t < \lambda,
+		\end{align}
+		(see \cite[Example 21.3]{Billingsley1995-en}).
+		Using a Chernoff bound, for all $0 <t < \lambda$, $\epsilon > 0$,
+		\begin{align}
+			\prob\left(\frac{T(k) \lambda}{k} \geq 1  + \epsilon\right) &= \prob\left(T(k) \geq \frac{k}{\lambda}(1  + \epsilon)\right)\\
+			&\leq \left(\frac{\lambda}{\lambda - t}\right)^k \exp\left(-\frac{t k}{\lambda}(1  + \epsilon)\right)\\
+			&= \exp\left(k\left(\ln(\lambda/(\lambda - t)) - t(1 + \epsilon)/\lambda\right)\right).
+		\end{align}
+		Taking $t = \epsilon\lambda/(1+\epsilon)$, which for any $\epsilon > 0$ satisfies $t \in (0, \lambda)$ as required, we have that for all $\epsilon > 0$,
+		\begin{align}
+			\prob\left(\frac{T(k) \lambda}{k} \geq 1  + \epsilon\right) &\leq \exp\left(k(\log(1 + \epsilon) - \epsilon)\right).
+		\end{align}
+		Similarly, for all $t < 0$, $\epsilon > 0$,
+		\begin{align}
+			\prob\left(\frac{T(k) \lambda}{k} \leq 1 - \epsilon \right) &= \prob\left(T(k) \leq \frac{k}{\lambda}(1  - \epsilon)\right)\\
+			&\leq \left(\frac{\lambda}{\lambda - t}\right)^k \exp\left(-\frac{t k}{\lambda}(1  - \epsilon)\right)\\
+			&= \exp\left(k\left(\ln(\lambda/(\lambda - t)) - t(1 - \epsilon)/\lambda\right)\right).
+		\end{align}
+		Since $T(k) > 0$ almost surely we have
+		\begin{equation}
+			\prob\left(\frac{T(k)\lambda}{k} \leq 1 - \epsilon \right) = 0
+		\end{equation}
+		when $\epsilon \geq 1$. Conversely, suppose $0 < \epsilon < 1$ and take $t = -\epsilon\lambda/(1 - \epsilon) < 0$. Then
+		\begin{align}
+			\prob\left(\frac{T(k) \lambda}{k} \leq 1  - \epsilon\right) &\leq \exp\left(k(\log(1 - \epsilon) + \epsilon)\right),\\
+			&\leq \exp(k(\log(1+\epsilon) - \epsilon)).
+		\end{align}
+		Since $\log(1+\epsilon) - \epsilon$ is well defined for all $\epsilon > 0$ we then have, for any $\epsilon > 0$,
+		\begin{equation}
+			\prob\left(\frac{T(k)\lambda}{k} \leq 1 - \epsilon\right) \leq \exp(k(\log(1 + \epsilon) - \epsilon)).
+		\end{equation}
+		Overall,
+		\begin{align}
+			\prob\left(\left|\frac{T(k) \lambda}{k} - 1\right| \geq \epsilon \right) %&\leq \exp\left(k(\log(1 - \epsilon) + \epsilon)\right) + \exp\left(k(\log(1 + \epsilon) - \epsilon)\right)\\
+			&\leq 2 \exp\left(k (\log(1 + \epsilon) - \epsilon )\right)\\
+			&\leq 2 \exp\left(-k \epsilon^2 /4\right)
+		\end{align}
+		for all $\epsilon  > 0$.
+	\end{proof}
+
+	We now prove the main proposition.
+	\begin{proof}[Proof of Proposition \ref{claim:discrete vs continuous distributions}]
+		In order to prove either direction, it is sufficient to show (see \cite[Theorem 25.4]{Billingsley1995-en}) that for any $\epsilon > 0$,
 		\begin{equation}
 			\lim_{n\rightarrow \infty} \prob(|Y_n - Z_n| > \epsilon) = 0.
+			\label{eq:Prob Yn - Zn > epsilon goes to zero}
 		\end{equation}
 		First note that
 		\begin{align}
@@ -223,7 +242,7 @@
 
 		Since $N_n \geq m_n$, 
 		\begin{align}
-			\prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right) &\leq \prob\left(\sup_{k \geq m_n}\left|\frac{T(k)\lambda}{k} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right)\\
+			\prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right) &\leq \prob\left(\sup_{k \geq m_n}\left\{\left|\frac{T(k)\lambda}{k} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right\} \right)\\
 			&= \prob\left(\bigcup_{k \geq m_n} \left\{ \left|\frac{T(k)\lambda}{k} - 1\right| > \epsilon\frac{a_n}{C b_n} \right\}\right)\\
 			&\leq \sum_{k = m_n}^\infty \prob\left(\left|\frac{T(k)\lambda}{k} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right).%\\
 			% &\leq \sum_{k = m_n}^\infty
@@ -235,7 +254,7 @@
 			\sum_{k = m_n}^\infty \prob\left(\left|\frac{T(k)\lambda}{k} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right) &\leq 2 \sum_{k = m_n}^\infty \exp\left(-k \epsilon^2 \frac{a_n^2}{64b_n^2}\right)\\
 			&= 2 \frac{\exp\left(-\epsilon^2 a_n^2 (m_n-1) /\left(64b_n^2\right)\right)}{\exp\left(\epsilon^2 a_n^2/\left(64b_n^2\right)\right) - 1}.
 		\end{align}
-		Since $x \leq \exp(x) - 1$ for $0 \leq x \leq 1$, for sufficiently large $n$,
+		Since $x \leq \exp(x) - 1$ for $x \geq 0$, for sufficiently large $n$,
 		\begin{align}
 		2 \frac{\exp\left(-\epsilon^2 a_n^2 (m_n-1) /\left(64b_n^2\right)\right)}{\exp\left(\epsilon^2 a_n^2/\left(64b_n^2\right)\right) - 1} &\leq \frac{128 b_n^2}{a_n^2 \epsilon^2} \exp\left(-\epsilon^2 a_n^2 (m_n-1) /\left(64b_n^2\right)\right)\\
 		&\leq 256 \frac{b_n^2}{a_n^2 \epsilon^2} \exp\left(-m_n \epsilon^2 a_n^2/\left(64b_n^2\right)\right)
@@ -247,23 +266,25 @@
 		\begin{align}
 			\prob\left(\frac{N_n}{\lambda a_n} > \frac{4 b_n}{a_n} \right) &= \prob\left(Z_n > 3\frac{b_n}{a_n} \right)
 		\end{align}
-		and since $b_n / a_n \rightarrow \infty$, and $Z_n$ converges to a distribution which places no mass at $\infty$,
+		and since $b_n / a_n \rightarrow \infty$, and $X$ has a continuous distribution function,
+		[MIGHT NEED EXTRA LEMMA HERE... ASK TIM ABOUT THIS]
 		\begin{equation}
-			\lim_{n\rightarrow \infty} \prob\left(\frac{N_n}{\lambda a_n} > \frac{4 b_n}{a_n} \right) = 0.
+			\lim_{n\rightarrow \infty} \prob\left(\frac{N_n}{\lambda a_n} > \frac{4 b_n}{a_n} \right) = 0,
 		\end{equation}
-		Now assume that $Y_n \convergedist X$. Note that if $T(N_n)/a_n < \epsilon/2$ and $|T(N_n) \lambda / N_n - 1| < 1/2$, then $N_n / (\lambda a_n )< \epsilon$. So
+		and so \eqref{eq:Prob Yn - Zn > epsilon goes to zero} holds.
+
+		Conversely, assume that $Y_n \convergedist X$. Note that, if $T(N_n)/a_n \leq c_n/2$ and $|T(N_n) \lambda / N_n - 1| \leq 1/2$, then $N_n / (\lambda a_n )\leq c_n$. So taking $c_n = 4b_n/a_n$ we have for any $c_n > 0$,
 		\begin{align}
-			\prob\left(\frac{N_n}{\lambda a_n} > \frac{4 b_n}{a_n} \right) &\leq \prob\left(\frac{T(N_n)}{a_n} < \frac{2 b_n}{a_n}\right) + \prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \frac{1}{2}\right)\\
-			&= \prob\left(Y_n < \frac{b_n}{a_n}\right) + \prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \frac{1}{2}\right).
+			\prob\left(\frac{N_n}{\lambda a_n} > \frac{4 b_n}{a_n} \right) &\leq \prob\left(\frac{T(N_n)}{a_n} > \frac{2 b_n}{a_n}\right) + \prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \frac{1}{2}\right)\\
+			&= \prob\left(Y_n > \frac{b_n}{a_n}\right) + \prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \frac{1}{2}\right).
 		\end{align}
-		As above, since $a_n/b_n \rightarrow \infty$, and $Y_n$ converges to a distribution which places no mass at $\infty$, the first term vanishes in the limit. The second disappears since 
+		As above, since $b_n/a_n \rightarrow \infty$, and $X$ has a continuous distribution function, 
+		[MIGHT NEED EXTRA LEMMA HERE... ASK TIM ABOUT THIS]
+		the first term vanishes as $n \rightarrow \infty$. The second disappears since 
 		\begin{equation}
 			\prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \frac{1}{2}\right) \leq \prob\left(\left|\frac{T(N_n)\lambda}{N_n} - 1\right| > \epsilon\frac{a_n}{4 b_n} \right)
 		\end{equation}
-		for large enough $n$.
-
-
-		
+		for sufficiently large $n$.
 	\end{proof}
 
 	% Often the sequence $w_n$ of Claim \ref{claim:discrete vs continuous distributions} is of the form $w_n = w_n(z) = a_n z + b_n$ and we have that 
@@ -273,7 +294,7 @@
 	% for some distribution $G(z)$. The following Lemma shows that if this is the case, in order for either \eqref{eq:Y_n goes to zero} or \eqref{eq:Z_n goes to zero} to hold, it is enough that $b_n$ dominates $a_n$.
 
 	\begin{remark}
-		We apply Claim \ref{claim:discrete vs continuous distributions} to the coupling time of the Glauber heat-bath dynamics in the following way. Take $N_n$ to be the discrete coupling time on a graph of size $n$. The continuous time coupling time is given by $T(N_n)$. Note that $N_n \geq m_n = n$ since each vertex must be updated at least once for coupling to occur. Finally Theorems \ref{thm:Coupling Distribution on Cycle} and \ref{thm:Coupling Distribution on transitive graph} establish the limiting distribution of the continuous-time coupling time using scaling and shifting sequences $a_n$ and $b_n$ whos ratio is 
+		We apply Claim \ref{claim:discrete vs continuous distributions} to the coupling time of the Glauber heat-bath dynamics in the following way. Take $N_n$ to be the discrete coupling time on a graph of size $n$. The continuous time coupling time is given by $T(N_n)$. Note that $N_n \geq m_n = n$ since each vertex must be updated at least once for coupling to occur. Finally Theorems \ref{thm:Coupling Distribution on Cycle} and \ref{thm:Coupling Distribution on transitive graph} establish the limiting distribution of the continuous-time coupling time using scaling and shifting sequences $a_n$ and $b_n$ whose ratio is 
 		\begin{equation}
 			\frac{b_n}{a_n} = \log n
 		\end{equation}
@@ -290,14 +311,14 @@
 	\end{equation}
 	We construct the composition
 	\begin{equation}
-		F_{-k} = f_0 \circ f_1 \circ \dots \circ f_{k-1}
+		F_{-k} = f_0 \circ f_{-1} \circ \dots \circ f_{-k+1}
 	\end{equation}
 	and define the \emph{backwards coupling time} to be
 	\begin{equation}
 		T_\mathrm{BACK} = \min\{k \in \mathbb{N} : F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0)\}.
 	\end{equation}
 
-	The state $F_{-T_\mathrm{BACK}}(\mathscr{B}_0) = F_{-T_\mathrm{BACK}}(\mathscr{T}_0)$ is the output of the CFTP algorithm, and was shown by Propp and Wilson \cite{Propp1996-cf} to be an exact sample from the chain's stationary distribution. To see why this is so, observe that by the monotonicity of $f$, if $F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0)$, then $F_{-k}(\sigma) = F_{-k}(\mathscr{B}_0)$ for any $\sigma \in \Omega$. If we let $\sigma_\pi$ be a random sample from the stationary distribution $\pi$, then $F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0) = F_{-k}(\sigma_\pi)$ must also have distribution $\pi$, which in our case is given by \eqref{eq:gibbsmeasure}.
+	The state $F_{-T_\mathrm{BACK}}(\mathscr{B}_0) = F_{-T_\mathrm{BACK}}(\mathscr{T}_0)$ is the output of the CFTP algorithm, and was shown by Propp and Wilson \cite{Propp1996-cf} to be an exact sample from the chain's stationary distribution. To gain some intuition as to why this is so, observe that by the monotonicity of $f$, if $F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0)$, then $F_{-k}(\sigma) = F_{-k}(\mathscr{B}_0)$ for any $\sigma \in \Omega$. If we let $\sigma_\pi$ be a random sample from the stationary distribution $\pi$, then $F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0) = F_{-k}(\sigma_\pi)$ must also have distribution $\pi$, which in our case is given by \eqref{eq:gibbsmeasure}.
 	
 	If we reverse the composition to construct
 	\begin{equation}
@@ -307,7 +328,7 @@
 	\begin{equation}
 		T_\mathrm{DIS} =  \min\{k \in \mathbb{N} : F_{k}(\mathscr{B}_0) = F_{k}(\mathscr{T}_0)\}.
 	\end{equation}
-	The forwards coupling time, $T_\mathrm{DIS}$, has the same distribution as the backwards coupling time, $T_\mathrm{BACK}$, although in general, $F_{T_\mathrm{DIS}}(\mathscr{B}_0) = F_{T_\mathrm{DIS}}(\mathscr{T}_0)$ does not have distribution \eqref{eq:gibbsmeasure}.
+	The forwards coupling time, $T_\mathrm{DIS}$, has the same distribution as the backwards coupling time, $T_\mathrm{BACK}$, \cite{Propp1996-cf}, although in general, $F_{T_\mathrm{DIS}}(\mathscr{B}_0) = F_{T_\mathrm{DIS}}(\mathscr{T}_0)$ does not have distribution \eqref{eq:gibbsmeasure}.
 
 	In practise, one runs the CFTP algorithm by starting both the top and bottom chains from some point in the past to time zero. This is repeated for increasingly more distant times in the past until both chains agree at time 0. The sequence of times at which one restarts this process need not be $-1, -2, -3, \dots$, rather, any monotonic natural sequence $a_1, a_2,\dots$ can  be used. See \cite{Levin2009-fo}, \cite{Haggstrom2002-os}, and \cite{Jerrum1998-ph} for further discussion.
 
