@@ -86,7 +86,7 @@
 	\label{sec:the coupling time}
 	[THIS NEEDS A BIT OF REWRITING. DEFINE BOTH DISCRETE AND CONTINUOUS RMR. TALK ABOUT BOTH WAYS OF DOING THIS. GENERATE $V_K$ SEQUENCE VIA POISSON CLOCKS. START WITH DISCRETE, THEN USUAL, THEN N CLOCKS.]
 
-	We now describe the two coupled chains from which we define the coupling time of the Ising heat-bath Glauber dynamics. In order to do this, we introduce a random mapping representation for the jump process. This will also help us outline an implementation of CFTP.
+	We now describe the two coupled chains from which we define the coupling time of the Ising heat-bath Glauber dynamics. It will prove convenient to first describe the discrete time chains along with their coupling and then discuss how to extend this coupling to the continuous time chain.	In order to define the discrete time coupling, we introduce a random mapping representation.
 
 	Define $f: \Omega \times V \times [0,1] \mapsto \Omega$ via $f(\sigma, i, u) = \sigma'$ where $\sigma'[j] = \sigma[j]$ for $j \neq i$ and
 	\begin{equation}
@@ -97,20 +97,31 @@
 			\end{cases}
 		\label{eq:plusorminusrules}
 	\end{equation}
-	Let $\mathscr{V}$ and $U$ be independent, with $\mathscr{V}$ uniform on $V$ and $U$ uniform on $[0,1]$. Then, updating our chain at rate $n = |V|$, and performing updates from $\sigma$ to $\sigma'$ according to $\sigma' = f(\sigma, \mathscr{V}, U)$, we recover the dynamics described in Section \ref{sec:heat-bath glauber dynamics definition}.
 
-	We also note that $f$ is monotonic, in the following sense. We define a partial ordering on $\Omega$ by writing that $\sigma \preceq \omega$ if $\sigma, \omega \in \Omega$ are such that $\sigma[i] \leq \omega[i]$ for all $i \in V$ (and similarly for $\sigma \succeq \omega$). Then for any fixed $i \in V$ and $u \in [0,1]$, if $\sigma \preceq \omega$ then $f(\sigma, i, u) \preceq f(\omega, i, u)$.
+	We note that $f$ is monotonic, in the following sense. We define a partial ordering on $\Omega$ by writing that $\sigma \preceq \omega$ if $\sigma, \omega \in \Omega$ are such that $\sigma[i] \leq \omega[i]$ for all $i \in V$ (and similarly for $\sigma \succeq \omega$). Then for any fixed $i \in V$ and $u \in [0,1]$, if $\sigma \preceq \omega$ then $f(\sigma, i, u) \preceq f(\omega, i, u)$.
 	
-	Let $(\mathscr{V}_k, U_k)_{k \geq 1}$ be an i.i.d. sequence of copies of $(\mathscr{V}, U)$. Define top and bottom chains, $(\mathscr{T}_t)_{t\geq0}$ and $(\mathscr{B}_t)_{t\geq0}$, with initial states
+	Let $(\mathscr{V}_k, U_k)_{k \geq 1}$ be an i.i.d. sequence of copies of $(\mathscr{V}, U)$. Define top and bottom discrete time chains, $(\mathscr{T}_t)_{t\in \mathbb{N}}^\mathrm{DIS}$ and $(\mathscr{B}_t)_{t\in \mathbb{N}}^\mathrm{DIS}$, with initial states
 	\begin{align}
-		\mathscr{T}_0 &= (1, 1, \dots, 1)\\
-		\mathscr{B}_0 &= (-1, -1, \dots, -1)
+		\mathscr{T}_0^\mathrm{DIS} &= (1, 1, \dots, 1)\\
+		\mathscr{B}_0^\mathrm{DIS} &= (-1, -1, \dots, -1)
 	\end{align}
-	that update together at rate $n$. On the $k$th update at time $t_k$, update $\mathscr{T}_{t_k}$ to $f(\mathscr{T}_{t_k}, \mathscr{V}_k, U_k)$ and update $\mathscr{B}_{t_k}$ to $f(\mathscr{B}_{t_k}, \mathscr{V}_k, U_k)$.
+	that update according to $\mathscr{T}_{t+1}^\mathrm{DIS} = f(\mathscr{T}_{t}^\mathrm{DIS}, \mathscr{V}_k, U_k)$ and $\mathscr{B}_{t+1}^\mathrm{DIS} = f(\mathscr{B}_{t}^\mathrm{DIS}, \mathscr{V}_k, U_k)$.
 
-	We call the coupled process, $(\mathscr{B}_t, \mathscr{F}_t)_{t\geq0}$, \emph{the Ising heat-bath coupling}. From the monotonicity of $f$, $\mathscr{T}_t \succeq \mathscr{B}_t$, for all $t \geq 0$.
+	We call the coupled process, $(\mathscr{B}_t^\mathrm{DIS}, \mathscr{F}_t^\mathrm{DIS})_{t\in \mathbb{N}}$, \emph{the discrete Ising heat-bath coupling}. From the monotonicity of $f$, $\mathscr{T}_t^\mathrm{DIS} \succeq \mathscr{B}_t^\mathrm{DIS}$, for all $t \geq 0$.
 
-	A more descriptive explanation of the coupling is that the top and bottom chains share the same rate-one Poisson clocks at each vertex, and upon updating that vertex, we share the same uniform random variable $U$ between the two chains to determine whether to update to a plus or minus according to \eqref{eq:plusorminusrules}.
+	There are two ways we can think about extending this process to our continuous-time chain. The first way is to "continuize it at rate n" [CITATION... I CAN'T FIND THIS IN LEVIN-PERES]. To do this we use the discrete process as defined above but the time between each update is an independent exponential with rate $n$. That is, the continuous-time top and bottom chains are defined as $(\mathscr{B}_t, \mathscr{T}_t) = (\mathscr{B}_{N_t}^\mathrm{DIS}, \mathscr{T}_{N_t}^\mathrm{DIS})$ where $N_t$ is an independent rate $n$ Poisson process. We call $(\mathscr{B}_t, \mathscr{T}_t)_{t\geq 0}$ simply, \emph{the Ising heat-bath coupling}.
+
+	It is perhaps not immediately obvious that the continuous time top and bottom chains have the same dynamics we described in Section \ref{sec:heat-bath glauber dynamics definition}. This leads us to the second way of extending the discrete coupling to continuous time. Instead of updating the whole chain at rate $n$ and choosing a vertex to update on the $k$th update via $\mathcal{V}_k$, we can think of each vertex in the chain as having its own independent rate 1 Poisson clock that tells it when to update. To clarify, whenever the Poisson clock of any vertex $i$ rings, we perform the $k$th update of the chain by setting $\mathcal{V}_k = i$. From the memoryless property of the exponential, the sequence $\mathcal{V}_1, \mathcal{V}_2, \dots$ that is generated is i.i.d.\ uniform on $V$. Since we have $n$ vertices updating at rate 1, the whole chain is updating at rate $n$, and we see that our two methods of extending the discrete coupling to continuous time are equivalent.
+
+		
+	
+
+	
+
+
+	% Let $\mathscr{V}$ and $U$ be independent, with $\mathscr{V}$ uniform on $V$ and $U$ uniform on $[0,1]$. Then, updating our chain at rate $n = |V|$, and performing updates from $\sigma$ to $\sigma'$ according to $\sigma' = f(\sigma, \mathscr{V}, U)$, we recover the dynamics described in Section \ref{sec:heat-bath glauber dynamics definition}.
+
+	In summary, a more descriptive explanation of the continuous time coupling is that the top and bottom chains share the same rate-one Poisson clocks at each vertex, and upon updating that vertex, we share the same uniform random variable $U$ between the two chains to determine whether to update to a plus or minus according to \eqref{eq:plusorminusrules}.
 
 	The \emph{coupling time} of the Ising heat-bath process is the random variable
 	\begin{equation}
@@ -328,28 +339,30 @@
 	\begin{equation}
 		T_\mathrm{DIS} =  \min\{k \in \mathbb{N} : F_{k}(\mathscr{B}_0) = F_{k}(\mathscr{T}_0)\}.
 	\end{equation}
-	The forwards coupling time, $T_\mathrm{DIS}$, has the same distribution as the backwards coupling time, $T_\mathrm{BACK}$, \cite{Propp1996-cf}, although in general, $F_{T_\mathrm{DIS}}(\mathscr{B}_0) = F_{T_\mathrm{DIS}}(\mathscr{T}_0)$ does not have distribution \eqref{eq:gibbsmeasure}.
+	The forwards coupling time, $T_\mathrm{DIS}$, has the same distribution as the backwards coupling time, $T_\mathrm{BACK}$ \cite{Propp1996-cf}, although in general, $F_{T_\mathrm{DIS}}(\mathscr{B}_0) = F_{T_\mathrm{DIS}}(\mathscr{T}_0)$ does not have distribution \eqref{eq:gibbsmeasure}.
 
 	In practise, one runs the CFTP algorithm by starting both the top and bottom chains from some point in the past to time zero. This is repeated for increasingly more distant times in the past until both chains agree at time 0. The sequence of times at which one restarts this process need not be $-1, -2, -3, \dots$, rather, any monotonic natural sequence $a_1, a_2,\dots$ can  be used. See \cite{Levin2009-fo}, \cite{Haggstrom2002-os}, and \cite{Jerrum1998-ph} for further discussion.
 
 	
 \section{Information percolation}
-	A cornerstone to the proofs contained in Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults} is the framework of information percolation, first introduced by Lubetzky and Sly in 2016 \cite{Lubetzky2016-wd}. In this paper, Lubetzky and Sly managed to achieve much sharper results, in much more generality, regarding the mixing time for the Glauber dynamics for the Ising model than had been achieved before. In this section we provide a brief summary of their paper before laying out the basic framework, in the context of the Ising heat-bath dynamics, that will be required for Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults}.
+	A cornerstone to the proofs contained in Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults} is the framework of information percolation, introduced by Lubetzky and Sly in \cite{Lubetzky2016-wd}. In this paper, Lubetzky and Sly managed to achieve much sharper results, in much more generality, regarding the mixing time for the Glauber dynamics for the Ising model than had been achieved before. In this section we provide a brief summary of their results before laying out the basic framework, in the context of the Ising heat-bath dynamics, that will be required for Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults}.
+
+	["THERE IS PROBABLY NOT PARTICULAR REASON TO FOCUS ON THEIR RESULTS SPECIFICALLY. A GENERAL SURVEY OF WHATS KNOWN ABOUT ISING GLAUBER MIXING (PERES ON $K_N$, OLVIERI IN HIGH TEMP) WOULD MAKE SENSE. ALSO SOME DISCUSSION OF WHATS KNOWN ALREADY FOR $T_{BACK}$ (NOT MUCH - ORIGINAL PW PAPER, PLUS OUR JSP - THEOREM \& CONJECTURES"]
 
 	\subsection{Information percolation and cutoff for the stochastic Ising model}
 	In order to define cutoff, the central phenomenon of study in Lubetzky and Sly's 2016 paper titled, `Information percolation and cutoff for the stochastic Ising model', we first have to define the total-variation mixing time. Given a parameter $\epsilon$, a Markov Chain $Y_t$ has mixing time
 	\begin{equation}
 		t_\mathrm{MIX}(\epsilon) = \inf\left\{t: \max_{x_0 \in \Omega} ||\prob(X_t \in \cdot | X_0 = x_0) - \pi ||_\mathrm{TV} \leq \epsilon \right\}
 	\end{equation}
-	where the total variation distance $||\nu_1 - \nu_2||_\mathrm{TV}$ is defined as 
+	where the total variation distance between two distributions $\nu_1$ and $\nu_2$ is defined as 
 	\begin{equation}
-		\max_{A \in \Omega}|\nu_1(A) - \nu_2(A)| = \frac{1}{2}\sum_{\sigma \in \Omega} |\nu_1(\sigma) - \nu_2(\sigma)|.
+		||\nu_1 - \nu_2||_\mathrm{TV} = \max_{A \in \Omega}|\nu_1(A) - \nu_2(A)| = \frac{1}{2}\sum_{\sigma \in \Omega} |\nu_1(\sigma) - \nu_2(\sigma)|.
 	\end{equation}
 	A family of Markov chains $(Y_t)$ indexed by $n$ is said to exhibit cutoff if
 	\begin{equation}
 		t_\mathrm{MIX}(\epsilon) = (1 + o(1)) t_\mathrm{MIX}(\epsilon'),
 	\end{equation}
-	for any fixed $0 < \epsilon, \epsilon' < 1$. A \emph{cutoff window} is a sequence $w_n$ where
+	for any fixed $0 < \epsilon, \epsilon' < 1$. A \emph{cutoff window} is a sequence $w_n = o(t_\mathrm{MIX}(1/4))$ where
 	\begin{equation}
 		t_\mathrm{MIX}(\epsilon) = t_\mathrm{MIX}(1 - \epsilon) + \mathcal{O}(w_n)
 	\end{equation}
@@ -357,12 +370,12 @@
 
 	Historically, proving cutoff has proven to be highly challenging. In a survey on the topic, Diaconis \cite{Diaconis1996-sz} wrote `proof of a cutoff is a difficult, delicate affair, requiring detailed knowledge of the chain, such as all eigenvalues and eigenvectors'. It is therefore worth noting the significant gap between the strength of the results regarding cutoff achieved using information percolation, and those that existed previously.
 
-	Previous to \cite{Lubetzky2016-wd}, the best result known for general graphs was that cutoff occurs with a $\mathcal{O}(1)$ window in the simple case when $\beta = 0$ \cite{Aldous1983-gz}. However, no results were known for $\beta > 0$, despite a conjecture by \citeauthor{Levin2009-fo} in 2009 \cite[Section 23.2]{Levin2009-fo} that cutoff occurs on any sequence of transitive graphs when the mixing time is of order $\log n$ (as one would expect when $\beta < c_0$ for some $c_0 > 0$ that depends on the sequence of graphs). On lattices, the first results to appear were due to Lubetzky and Sly in 2013 who established cutoff up to the critical temperature for dimensions $d \leq 2$ with only a $\mathcal{O}(\log \log n)$ window \cite{Lubetzky2013-yv}. 
+	Previous to \cite{Lubetzky2016-wd}, the best result known for general graphs was that cutoff occurs with a $\mathcal{O}(1)$ window in the simple case when $\beta = 0$ \cite{Aldous1983-gz}. However, no results were known for $\beta > 0$, despite a conjecture by Peres in 2009 \cite[Section 23.2]{Levin2009-fo} that cutoff occurs on any sequence of transitive graphs when the mixing time is of order $\log n$ (as one would expect when $\beta < c_0$ for some $c_0 > 0$ that depends on the sequence of graphs). On lattices, the first results to appear were due to Lubetzky and Sly in 2013 who established cutoff up to the critical temperature for dimensions $d \leq 2$ with a $\mathcal{O}(\log \log n)$ window \cite{Lubetzky2013-yv}. 
 
-	Using information percolation, Lubetzky and Sly proved the existence of cutoff for the continous time Glauber dynamics for the Ising model with an $\mathcal{O}(1)$ window on $\mathbb{Z}^d$ for all temperatures up to the critical temperature. In a companion paper \cite{Lubetzky2017-nc}, they extended this result to include any graph for sufficiently high temperature. Since these papers, information percolation has also been used to establish cutoff for the Swendsen-Wang dynamics on the lattice \cite{Nam2018-io}, suggesting that the technique is effective on a broader class of problems than simply Glauber dynamics for Ising.
+	Using information percolation, Lubetzky and Sly proved the existence of cutoff for the continous time Glauber dynamics for the Ising model with an $\mathcal{O}(1)$ window on $\mathbb{Z}^d$ for all temperatures up to the critical temperature. In a companion paper \cite{Lubetzky2017-nc}, they extended this result to include any graph with maximum degree $d$ provided that $\beta < \kappa/d$ for some absolute constant $\kappa$. Recently, information percolation has also been used to establish cutoff for the Swendsen-Wang dynamics on the lattice \cite{Nam2018-io}, suggesting that the technique is effective on a broader class of problems than simply Glauber dynamics for Ising.
 	
 	\subsection{The framework}
-	At its core, information percolation is a way of tracking how the dependencies of the final spins of the Glauber heat-bath dynamics percolate through the graph over time. These dependencies are traced backwards through time from some designated time $t^*$ on the space-time slab $V \times [0, t^*]$ (see Figure \ref{fig:typical percolation} for example) to create the update history. These histories are made in such a way so that, if for any $j \in V$ no path exists connecting $(i, t^*)$ to $(j, 0)$, then the spin of $i$ does not depend on the initial state (and thus at time $t^*$ vertex $i$ takes $+1$ and $-1$ spins with equal probability by symmetry). The main constructs used to create this history are the update sequence, and the update support function which we will now define.
+	At its core, information percolation is a way of tracking how the dependencies of the final spins of the Glauber heat-bath dynamics percolate through the graph over time. These dependencies are traced backwards through time from some designated time $t^*$ on the space-time slab $V \times [0, t^*]$ to create the update history (see Figure \ref{fig:typical percolation} for example). These histories are made in such a way so that, if for every $j \in V$ no path exists connecting $(i, t^*)$ to $(j, 0)$, then the spin of $i$ does not depend on the initial state (and thus at time $t^*$ vertex $i$ takes $+1$ and $-1$ spins with equal probability by symmetry). The main constructs used to create this history are the update sequence, and the update support function which we will now define.
 
 	\begin{figure}
 		\centering
