@@ -111,7 +111,9 @@
 
 	There are two ways we can think about extending this process to our continuous-time chain. The first way is to "continuize it at rate n" [CITATION... I CAN'T FIND THIS IN LEVIN-PERES]. To do this we use the discrete process as defined above but the time between each update is an independent exponential with rate $n$. That is, the continuous-time top and bottom chains are defined as $(\mathscr{B}_t, \mathscr{T}_t) = (\mathscr{B}_{N_t}^\mathrm{DIS}, \mathscr{T}_{N_t}^\mathrm{DIS})$ where $N_t$ is an independent rate $n$ Poisson process. We call $(\mathscr{B}_t, \mathscr{T}_t)_{t\geq 0}$ simply, \emph{the Ising heat-bath coupling}.
 
-	It is perhaps not immediately obvious that the continuous time top and bottom chains have the same dynamics we described in Section \ref{sec:heat-bath glauber dynamics definition}. This leads us to the second way of extending the discrete coupling to continuous time. Instead of updating the whole chain at rate $n$ and choosing a vertex to update on the $k$th update via $\mathcal{V}_k$, we can think of each vertex in the chain as having its own independent rate 1 Poisson clock that tells it when to update. To clarify, whenever the Poisson clock of any vertex $i$ rings, we perform the $k$th update of the chain by setting $\mathcal{V}_k = i$. From the memoryless property of the exponential, the sequence $\mathcal{V}_1, \mathcal{V}_2, \dots$ that is generated is i.i.d.\ uniform on $V$. Since we have $n$ vertices updating at rate 1, the whole chain is updating at rate $n$, and we see that our two methods of extending the discrete coupling to continuous time are equivalent.
+	It is perhaps not immediately obvious that the continuous time top and bottom chains have the same dynamics we described in Section \ref{sec:heat-bath glauber dynamics definition}. This leads us to the second way of extending the discrete coupling to continuous time. Instead of updating the whole chain at rate $n$ and choosing a vertex to update on the $k$th update via $\mathcal{V}_k$, we can think of each vertex in the chain as having its own independent rate 1 Poisson clock that tells it when to update. To clarify, whenever the Poisson clock of any vertex $i$ rings at time $t$, we perform the $k$th update of the chain by setting $\mathcal{V}_k = i$ and updating as in the discrete case via $\mathscr{B}_t \leftarrow f(\mathscr{B}_t, \mathcal{V}_k, U_k)$ and $\mathscr{T}_t \leftarrow f(\mathscr{T}_t, \mathcal{V}_k, U_k)$.
+
+	From the memoryless property of the exponential, the sequence $\mathcal{V}_1, \mathcal{V}_2, \dots$ that is generated is i.i.d.\ uniform on $V$. Since we have $n$ vertices updating at rate 1, the whole chain is updating at rate $n$, and so our two methods of extending the discrete coupling to continuous time are equivalent.
 
 		
 	
@@ -121,7 +123,7 @@
 
 	% Let $\mathscr{V}$ and $U$ be independent, with $\mathscr{V}$ uniform on $V$ and $U$ uniform on $[0,1]$. Then, updating our chain at rate $n = |V|$, and performing updates from $\sigma$ to $\sigma'$ according to $\sigma' = f(\sigma, \mathscr{V}, U)$, we recover the dynamics described in Section \ref{sec:heat-bath glauber dynamics definition}.
 
-	In summary, a more descriptive explanation of the continuous time coupling is that the top and bottom chains share the same rate-one Poisson clocks at each vertex, and upon updating that vertex, we share the same uniform random variable $U$ between the two chains to determine whether to update to a plus or minus according to \eqref{eq:plusorminusrules}.
+	This leads to a more descriptive explanation of the continuous time coupling: the top and bottom chains share the same rate-one Poisson clocks at each vertex, and upon updating that vertex, we share the same uniform random variable $U$ between the two chains to determine whether to update to a plus or minus according to \eqref{eq:plusorminusrules}.
 
 	The \emph{coupling time} of the Ising heat-bath process is the random variable
 	\begin{equation}
@@ -385,13 +387,15 @@
 	\end{figure}
 
 	\subsubsection{The update sequence}
-	Recalling our random mapping representation from Section \ref{sec:the coupling time}, we can encode an update of our coupled process with the tuple $(\mathcal{V}, U, t)$, where $t$ is the time of the update, $\mathcal{V}$ is the vertex that is updated, and $U$ is the value of the uniform random variable that tells us whether $\mathcal{V}$ is a plus or minus according to \eqref{eq:plusorminusrules}. The \emph{update sequence} along an interval $(t_0, t_1]$ is the set of these tuples with $t_0 < t \leq t_1$. Given the state of our Markov Chain at time $t_0$, $Y_{t_0}$, the update sequence along $(t_0, t_1]$ contains all the information we need to contruct $Y_{t_1}$. In particular, given the update sequence along the interval $(0, t_1]$, $Y_{t_1}$ is a deterministic function of $Y_0$.
+	Recalling our random mapping representation from Section \ref{sec:the coupling time}, we can encode an update of our coupled process with the tuple $(\mathcal{V}, U, S)$, where $S$ is the time of the update, $\mathcal{V}$ is the vertex that is updated, and $U$ is the value of the uniform random variable that tells us whether $\mathcal{V}$ is a plus or minus according to \eqref{eq:plusorminusrules}. The \emph{update sequence} along an interval $(t_0, t_1]$ is the set of these tuples with $t_0 < S \leq t_1$, ordered by $S$ decreasing from $t_1$. 
+
+	Let $(Y_t)_{t \geq 0}$ be a copy of the continuous-time heat-bath Glauber dynamics starting in some state $Y_0 \in \Omega$. So $Y_t = \mathscr{T}_t$ if $Y_0 = (1, 1, \dots, 1)$ and $Y_t = \mathscr{B}_t$ if $Y_0 = (-1, -1, \dots, -1)$. Given the state of $Y$ at time $t_0$, $Y_{t_0}$, the update sequence along $(t_0, t_1]$ contains all the information we need to contruct $Y_{t_1}$. In particular, given the update sequence along the interval $(0, t_1]$, $Y_{t_1}$ is a deterministic function of $Y_0$.
 
 	\subsubsection{The update support function}
 	\label{sec: definition update support function}
 	Given the update sequence along the interval $(t_1, t_2]$, the \emph{update support function}, $\mathscr{F}(A, t_1, t_2)$, is the minimal set of vertices whose spins at time $t_1$ determine the spins of the vertices in $A$ at time $t_2$. That is, $i \in \mathscr{F}(A, t_1, t_2)$ if and only if there exist states $Y_{t_1}, Y_{t_1}' \in \{-1, +1\}^{V}$ that differ only at $i$ and such that when we construct $Y_{t_2}$ and $Y_{t_2}'$ using the update sequence, $Y_{t_2} \neq Y_{t_2}'$.
 
-	In particular, if $\mathscr{F}(i, 0, t) = \emptyset$ then the spin at vertex $i$ at time $t$ does not depend on the initial state and so for any two coupled chains $Y$ and $Y'$, $Y_t[i] = Y_t'[i]$. 
+	In particular, if $\mathscr{F}(i, 0, t) = \emptyset$ then the spin at vertex $i$ at time $t$ does not depend on the initial state and so for our coupled chains, $\mathscr{B}_t[i] = \mathscr{T}_t[i]$.
 	% It follows that
 	% \begin{equation}
 	% 	\prob \left[ Y_t[v] \neq Y_t'[v] \right] \leq \prob \left[ \mathscr{F}(v, 0, t) \neq \emptyset \right].
@@ -407,7 +411,7 @@
 	\begin{equation}
 		\mathcal{H}_i(t) := \mathscr{F}(i, t, t^*)
 	\end{equation}
-	where $t^*$ is some target time that should be clear from context. We call this the \emph{update history of vertex $i$ at time $t$}. Tracing $\mathcal{H}_i(t)$ backwards in time from $t^*$ produces a subgraph of $\Omega \times [0, t^*]$ which we write as $\mathcal{H}_i$ and which we simply call the \emph{update history of vertex $i$}. To be slightly more precise, to produce $\mathcal{H}_i$ we connect $(j,t)$ to $(j,t')$ if $j \in \mathcal{H}_i(t)$ and there are no updates of $j$ along $(t', t]$ and we connect $(j,t)$ to $(j',t)$ if there was an update at $(j, t)$, $j \in \mathcal{H}_i(t)$, $j' \notin \mathcal{H}_i(t)$, and $j' \in \mathcal{H}_i(t+\epsilon)$ for any sufficiently small $\epsilon > 0$.
+	where $t^*$ is some target time that should be clear from context. We call this the \emph{update support} of vertex $i$ at time $t$. Tracing $\mathcal{H}_i(t)$ backwards in time from $t^*$ produces a subgraph of $\Omega \times [0, t^*]$ which we write as $\mathcal{H}_i$ and which we call the \emph{update history} of vertex $i$. To be slightly more precise, to produce $\mathcal{H}_i$ we connect $(j,t)$ to $(j,t')$ if $j \in \mathcal{H}_i(t)$ and there are no updates of $j$ along $(t', t]$ and we connect $(j,t)$ to $(j',t)$ if there was an update at $(j, t)$, $j \in \mathcal{H}_i(t)$, $j' \notin \mathcal{H}_i(t)$, and $j' \in \mathcal{H}_i(t+\epsilon)$ for any sufficiently small $\epsilon > 0$.
 
 	Similarly, we also use 
 	\begin{equation}
@@ -424,7 +428,11 @@
 
 	% ALSO DEFINE UPDATE SUPPORT
 	
-	To give some intuition to the definitions above, consider how we might construct the update history of a vertex $i$ from some target time $t^*$. We have at our disposal the update sequence along $(0, t^*]$ which we place in order of decreasing time. If vertex $i$ does not appear in the update sequence then we create a temporal edge between $(i, t^*)$ and $(i, 0)$ and our update history is complete - vertex $i$ was never updated and so it simply takes its initial value. Otherwise, we create temporal edge between $(i, t^*)$ and $(i, t_i)$ where $t_i$ is the last time vertex $i$ was updated. At this point we note from \eqref{eq:plusorminusrules} that the spin that vertex $i$ takes due to this update depends on the spins of its neighbours. So we add spatial edges from $(i, t_i)$ to $(j, t_i)$ for each $j\sim i$. Finally, we can iterate this process for each neighbour until every history has reached time $0$.
+	\subsubsection{The update function}
+	\label{sec: definition update function}
+	[DEFINE OTHER ONE]
+	
+	To give some intuition to the definitions above, consider how we might construct the update history of a vertex $i$ from some target time $t^*$. We have at our disposal the update sequence along $(0, t^*]$ which we place in order of decreasing time. If vertex $i$ does not appear in the update sequence then we create a temporal edge between $(i, t^*)$ and $(i, 0)$ and our update history is complete - vertex $i$ was never updated and so it simply takes its initial value. Otherwise, we create a temporal edge between $(i, t^*)$ and $(i, t_i)$ where $t_i$ is the last time vertex $i$ was updated. At this point we note from \eqref{eq:plusorminusrules} that the spin that vertex $i$ takes due to this update depends on the spins of its neighbours. So we add spatial edges from $(i, t_i)$ to $(j, t_i)$ for each $j\sim i$. Finally, we can iterate this process for each neighbour until every history has reached time $0$.
 
 	In Figure \ref{fig:example percolation construction} we have followed this procedure to show how we might create the update history from a single vertex on the cycle. This construction certainly contains every vertex that might influence the final spin at $i$, that is, it contains $\mathcal{H}_i$ as a subgraph. However, it is possible for updates to occur that do not depend on neighbouring spins. These updates cause temporal edges leading up to them to terminate without branching out to the neighbouring vertices. These type of updates are called \emph{oblivious updates}.
 
