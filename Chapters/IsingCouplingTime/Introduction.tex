@@ -443,7 +443,7 @@
 		\label{fig:example trace construction}
 	\end{figure}
 
-	We turn now to discussing how the update history differs from the update trace. We first note that an update to vertex $i$ removes it from the update support as we move backwards in time. This is because the updated spin at $i$ is a function only of its neighbours \eqref{eq:plusorminusrules}. The second difference which we will now spend some time discussing is that it is possible for updates to occur that do not depend on neighbouring spins. These updates therefore cause temporal edges leading up to them to terminate without branching out to the neighbouring vertices. These type of updates are called \emph{oblivious updates}.
+	We turn now to discussing how the update history differs from the update trace. We first note that an update to vertex $i$ removes it from the update support as we move backwards in time. This is because the updated spin at $i$ is a function only of its neighbours \eqref{eq:plusorminusrules}. The second difference which we will now spend some time discussing is that it is possible for updates to occur that do not depend on neighbouring spins. These updates therefore cause temporal edges leading up to them to terminate without branching out to the neighbouring vertices. These type of updates are called \emph{oblivious updates}. (These are not the only differences between the update history and the update trace; there are other ways in which vertices can be removed from the update support. See Figure \ref{fig:nonoblivious shrink} for an example).
 
 	% \begin{figure}
 	% 	\centering
@@ -455,6 +455,7 @@
 	
 
 	\subsubsection{Oblivious updates}
+	\label{sec:oblivious updates}
 
 	Roughly speaking, an update to a vertex is oblivious if we do not need to know the configuration of its neighbours to determine the spin of that vertex. More precisely, an update, $(\mathcal{V}, U, t)$, is oblivious if and only if
 	%for any $\sigma_1, \sigma_2 \in \Omega$, $\sigma_1' = f(\sigma_1, \mathcal{V}, U)$ and $\sigma_2' = f(\sigma_2, \mathcal{V}, U)$ are such that
@@ -499,12 +500,12 @@
 	\end{figure}
 
 	
-	It is worth remarking that oblivious updates are not necessarily the only updates that can shrink the size of the update history of $i$ (see for example Figure \ref{fig:nonoblivious shrink}). However, for our analysis they will be the only such updates we will be concerned with. Indeed, in Chapter \ref{Ch:1D} we will use a different coupling so that these are the only updates that shrink the size of the update history, and in Chapter \ref{Ch:GeneralResults} we will use an alternative construction that bounds the true update history, in which updates are either oblivious or branch out to all $\Delta$ neighbours.
+	It is worth remarking that oblivious updates are not necessarily the only updates that can shrink the size of the update history of $i$. In Figure \ref{fig:nonoblivious shrink} we use an example from \cite{Lubetzky2016-wd} that shows the update support collapsing down to a single vertex from a non-oblivious update. However, for our analysis, oblivious updates will be the only such updates we will be concerned with. Indeed, in Chapter \ref{Ch:1D} we will use a different coupling so that these are the only updates that shrink the size of the update history, and in Chapter \ref{Ch:GeneralResults} we will use an alternative construction that bounds the true update history, in which all updates are either oblivious or branch out to all $\Delta$ neighbours.
 
 	\begin{figure}
 		\centering
 		\includegraphics[width = 0.8\textwidth]{Figures/IsingCouplingTime/nonoblivious_shrink.pdf}
-		\caption[A non-oblivious update that shrinks the size of the update history]{A non-oblivious update that shrinks the size of the update history. On the right is written the final spin of $x_3$ as a function of the configuration at that time. The update $x_3 \mapsto x_2 \vee x_4$ causes the entire function to collapse to $x_4$, and so removes $x_1$ and $x_3$ from the update history.}
+		\caption[A non-oblivious update that shrinks the size of the update history]{[Example taken from \cite{Lubetzky2016-wd}]. A non-oblivious update that shrinks the size of the update history. On the right is written the final spin of $x_3$ as a function of the configuration at that time. The update $x_3 \mapsto x_2 \vee x_4$ causes the entire function to collapse to $x_4$, and so removes $x_1$ and $x_3$ from the update history.}
 		\label{fig:nonoblivious shrink}
 	\end{figure}
 	
