@@ -37,17 +37,17 @@ which is around the time it takes for the top and bottom chains to couple.
 
 \begin{theorem}
 \label{thm:Coupling Distribution on transitive graph}
-	Let $(G_n) \in \mathscr{G}$ be a sequence of vertex-transitive graphs, $G_n = (V, E)$ with $|V| = n$ vertices. Let $T_n$ be the coupling time for the continuous-time Ising heat-bath dynamics for the zero-field ferromagnetic Ising model on $G_n$. Then for any small enough inverse-temperature $\beta$,
+	Let $(G_n) \in \mathscr{G}$ be a sequence of vertex-transitive graphs, $G_n = (V, E)$ with $|V| = n$ vertices. Let $T_n$ be the coupling time for the continuous-time Ising heat-bath dynamics for the zero-field ferromagnetic Ising model on $G_n$. Then for any small enough inverse-temperature $\beta$, there exists a subsequence $(T_m)$ of $(T_n)$ such that
 	\begin{equation}
-		\lim_{n \rightarrow \infty} \prob[T_n < z + t_c(n)] = \euler^{-C_\beta\euler^{-C_z z}}
+		\lim_{m \rightarrow \infty} \prob[T_m < z + t_c(m)] = \euler^{-C_1\euler^{-C_2 z}}
 	\end{equation}
 	for some
 	\begin{equation}
-		C_\beta \in \left(0,1\right]
+		C_1 = C_1(\beta, \mathscr{G}) \in \left(0,1\right]
 	\end{equation}
 	and
 	\begin{equation}
-		C_z \in \left[1 - \beta \Delta, 1\right].
+		C_2 = C_2(\beta, \mathscr{G}) \in \left[1 - \beta \Delta, 1\right].
 	\end{equation}
 
 \end{theorem}
@@ -216,11 +216,17 @@ For each vertex $i \in V$, define indicators
 \section{Proof of Theorem \ref{thm:Coupling Distribution on transitive graph}}
 \label{sec:proof thm coupling nd}
 	In this section we use Corollary \ref{cor:nd bound distance prob[w=0] and e^-lambda} to prove Theorem \ref{thm:Coupling Distribution on transitive graph} by bounding $\lambda$ and showing that $\delta_1$ and $\delta_4$ go to zero as $n \rightarrow \infty$. This is done in Lemmas \ref{lem:nDlambda}, \ref{lem:delta1 goes to 0 general}, and \ref{lem:delta4 goes to 0 general}. The proofs of these require some additional lemmas concerning properties of the update histories which have been deferred to Section \ref{sec:additional lemmas nd}.
+
+	We begin by bounding $\lambda$. Note that bounding $\lambda$ is enough to show that there is a subsequence of graphs on which $\lambda$ converges as required by Theorem \ref{thm:Coupling Distribution on transitive graph}.
 	\begin{lemma}
 	\label{lem:nDlambda}
-		Using the above setup, there exists a constant $C \in (0,1)$ such that
+		Using the above setup, 
 		\begin{equation}
-			 C \min(\euler^{-z}, \euler^{-(1 - \beta\Delta)z}) \leq \lim_{n \rightarrow \infty} \lambda \leq \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z}).
+			\limsup_{n \rightarrow \infty} \lambda \leq \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})
+		\end{equation}
+		and there exists a constant $C \in (0,1)$ such that
+		\begin{equation}
+			\liminf_{n \rightarrow \infty} \lambda \geq C \min(\euler^{-z}, \euler^{-(1 - \beta\Delta)z}).
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
@@ -256,18 +262,18 @@ For each vertex $i \in V$, define indicators
 		\end{align}
 		for some $C_2 > 0$, $C_z = \max(\euler^{-z}, \euler^{-(1 - \beta \Delta)z})$.
 		As $n \rightarrow \infty$, the first term vanishes and we are left with \begin{align}
-			\lim_{n \rightarrow \infty} \lambda &\geq \frac{1}{1 + C_2} n m_{t^*}\\
+			\liminf_{n \rightarrow \infty} \lambda &\geq \frac{1}{1 + C_2} n m_{t^*}\\
 				&\geq C \min(\euler^{-z}, \euler^{-(1 - \beta\Delta)z}) 
 		\end{align}
 		for some $C \in (0, 1)$.
 	\end{proof}
 
-	\begin{lemma}
-		[LAMBDA CONVERGES]
-	\end{lemma}
-	\begin{proof}
+	% \begin{lemma}
+	% 	[LAMBDA CONVERGES]
+	% \end{lemma}
+	% \begin{proof}
 		
-	\end{proof}
+	% \end{proof}
 
 	\begin{lemma}
 	\label{lem:delta1 goes to 0 general}
