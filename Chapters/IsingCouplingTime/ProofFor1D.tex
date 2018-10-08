@@ -120,7 +120,7 @@
 	% It is easy to verify that for each possible configuration, the joint distribution for $\sigma_i'$ in the top and bottom chains is the same whether we use these rules or the ones given in \eqref{eq:plusorminusrules}. Hence the coupling time is unchanged in distribution in this new random mapping representation.
 
 	\subsection{Update histories on the cycle}
-	Under the update rules in \eqref{eq:new update rules}, each time a vertex is updated, it is either an oblivious update with probability $\theta$, or it takes the spin of a uniformly chosen neighbour. Unlike the histories considered earlier (for example Figure \ref{fig:example percolation construction oblivious}), this time a non-oblivious update does not cause the history to branch out to both its neighbours. Rather, given a non-oblivious update to some vertex $v$, we only need to know the spins of one of its neighbours to update it (the left spin if $U  < 1/2$ and the right if $U \geq 1/2$). So the history simply moves either right or left without branching. As before, encountering an oblivious update causes $\mathcal{H}_i$ to terminate. An example history using these new rules is shown in Figure \ref{fig:example percolation construction rightleft}. In a similar vein to Figures \ref{fig:example percolation construction oblivious} and \ref{fig:nonoblivious shrink} we represent each update $(\mathcal{V}, U, t)$ in the update sequence by placing at $(\mathcal{V}, t)$ one of the symbols $+$, $r$, $l$, or $-$ choosen according to $U$. We then trace back from time $t^*$, moving left or right when we encounter a $l$ or $r$ respectively, and terminating whenever we encounter a $+$ or $-$.
+	Under the update rules in \eqref{eq:new update rules}, each time a vertex is updated, it is either an oblivious update with probability $\theta$, or it takes the spin of a uniformly chosen neighbour. Unlike the histories considered earlier (for example Figure \ref{fig:example percolation construction oblivious}), this time a non-oblivious update does not cause the history to branch out to both its neighbours. Rather, given a non-oblivious update to some vertex $v$, we only need to know the spins of one of its neighbours to update it (the left spin if $U  < 1/2$ and the right if $U \geq 1/2$). So the history simply moves either right or left without branching. As before, encountering an oblivious update causes $\mathcal{H}_i$ to terminate. An example history using these new rules is shown in Figure \ref{fig:example percolation construction rightleft}. In a similar vein to Figures \ref{fig:example percolation construction oblivious} and \ref{fig:nonoblivious shrink} we represent each update $(\mathcal{V}, U, t)$ in the update sequence by placing at $(\mathcal{V}, t)$ one of the symbols $+$, $r$, $l$, or $-$ chosen according to $U$. We then trace back from time $t^*$, moving left or right when we encounter a $l$ or $r$ respectively, and terminating whenever we encounter a $+$ or $-$.
 
 	\begin{figure}
 		\centering
@@ -140,7 +140,7 @@
 
 	\section{Problem Setup}
 	\label{sec:1D problem setup}
-	In order to prove Theorem \ref{thm:Coupling Distribution on Cycle}, we will actually prove a stronger statement using Theorem \ref{thm: compound poisson approximation}. The general idea is that at some fixed time $t^*$ we will count the number of vertices at which the bottom and top chains differ. This number is a random variable, which we will call $W$, and we can bound the total variation distance of its distribution with that of an appropriate compound poisson distribution. As a special case, we can use this bound as a bound on the probability that $W$ is zero. Of course, if $W$ is zero then the top and bottom chains must have coupled and so we can use this to establish Theorem \ref{thm:Coupling Distribution on Cycle}.
+	In order to prove Theorem \ref{thm:Coupling Distribution on Cycle}, we will actually prove a stronger statement using Theorem \ref{thm: compound poisson approximation}. The general idea is that at some fixed time $t^*$ we will count the number of vertices at which the bottom and top chains differ. This number is a random variable, which we will call $W$, and we can bound the total variation distance of its distribution with that of an appropriate compound Poisson distribution. As a special case, we can use this bound as a bound on the probability that $W$ is zero. Of course, if $W$ is zero then the top and bottom chains must have coupled and so we can use this to establish Theorem \ref{thm:Coupling Distribution on Cycle}.
 
 	Bounding the total variation distance between $W$ and the compound Poisson will be done using compound Poisson approximation as described in \cite{Barbour2001-nh}. This paper reviews a number of different methods by which approximations may be made. The specific method that we will employ is based on Stein's method for the compound Poisson distribution, introduced in \cite{Barbour1992-mc}.
 
@@ -177,7 +177,7 @@
 		C_i &= \{j\notin B_i\cup \{i\}: |j - i| \leq c_n \},\\
 		D_i &= V \setminus (B_i \cup C_i \cup \{i\}).
 	\end{align}
-	We have some freedom in choosing $b_n$ and $c_n$; they are chosen to control the assymptotics of various quantities to be defined later. For this chapter, we will choose $b_n = \ln(n)$ and $c_n = \ln(n)^2$.
+	We have some freedom in choosing $b_n$ and $c_n$; they are chosen to control the asymptotics of various quantities to be defined later. For this chapter, we will choose $b_n = \ln(n)$ and $c_n = \ln(n)^2$.
 
 	We now define the quantities
 	\begin{align}
@@ -222,7 +222,7 @@
 	We begin by bounding $\lambda$. Note that bounding $\lambda$ is enough to show that there is a subsequence of graphs on which $\lambda$ converges as required by Theorem \ref{thm:Coupling Distribution on Cycle}.
 	\begin{lemma}
 	\label{lem:1Dlambda}
-		Using the above setup
+		Using the above set-up
 		\begin{equation}
 			\limsup_{n \rightarrow \infty} \lambda \leq \euler^{-z}
 		\end{equation}
@@ -449,7 +449,7 @@
 		\begin{equation}
 			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] \leq 2 \prob[\mathrm{Po}(s) \geq  l].
 		\end{equation}
-		The moment generating function of a poisson random variable with rate $s$ is
+		The moment generating function of a Poisson random variable with rate $s$ is
 		\begin{equation}
 			M(t) = \exp\left(s\left(\euler^t - 1\right)\right).
 		\end{equation}
@@ -560,7 +560,7 @@
 			\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] &= \prob[X_i = 1]^{-1}\prob[X_i = 1, X_j = 1, \hist_i \cap\hist_j = \emptyset]\\
 			&= \frac{\prob[\hist_i(0) \cup \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset]}{\prob[\hist_i(0) \neq \emptyset]}.
 		\end{align}
-		Define $S$ to be the first time that the histories intersect, or define $S = 0$ if the histories do not intersect before time $0$. We construct a new history, $\hist_j'$, in the following way. Along the interval $[S, t^*)$, $\hist_j'$ is constructed from the update sequence in the exact same way as $\hist_j$. However, along the interval $[0, S)$, we replace the update sequence with an another i.i.d. copy of the update sequence. We have constructed $\hist_j'$ to be independent of $\hist_i$. This is obvious for $t < S$. For $t \geq S$ we note that no updates are a part of both histories. From the memoryless property of the exponential waiting times between updates, we get that each update is independent of the rest, and so the histories are independent too. Note that in the event $\{\hist_i \cap \hist_j = \emptyset\}$, we have $\hist_j = \hist_j'$ and so
+		Define $S$ to be the first time that the histories intersect, or define $S = 0$ if the histories do not intersect before time $0$. We construct a new history, $\hist_j'$, in the following way. Along the interval $[S, t^*)$, $\hist_j'$ is constructed from the update sequence in the exact same way as $\hist_j$. However, along the interval $[0, S)$, we replace the update sequence with an another i.i.d.\ copy of the update sequence. We have constructed $\hist_j'$ to be independent of $\hist_i$. This is obvious for $t < S$. For $t \geq S$ we note that no updates are a part of both histories. From the memoryless property of the exponential waiting times between updates, we get that each update is independent of the rest, and so the histories are independent too. Note that in the event $\{\hist_i \cap \hist_j = \emptyset\}$, we have $\hist_j = \hist_j'$ and so
 		\begin{align}
 			\prob[\hist_i(0) \cup \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset] &= \prob[\hist_i(0) \cup \hist_j'(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset]\\
 			&\leq \prob[\hist_i(0) \cup \hist_j'(0) \neq \emptyset]\\

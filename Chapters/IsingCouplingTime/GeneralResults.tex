@@ -4,11 +4,11 @@
 
 \lhead{Chapter \ref{Ch:GeneralResults}. \emph{The Coupling Time on Vertex Transitive Graphs}}
 
-For the most part, this chapter will be similar in structure and content to Chapter \ref{Ch:1D}. The main difference is that we extend the family of graphs on which we consider the Ising heat-bath Glauber dynamics from the cycle to any vertex transtive graph. Again, the main result, Theorem \ref{thm:Coupling Distribution on transitive graph}, concerns the coupling time, $T_n$, as defined in Section \ref{sec:the coupling time}, and establishes that at sufficiently high temperature (that is, for $\beta$ small enough), the coupling time converges in distribution to a Gumbel distribution.
+For the most part, this chapter will be similar in structure and content to Chapter \ref{Ch:1D}. The main difference is that we extend the family of graphs on which we consider the Ising heat-bath Glauber dynamics from the cycle to any vertex transitive graph. Again, the main result, Theorem \ref{thm:Coupling Distribution on transitive graph}, concerns the coupling time, $T_n$, as defined in Section \ref{sec:the coupling time}, and establishes that at sufficiently high temperature (that is, for $\beta$ small enough), the coupling time converges in distribution to a Gumbel distribution.
 
-Restricting $\beta$ to be sufficiently small is a consequence of the increased generality of this chapter. As mentioned in Chapter \ref{Ch:1D}, in the high-temperature regime we expect the dynamics to be similar to those when $\beta = 0$. When $\beta = 0$ the problem simplifies to the coupon collector's problem, which is known to have a Gumbel limit. However, at the critical temperature, and below in the low-temerature regime, there is no reason to suspect that the dynamics will behave similarly to when $\beta = 0$. So our restriction of $\beta$ to be small enough for the result to hold is, on at least a descriptive level, somewhat expected. 
+Restricting $\beta$ to be sufficiently small is a consequence of the increased generality of this chapter. As mentioned in Chapter \ref{Ch:1D}, in the high-temperature regime we expect the dynamics to be similar to those when $\beta = 0$. When $\beta = 0$ the problem simplifies to the coupon collector's problem, which is known to have a Gumbel limit. However, at the critical temperature, and below in the low-temperature regime, there is no reason to suspect that the dynamics will behave similarly to when $\beta = 0$. So our restriction of $\beta$ to be small enough for the result to hold is, on at least a descriptive level, somewhat expected. 
 
-Our result partially confirms the conjecture by \citeauthor{Collevecchio2017-nq} in \cite{Collevecchio2017-nq} that the coupling time for the Ising heat-bath process on the $d$-dimensional lattice, $G_L = (\mathbb{Z}/L\mathbb{Z})^d$, converges to a Gumbel distribution as $L \rightarrow\infty$ for all $\beta < \beta_C$. Our result does not hold all the way up until the critical temperature. This is due to the fact that we are considering a larger class of graphs than just the square lattice, and so it is unreasonable to expect such a result to provide sharp bounds for the lattice. A seperate treatement of the square lattice in particular may be needed for a result holding all the way up to the critical temperature. Note that this is what \citeauthor{Lubetzky2013-yv} did in \cite{Lubetzky2013-yv} to prove the existence of cutoff for the full high-temperature regime. Since our proof is also based on information percolation there is good reason to think that a similar approach could also work to extend our result.
+Our result partially confirms the conjecture by \citeauthor{Collevecchio2017-nq} in \cite{Collevecchio2017-nq} that the coupling time for the Ising heat-bath process on the $d$-dimensional lattice, $G_L = (\mathbb{Z}/L\mathbb{Z})^d$, converges to a Gumbel distribution as $L \rightarrow\infty$ for all $\beta < \beta_C$. Our result does not hold all the way up until the critical temperature. This is due to the fact that we are considering a larger class of graphs than just the square lattice, and so it is unreasonable to expect such a result to provide sharp bounds for the lattice. A separate treatment of the square lattice in particular may be needed for a result holding all the way up to the critical temperature. Note that this is what \citeauthor{Lubetzky2013-yv} did in \cite{Lubetzky2013-yv} to prove the existence of cutoff for the full high-temperature regime. Since our proof is also based on information percolation there is good reason to think that a similar approach could also work to extend our result.
 
 [MENTION ONE LEMMA WHERE WE NEED BETA SMALL IS VERY SIMILAR TO THEIR LEMMA?]
 
@@ -17,7 +17,7 @@ To state the main result we first must define the graphs on which it is valid. L
 	\mathscr{G} = \left\{(G_n) : \exists C_2 > 0 \text{ such that} \lim_{n \rightarrow \infty}\sum_{k = 1}^\infty P_n(k)\euler^{-k} \leq C_2, Q_n(\ln^2(n)) = o(n) \right\}.
 	\label{eq:set valid graphs}
 \end{equation}
-In this chapter we consider sequences of vertex-transtitive graphs $(G_n) \in \mathscr{G}$. 
+In this chapter we consider sequences of vertex-transitive graphs $(G_n) \in \mathscr{G}$. 
 
 \begin{lemma}
 	Define the sequence of length $L$ $d$-dimensional square lattices on a torus, $G_L = (\mathbb{Z}/\mathbb{Z} L)^d$. Then $(G_L)_{L \geq 1} \in \mathscr{G}$.
@@ -31,7 +31,7 @@ In this chapter we consider sequences of vertex-transtitive graphs $(G_n) \in \m
 \end{proof}
 
 \begin{remark}
-	Another class of graphs contained in $\mathscr{G}$ are the $m$th powers of $G_L = (\mathbb{Z}/\mathbb{Z} L)^d$.	The $m$th power of a graph $G$ is a graph, $G^m$, with the same vertices as $G$, but in which all vertices whos distance in $G$ is no more than $m$ are adjacent. Clearly, $Q_n^{G^m}(k) \leq Q_n^G(mk)$. Hence powers of $G_L = (\mathbb{Z}/\mathbb{Z}L)^d$ are also in $\mathscr{G}$. This is of practical interest since the Ising model on $G^m$ corresponds to the Ising model with $m$ nearest neighbours on $G$.
+	Another class of graphs contained in $\mathscr{G}$ are the $m$th powers of $G_L = (\mathbb{Z}/\mathbb{Z} L)^d$.	The $m$th power of a graph $G$ is a graph, $G^m$, with the same vertices as $G$, but in which all vertices whose distance in $G$ is no more than $m$ are adjacent. Clearly, $Q_n^{G^m}(k) \leq Q_n^G(mk)$. Hence powers of $G_L = (\mathbb{Z}/\mathbb{Z}L)^d$ are also in $\mathscr{G}$. This is of practical interest since the Ising model on $G^m$ corresponds to the Ising model with $m$ nearest neighbours on $G$.
 \end{remark}
 
 [WHAT ELSE TO SAY HERE]
@@ -97,7 +97,7 @@ Given a monotonically coupled chain $(\mathcal{B}_t)_{t\geq0}$, starting in the 
 	&\phantom{= } + \prob\left[A_t^\complement\right] \left( \prob\left[Y_t^+[i] = 1 |A_t^\complement\right] - \prob\left[Y_t^+[i] = -1|A_t^\complement\right] \right). \notag
 \end{align}
 
-Now if event $A_t^\complement$ holds, $\mathcal{T}_t[i] = \mathcal{B}_t[i]$, and so by symmetry vertex $i$ must take values $-1$ and $+1$ uniformly. Furthermore, by the monontonicity of our coupling, if $A_t$ holds, we must have that $\mathcal{T}_t[i] = +1$ and $\mathcal{B}_t[i] = -1$.
+Now if event $A_t^\complement$ holds, $\mathcal{T}_t[i] = \mathcal{B}_t[i]$, and so by symmetry vertex $i$ must take values $-1$ and $+1$ uniformly. Furthermore, by the monotonicity of our coupling, if $A_t$ holds, we must have that $\mathcal{T}_t[i] = +1$ and $\mathcal{B}_t[i] = -1$.
 So
 \begin{align}
 	m_t(i) = \prob[A_t].
@@ -132,7 +132,7 @@ The following comes from \cite{Lubetzky2017-nc} and is valid on any graph, not j
 		\euler^{-2s} \leq \frac{\sum_i m_{t+s}[i]^2}{\sum_i m_t[i]^2} \leq \euler^{-2(1 - \beta \Delta)s}.
 	\end{equation}
 \end{lemma}
-The following corollaries are then straightfoward.
+The following corollaries are then straightforward.
 \begin{corollary}
 	\label{cor:exponential decay magnetization}
 	On any vertex transitive graph with degree $\Delta$, for any $t, s > 0$ we have
@@ -164,7 +164,7 @@ Bearing in mind that $m_0 = 1$, we also obtain a bound on $t_c(n)$.
 
 \section{Setup}
 \label{sec:nd problem setup}
-As in Chapter \ref{Ch:1D}, we prove Theorem \ref{thm:Coupling Distribution on transitive graph} through the use of a stronger statement in Theorem \ref{thm: nd compound poisson approximation}. The overall approach is almost exactly as described in Section \ref{sec:1D problem setup}; at a time $t^*$ we count the number of vertices at which the bottom and top chains differ and show that the distribution of this random variable, which we call $W$, is close to an appropriately chosen compound poisson distribution. The main difference in the construction is that we use a different $t^*$ here.
+As in Chapter \ref{Ch:1D}, we prove Theorem \ref{thm:Coupling Distribution on transitive graph} through the use of a stronger statement in Theorem \ref{thm: nd compound poisson approximation}. The overall approach is almost exactly as described in Section \ref{sec:1D problem setup}; at a time $t^*$ we count the number of vertices at which the bottom and top chains differ and show that the distribution of this random variable, which we call $W$, is close to an appropriately chosen compound Poisson distribution. The main difference in the construction is that we use a different $t^*$ here.
 
 Recalling the definition of $t_c(n)$ in \eqref{eq:definition t_c(n)}, fix $z$ and a time of interest $t^* = t_c(n) + z$. From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and $\mu$ exactly as in Chapter \ref{Ch:1D} but using our new definition for $t^*$. For convenience, we repeat the definitions here.
 
@@ -234,7 +234,7 @@ For each vertex $i \in V$, define indicators
 	We begin by bounding $\lambda$. Note that bounding $\lambda$ is enough to show that there is a subsequence of graphs on which $\lambda$ converges as required by Theorem \ref{thm:Coupling Distribution on transitive graph}.
 	\begin{lemma}
 	\label{lem:nDlambda}
-		Using the above setup, 
+		Using the above set-up, 
 		\begin{equation}
 			\limsup_{n \rightarrow \infty} \lambda \leq \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})
 		\end{equation}
@@ -709,7 +709,7 @@ For each vertex $i \in V$, define indicators
 			\begin{equation}
 				\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t^* - u) \nsubseteq B(i, l)\right] \leq \Delta^{l-1} \prob[\mathrm{Po}(s) \geq l].
 			\end{equation}
-			The moment generating function of a poisson random variable with rate $s$ is
+			The moment generating function of a Poisson random variable with rate $s$ is
 			\begin{equation}
 				M(t) = \exp\left(s\left(\euler^t - 1\right)\right).
 			\end{equation}
@@ -906,7 +906,7 @@ For each vertex $i \in V$, define indicators
 			\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] &= \prob[X_i = 1]^{-1}\prob[X_i = 1, X_j = 1, \hist_i \cap\hist_j = \emptyset]\\
 			&= \frac{\prob[\hist_i(0) \cup \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset]}{\prob[\hist_i(0) \neq \emptyset]}.
 		\end{align}
-		Define $S$ to be the first time that the histories intersect, or define $S = 0$ if the histories do not intersect before time $0$. We construct a new history, $\hist_j'$, in the following way. Along the interval $[S, t^*)$, $\hist_j'$ is constructed from the update sequence in the exact same way as $\hist_j$. However, along the interval $[0, S)$, we replace the update sequence with an another i.i.d. copy of the update sequence. We have constructed $\hist_j'$ to be independent of $\hist_i$. This is obvious for $t < S$. For $t \geq S$ we note that no updates are a part of both histories. From the memoryless property of the exponential waiting times between updates, we get that each update is independent of the rest, and so the histories are independent too. Note that in the event $\{\hist_i \cap \hist_j = \emptyset\}$, we have $\hist_j = \hist_j'$ and so
+		Define $S$ to be the first time that the histories intersect, or define $S = 0$ if the histories do not intersect before time $0$. We construct a new history, $\hist_j'$, in the following way. Along the interval $[S, t^*)$, $\hist_j'$ is constructed from the update sequence in the exact same way as $\hist_j$. However, along the interval $[0, S)$, we replace the update sequence with an another i.i.d.\ copy of the update sequence. We have constructed $\hist_j'$ to be independent of $\hist_i$. This is obvious for $t < S$. For $t \geq S$ we note that no updates are a part of both histories. From the memoryless property of the exponential waiting times between updates, we get that each update is independent of the rest, and so the histories are independent too. Note that in the event $\{\hist_i \cap \hist_j = \emptyset\}$, we have $\hist_j = \hist_j'$ and so
 		\begin{align}
 			\prob[\hist_i(0) \cup \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset] &= \prob[\hist_i(0) \cup \hist_j'(0) \neq \emptyset, \hist_i \cap \hist_j' = \emptyset]\\
 			&\leq \prob[\hist_i(0) \cup \hist_j'(0) \neq \emptyset]\\
@@ -994,7 +994,7 @@ For each vertex $i \in V$, define indicators
 			\label{eq:prob union subset of}
 			\{\hist_i(0) \cup \hist_j(0) \neq \emptyset\} \subseteq \{\mathscr{F}(v, 0, S) \neq \emptyset\}
 		\end{equation}
-		where $v$ is either the single vertex $v = \hist_i(S) \cup\hist_j(S)$ in the case that the histories coallesce to a single point at $S$, or any arbitrary single vertex otherwise.
+		where $v$ is either the single vertex $v = \hist_i(S) \cup\hist_j(S)$ in the case that the histories coalesce to a single point at $S$, or any arbitrary single vertex otherwise.
 		We also note that
 		\begin{equation}
 			\label{eq:prob intersect subset of}
