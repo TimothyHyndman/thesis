@@ -5,7 +5,7 @@
 \lhead{Chapter \ref{Ch:CouplingIntro}. \emph{Introduction}} % This is for the header on each page
 
 
-\section{The Ising Model}
+\section{The Ising model}
 \label{sec:Ising}
 	The Ising model is named after Ernst Ising who studied it in his 1924 thesis \cite{Ising1925-nd} under the supervision of Wilhelm Lenz, who introduced the model in \cite{Lenz1920-bn}. It was originally motivated by the phenomenon of ferromagnetism but it has since found application to apply to numerous other situations in both physics and other fields \footnote{See \cite[notes of Section 1.4.2]{Friedli2017-xm} for a list of references concerning this.}.
 
@@ -33,7 +33,7 @@
 		\label{eq:gibbsmeasure}
 	\end{equation}
 
-	\subsection{The Phase Transition}
+	\subsection{The phase transition}
 	\label{sec:the phase transition}
 	An in depth study of the Ising phase transition and its associated critical temperature will not be needed for this work. However, we will still wish to refer to it occasionally and so here we give a workable description of the phase transition on lattices.
 
@@ -54,7 +54,7 @@
 
 	% [EXTEND]
 
-\section{Coupling from the Past}
+\section{Coupling from the past}
 	One of the central challenges regarding the Ising model is how to efficiently sample from the Gibbs measure. Calculating the normalizing constant for \eqref{eq:gibbsmeasure}, known as the partition function, is a \#P-complete problem \cite{Jerrum1993-ii}. As such a direct approach to sampling is expected to be computationally intractable in general, and so other methods must be employed instead. One such method is Markov Chain Monte Carlo (MCMC). This involves constructing a Markov chain whose states are elements of $\Omega$ and whose stationary distribution is given by \eqref{eq:gibbsmeasure}. One can then obtain a sample by running this Markov chain for long enough that the output has distribution sufficiently close to \eqref{eq:gibbsmeasure}.
 	% The zero-field ferromagnetic Ising model on finite graph $G = (V, E)$ at 
 	% inverse temperature $\beta \geq 0$ has Gibbs measure
@@ -82,7 +82,7 @@
 
 	The probability $p_i(\sigma)$ is constructed so that it gives the probability that vertex $i$ is $+1$ if we sample it from $\pi$ \eqref{eq:gibbsmeasure} conditioned on every other vertex having its spin fixed by $\sigma$. Note that this causes the dynamics to have $\pi$ as its stationary distribution.
 
-	\subsection{The Coupling Time}
+	\subsection{The coupling time}
 	\label{sec:the coupling time}
 	[THIS NEEDS A BIT OF REWRITING. DEFINE BOTH DISCRETE AND CONTINUOUS RMR. TALK ABOUT BOTH WAYS OF DOING THIS. GENERATE $V_K$ SEQUENCE VIA POISSON CLOCKS. START WITH DISCRETE, THEN USUAL, THEN N CLOCKS.]
 
@@ -131,7 +131,7 @@
 	\end{equation}
 	This is the main object of interest for our analysis. Note that the coupling time is not just a property of the Ising heat-bath process, but also of the coupling we have chosen. In Section \ref{sec:information percolation on the cycle} we will make a change to the coupling we use to make the analysis easier. Some care will need to be taken to verify that the coupling time is not affected by this change.
 
-	\subsection{Equivalence of Discrete and Continuous Coupling Time}
+	\subsection{Equivalence of discrete and continuous coupling time}
 	So far we have stated that the running time of CFTP has the same distribution as the coupling time. In fact, we have glossed over one important detail. Namely, CFTP is exclusively run in discrete time, and our coupling time is defined by the continuous time dynamics. Therefore, for our motivation to be reasonable, we would like to show some sort of equivalence between the distributions of the discrete and continuous coupling times. We do this via Proposition \ref{claim:discrete vs continuous distributions}. 
 
 	\begin{proposition}

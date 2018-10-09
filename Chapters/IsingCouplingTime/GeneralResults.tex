@@ -10,7 +10,7 @@ Restricting $\beta$ to be sufficiently small is a consequence of the increased g
 
 Our result partially confirms the conjecture by \citeauthor{Collevecchio2017-nq} in \cite{Collevecchio2017-nq} that the coupling time for the Ising heat-bath process on the $d$-dimensional lattice, $G_L = (\mathbb{Z}/L\mathbb{Z})^d$, converges to a Gumbel distribution as $L \rightarrow\infty$ for all $\beta < \beta_C$. Our result does not hold all the way up until the critical temperature. This is due to the fact that we are considering a larger class of graphs than just the square lattice, and so it is unreasonable to expect such a result to provide sharp bounds for the lattice. A separate treatment of the square lattice in particular may be needed for a result holding all the way up to the critical temperature. Note that this is what \citeauthor{Lubetzky2013-yv} did in \cite{Lubetzky2013-yv} to prove the existence of cutoff for the full high-temperature regime. Since our proof is also based on information percolation there is good reason to think that a similar approach could also work to extend our result.
 
-[MENTION ONE LEMMA WHERE WE NEED BETA SMALL IS VERY SIMILAR TO THEIR LEMMA?]
+The main part of our proof which requires $\beta$ to be sufficiently small is in Lemma \ref{lem: prob intersect given X_i = 1}. In particular, this Lemma concerns a quantity (see the comments immediately preceding Lemma \ref{lem: prob intersect given X_i = 1}) that is very similar to a quantity used in \cite{Lubetzky2015-po} to prove the existence of cutoff. This similarity further encourages future efforts to sharpen our result.
 
 To state the main result we first must define the graphs on which it is valid. Let $(G_{n})$ be a sequence of vertex-transitive graphs with fixed degree $\Delta$ and $n$ vertices. Let $P_n(k)$ denote the number of vertices at distance $k$ from a vertex $i$ in $G_n$ and let $Q_n(k)$ denote the number of vertices at distance $k$ or less from a vertex $i$ in $G_n$. Define
 \begin{equation}
@@ -19,22 +19,34 @@ To state the main result we first must define the graphs on which it is valid. L
 \end{equation}
 In this chapter we consider sequences of vertex-transitive graphs $(G_n) \in \mathscr{G}$. 
 
+It is worth verifying that the set $\mathscr{G}$ contains some graph sequences that are of interest. We start by showing that it contains the $d$-dimensional discrete tori.
+
 \begin{lemma}
-	Define the sequence of length $L$ $d$-dimensional square lattices on a torus, $G_L = (\mathbb{Z}/\mathbb{Z} L)^d$. Then $(G_L)_{L \geq 1} \in \mathscr{G}$.
+	Define the sequence of length $L$ $d$-dimensional square lattices on a torus, $(G_L)_{L \geq 1}$, via $G_L = (\mathbb{Z}/\mathbb{Z} L)^d$. Then $(G_L)_{L \geq 1} \in \mathscr{G}$.
 \end{lemma}
 \begin{proof}
-	First note that on $G_L = (\mathbb{Z}/\mathbb{Z}L)^2$, $P_n(k) \leq Q_n(k)$ and
-		\begin{equation}
-			Q_n(k) \leq \frac{2^d}{d!} (k+1)(k+2)\dots(k+d).
-		\end{equation}
-	This is a degree $d$ polynomial in $k$ which satisfies the constraints on \eqref{eq:set valid graphs}.
+	The torus $G_L = (\mathbb{Z}/\mathbb{Z}L)^d$ is obviously vertex transitive and the sequence $(G_L)_{L \geq 1}$ has fixed degree $\Delta = 2d$. By definition $P_n(k) \leq Q_n(k)$ and we can upper bound $Q_n(k)$ by the number of vertices contained within distance $k$ of the origin on the infinite $d$-dimensional integer lattice, $Q_\infty(k)$.
+
+	To bound $Q_\infty(k)$, consider first the number of vertices contained within distance $k$ of the origin in the closed positive orthant, $Q_\infty(k)^+$. That is, the number of vertices $\vect{x} = (x_1, \dots, x_d)$ with $x_i \geq 0$ and such that
+	\begin{align}
+		\sum_{i = 1}^d x_i \leq k
+	\end{align}
+	We note that we can represent each vertex in the positive orthant within distance $k$ of the origin by $k$ stars separated by $n$ bars, and taking $x_i$ to be the number of stars between bars $i-1$ and $i$. So for example, if $k = 5$ and $d = 2$,
+	\begin{equation}
+		\star | \star \star | | \star \star
+	\end{equation}
+	represents the vertex $\vect{x} = (1, 2, 0)$. Note that any stars after the last bar are not included (this accounts for $\vect{x}$ being closer than distance $k$ to the origin). There are $k + d$ choose $d$ ways to arrange the stars and bars and so
+	\begin{equation}
+		Q_\infty(k)^+ \leq \binom{k+d}{d}
+	\end{equation}
+	and since in $d$ dimensions there are $2^d$ orthants,
+	\begin{equation}
+		P_n(k) \leq Q_n(k) \leq Q_\infty(k) \leq \frac{2^d}{d!} (k+1)(k+2)\dots(k+d).
+	\end{equation}
+	This is a degree $d$ polynomial in $k$ which satisfies the constraints in \eqref{eq:set valid graphs}.
 \end{proof}
 
-\begin{remark}
-	Another class of graphs contained in $\mathscr{G}$ are the $m$th powers of $G_L = (\mathbb{Z}/\mathbb{Z} L)^d$.	The $m$th power of a graph $G$ is a graph, $G^m$, with the same vertices as $G$, but in which all vertices whose distance in $G$ is no more than $m$ are adjacent. Clearly, $Q_n^{G^m}(k) \leq Q_n^G(mk)$. Hence powers of $G_L = (\mathbb{Z}/\mathbb{Z}L)^d$ are also in $\mathscr{G}$. This is of practical interest since the Ising model on $G^m$ corresponds to the Ising model with $m$ nearest neighbours on $G$.
-\end{remark}
-
-[WHAT ELSE TO SAY HERE]
+Another class of graphs contained in $\mathscr{G}$ are the $m$th powers of $G_L = (\mathbb{Z}/\mathbb{Z} L)^d$.	The $m$th power of a graph $G$ is a graph, $G^m$, with the same vertices as $G$, but in which we make adjacent all vertices whose distance in $G$ is no more than $m$. Clearly, $Q_n^{G^m}(k) \leq Q_n^G(mk)$, and $G^m$ inherits the transitivity of $G$. Hence sequences of powers of $G_L = (\mathbb{Z}/\mathbb{Z}L)^d$ are also in $\mathscr{G}$. This is of practical interest since the Ising model on $G^m$ corresponds to the Ising model with $m$ nearest neighbours on $G$.
 
 We now define a couple of quantities. Firstly, the \emph{magnetization at vertex $i$ at time $t$} is
 \begin{equation}
@@ -68,7 +80,7 @@ which is around the time it takes for the top and bottom chains to couple.
 
 The proof of Theorem \ref{thm:Coupling Distribution on transitive graph} will be given in Section \ref{sec:proof thm coupling nd} after the essential preliminaries are presented. In Section \ref{sec:information percolation in higher dimensions} we describe an alternative construction of the histories that can sometimes be easier to work with. Then in Section \ref{sec:nd problem setup}, we outline the overall approach to the proof. The method is very similar to the method used in Chapter \ref{Ch:1D} but there are some additional problems that are addressed. Finally, we defer results directly concerning the update histories to Section \ref{sec:additional lemmas nd}.
 
-\section{Information Percolation in higher dimensions}
+\section{Information percolation in higher dimensions}
 \label{sec:information percolation in higher dimensions}
 In the previous chapter, we showed that on the cycle, there was a coupling that made the update history of a single vertex to be a continuous-time random walk that died at rate $\theta$. On lattices of dimension $d > 2$, we can no longer use this coupling and so the updates histories are significantly more complex. 
 
@@ -82,7 +94,7 @@ However, it is possible for vertices to be removed from $\mathcal{H}_A(t)$ from 
 \end{equation}
 and also that $\mathcal{H}_A$ is a subgraph of $\hat{\mathcal{H}}_A$.
 
-\subsection{Magnetization}
+\subsection{The magnetization}
 One quantity which we used multiple times in Chapter \ref{Ch:1D} was $\prob[X_i = 1]$. Although it was not required earlier, we would now like to make clear that this is in fact the magnetization at time $t^*$. 
 
 Recall that the magnetization at vertex $i \in V$ at time $t > 0$ is defined to be
@@ -162,7 +174,7 @@ Bearing in mind that $m_0 = 1$, we also obtain a bound on $t_c(n)$.
 	\end{equation}
 \end{corollary}
 
-\section{Setup}
+\section{Problem set-up}
 \label{sec:nd problem setup}
 As in Chapter \ref{Ch:1D}, we prove Theorem \ref{thm:Coupling Distribution on transitive graph} through the use of a stronger statement in Theorem \ref{thm: nd compound poisson approximation}. The overall approach is almost exactly as described in Section \ref{sec:1D problem setup}; at a time $t^*$ we count the number of vertices at which the bottom and top chains differ and show that the distribution of this random variable, which we call $W$, is close to an appropriately chosen compound Poisson distribution. The main difference in the construction is that we use a different $t^*$ here.
 
@@ -401,11 +413,11 @@ For each vertex $i \in V$, define indicators
 		% NEED TO PROVE LEMMA \ref{lem:intersecting histories bound given X_j = 1}
 	\end{proof}
 
-\section{Additional Lemmas}
+\section{Additional lemmas}
 \label{sec:additional lemmas nd}
-	The first of our additional Lemmas comes from \cite[Lemma 3.1]{Lubetzky2015-po}. We have made our statement of the lemma slightly more precise and so we have rewritten both the lemma and proof out here along with our modifications. In particular, we have specified precisely how small $\beta$ must be for the statement to hold.
+	The first of our additional lemmas comes from \cite[Lemma 3.1]{Lubetzky2015-po}. We have made our statement of the lemma slightly more precise and so we have rewritten both the lemma and proof out here along with our modifications. In particular, we have specified precisely how small $\beta$ must be for the statement to hold.
 
-	The Lemma concerns two quantities, $\chi(\hist_A)$ and $\mathcal{L}(\hist_A)$ which in some sense measure the horizontal and vertical size of $\hist_A$ respectively. 
+	The lemma concerns two quantities, $\chi(\hist_A)$ and $\mathcal{L}(\hist_A)$ which in some sense measure the horizontal and vertical size of $\hist_A$ respectively. 
 	Define
 	\begin{equation}
 		\chi(\mathcal{H}_i) = \#\left\{ \left( (u,t), (v,t) \right) \in \mathcal{H}_i \right\}
