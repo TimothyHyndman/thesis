@@ -11,6 +11,8 @@
 %-------------------------------------------------------------------------------
 
 \section{Introduction}
+	Mixtures of distributions
+% History, background, usefulness
 	\subsection{Definitions}
 		A location mixture on $\mathbb{R}$ with mixing distribution $Q$ and component density $f(x)$ can be written as
 		\begin{equation}
@@ -32,7 +34,7 @@
 		
 		In this paper we are primarily interested in the number of probability masses that are required in the maximizing mixture. We will call this quantity $K_{\vect{x}}$. It should be noted that there is not always a unique mixing distribution that maximizes \eqref{eq:loglikelihood}. However we can choose $K_{\vect{x}}$ to be the smallest number of probability masses that any of the maximizing distributions have.
 
-	\subsection{Flag graphs}
+\section{Numerical Results}
 		One point which we wish to emphasize is that, given a component density $f$, $K$ is a function of $\vect{x}$ only. We can visualise this for small values of $n$. In Figure \ref{fig:n3phase}, we empirically found the MLE for $\vect{x} = (0,x_2,x_3)$ and recorded the number of probability masses in the maximizing mixture. We took values for $x_2$ and $x_3$ from an evenly spaced grid with $-6\leq x_2,x_3\leq 6$. We fixed $x_1 = 0$ since the shape of the maximum likelihood mixture (and therefore $K_{\vect{x}}$) depends only on the relative location of the $x_i$, not their absolute location.
 		
 		\begin{figure}[ht]
@@ -48,7 +50,8 @@
 		The problem of determining $K_{\vect{x}}$ is then the same as determining in which of the $C_k$ $\vect{x}$ lies.
 
 	\subsection{Motivating Example}
-	% \subsection{Summary of Lindsay}
+
+\section{Summary of Lindsay}
 
 \section{Results for \texorpdfstring{$n = 2$}{n = 2}}
 	In this section, we present Theorem \ref{thm:n=2 inflection result} which 
@@ -494,7 +497,7 @@
 	\subsection{Derive Constraints again}
 	WE SHOULD BE ABLE TO DERIVE \eqref{eq:GammaEq1} THROUGH \eqref{eq:GammaEq3} AGAIN USING THEOREM \ref{thm:solution in interior}.
 
-\section{General Results}
+% \section{Other Results}
 	\subsection{All points separated by \texorpdfstring{$\alpha$}{a}}
 		Consider the situation in which $|x_i - x_j| > \alpha$ for all $i\neq j$. Intuitively, we would expect that there is some $\alpha^*$ such that if $\alpha > \alpha^*$ then $\vect{x} \in C_n$.
 		
