@@ -65,23 +65,23 @@
 
 	In Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults}, we will investigate the coupling time for the Ising heat-bath Glauber dynamics, both on the cycle, at any temperature, in Chapter \ref{Ch:1D}, and on any vertex transitive graph, at sufficiently high temperatures, in Chapter \ref{Ch:GeneralResults}. Our main result in each chapter will be proving that, when appropriately scaled, the distribution of the coupling time essentially converges to a Gumbel as the size of the graph increases. 
 
-	Prior to this work, not much has been written about the coupling time for the heat-bath dynamics. In \cite[Conjecture 7.1]{Collevecchio2017-nq}, the authors conjecture that on the $d$-dimensional lattice with side length $L$, $\mathbb{Z}^d_L$, the coupling time of the Ising heat-bath process converges to a Gumbel distribution as $L \rightarrow \infty$ at all temperatures above the critical temperature. This is then followed by numerical evidence supporting their conjecture. We may also use a Theorem by Propp and Wilson \cite[Theorem 5]{Propp1996-cf} to relate the \emph{mixing time} of the heat-bath Glauber dynamics with tail bounds of the coupling time.
+	Prior to this work, not much has been written about the coupling time for the heat-bath dynamics. In \cite[Conjecture 7.1]{Collevecchio2017-nq}, the authors conjecture that on the $d$-dimensional lattice with side length $L$, $\mathbb{Z}^d_L$, the coupling time of the Ising heat-bath process converges to a Gumbel distribution as $L \rightarrow \infty$ at all temperatures above the critical temperature. This is then followed by numerical evidence supporting their conjecture. We may also use the results by Propp and Wilson in \cite[Section 5]{Propp1996-cf} to relate the \emph{mixing time} of the heat-bath Glauber dynamics with tail bounds of the coupling time.
+
+	[WRITE THE RESULTS]
 
 	Given a parameter $\epsilon$, a Markov Chain $Y_t$ has mixing time
 	\begin{equation}
+	\label{eq:mixing time definition}
 		t_\mathrm{MIX}(\epsilon) = \inf\left\{t: \max_{x_0 \in \Omega} ||\prob(X_t \in \cdot | X_0 = x_0) - \pi ||_\mathrm{TV} \leq \epsilon \right\}
 	\end{equation}
 	where the total variation distance between two distributions $\nu_1$ and $\nu_2$ is defined as 
 	\begin{equation}
 		||\nu_1 - \nu_2||_\mathrm{TV} = \max_{A \in \Omega}|\nu_1(A) - \nu_2(A)| = \frac{1}{2}\sum_{\sigma \in \Omega} |\nu_1(\sigma) - \nu_2(\sigma)|.
 	\end{equation}
+
+	% [STATE RELATION]
 	
-	On the complete graph,
-
-
-	[BRIEF LIT REVIEW HERE].
-
-	["THERE IS PROBABLY NOT PARTICULAR REASON TO FOCUS ON THEIR RESULTS SPECIFICALLY. A GENERAL SURVEY OF WHATS KNOWN ABOUT ISING GLAUBER MIXING (PERES ON $K_N$, OLVIERI IN HIGH TEMP) WOULD MAKE SENSE. ALSO SOME DISCUSSION OF WHATS KNOWN ALREADY FOR $T_{BACK}$ (NOT MUCH - ORIGINAL PW PAPER, PLUS OUR JSP - THEOREM \& CONJECTURES"]
+	On the complete graph, a complete characterisation of the mixing time as a function of temperature is obtained in \cite{Ding2009-du}. On other graphs, the mixing time is treated in \cite{Martinelli1994-bv} for sufficiently high temperature. More recently, a series of papers by Lubetzky and Sly (\cite{Lubetzky2013-yv}, \cite{Lubetzky2015-po}, \cite{Lubetzky2016-wd}, and \cite{Lubetzky2017-nc}) have established much sharper results concerning the mixing time on a wide class of graphs. Their methods form a key part of our proof and will be discussed further in Section \ref{sec:information percolation}.
 
 	\subsection{Ising heat-bath Glauber dynamics}
 	\label{sec:heat-bath glauber dynamics definition}
@@ -363,22 +363,24 @@
 
 	
 \section{Information percolation}
+\label{sec:information percolation}
 	A cornerstone to the proofs contained in Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults} is the framework of information percolation, introduced by Lubetzky and Sly in \cite{Lubetzky2016-wd}. In this paper, Lubetzky and Sly managed to achieve much sharper results, in much more generality, regarding the mixing time for the Glauber dynamics for the Ising model than had been achieved before. In this section we provide a brief summary of their results before laying out the basic framework, in the context of the Ising heat-bath dynamics, that will be required for Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults}.
 
 	\subsection{Information percolation and cutoff for the stochastic Ising model}
-	In order to define cutoff, the central phenomenon of study in Lubetzky and Sly's 2016 paper titled, `Information percolation and cutoff for the stochastic Ising model', we first have to define the total-variation mixing time. Given a parameter $\epsilon$, a Markov Chain $Y_t$ has mixing time
-	\begin{equation}
-		t_\mathrm{MIX}(\epsilon) = \inf\left\{t: \max_{x_0 \in \Omega} ||\prob(X_t \in \cdot | X_0 = x_0) - \pi ||_\mathrm{TV} \leq \epsilon \right\}
-	\end{equation}
-	where the total variation distance between two distributions $\nu_1$ and $\nu_2$ is defined as 
-	\begin{equation}
-		||\nu_1 - \nu_2||_\mathrm{TV} = \max_{A \in \Omega}|\nu_1(A) - \nu_2(A)| = \frac{1}{2}\sum_{\sigma \in \Omega} |\nu_1(\sigma) - \nu_2(\sigma)|.
-	\end{equation}
+	\emph{Cutoff} is the central phenomenon of study in Lubetzky and Sly's 2016 paper titled, `Information percolation and cutoff for the stochastic Ising model'.
+	% Given a parameter $\epsilon$, a Markov Chain $Y_t$ has mixing time
+	% \begin{equation}
+	% 	t_\mathrm{MIX}(\epsilon) = \inf\left\{t: \max_{x_0 \in \Omega} ||\prob(X_t \in \cdot | X_0 = x_0) - \pi ||_\mathrm{TV} \leq \epsilon \right\}
+	% \end{equation}
+	% where the total variation distance between two distributions $\nu_1$ and $\nu_2$ is defined as 
+	% \begin{equation}
+	% 	||\nu_1 - \nu_2||_\mathrm{TV} = \max_{A \in \Omega}|\nu_1(A) - \nu_2(A)| = \frac{1}{2}\sum_{\sigma \in \Omega} |\nu_1(\sigma) - \nu_2(\sigma)|.
+	% \end{equation}
 	A family of Markov chains $(Y_t)$ indexed by $n$ is said to exhibit cutoff if
 	\begin{equation}
 		t_\mathrm{MIX}(\epsilon) = (1 + o(1)) t_\mathrm{MIX}(\epsilon'),
 	\end{equation}
-	for any fixed $0 < \epsilon, \epsilon' < 1$. A \emph{cutoff window} is a sequence $w_n = o(t_\mathrm{MIX}(1/4))$ where
+	for any fixed $0 < \epsilon, \epsilon' < 1$ (recall \eqref{eq:mixing time definition} for the definition of $t_\mathrm{MIX}$). A \emph{cutoff window} is a sequence $w_n = o(t_\mathrm{MIX}(1/4))$ where
 	\begin{equation}
 		t_\mathrm{MIX}(\epsilon) = t_\mathrm{MIX}(1 - \epsilon) + \mathcal{O}(w_n)
 	\end{equation}
