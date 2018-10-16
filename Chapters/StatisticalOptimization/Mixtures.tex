@@ -14,7 +14,7 @@
 	Mixtures of distributions have been used to model a wide variety of phenomena, with successful applications in the fields of ``astronomy, biology, genetics, medicine, psychiatry, economics, engineering, and marketing, among many other fields in the biological, physical, and social sciences'' \cite[Section 1.1.1]{McLachlan2004-ik}. Mixture models have been in use for over 100 years. In 1984, Pearson used a mixture of two normal densities to model the distribution of the ratio of forehead to body lengths of a sample of 1000 crabs \cite{Pearson1894-qv}. His mixture of two normals was able to account for the skewness in the data, which a single normal could not model. Pearson suggested that this signalled the existence of two sub-populations of crabs; each associated with its own normal distribution.
 
 	However, we do not require that data comes from a mixture of distributions in any physical sense for mixtures to be a useful modelling tool. 
-	One of the traits that has contributed to the extent of the use of mixtures is that they provide a convenient semi-parametric way of modelling unknown distributions. They are particularly useful in situations where a parametric method is too restrictive to satisfactorily model the data, and a fully non-parametric method, such as kernel density estimation, may require evaluating a sum which contains more terms than desired. By way of illustration, Priebe in \cite{Priebe1994-ng} discussed modelling a log normal density using a mixture of normals. With $n = 10000$ observations, Priebe only required about 30 normals to obtain a good approximation. This is in contrast to a kernel density estimator which would be essentially a mixture of 10000 normals.
+	One of the traits that has contributed to the extent of the use of mixtures is that they provide a convenient semi-parametric way of modelling unknown distributions. They are particularly useful in situations where a parametric method is too restrictive to satisfactorily model the data, and a fully non-parametric method, such as kernel density estimation, may require evaluating a sum which contains more terms than desired. By way of illustration, Priebe in \cite{Priebe1994-ng} discussed modelling a log normal density using a mixture of normals. With $n = 10000$ observations, Priebe only required about 30 normals to obtain a good approximation. This is in contrast to a kernel density estimator which in this case would be essentially a mixture of 10000 normals.
 
 	[WHAT ELSE?]
 
@@ -34,9 +34,11 @@
 		f_{\vect{p}, \vect{\theta}} = \sum_{j = 1}^m p_j f(x - \theta_j).
 		% \label{eq:mixturesum}
 	\end{equation}
+	Looking only at mixtures of this form is not as restrictive as it may at first seem. Using a finite location mixture of normals, you can approximate any continuous density arbitrarily well [BETTER CITATION] \cite{McLachlan2004-ik}.
 
-	Looking only at mixtures of this form is not as restrictive as it may at first seem. [BLAHBLAHBLAH] you can approximate any continuous density with a finite location mixture.
+	A common question when using mixtures is the following. Let $\vect{X} = (X_1, \dots, X_n)$ be a random sample of size $n$, where $X_i$ has probability density function $g(\vect{x})$. Given $\vect{x} = (x_1, \dots, x_n)$, an observed random sample of $\vect{X}$, and a component density $f(\vect{x}; \vect{\theta})$, how do we choose the mixing distribution $Q$ so that $f_Q(\vect{x})$ is a good approximation for $g(\vect{x})$?
 
+	One answer to this question is to use maximum likelihood.
 
 	[UP TO HERE]
 	% History, background, usefulness
