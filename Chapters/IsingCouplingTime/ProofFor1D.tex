@@ -132,32 +132,43 @@
 	\end{align}
 	The process $K_t^i$ is Poisson with rate $\theta$ and gives the times when vertex $i$ has an oblivious update. The processes $L_t^i$ and $R_t^i$ are Poisson with rate $(1 - \theta)/2$ and give the times when $\sigma_i$ is replaced by $\sigma_{i-1}$ and $\sigma_{i+1}$ respectively.
 
-	The collection of $K_i^t$, $L_t^i$ and $R_t^i$ for every $i \in V$ forms an encoding of the update sequence and may be represented graphically as follows. Place an $\times$ at every $(i, K_t^i) \in V \times [0, t^*]$. Draw a directed edge $(i, L_t^i) \rightarrow (v - 1, L_t^i)$ for every $L_t^i$ and draw a directed edge $(i, R_t^i) \rightarrow (v + 1, R_t^i)$ for every $R_t^i$.
+	The collection of $K_i^t$, $L_t^i$ and $R_t^i$ for every $i \in V$ forms an encoding of the update sequence and may be represented graphically as follows. Place an $\times$ at every $(i, K_t^i) \in V \times [0, t^*]$. Draw a directed edge $(i, L_t^i) \rightarrow (v - 1, L_t^i)$ for every $L_t^i$ and draw a directed edge $(i, R_t^i) \rightarrow (v + 1, R_t^i)$ for every $R_t^i$. To construct the update histories, trace back in time from $t^*$ from each vertex, making turns along directed horizontal edges, and killing the process at any $\times$. An example of this graphical representation along with the update histories is shown in Figure \ref{fig:example histories 1D thinned poisson}.
 
+	["SHOULD PROBABLY COMMENT ON WHY, IE WHY THEY HAVE THE RIGHT DISTRIBUTION"]
 
+	[POINT OUT THIS IS SAME AS GRAPHICAL REPRESENTATION OF NOISY VOTER MODEL]
+	% An example history using these new rules is shown in Figure \ref{fig:example percolation construction rightleft}. In a similar vein to Figures \ref{fig:example percolation construction oblivious} and \ref{fig:nonoblivious shrink} we represent each update $(\mathcal{V}, U, t)$ in the update sequence by placing at $(\mathcal{V}, t)$ one of the symbols $+$, $r$, $l$, or $-$ chosen according to $U$. We then trace back from time $t^*$, moving left or right when we encounter a $l$ or $r$ respectively, and terminating whenever we encounter a $+$ or $-$.
 
-
-
-
-
-
-	An example history using these new rules is shown in Figure \ref{fig:example percolation construction rightleft}. In a similar vein to Figures \ref{fig:example percolation construction oblivious} and \ref{fig:nonoblivious shrink} we represent each update $(\mathcal{V}, U, t)$ in the update sequence by placing at $(\mathcal{V}, t)$ one of the symbols $+$, $r$, $l$, or $-$ chosen according to $U$. We then trace back from time $t^*$, moving left or right when we encounter a $l$ or $r$ respectively, and terminating whenever we encounter a $+$ or $-$.
+	% \begin{figure}
+	% 	\centering
+	% 	\includegraphics[width = 0.8\textwidth]{Figures/IsingCouplingTime/example_percolation_construction_rightleft.pdf}
+	% 	\caption[The update sequence for a section of the cycle and the corresponding update history from vertex i using the new update rules.]{The update sequence for a section of the cycle and the corresponding update history from vertex $i$ using the new update rules. Vertex $i$ takes the same spin as the spin it terminates at, in this case $+1$.}
+	% 	\label{fig:example percolation construction rightleft}
+	% \end{figure}
 
 	\begin{figure}
 		\centering
-		\includegraphics[width = 0.8\textwidth]{Figures/IsingCouplingTime/example_percolation_construction_rightleft.pdf}
-		\caption[The update sequence for a section of the cycle and the corresponding update history from vertex i using the new update rules.]{The update sequence for a section of the cycle and the corresponding update history from vertex $i$ using the new update rules. Vertex $i$ takes the same spin as the spin it terminates at, in this case $+1$.}
-		\label{fig:example percolation construction rightleft}
+		\includegraphics[width = 0.8\textwidth]{Figures/IsingCouplingTime/example_histories_1D_thinned_poisson.pdf}
+		\caption[The update sequence for a section of the cycle and the corresponding update history from each vertex using the new update rules.]{The update sequence for a section of the cycle represented by the thinned Poisson processes $K_t^i$ ($\times$), $L_t^i$ (left arrows), and $R_t^i$ (right arrows) for each vertex. The corresponding update histories are overlaid in blue.}
+		\label{fig:example histories 1D thinned poisson}
 	\end{figure}
 
-	We now see that as $t$ decreases from $t^*$, $\mathcal{H}_i(t)$ is a continuous-time random walk that dies at rate $\theta$, moves left at rate $(1 - \theta)/2$, and moves right at rate $(1 - \theta)/2$. The probability that $\mathcal{H}_i(0) \neq \emptyset$ is simply the probability that the continuous-time random walk survives until time $t = 0$. This immediately gives us the following probability which we will use repeatedly in what follows. Recalling \eqref{eq:prob equality of coupling and empty support},
+	% For each vertex $i$, we can also describe processes
+	% \begin{align}
+	% 	K_t^{\hist_i} &= \#\{k \leq N_t: \mathcal{V}_k = \hist_i(t), U_k \in \left[0, \theta/2\right) \cup \left(1 - \theta/2, 1\right]\}\\
+	% 	L_t^{\hist_i} &= \#\{k \leq N_t: \mathcal{V}_k = \hist_i(t), U_k \in \left[\theta/2, 1/2\right)\}\\
+	% 	R_t^{\hist_i} &= \#\{k \leq N_t: \mathcal{V}_k = \hist_i(t), U_k \in \left[1/2, 1 - \theta/2\right)\}.
+	% \end{align}
+
+	Following the history of a single vertex $i$ backwards in time from $t^*$, we trace out a continuous-time random walk which moves left at rate $(1 - \theta)/2$, and moves right at rate $(1 - \theta)/2$. The walk survives until it encounters a point from $K_t^j$, $j = \hist_i(t)$, at which point it terminates. From the memoryless property of the exponential waiting times of $K_t^j$, and since $K_t^j$ is independent of $K_t^k$ for any two vertices $j \neq k$, we have that the time until a single history dies is exponential with rate $\theta$.
+	% We now see that as $t$ decreases from $t^*$, $\mathcal{H}_i(t)$ is a continuous-time random walk that dies at rate $\theta$, moves left at rate $(1 - \theta)/2$, and moves right at rate $(1 - \theta)/2$. The probability that $\mathcal{H}_i(0) \neq \emptyset$ is simply the probability that the continuous-time random walk survives until time $t = 0$. 
+	This immediately gives us the following probability which we will use repeatedly in what follows. Recalling \eqref{eq:prob equality of coupling and empty support},
 	\begin{equation}
 		\prob \left[ \mathscr{B}_{t^*}[i] \neq \mathscr{T}_{t^*}[i] \right] = 
 		\prob \left[ \mathcal{H}_i(0) \neq \emptyset \right] = 
 		\euler^{-\theta t^*}.
 		\label{eq:1D bernoulli prob}
 	\end{equation}
-	since our histories die at rate $\theta$.
 
 	\section{Problem set-up}
 	\label{sec:1D problem setup}
