@@ -31,14 +31,23 @@
 
 	In this chapter, we will be concerned only with finite mixtures on the real line, whose component densities are parametrised by a single shifting parameter, $\theta$. This is what we will call a \emph{location mixture}, and it can be written as
 	\begin{equation}
-		f_{\vect{p}, \vect{\theta}} = \sum_{j = 1}^m p_j f(x - \theta_j).
+		f_{\vect{p}, \vect{\theta}} = \sum_{j = 1}^m p_j f(x - \theta_j)
 		% \label{eq:mixturesum}
 	\end{equation}
+	for a single component density $f(x)$.
 	Looking only at mixtures of this form is not as restrictive as it may at first seem. Using a finite location mixture of normals, you can approximate any continuous density arbitrarily well [BETTER CITATION] \cite{McLachlan2004-ik}.
 
-	A common question when using mixtures is the following. Let $\vect{X} = (X_1, \dots, X_n)$ be a random sample of size $n$, where $X_i$ has probability density function $g(\vect{x})$. Given $\vect{x} = (x_1, \dots, x_n)$, an observed random sample of $\vect{X}$, and a component density $f(\vect{x}; \vect{\theta})$, how do we choose the mixing distribution $Q$ so that $f_Q(\vect{x})$ is a good approximation for $g(\vect{x})$?
+	A common question when using mixtures is the following. Let $\vect{X} = (X_1, \dots, X_n)$ be a random sample of size $n$, where $X_i$ has probability density function $g(\vect{x})$. Given $\vect{x} = (x_1, \dots, x_n)$, an observed random sample of $\vect{X}$, and a component density $f(\vect{x}; \vect{\theta})$, how do we choose the mixing distribution $Q$ so that $f_Q(\vect{x})$ is a good approximation for $g(\vect{x})$?	One answer to this question is to choose $Q$ to maximise the likelihood.
 
-	One answer to this question is to use maximum likelihood.
+	The \emph{likelihood} of a distribution $Q$ given $\vect{x}$ is 
+	\begin{equation}
+		L(Q;\vect{x}) = \prod_{i = 1}^n f_Q(x_i).
+	\end{equation}
+	Maximizing $L(Q;\vect{x})$ may be achieved by instead maximizing the \emph{log likelihood},
+	\begin{equation}
+		l(Q; \vect{x}) = \log L(Q; \vect{x}) = \sum_{i = 1}^n \log f_Q(x_i),
+	\end{equation}
+	since $\log(x)$ is a strictly increasing function. In \cite{Lindsay1983-tf}, Linday showed that so long as the likelihood is bounded, there exists a maximizing $Q$ that has at most $n$ points of support. This is a useful result because it means that the problem of finding a maximizing $Q$ is an optimization problem having finite dimensions. It also justifies our decision to only consider finite mixtures in this chapter.
 
 	[UP TO HERE]
 	% History, background, usefulness
