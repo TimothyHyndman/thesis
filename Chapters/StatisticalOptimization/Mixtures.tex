@@ -32,7 +32,7 @@
 	In this chapter, we will be concerned only with finite mixtures on the real line, whose component densities are parametrised by a single shifting parameter, $\theta$. This is what we will call a \emph{location mixture}, and it can be written as
 	\begin{equation}
 		f_{\vect{p}, \vect{\theta}} = \sum_{j = 1}^m p_j f(x - \theta_j)
-		% \label{eq:mixturesum}
+		\label{eq:mixturesum}
 	\end{equation}
 	for a single component density $f(x)$.
 	Looking only at mixtures of this form is not as restrictive as it may at first seem. Using a finite location mixture of normals, you can approximate any continuous density arbitrarily well [BETTER CITATION] \cite{McLachlan2004-ik}.
@@ -46,33 +46,39 @@
 	Maximizing $L(Q;\vect{x})$ may be achieved by instead maximizing the \emph{log likelihood},
 	\begin{equation}
 		l(Q; \vect{x}) = \log L(Q; \vect{x}) = \sum_{i = 1}^n \log f_Q(x_i),
+		\label{eq:loglikelihood}
 	\end{equation}
-	since $\log(x)$ is a strictly increasing function. In \cite{Lindsay1983-tf}, Linday showed that so long as the likelihood is bounded, there exists a maximizing $Q$ that has at most $n$ points of support. This is a useful result because it means that the problem of finding a maximizing $Q$ is an optimization problem having finite dimensions. It also justifies our decision to only consider finite mixtures in this chapter.
+	since $\log(x)$ is a strictly increasing function. In \cite{Lindsay1983-tf}, Lindsay showed that so long as the likelihood is bounded, there exists a maximizing $Q$ that has at most $n$ points of support. This is a useful result because it means that the problem of finding a maximizing $Q$ is an optimization problem having finite dimensions. It also justifies our decision to only consider finite mixtures in this chapter.
+
+	% While one can construct examples in which the mixing distribution that maximizes the likelihood has all $n$ points of support, in practise, 
+	The size of the support of the $Q$ that maximizes \eqref{eq:loglikelihood} is the primary quantity of interest for this Chapter. However, there are a few considerations to be made. The first is that 
+
+	% Not necessarily unique Q
+	% Location mixtures only (otherwise unbounded likelihood and use all n points)
+	% Mention sieves
+	% NOT about recovering the 'true' number of components - we are using mixtures as a density approximation tool and are interested in the property of this optimization.
+
 
 	[UP TO HERE]
-	% History, background, usefulness
-	% Definitions
-	% Log likelihood
-	% Location mixtures
 
 
-	A location mixture on $\mathbb{R}$ with mixing distribution $Q$ and component density $f(x)$ can be written as
-	\begin{equation}
-		f_Q(x) = \int_{-\infty}^\infty f(x-\theta) \intd Q(\theta).
-	\label{eq:mixtureint}
-	\end{equation}
+	% A location mixture on $\mathbb{R}$ with mixing distribution $Q$ and component density $f(x)$ can be written as
+	% \begin{equation}
+	% 	f_Q(x) = \int_{-\infty}^\infty f(x-\theta) \intd Q(\theta).
+	% \label{eq:mixtureint}
+	% \end{equation}
 
-	Given a sample $\vect{x} = (x_1,\dots,x_n)$, we wish to find a distribution that maximizes the log likelihood	
-	\begin{equation}
-		L(Q;\vect{x}) = \sum_{i = 1}^n \log(f_Q(x_i)).
-	\label{eq:loglikelihood}
-	\end{equation}
-	Lindsay showed that under quite general conditions, such a maximizing distribution exists and has no more than $n$ points of support \cite{Lindsay1983-tf}. It is therefore common to use
-	\begin{equation}
-		f_{\vect{p},\vect{\theta}}(x) = \sum_{j = 1}^m p_j f(x - \theta_j)
-	\label{eq:mixturesum}
-	\end{equation}
-	instead of \eqref{eq:mixtureint} as our definition of a location mixture. We note that \eqref{eq:mixtureint} is equivalent to \eqref{eq:mixturesum} in the case where $Q$ is a discrete distribution which places probability masses of weight $p_j$ at locations $\theta_j$, for $j = 1,\dots,m$. The order of the $x_i$ does not matter and so we will assume without loss of generality that $x_1 \leq x_2 \leq \dots \leq x_n$ throughout.
+	% Given a sample $\vect{x} = (x_1,\dots,x_n)$, we wish to find a distribution that maximizes the log likelihood	
+	% \begin{equation}
+	% 	L(Q;\vect{x}) = \sum_{i = 1}^n \log(f_Q(x_i)).
+	% \label{eq:loglikelihood}
+	% \end{equation}
+	% Lindsay showed that under quite general conditions, such a maximizing distribution exists and has no more than $n$ points of support \cite{Lindsay1983-tf}. It is therefore common to use
+	% \begin{equation}
+	% 	f_{\vect{p},\vect{\theta}}(x) = \sum_{j = 1}^m p_j f(x - \theta_j)
+	% \label{eq:mixturesum}
+	% \end{equation}
+	% instead of \eqref{eq:mixtureint} as our definition of a location mixture. We note that \eqref{eq:mixtureint} is equivalent to \eqref{eq:mixturesum} in the case where $Q$ is a discrete distribution which places probability masses of weight $p_j$ at locations $\theta_j$, for $j = 1,\dots,m$. The order of the $x_i$ does not matter and so we will assume without loss of generality that $x_1 \leq x_2 \leq \dots \leq x_n$ throughout.
 	
 	In this paper we are primarily interested in the number of probability masses that are required in the maximizing mixture. We will call this quantity $K_{\vect{x}}$. It should be noted that there is not always a unique mixing distribution that maximizes \eqref{eq:loglikelihood}. However we can choose $K_{\vect{x}}$ to be the smallest number of probability masses that any of the maximizing distributions have.
 
