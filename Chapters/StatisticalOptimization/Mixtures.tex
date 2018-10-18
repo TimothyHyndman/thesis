@@ -51,7 +51,13 @@
 	since $\log(x)$ is a strictly increasing function. In \cite{Lindsay1983-tf}, Lindsay showed that so long as the likelihood is bounded, there exists a maximizing $Q$ that has at most $n$ points of support. This is a useful result because it means that the problem of finding a maximizing $Q$ is an optimization problem having finite dimensions. It also justifies our decision to only consider finite mixtures in this chapter.
 
 	% While one can construct examples in which the mixing distribution that maximizes the likelihood has all $n$ points of support, in practise, 
-	The size of the support of the $Q$ that maximizes \eqref{eq:loglikelihood} is the primary quantity of interest for this Chapter. However, there are a few considerations to be made. The first is that there is not necessarily a unique mixing distribution that maximizes \eqref{eq:loglikelihood}. This does not pose a huge problem for us as we can choose to consider the smallest number of points of support required for a maximizing distribution. The question of uniqueness was addressed by Lindsay in \cite{Lindsay1983-tf} and in \cite{Lindsay1983a-he} for univariate component density univariate in the exponential family.
+	The size of the support of the $Q$ that maximizes \eqref{eq:loglikelihood} is the primary quantity of interest for this Chapter. However, there are a few considerations to be made. 
+	The first is that there is not necessarily a unique mixing distribution that maximizes \eqref{eq:loglikelihood}. This does not pose a huge problem for us as we can choose to define the quantity of interest as the smallest number of points of support required for a maximizing distribution. (The question of uniqueness was addressed by Lindsay in \cite{Lindsay1983-tf} and in \cite{Lindsay1983a-he} for univariate component densities in the exponential family. A generalization of these results can be found in \cite{Lindsay1993-rj}).
+
+	The second, is that our choice to only consider location mixtures is significant in that it guarantees the likelihood to be bounded so long as the component density is bounded. In general, this is not the case. Consider the likelihood function for a mixture of normals parametrized by both the mean and variance. We can create a mixture by placing equally weighted normals with very small variance at each $x_i$ in our sample. This corresponds to a mixing distribution $Q$ which places probability mass $1/n$ at points $(x_i, \sigma^2)$ for $i = 1, \dots, n$. As $\sigma^2$ approaches zero, the density at each $x_i$, $f_Q(x_i)$, increases without bound and so the likelihood is unbounded.
+
+	[TALK ABOUT SIEVES]
+
 
 	% Not necessarily unique Q
 	% Location mixtures only (otherwise unbounded likelihood and use all n points)
