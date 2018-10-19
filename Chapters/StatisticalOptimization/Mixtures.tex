@@ -41,23 +41,34 @@
 
 	The \emph{likelihood} of a distribution $Q$ given $\vect{x}$ is 
 	\begin{equation}
-		L(Q;\vect{x}) = \prod_{i = 1}^n f_Q(x_i).
+		L(Q;\vect{x}, f) = \prod_{i = 1}^n f_Q(x_i).
 	\end{equation}
-	Maximizing $L(Q;\vect{x})$ may be achieved by instead maximizing the \emph{log likelihood},
+	Maximizing $L(Q;\vect{x}, f)$ may be achieved by instead maximizing the \emph{log likelihood},
 	\begin{equation}
-		l(Q; \vect{x}) = \log L(Q; \vect{x}) = \sum_{i = 1}^n \log f_Q(x_i),
+		l(Q; \vect{x}, f) = \log L(Q; \vect{x}, f) = \sum_{i = 1}^n \log f_Q(x_i),
 		\label{eq:loglikelihood}
 	\end{equation}
 	since $\log(x)$ is a strictly increasing function. In \cite{Lindsay1983-tf}, Lindsay showed that so long as the likelihood is bounded, there exists a maximizing $Q$ that has at most $n$ points of support. This is a useful result because it means that the problem of finding a maximizing $Q$ is an optimization problem having finite dimensions. It also justifies our decision to only consider finite mixtures in this chapter.
 
 	% While one can construct examples in which the mixing distribution that maximizes the likelihood has all $n$ points of support, in practise, 
-	The size of the support of the $Q$ that maximizes \eqref{eq:loglikelihood} is the primary quantity of interest for this Chapter. However, there are a few considerations to be made. 
-	The first is that there is not necessarily a unique mixing distribution that maximizes \eqref{eq:loglikelihood}. This does not pose a huge problem for us as we can choose to define the quantity of interest as the smallest number of points of support required for a maximizing distribution. (The question of uniqueness was addressed by Lindsay in \cite{Lindsay1983-tf} and in \cite{Lindsay1983a-he} for univariate component densities in the exponential family. A generalization of these results can be found in \cite{Lindsay1993-rj}).
+	The size of the support of the $Q$ that maximizes \eqref{eq:loglikelihood} is the primary quantity of interest for this Chapter. We define it as follows. Let $\mathcal{Q}_n$ be the set of all discrete probability distributions on $\mathbb{R}$ with no more than $n$ points of support. Let
+	\begin{equation}
+		\hat{Q}_{\vect{x},f} = \{Q \in \mathcal{Q}_n: \forall Q' \in \mathcal{Q}_n, l(Q;\vect{x}) \geq l(Q';\vect{x})\}
+	\end{equation}
+	be the set of all global maximizers of \eqref{eq:loglikelihood}. Then define
+	\begin{equation}
+		K_\vect{x} = K(\vect{x}; f) = \min\{m \leq n : \mathcal{Q}_m \cap \hat{Q}_{\vect{x},f} \neq \emptyset\}
+	\end{equation}
+	which counts the smallest number of probability masses needed to maximize the likelihood.
 
-	The second, is that our choice to only consider location mixtures is significant in that it guarantees the likelihood to be bounded so long as the component density is bounded. In general, this is not the case. Consider the likelihood function for a mixture of normals parametrized by both the mean and variance. We can create a mixture by placing equally weighted normals with very small variance at each $x_i$ in our sample. This corresponds to a mixing distribution $Q$ which places probability mass $1/n$ at points $(x_i, \sigma^2)$ for $i = 1, \dots, n$. As $\sigma^2$ approaches zero, the density at each $x_i$, $f_Q(x_i)$, increases without bound and so the likelihood is unbounded.
+
+	There are a few considerations to be made here. The first is that there is not necessarily a unique mixing distribution that maximizes \eqref{eq:loglikelihood} and so we have defined the quantity of interest as the smallest number of points of support required for a maximizing distribution. The question of uniqueness was addressed by Lindsay in \cite{Lindsay1983-tf} and in \cite{Lindsay1983a-he} for univariate component densities in the exponential family. A generalization of these results can be found in \cite{Lindsay1993-rj}.
+
+	The second, is that our choice to only consider location mixtures is significant in that it guarantees the likelihood to be bounded so long as the component density is bounded. In general, this is not the case. Consider the likelihood function for a mixture of normals parametrized by both the mean and variance. We can create a mixture by placing equally weighted normals with very small variance at each $x_i$ in our sample. This corresponds to a mixing distribution $Q$ which places probability mass $1/n$ at points $(x_i, \sigma^2)$ for $i = 1, \dots, n$. As $\sigma^2$ approaches zero, the density at each $x_i$, $f_Q(x_i)$, increases without bound and so the likelihood is unbounded. There are a number of techniques that can be employed to ensure the likelihood is bounded. These include 
 
 	[TALK ABOUT SIEVES]
 
+	The third, is that we should be careful to make a distinction between calculating $K_\vect{x}$ and choosing an appropriate number of components for a mixture model. 
 
 	% Not necessarily unique Q
 	% Location mixtures only (otherwise unbounded likelihood and use all n points)
@@ -86,7 +97,7 @@
 	% \end{equation}
 	% instead of \eqref{eq:mixtureint} as our definition of a location mixture. We note that \eqref{eq:mixtureint} is equivalent to \eqref{eq:mixturesum} in the case where $Q$ is a discrete distribution which places probability masses of weight $p_j$ at locations $\theta_j$, for $j = 1,\dots,m$. The order of the $x_i$ does not matter and so we will assume without loss of generality that $x_1 \leq x_2 \leq \dots \leq x_n$ throughout.
 	
-	In this paper we are primarily interested in the number of probability masses that are required in the maximizing mixture. We will call this quantity $K_{\vect{x}}$. It should be noted that there is not always a unique mixing distribution that maximizes \eqref{eq:loglikelihood}. However we can choose $K_{\vect{x}}$ to be the smallest number of probability masses that any of the maximizing distributions have.
+	% In this paper we are primarily interested in the number of probability masses that are required in the maximizing mixture. We will call this quantity $K_{\vect{x}}$. It should be noted that there is not always a unique mixing distribution that maximizes \eqref{eq:loglikelihood}. However we can choose $K_{\vect{x}}$ to be the smallest number of probability masses that any of the maximizing distributions have.
 
 \section{Numerical Results}
 		One point which we wish to emphasize is that, given a component density $f$, $K$ is a function of $\vect{x}$ only. We can visualise this for small values of $n$. In Figure \ref{fig:n3phase}, we empirically found the MLE for $\vect{x} = (0,x_2,x_3)$ and recorded the number of probability masses in the maximizing mixture. We took values for $x_2$ and $x_3$ from an evenly spaced grid with $-6\leq x_2,x_3\leq 6$. We fixed $x_1 = 0$ since the shape of the maximum likelihood mixture (and therefore $K_{\vect{x}}$) depends only on the relative location of the $x_i$, not their absolute location.
