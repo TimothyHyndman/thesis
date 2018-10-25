@@ -143,11 +143,13 @@
 
 	\begin{theorem}[\cite{Lindsay1995-sq}]
 		Suppose that $\Gamma_{\vect{x}, f}$ is closed and bounded and that $\mathcal{M}$ contains at least one point with positive likelihood. Then there exists a unique $\hat{\vect{\gamma}} \in \partial \mathcal{M}$, the boundary of $\mathcal{M}$, such that $\hat{\vect{\gamma}}$ maximizes $\mathcal{L}(\vect{\gamma})$ over $\mathcal{M}$.
+		\label{thm: lindsay maximizing likelihood vector point}
 	\end{theorem}
 
 	In addition to this, in \cite[Theorem 21]{Lindsay1995-sq} is stated the following.
 	\begin{theorem}[\cite{Lindsay1995-sq}]
 		The solution $\hat{\vect{\gamma}}$ can be represented as $\vect{\gamma}(\hat{Q};\vect{x}, f)$, where $\hat{Q}$ has no more than $n$ points of support.
+		\label{thm: lindsay no more than n points}
 	\end{theorem}
 
 	% \subsection{The likelihood curve}
@@ -219,14 +221,16 @@
 		\end{figure}
 
 		[MAKE THIS FIGURE REPRODUCIBLE?]
-
-		[UP TO HERE]
-
-
-		\begin{remark}
-			Note that while $\Gamma$ is bounded, it is not closed (it does not contain the limit point $(0,0)$), and so $\Gamma$ is not compact (as required by Theorem \ref{thm:LindsayGamma}). In fact, any positive density whose support is the whole real line will not contain the limit point $\vect{0}$ (where $\vect{0}$ represents the zero vector in $\mathbb{R}^n$). However, since $\vect{0}$ is clearly not going to be a part of a maximizing mixture, we are safe to apply Theorem \ref{thm:LindsayGamma} if $\Gamma \cup \{ \vect{0} \}$ is compact.
-		\end{remark}
 		
+		The set of possible values of the likelihood vector, $\mathcal{M}$, is given by the convex hull of $\Gamma_{\vect{x}, f}$, the boundary of which is marked along with $\Gamma_{\vect{x}, f}$ in Figure \ref{fig:GammaSol:subfig:Gamma} and overlaid on a heat map of $\mathcal{L}(\vect{\gamma})$. The maximizing point, $\hat{\vect{\gamma}}$, is marked with a yellow dot and lies on the boundary of $\conv(\Gamma_{\vect{x}, f})$ as predicted by Theorem \ref{thm: lindsay maximizing likelihood vector point}. This point may be written as the convex combination of two points in $\Gamma_{\vect{x}, f}$,
+		\begin{equation}
+			\hat{\vect{\gamma}} = \sum_{j = 1}^2 p_j \vect{\gamma}(\theta_j;\vect{x}, f)
+		\end{equation}
+		and we represent the two points, $\vect{\gamma}(\theta_1;\vect{x}, f)$ and $\vect{\gamma}(\theta_2;\vect{x}, f)$ with magenta dots.
+
+		The mixture $\hat{Q}$ that satisfies $\hat{\vect{\gamma}} = \vect{\gamma}(\hat{Q};\vect{x}, f)$ is the one that places masses $p_1$ and $p_2$ at locations $\theta_1$ and $\theta_2$ and it is plotted in Figure \ref{fig:GammaSol:subfig:Density} by two magenta points at $(\theta_1, p_1)$ and $(\theta_2, p_2)$ along with the overall mixture density $f_{\hat{Q}}(x)$.
+
+		% The optimal point is on the boundary of $\conv(\Gamma)$ as expected and it can be written as the  $p_1 \vect{f}(\theta_1) + p_2 \vect{f}(\theta_2)$ (where $p_1 + p_2 =1 $). These two points correspond to the two probability masses in the maximizing mixture distribution shown in Figure \ref{fig:GammaSol:subfig:Density}. These masses are located at $\theta_1$ and $\theta_2$ with weights $p_1$ and $p_2$.
 
 		%and so we will provide a slightly more general form of Theorem \ref{thm:LindsayGamma}.
 		%\begin{theorem}
@@ -236,7 +240,8 @@
 		%	We need to show that $\vect{0}$ does not appear in the maximizing mixture. Clearly, $\vect{0}$ is not going to be a maximizing point.
 		%\end{proof}
 
-		We trace the boundary of $\conv(\Gamma)$ in Figure \ref{fig:GammaSol} along with a heat map of the objective function \eqref{eq:transformedlikelihood}.
+		% We trace the boundary of $\conv(\Gamma)$ in Figure \ref{fig:GammaSol} along with a heat map of the objective function \eqref{eq:transformedlikelihood}.
+
 		\begin{figure}[ht]
 			\centering
 			\begin{minipage}{0.4\textwidth}
@@ -246,10 +251,17 @@
 			\begin{minipage}{0.5\textwidth}
 				\includegraphics[width = \textwidth]{MixingSolSigma045}				\subcaption{}\label{fig:GammaSol:subfig:Density}
 			\end{minipage}
-			\caption{In (\subref{fig:GammaSol:subfig:Gamma}), the boundary of $\conv(\Gamma)$ is shown as a dashed black line, $\Gamma$ is the white curve, the heat map  shows the objective function (likelihood increases from blue to yellow) and the yellow point is the maximizing point which can be written as the convex combination of the two magenta points. These two magenta points correspond to the two probability masses in the maximizing mixing distribution (\subref{fig:GammaSol:subfig:Density}).}
+			\caption[The geometric relationship between the likelihood curve (\subref{fig:GammaSol:subfig:Gamma}) and the maximizing mixture density (\subref{fig:GammaSol:subfig:Density}).]{The geometric relationship between the likelihood curve (\subref{fig:GammaSol:subfig:Gamma}) and the maximizing mixture density (\subref{fig:GammaSol:subfig:Density}). In (\subref{fig:GammaSol:subfig:Gamma}), the boundary of $\conv(\Gamma_{\vect{x}, f})$ is shown as a dashed black line, $\Gamma_{\vect{x}, f}$ is the white curve, the heat map  shows the objective function (likelihood increases from blue to yellow) and $\hat{\vect{\gamma}}$ is marked with a yellow dot. This point is a convex combination of the two magenta points. These two magenta points correspond to the two probability masses in the maximizing mixing distribution (\subref{fig:GammaSol:subfig:Density}).}
 			\label{fig:GammaSol}
 		\end{figure}
-		The optimal point is on the boundary of $\conv(\Gamma)$ as expected and it can be written as the  $p_1 \vect{f}(\theta_1) + p_2 \vect{f}(\theta_2)$ (where $p_1 + p_2 =1 $). These two points correspond to the two probability masses in the maximizing mixture distribution shown in Figure \ref{fig:GammaSol:subfig:Density}. These masses are located at $\theta_1$ and $\theta_2$ with weights $p_1$ and $p_2$.
+
+		[MAKE THIS FIGURE REPRODUCIBLE + FIX]
+
+		[UP TO HERE]
+
+		\begin{remark}
+			Note that in this example, while $\Gamma_{\vect{x}, f}$ is bounded, it is not closed (it does not contain the limit point $(0,0)$), and so $\Gamma_{\vect{x}, f}$ is not compact (as required by Theorem \ref{thm:LindsayGamma}). In fact, any positive density whose support is the whole real line will not contain the limit point $\vect{0}$ (where $\vect{0}$ represents the zero vector in $\mathbb{R}^n$). However, since $\vect{0}$ is clearly not going to be a part of a maximizing mixture, we are safe to apply Theorem \ref{thm:LindsayGamma} if $\Gamma \cup \{ \vect{0} \}$ is compact.
+		\end{remark}
 
 	\subsection{Derivative stuff}
 
