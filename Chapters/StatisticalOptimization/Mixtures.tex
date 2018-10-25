@@ -149,7 +149,6 @@
 	\begin{theorem}[\cite{Lindsay1995-sq}]
 		The solution $\hat{\vect{\gamma}}$ can be represented as $\vect{\gamma}(\hat{Q};\vect{x}, f)$, where $\hat{Q}$ has no more than $n$ points of support.
 	\end{theorem}
-	[UP TO HERE]
 
 	% \subsection{The likelihood curve}
 	% 	In \cite{Lindsay1983-tf}, the problem of mixture likelihoods was looked at from a geometrical perspective. One key construction introduced by Lindsay was the \emph{likelihood curve},
@@ -182,14 +181,16 @@
 	% 		\hat{\vect{u}} = \vect{u}(\vect{p},\vect{\theta};\vect{x})
 	% 	\end{equation}
 	% 	for some $\vect{p}$ and $\vect{\theta}$ whose dimension is no more than $n$. Furthermore, the corresponding distribution that places masses $p_j$ at locations $\theta_j$ maximizes \eqref{eq:loglikelihood}. There are some minor conditions on this result, but they will not cause any problems for our purposes and so will not be discussed (see \cite{Lindsay1983-tf} for details).
-	\subsection{An example}
+	\subsection{An example likelihood curve}
 		\label{sec:mixturelikelihoods:example}
-		The following example illustrates the geometrical approach given above. We consider the case where $n = 2$. Our sample is made up of two points, $X_1 = 1$ and $X_2 = 2$. We define the normal density with variance $\sigma_2 = 0.45^2$ and parametrized by $\theta$,
+		In simple cases, we can plot the likelihood curve, $\Gamma_{\vect{x}, f}$, and objective function, $\mathcal{L}$, along with the maximizing point, $\hat{\vect{\gamma}}$. In particular, when $n = 2$, $\Gamma_{\vect{x}, f} \subset \mathbb{R}^2$ and if the component density is smoothly parametrized by a single parameter, then we can plot $\Gamma_{\vect{x}, f}$ by tracing out $\vect{\gamma}(\theta; \vect{x}, f)$ as we vary $\theta$.
+
+		For example, suppose our sample is made up of two points, $\vect{x} = (x_1, x_2) = (1,2)$, and suppose our component density is normal with variance $\sigma_2 = 0.45^2$ and parametrized by $\theta$, that is,
 		\begin{equation}
-		f_\theta(x) = \frac{1}{0.45 \sqrt{2 \pi}} \exp\left(-\frac{(x-\theta)^2}{2\cdot 0.45^2}\right)
+		f(x;\theta) = \frac{1}{0.45 \sqrt{2 \pi}} \exp\left(-\frac{(x-\theta)^2}{2\cdot 0.45^2}\right).
+		\label{eq:example component density for likelihood curve}
 		\end{equation}
-		to be our component density.
-		We trace out the set $\Gamma$ in Figure \ref{fig:TracingGamma}. 
+		Then the corresponding likelihood curve can be traced out as we increase $\theta$ from $-\infty$ to $\infty$ as shown in Figure \ref{fig:TracingGamma}. 
 
 		\begin{figure}[ht]
 			\centering
@@ -214,10 +215,18 @@
 				\includegraphics[width=\textwidth]{GammaTraceDensity03}
 				\subcaption{$\theta = 3$}
 			\end{minipage}
-			\caption{The blue density is $f_\theta$ for $\theta = 1,2,3$. Each value of $\theta$ contributes a point to $\Gamma$ whose coordinates are given by $(f_\theta(X_1),f_\theta(X_2))$ (represented by the red circles). As we increase $\theta$ from $-\infty$ to $\infty$ we trace out more of $\Gamma$ (shown above).}\label{fig:TracingGamma}
+			\caption[A simple example of a likelihood curve.]{A simple example of a likelihood curve. The component density, $f(x;\theta)$, as defined in \eqref{eq:example component density for likelihood curve}, is shown in blue for $\theta = 1,2,$ and $3$. Each value of $\theta$ contributes a point to $\Gamma_{\vect{x}, f}$ whose coordinates are given by $(f(1;\theta),f(2;\theta))$ (represented by the red circles). As we increase $\theta$ from $-\infty$ to $\infty$ we trace out more of $\Gamma_{\vect{x}, f}$.}\label{fig:TracingGamma}
 		\end{figure}
 
-		Note that while $\Gamma$ is bounded, it is not closed (it does not contain the limit point $(0,0)$), and so $\Gamma$ is not compact (as required by Theorem \ref{thm:LindsayGamma}). In fact, any positive density whose support is the whole real line will not contain the limit point $\vect{0}$ (where $\vect{0}$ represents the zero vector in $\mathbb{R}^n$). However, since $\vect{0}$ is clearly not going to be a part of a maximizing mixture, we are safe to apply Theorem \ref{thm:LindsayGamma} if $\Gamma \cup \{ \vect{0} \}$ is compact.
+		[MAKE THIS FIGURE REPRODUCIBLE?]
+
+		[UP TO HERE]
+
+
+		\begin{remark}
+			Note that while $\Gamma$ is bounded, it is not closed (it does not contain the limit point $(0,0)$), and so $\Gamma$ is not compact (as required by Theorem \ref{thm:LindsayGamma}). In fact, any positive density whose support is the whole real line will not contain the limit point $\vect{0}$ (where $\vect{0}$ represents the zero vector in $\mathbb{R}^n$). However, since $\vect{0}$ is clearly not going to be a part of a maximizing mixture, we are safe to apply Theorem \ref{thm:LindsayGamma} if $\Gamma \cup \{ \vect{0} \}$ is compact.
+		\end{remark}
+		
 
 		%and so we will provide a slightly more general form of Theorem \ref{thm:LindsayGamma}.
 		%\begin{theorem}
@@ -241,7 +250,9 @@
 			\label{fig:GammaSol}
 		\end{figure}
 		The optimal point is on the boundary of $\conv(\Gamma)$ as expected and it can be written as the  $p_1 \vect{f}(\theta_1) + p_2 \vect{f}(\theta_2)$ (where $p_1 + p_2 =1 $). These two points correspond to the two probability masses in the maximizing mixture distribution shown in Figure \ref{fig:GammaSol:subfig:Density}. These masses are located at $\theta_1$ and $\theta_2$ with weights $p_1$ and $p_2$.
-	
+
+	\subsection{Derivative stuff}
+
 \section{Numerical Results}
 
 
