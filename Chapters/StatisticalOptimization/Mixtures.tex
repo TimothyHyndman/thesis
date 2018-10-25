@@ -66,7 +66,7 @@
 
 	The second, is that our choice to only consider location mixtures is significant in that it guarantees the likelihood to be bounded so long as the component density is bounded. In general, this is not the case. Consider the likelihood function for a mixture of normals parametrized by both the mean and variance. We can create a mixture by placing equally weighted normals with very small variance at each $x_i$ in our sample. This corresponds to a mixing distribution $Q$ which places probability mass $1/n$ at points $(x_i, \sigma^2)$ for $i = 1, \dots, n$. As $\sigma^2$ approaches zero, the density at each $x_i$, $f_Q(x_i)$, increases without bound and so the likelihood is unbounded. There are a number of techniques that can be employed to ensure the likelihood is bounded such as restricting the parameter space appropriately or restricting the number of components to some number that grows slowly with $n$ (the sieve method \cite{Grenander1981-dy}).
 
-	The third, is that we should be careful to make a distinction between calculating $K_\vect{x}$ and choosing an appropriate number of components for a mixture model. The former is simply a deterministic property of an optimization problem whereas the latter is an in-depth and difficult problem which involves consideration of properties such as consistency, and the use of techniques such as information criteria and likelihood ratio. This latter problem is discussed in \cite[Chapter 6]{McLachlan2004-ik}. In particular, if each $X_i$ comes from a distribution with density $g(x) = f_Q(x)$ (that is, $g(x)$ is a mixture density itself) then we may consider the `true' number of components and using certain penalised log likelihood criteria, such as the Akaike information criterion (AIC) \cite{Akaike1974-bl} or the Bayesian information criterion (BIC) \cite{Schwarz1978-ci}, does not underestimate this quantity asymptotically \cite{Leroux1992-ek}. This suggests that we should not expect $K_\vect{x}$ (which is not based on a penalised likelihood) to necessarily be reflective of the properties of $g(x)$.
+	The third, is that we should be careful to make a distinction between calculating $K_\vect{x}$ and choosing an appropriate number of components for a mixture model. The former is simply a deterministic property of an optimization problem whereas the latter is an in-depth and difficult problem which involves consideration of properties such as consistency, and the use of techniques such as information criteria and likelihood ratio. This latter problem is discussed in \cite[Chapter 6]{McLachlan2004-ik}. In particular, if each $X_i$ comes from a distribution with density $g(x) = f_Q(x)$ (that is, $g(x)$ is a mixture density itself) then we may consider the `true' number of components and using certain penalised log likelihood criteria, such as the Akaike information criterion (AIC) \cite{Akaike1974-bl} or the Bayesian information criterion (BIC) \cite{Schwarz1978-ci}, does not underestimate this quantity asymptotically \cite{Leroux1992-ek}. This suggests that we should not expect $K_\vect{x}$ (which is defined from an unpenalised likelihood) to necessarily be reflective of the properties of $g(x)$.
  
 	% Not necessarily unique Q
 	% Location mixtures only (otherwise unbounded likelihood and use all n points)
@@ -93,7 +93,7 @@
 	
 	% In this paper we are primarily interested in the number of probability masses that are required in the maximizing mixture. We will call this quantity $K_{\vect{x}}$. It should be noted that there is not always a unique mixing distribution that maximizes \eqref{eq:loglikelihood}. However we can choose $K_{\vect{x}}$ to be the smallest number of probability masses that any of the maximizing distributions have.
 \section{Summary of Lindsay}
-	To obtain results concerning $K_\vect{x}$ we will make use of the geometrical approach employed by Lindsay in \cite{Lindsay1983-tf} and \cite{Lindsay1983a-he} and summarized later in \cite[Chapter 5]{Lindsay1995-sq}. This section is dedicated to laying out the basics of this approach and summarising the results that are most relevant to our work. 
+	To obtain results concerning $K_\vect{x}$ we will make use of the geometrical approach employed by Lindsay in \cite{Lindsay1983-tf} and \cite{Lindsay1983a-he} and summarized later in \cite[Chapter 5]{Lindsay1995-sq}. This section is dedicated to laying out the basics of this approach and summarising the results that are most relevant to our work. Here, we assume that the component densities, $f(\vect{x};\vect{\theta})$, are bounded, but we do not restrict ourselves to finite location mixtures on the real line.
 
 	The key to Lindsay's approach is to reformulate the problem from optimizing over all mixing distributions, to optimizing an appropriate objective function over a convex set in $\mathbb{R}^n$. Define the \emph{likelihood vector}
 	\begin{equation}
@@ -114,47 +114,81 @@
 	\end{equation}
 	for $Q$.
 
+	To show that $\mathcal{M}$ is a convex set, consider the \emph{unicomponent likelihood vector}
+	\begin{equation}
+		\vect{\gamma}(\vect{\theta}; \vect{x}, f) = (f_\vect{\theta}(x_1), \dots, f_\vect{\theta}(x_n))
+	\end{equation}
+	where $f_\vect{\theta}$ is the mixture density corresponding to the mixing distribution that places all its mass at $\vect{\theta}$, that is, 
+	\begin{equation}
+		f_\vect{\theta}(x) = f(x; \vect{\theta}).
+	\end{equation}
+	For any probability distribution, $Q$, the likelihood vector can be represented by
+	\begin{equation}
+		\vect{\gamma}(Q; \vect{x}, f) = \int \vect{\gamma}(\vect{\theta}; \vect{x}, f) \intd Q(\vect{\theta})
+	\end{equation}
+	which for a finite mixture $Q$, with weights $p_j$ assigned to parameters $\vect{\theta}_j$, can be written as
+	\begin{equation}
+		\vect{\gamma}(Q;\vect{x},f) = \sum_{j = 1}^m p_j \vect{\gamma}(\vect{\theta}_j; \vect{x}, f).
+	\end{equation}
+	
+	This leads to an alternative characterisation of $\mathcal{M}$. Define the \emph{unicomponent likelihood curve}
+	\begin{equation}
+		\Gamma_{\vect{x}, f} = \{\vect{\gamma}(\vect{\theta}; \vect{x}, f) : \vect{\theta} \in \Omega\}.
+	\end{equation}
+	Then
+	\begin{equation}
+		\mathcal{M} = \conv(\Gamma_{\vect{x}, f}),
+	\end{equation}
+	where we use $\conv(A)$ to denote the convex hull of $A$. We now state the following Theorem taken directly from \cite[Theorem 18]{Lindsay1995-sq} which is a consequence of the convexity of $\mathcal{M}$, and the concavity of $\mathcal{L}(\vect{\gamma})$.
 
+	\begin{theorem}[\cite{Lindsay1995-sq}]
+		Suppose that $\Gamma_{\vect{x}, f}$ is closed and bounded and that $\mathcal{M}$ contains at least one point with positive likelihood. Then there exists a unique $\hat{\vect{\gamma}} \in \partial \mathcal{M}$, the boundary of $\mathcal{M}$, such that $\hat{\vect{\gamma}}$ maximizes $\mathcal{L}(\vect{\gamma})$ over $\mathcal{M}$.
+	\end{theorem}
+
+	In addition to this, in \cite[Theorem 21]{Lindsay1995-sq} is stated the following.
+	\begin{theorem}[\cite{Lindsay1995-sq}]
+		The solution $\hat{\vect{\gamma}}$ can be represented as $\vect{\gamma}(\hat{Q};\vect{x}, f)$, where $\hat{Q}$ has no more than $n$ points of support.
+	\end{theorem}
 	[UP TO HERE]
 
-	\subsection{The likelihood curve}
-		In \cite{Lindsay1983-tf}, the problem of mixture likelihoods was looked at from a geometrical perspective. One key construction introduced by Lindsay was the \emph{likelihood curve},
-		\begin{equation}
-			\vect{\gamma}(\theta;\vect{x}) = (f(x_{1}-\theta),\dots,f(x_{n}-\theta))
-			\label{eq:Gamma}
-		\end{equation}
-		and it's trace,
-		\begin{equation}
-			\Gamma_{\vect{x}} = \{\vect{\gamma}(\theta;\vect{x})| \theta \in \mathbb{R}\}.
-		\end{equation}
-		A useful property of the likelihood curve is that any convex combination of elements from $\Gamma_{\vect{x}}$ can be written as
-		\begin{equation}
-			\vect{u}(\vect{p},\vect{\theta};\vect{x}) = (f_{\vect{p},\vect{\theta}}(x_{1}),\dots,f_{\vect{p},\vect{\theta}}(x_{n})) = \sum_{j = 1}^m p_j \vect{\gamma}(\theta_j;\vect{x}), \hspace{30pt} \sum_{j=1}^m p_j = 1
-			\label{eq:convexcombinationgamma}
-		\end{equation}
-		where $f_{\vect{p},\vect{\theta}}(x)$ is as defined in \eqref{eq:mixturesum}. The log likelihood of the corresponding distribution is simply the sum of the log of the components of $\vect{u}(\vect{p},\vect{\theta};\vect{x})$.
+	% \subsection{The likelihood curve}
+	% 	In \cite{Lindsay1983-tf}, the problem of mixture likelihoods was looked at from a geometrical perspective. One key construction introduced by Lindsay was the \emph{likelihood curve},
+	% 	\begin{equation}
+	% 		\vect{\gamma}(\theta;\vect{x}) = (f(x_{1}-\theta),\dots,f(x_{n}-\theta))
+	% 		\label{eq:Gamma}
+	% 	\end{equation}
+	% 	and it's trace,
+	% 	\begin{equation}
+	% 		\Gamma_{\vect{x}} = \{\vect{\gamma}(\theta;\vect{x})| \theta \in \mathbb{R}\}.
+	% 	\end{equation}
+	% 	A useful property of the likelihood curve is that any convex combination of elements from $\Gamma_{\vect{x}}$ can be written as
+	% 	\begin{equation}
+	% 		\vect{u}(\vect{p},\vect{\theta};\vect{x}) = (f_{\vect{p},\vect{\theta}}(x_{1}),\dots,f_{\vect{p},\vect{\theta}}(x_{n})) = \sum_{j = 1}^m p_j \vect{\gamma}(\theta_j;\vect{x}), \hspace{30pt} \sum_{j=1}^m p_j = 1
+	% 		\label{eq:convexcombinationgamma}
+	% 	\end{equation}
+	% 	where $f_{\vect{p},\vect{\theta}}(x)$ is as defined in \eqref{eq:mixturesum}. The log likelihood of the corresponding distribution is simply the sum of the log of the components of $\vect{u}(\vect{p},\vect{\theta};\vect{x})$.
 		
-		One of Lindsay's main results, which follows from this observation, was that if
-		\begin{equation}
-			\hat{\vect{u}} = \argmax_{\vect{u} \in \conv(\Gamma_{\vect{x}})} \sum_{i=1}^n \log(u_i)
-			\label{eq:optimalu}
-		\end{equation}
-		% where
-		% \begin{equation}
-		% 	U =  %\{\vect{u}(\vect{p},\vect{\theta};\vect{x}) |  \}
-		% \end{equation}
-		then we can write
-		\begin{equation}
-			\hat{\vect{u}} = \vect{u}(\vect{p},\vect{\theta};\vect{x})
-		\end{equation}
-		for some $\vect{p}$ and $\vect{\theta}$ whose dimension is no more than $n$. Furthermore, the corresponding distribution that places masses $p_j$ at locations $\theta_j$ maximizes \eqref{eq:loglikelihood}. There are some minor conditions on this result, but they will not cause any problems for our purposes and so will not be discussed (see \cite{Lindsay1983-tf} for details).
-	\subsubsection{An example}
+	% 	One of Lindsay's main results, which follows from this observation, was that if
+	% 	\begin{equation}
+	% 		\hat{\vect{u}} = \argmax_{\vect{u} \in \conv(\Gamma_{\vect{x}})} \sum_{i=1}^n \log(u_i)
+	% 		\label{eq:optimalu}
+	% 	\end{equation}
+	% 	% where
+	% 	% \begin{equation}
+	% 	% 	U =  %\{\vect{u}(\vect{p},\vect{\theta};\vect{x}) |  \}
+	% 	% \end{equation}
+	% 	then we can write
+	% 	\begin{equation}
+	% 		\hat{\vect{u}} = \vect{u}(\vect{p},\vect{\theta};\vect{x})
+	% 	\end{equation}
+	% 	for some $\vect{p}$ and $\vect{\theta}$ whose dimension is no more than $n$. Furthermore, the corresponding distribution that places masses $p_j$ at locations $\theta_j$ maximizes \eqref{eq:loglikelihood}. There are some minor conditions on this result, but they will not cause any problems for our purposes and so will not be discussed (see \cite{Lindsay1983-tf} for details).
+	\subsection{An example}
 		\label{sec:mixturelikelihoods:example}
-		The following example illustrates the geometrical approach given above. We consider the case where $n = 2$. Our sample is made up of two points, $X_1 = 1$ and $X_2 = 2$. We define
+		The following example illustrates the geometrical approach given above. We consider the case where $n = 2$. Our sample is made up of two points, $X_1 = 1$ and $X_2 = 2$. We define the normal density with variance $\sigma_2 = 0.45^2$ and parametrized by $\theta$,
 		\begin{equation}
 		f_\theta(x) = \frac{1}{0.45 \sqrt{2 \pi}} \exp\left(-\frac{(x-\theta)^2}{2\cdot 0.45^2}\right)
 		\end{equation}
-		(i.e. a normal density with mean $\theta$ and variance $\sigma^2 = 0.45^2$) to be our component density.
+		to be our component density.
 		We trace out the set $\Gamma$ in Figure \ref{fig:TracingGamma}. 
 
 		\begin{figure}[ht]
@@ -263,7 +297,7 @@
 				\includegraphics[width = \textwidth]{Sigma1x1_0-x2_3}
 				\caption{$\vect{x} = (0,3)$} \label{subfig:gammaexamplec}
 			\end{subfigure}
-			\caption{The curve $\Gamma_\vect{x}$ for three different $\vect{x}$ along with the boundary of $\conv(\Gamma_\vect{x})$. The objective function from \eqref{eq:optimalu} is represented as a heat map. The optimal point $\hat{\vect{u}}$ is shown in yellow, and where applicable, the points $\vect{\gamma}(\theta_j)$ that make up $\hat{\vect{u}}$ (as in \eqref{eq:convexcombinationgamma}) are shown in magenta.}
+			\caption{The curve $\Gamma_\vect{x}$ for three different $\vect{x}$ along with the boundary of $\conv(\Gamma_\vect{x})$. The objective function, $\mathcal{L}(\vect{\gamma})$, is represented as a heat map. The optimal point $\hat{\vect{\gamma}}$ is shown in yellow, and where applicable, the points $\vect{\gamma}(\theta_j)$ that make up $\hat{\vect{\gamma}}$ are shown in magenta.}
 			\label{fig:Gammaexample}
 		\end{figure}
 		In particular, we note that the distance between $x_1$ and $x_2$ has a strong effect on the shape of $\Gamma_\vect{x}$. In Figure \ref{subfig:gammaexamplea}, the points are distance 1 apart and $\Gamma_\vect{x}$ is the boundary of $\conv(\Gamma_\vect{x})$. In this case, it is clear that $K_\vect{x} = 1$. In Figure \ref{subfig:gammaexamplec}, the points are distance 3 apart and the optimal point no longer lies on $\Gamma_\vect{x}$. This results in the maximum likelihood mixing distribution needing two points of support and so $K_\vect{x} = 2$. The boundary case, where $\Gamma_\vect{x}$ goes from being a convex curve to having the indentation shown in Figure \ref{subfig:gammaexamplec}, is shown in Figure \ref{subfig:gammaexampleb}.
