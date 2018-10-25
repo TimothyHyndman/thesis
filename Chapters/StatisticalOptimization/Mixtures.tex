@@ -66,7 +66,7 @@
 
 	The second, is that our choice to only consider location mixtures is significant in that it guarantees the likelihood to be bounded so long as the component density is bounded. In general, this is not the case. Consider the likelihood function for a mixture of normals parametrized by both the mean and variance. We can create a mixture by placing equally weighted normals with very small variance at each $x_i$ in our sample. This corresponds to a mixing distribution $Q$ which places probability mass $1/n$ at points $(x_i, \sigma^2)$ for $i = 1, \dots, n$. As $\sigma^2$ approaches zero, the density at each $x_i$, $f_Q(x_i)$, increases without bound and so the likelihood is unbounded. There are a number of techniques that can be employed to ensure the likelihood is bounded such as restricting the parameter space appropriately or restricting the number of components to some number that grows slowly with $n$ (the sieve method \cite{Grenander1981-dy}).
 
-	The third, is that we should be careful to make a distinction between calculating $K_\vect{x}$ and choosing an appropriate number of components for a mixture model. The former is simply a deterministic property of an optimization problem whereas the latter is an in-depth and difficult problem which involves consideration of properties such as consistency, and the use of techniques such as information criteria and likelihood ratio. This latter problem is discussed in \cite[Chapter 6]{McLachlan2004-ik}. In particular, if each $X_i$ comes from a distribution with density $g(x) = f_Q(x)$ (that is, $g(x)$ is a mixture density itself) then we may consider the `true' number of components and using certain penalised log likelihood criteria, such as the Akaike information criterion (AIC) \cite{Akaike1974-bl} or the Bayesian information criterion (BIC) \cite{Schwarz1978-ci}, does not underestimate this quantity asymptotically \cite{Leroux1992-ek}. This suggests that we should not expect $K_\vect{x}$ to necessarily be reflective of the properties of $g(x)$.
+	The third, is that we should be careful to make a distinction between calculating $K_\vect{x}$ and choosing an appropriate number of components for a mixture model. The former is simply a deterministic property of an optimization problem whereas the latter is an in-depth and difficult problem which involves consideration of properties such as consistency, and the use of techniques such as information criteria and likelihood ratio. This latter problem is discussed in \cite[Chapter 6]{McLachlan2004-ik}. In particular, if each $X_i$ comes from a distribution with density $g(x) = f_Q(x)$ (that is, $g(x)$ is a mixture density itself) then we may consider the `true' number of components and using certain penalised log likelihood criteria, such as the Akaike information criterion (AIC) \cite{Akaike1974-bl} or the Bayesian information criterion (BIC) \cite{Schwarz1978-ci}, does not underestimate this quantity asymptotically \cite{Leroux1992-ek}. This suggests that we should not expect $K_\vect{x}$ (which is not based on a penalised likelihood) to necessarily be reflective of the properties of $g(x)$.
  
 	% Not necessarily unique Q
 	% Location mixtures only (otherwise unbounded likelihood and use all n points)
@@ -93,43 +93,29 @@
 	
 	% In this paper we are primarily interested in the number of probability masses that are required in the maximizing mixture. We will call this quantity $K_{\vect{x}}$. It should be noted that there is not always a unique mixing distribution that maximizes \eqref{eq:loglikelihood}. However we can choose $K_{\vect{x}}$ to be the smallest number of probability masses that any of the maximizing distributions have.
 \section{Summary of Lindsay}
+	To obtain results concerning $K_\vect{x}$ we will make use of the geometrical approach employed by Lindsay in \cite{Lindsay1983-tf} and \cite{Lindsay1983a-he} and summarized later in \cite[Chapter 5]{Lindsay1995-sq}. This section is dedicated to laying out the basics of this approach and summarising the results that are most relevant to our work. 
 
-[UP TO HERE]
-	
-\section{Numerical Results}
-
-
-	One point which we wish to emphasize is that, given a component density $f$, $K$ is a function of $\vect{x}$ only. We can visualise this for small values of $n$. In Figure \ref{fig:n3phase}, we empirically found the MLE for $\vect{x} = (0,x_2,x_3)$ and recorded the number of probability masses in the maximizing mixture. We took values for $x_2$ and $x_3$ from an evenly spaced grid with $-6\leq x_2,x_3\leq 6$. We fixed $x_1 = 0$ since the shape of the maximum likelihood mixture (and therefore $K_{\vect{x}}$) depends only on the relative location of the $x_i$, not their absolute location.
-	
-	\begin{figure}[ht]
-		\centering
-		\includegraphics[width=0.8\textwidth]{Sigma1n3res1024width6}
-		\caption{$K$ as a function of $x_2$ and $x_3$ (with $x_1 = 0$) for a normal component density with unit variance.}\label{fig:n3phase}
-	\end{figure}
-	
-	For a particular choice of component density, we can partition $\mathbb{R}^n$ into sets 
+	The key to Lindsay's approach is to reformulate the problem from optimizing over all mixing distributions, to optimizing an appropriate objective function over a convex set in $\mathbb{R}^n$. Define the \emph{likelihood vector}
 	\begin{equation}
-		C_k = \{ \vect{x} \in \mathbb{R}^n | K_{\vect{x}} = k \}, \hspace{40pt} k = 1,\dots,n.
+		\vect{\gamma}(Q;\vect{x}, f) = (f_Q(x_1), \dots, f_Q(x_n))
+		\label{eq:likelihood vector}
 	\end{equation}
-	The problem of determining $K_{\vect{x}}$ is then the same as determining in which of the $C_k$ $\vect{x}$ lies.
-
-	\subsection{Motivating Example}
-
-\section{Results for \texorpdfstring{$n = 2$}{n = 2}}
-	In this section, we present Theorem \ref{thm:n=2 inflection result} which 
-	expands upon the results found in \cite{Lindsay1983-tf} and \cite{Lindsay1983a-he}.
-
-	\subsection{Things that are referenced}
-	REWORK CONTENTS OF THIS SUBSECTION INTO MAIN TEXT.
+	and the objective function
 	\begin{equation}
-		M(\vect{u}) = \sum_{i=1}^n \log(u_i)
-		\label{eq:transformedlikelihood}
+		\mathcal{L}(\vect{\gamma}) = \sum_{i = 1}^n \ln(\gamma_i).
 	\end{equation}
+	Let 
+	\begin{equation}
+		\mathcal{M} = \{\vect{\gamma}(Q;\vect{x}, f): \text{$Q$ is a probability distribution}\}
+	\end{equation}
+	be the set of all possible values of the likelihood vector. A maximizing mixing distribution may be found by first finding the $\hat{\vect{\gamma}} \in \mathcal{M}$ that maximizes $\mathcal{L}(\vect{\gamma})$ and then solving the $n$ equations
+	\begin{equation}
+		\vect{\gamma}(Q; \vect{x}, f) = \hat{\vect{\gamma}}
+	\end{equation}
+	for $Q$.
 
-	\begin{theorem}
-		If $\Gamma$ is compact then there exists a unique point on the boundary of $\conv(\Gamma)$ which maximizes the likelihood. This point corresponds to a distribution $Q$ which maximizes the likelihood and that has no more than $n$ point masses.
-		\label{thm:LindsayGamma}
-	\end{theorem}
+
+	[UP TO HERE]
 
 	\subsection{The likelihood curve}
 		In \cite{Lindsay1983-tf}, the problem of mixture likelihoods was looked at from a geometrical perspective. One key construction introduced by Lindsay was the \emph{likelihood curve},
@@ -221,6 +207,43 @@
 			\label{fig:GammaSol}
 		\end{figure}
 		The optimal point is on the boundary of $\conv(\Gamma)$ as expected and it can be written as the  $p_1 \vect{f}(\theta_1) + p_2 \vect{f}(\theta_2)$ (where $p_1 + p_2 =1 $). These two points correspond to the two probability masses in the maximizing mixture distribution shown in Figure \ref{fig:GammaSol:subfig:Density}. These masses are located at $\theta_1$ and $\theta_2$ with weights $p_1$ and $p_2$.
+	
+\section{Numerical Results}
+
+
+	One point which we wish to emphasize is that, given a component density $f$, $K$ is a function of $\vect{x}$ only. We can visualise this for small values of $n$. In Figure \ref{fig:n3phase}, we empirically found the MLE for $\vect{x} = (0,x_2,x_3)$ and recorded the number of probability masses in the maximizing mixture. We took values for $x_2$ and $x_3$ from an evenly spaced grid with $-6\leq x_2,x_3\leq 6$. We fixed $x_1 = 0$ since the shape of the maximum likelihood mixture (and therefore $K_{\vect{x}}$) depends only on the relative location of the $x_i$, not their absolute location.
+	
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width=0.8\textwidth]{Sigma1n3res1024width6}
+		\caption{$K$ as a function of $x_2$ and $x_3$ (with $x_1 = 0$) for a normal component density with unit variance.}\label{fig:n3phase}
+	\end{figure}
+	
+	For a particular choice of component density, we can partition $\mathbb{R}^n$ into sets 
+	\begin{equation}
+		C_k = \{ \vect{x} \in \mathbb{R}^n | K_{\vect{x}} = k \}, \hspace{40pt} k = 1,\dots,n.
+	\end{equation}
+	The problem of determining $K_{\vect{x}}$ is then the same as determining in which of the $C_k$ $\vect{x}$ lies.
+
+	\subsection{Motivating Example}
+
+\section{Results for \texorpdfstring{$n = 2$}{n = 2}}
+	In this section, we present Theorem \ref{thm:n=2 inflection result} which 
+	expands upon the results found in \cite{Lindsay1983-tf} and \cite{Lindsay1983a-he}.
+
+	\subsection{Things that are referenced}
+	REWORK CONTENTS OF THIS SUBSECTION INTO MAIN TEXT.
+	\begin{equation}
+		M(\vect{u}) = \sum_{i=1}^n \log(u_i)
+		\label{eq:transformedlikelihood}
+	\end{equation}
+
+	\begin{theorem}
+		If $\Gamma$ is compact then there exists a unique point on the boundary of $\conv(\Gamma)$ which maximizes the likelihood. This point corresponds to a distribution $Q$ which maximizes the likelihood and that has no more than $n$ point masses.
+		\label{thm:LindsayGamma}
+	\end{theorem}
+
+	
 
 	\subsection{The likelihood curve for \texorpdfstring{$n = 2$}{n = 2}}
 		The shape of $\Gamma_\vect{x}$ can provide us with some insight into the behaviour of $K_\vect{x}$. In Figure \ref{fig:Gammaexample}, we give some examples of $\Gamma_\vect{x}$ for $n=2$ using a normal component density with variance $\sigma^2 = 1$. 
