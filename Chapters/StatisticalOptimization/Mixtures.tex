@@ -274,42 +274,75 @@
 	evaluated at $p = 0$ and where $\Delta_\vect{\theta}$ is a degenerate distribution that places all of its mass at $\vect{\theta}$. In \cite[Theorem 4.1]{Lindsay1983-tf}, Lindsay showed you could characterise the maximizing mixture by three equivalent conditions. The statement of the Theorem here is taken from \cite[Theorem 19]{Lindsay1995-sq}.
 
 	\begin{theorem}[\cite{Lindsay1995-sq}]
+	\label{thm:Lindsay three statements that characterise maximizing mixture}
 		The following three statements are equivalent:
 		\begin{enumerate}
 			\item $\hat{Q}$ maximizes $l(Q;\vect{x},f)$.
 			\item $\hat{Q}$ minimizes $\sup_\vect{\theta} D_Q(\vect{\theta};\vect{x}, f)$.
 			\item $\sup_\vect{\theta} D_{\hat{Q}}(\vect{\theta};\vect{x}, f) = 0$.
+			\label{item:supremum of gradient is zero}
 		\end{enumerate}
 	\end{theorem}
 
 	Also contained in \cite[Theorem 4.1]{Lindsay1983-tf} was the following result concerning the locations of the support points of $\hat{Q}$. The statement here is taken from \cite[Theorem 20]{Lindsay1995-sq}.
 
 	\begin{theorem}[\cite{Lindsay1995-sq}]
+		\label{thm: Lindsay support is zeros of gradient}
 		The support of any maximum likelihood estimator $\hat{Q}$ lies in the set 
 		\begin{equation}
 			\left\{\vect{\theta} : D_{\hat{Q}}(\vect{\theta};\vect{x},f) = 0 \right\}.
 		\end{equation}
 	\end{theorem}
 
-	[UP TO HERE]
+	If $f$ is parametrized by a single parameter $\theta$ and $D_Q(\theta;\vect{x},f)$ is twice differentiable in $\theta$, then each interior support point $\theta^*$ of the maximizing mixture distribution, $\hat{Q}$, satisfies
+	\begin{align}
+		D_{\hat{Q}}(\theta^*;\vect{x}, f) &= 0, 
+		\label{eq:Deq1}\\
+		D'_{\hat{Q}}(\theta^*;\vect{x}, f) &= 0, 
+		\label{eq:Deq2}\\
+		D''_{\hat{Q}}(\theta^*;\vect{x}, f) &\leq 0.
+		\label{eq:Deq3}
+	\end{align}
 
-	\subsection{Directional Derivative}
-		One of the tools introduced in \cite{Lindsay1983-tf} was the function
-		\begin{equation}
-			D(\theta;\vect{p},\vect{\theta},\vect{x}) = -n + \sum_{i=1}^n \frac{f(x_i - \theta)}{\sum_{j=1}^m p_j f(x_i - \theta_j)}.
-		\end{equation}
+	\subsubsection{Support Hyperplane}
+	There is a geometrical interpretation to these theorems that ties in with the likelihood curve interpretation given above. For any given mixing distribution $Q$, define the \emph{inverse likelihood vector} $\vect{\gamma}^{-1}(Q;\vect{x},f) = (1/f_Q(x_1),\dots, 1/f_Q(x_n))$ and the hyperplane
+	\begin{equation}
+		\mathcal{H}_{Q} = \{\vect{z} : \langle \vect{\gamma}^{-1}(Q;\vect{x},f), \vect{z}\rangle = n\},
+	\end{equation}
+	which contains the usual likelihood vector, $\vect{\gamma}(Q;\vect{x}, f)$. We may write the gradient function as
+	\begin{equation}
+		D(Q;\vect{x},f) = \langle \vect{\gamma}^{-1}(Q;\vect{x},f), \vect{\gamma}(\vect{\theta};\vect{x},f)\rangle - n.
+	\end{equation}
+	If $\hat{Q}$ maximizes $l(Q;\vect{x},f)$ then by statement \ref{item:supremum of gradient is zero}, 
+	\begin{equation}
+		\langle \vect{\gamma}^{-1}(\hat{Q};\vect{x},f), \vect{\gamma}(\vect{\theta};\vect{x},f) \rangle \leq n
+	\end{equation}
+	for all $\vect{\theta} \in \Omega$. This means that $\mathcal{M} = \conv(\Gamma_{\vect{x},f})$ lies entirely on one side of $\mathcal{H}$ and Theorem \ref{thm: Lindsay support is zeros of gradient} tell us that if $\vect{\theta}$ is in the support of $\hat{Q}$, then 
+	\begin{equation}
+		\langle \vect{\gamma}^{-1}(\hat{Q};\vect{x},f), \vect{\gamma}(\vect{\theta};\vect{x},f) \rangle = n
+	\end{equation}
+	and so $\vect{\gamma}(\vect{\theta};\vect{x},f) \in \mathcal{H}$. Thus the question of determining the number of support points of $\hat{Q}$ can be answered by finding the number of points at which $\Gamma_{\vect{x},f}$ touches $\mathcal{H}_{\hat{Q}}$.
 
-		Lindsay showed that if $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ form a maximum likelihood location mixture of $f$ for $\vect{x}$ then (under appropriate differentiability assumuptions) the function $D$ satisfies the following:
-		\begin{align}
-			D(\theta_k;\hat{\vect{p}},\hat{\vect{\theta}},\vect{x}) &= 0, && k = 1,\dots,m,
-			\label{eq:Deq1}\\
-			D'(\theta_k;\hat{\vect{p}},\hat{\vect{\theta}},\vect{x}) &= 0, && k = 1,\dots,m,
-			\label{eq:Deq2}\\
-			D''(\theta_k;\hat{\vect{p}},\hat{\vect{\theta}},\vect{x}) &\leq 0, && k = 1,\dots,m.
-			\label{eq:Deq3}
-		\end{align}
-		These three constraints restrict what a potential maximum likelihood solution can look like.
-		HOW DID LINDSAY USE THEM VS US?
+	[FIGURE]
+	
+
+	% \subsection{Directional Derivative}
+	% 	One of the tools introduced in \cite{Lindsay1983-tf} was the function
+	% 	\begin{equation}
+	% 		D(\theta;\vect{p},\vect{\theta},\vect{x}) = -n + \sum_{i=1}^n \frac{f(x_i - \theta)}{\sum_{j=1}^m p_j f(x_i - \theta_j)}.
+	% 	\end{equation}
+
+	% 	Lindsay showed that if $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ form a maximum likelihood location mixture of $f$ for $\vect{x}$ then (under appropriate differentiability assumuptions) the function $D$ satisfies the following:
+	% 	% \begin{align}
+	% 	% 	D(\theta_k;\hat{\vect{p}},\hat{\vect{\theta}},\vect{x}) &= 0, && k = 1,\dots,m,
+	% 	% 	\label{eq:Deq1}\\
+	% 	% 	D'(\theta_k;\hat{\vect{p}},\hat{\vect{\theta}},\vect{x}) &= 0, && k = 1,\dots,m,
+	% 	% 	\label{eq:Deq2}\\
+	% 	% 	D''(\theta_k;\hat{\vect{p}},\hat{\vect{\theta}},\vect{x}) &\leq 0, && k = 1,\dots,m.
+	% 	% 	\label{eq:Deq3}
+	% 	% \end{align}
+	% 	These three constraints restrict what a potential maximum likelihood solution can look like.
+	% 	HOW DID LINDSAY USE THEM VS US?
 
 
 \section{Numerical Results}
