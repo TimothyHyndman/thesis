@@ -95,6 +95,7 @@
 \section{Summary of Lindsay}
 	To obtain results concerning $K_\vect{x}$ we will make use of the geometrical approach employed by Lindsay in \cite{Lindsay1983-tf} and \cite{Lindsay1983a-he} and summarized later in \cite[Chapter 5]{Lindsay1995-sq}. This section is dedicated to laying out the basics of this approach and summarising the results that are most relevant to our work. Here, we assume that the component densities, $f(\vect{x};\vect{\theta})$, are bounded, but we do not restrict ourselves to finite location mixtures on the real line.
 
+	\subsection{The likelihood curve}
 	The key to Lindsay's approach is to reformulate the problem from optimizing over all mixing distributions, to optimizing an appropriate objective function over a convex set in $\mathbb{R}^n$. Define the \emph{likelihood vector}
 	\begin{equation}
 		\vect{\gamma}(Q;\vect{x}, f) = (f_Q(x_1), \dots, f_Q(x_n))
@@ -257,13 +258,59 @@
 
 		[MAKE THIS FIGURE REPRODUCIBLE + FIX]
 
-		[UP TO HERE]
-
 		\begin{remark}
-			Note that in this example, while $\Gamma_{\vect{x}, f}$ is bounded, it is not closed (it does not contain the limit point $(0,0)$), and so $\Gamma_{\vect{x}, f}$ is not compact (as required by Theorem \ref{thm:LindsayGamma}). In fact, any positive density whose support is the whole real line will not contain the limit point $\vect{0}$ (where $\vect{0}$ represents the zero vector in $\mathbb{R}^n$). However, since $\vect{0}$ is clearly not going to be a part of a maximizing mixture, we are safe to apply Theorem \ref{thm:LindsayGamma} if $\Gamma \cup \{ \vect{0} \}$ is compact.
+			Note that in this example, while $\Gamma_{\vect{x}, f}$ is bounded, it is not closed (it does not contain the limit point $(0,0)$), counter to the requirements of Theorems \ref{thm: lindsay maximizing likelihood vector point} and \ref{thm: lindsay no more than n points}. In fact, any positive density whose support is the whole real line will not contain the limit point $\vect{0}$ (where $\vect{0}$ represents the zero vector in $\mathbb{R}^n$). However, since $\vect{0}$ is clearly not going to be a part of a maximizing mixture, we are safe to apply both theorems if $\Gamma \cup \{ \vect{0} \}$ is closed. A more detailed discussion concerning how to relax the requirement that the set $\Gamma_{\vect{x},f}$ be closed can be found in \cite[Section 5.2.2.]{Lindsay1995-sq}.
 		\end{remark}
 
-	\subsection{Derivative stuff}
+	\subsection{Gradient characterization}
+	Another important construction due to Lindsay is the gradient function
+	\begin{equation}
+		D_Q(\vect{\theta}; \vect{x}, f) = -n + \sum_{i = 1}^n \frac{f(x_i;\vect{\theta})}{f_Q(x_i)}.
+	\end{equation}
+	This is the derivative of $l(Q;\vect{x},f)$ as we move along the path parametrized by
+	\begin{equation}
+		(1 - p)Q + p\Delta_\vect{\theta}
+	\end{equation}
+	evaluated at $p = 0$ and where $\Delta_\vect{\theta}$ is a degenerate distribution that places all of its mass at $\vect{\theta}$. In \cite[Theorem 4.1]{Lindsay1983-tf}, Lindsay showed you could characterise the maximizing mixture by three equivalent conditions. The statement of the Theorem here is taken from \cite[Theorem 19]{Lindsay1995-sq}.
+
+	\begin{theorem}[\cite{Lindsay1995-sq}]
+		The following three statements are equivalent:
+		\begin{enumerate}
+			\item $\hat{Q}$ maximizes $l(Q;\vect{x},f)$.
+			\item $\hat{Q}$ minimizes $\sup_\vect{\theta} D_Q(\vect{\theta};\vect{x}, f)$.
+			\item $\sup_\vect{\theta} D_{\hat{Q}}(\vect{\theta};\vect{x}, f) = 0$.
+		\end{enumerate}
+	\end{theorem}
+
+	Also contained in \cite[Theorem 4.1]{Lindsay1983-tf} was the following result concerning the locations of the support points of $\hat{Q}$. The statement here is taken from \cite[Theorem 20]{Lindsay1995-sq}.
+
+	\begin{theorem}[\cite{Lindsay1995-sq}]
+		The support of any maximum likelihood estimator $\hat{Q}$ lies in the set 
+		\begin{equation}
+			\left\{\vect{\theta} : D_{\hat{Q}}(\vect{\theta};\vect{x},f) = 0 \right\}.
+		\end{equation}
+	\end{theorem}
+
+	[UP TO HERE]
+
+	\subsection{Directional Derivative}
+		One of the tools introduced in \cite{Lindsay1983-tf} was the function
+		\begin{equation}
+			D(\theta;\vect{p},\vect{\theta},\vect{x}) = -n + \sum_{i=1}^n \frac{f(x_i - \theta)}{\sum_{j=1}^m p_j f(x_i - \theta_j)}.
+		\end{equation}
+
+		Lindsay showed that if $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ form a maximum likelihood location mixture of $f$ for $\vect{x}$ then (under appropriate differentiability assumuptions) the function $D$ satisfies the following:
+		\begin{align}
+			D(\theta_k;\hat{\vect{p}},\hat{\vect{\theta}},\vect{x}) &= 0, && k = 1,\dots,m,
+			\label{eq:Deq1}\\
+			D'(\theta_k;\hat{\vect{p}},\hat{\vect{\theta}},\vect{x}) &= 0, && k = 1,\dots,m,
+			\label{eq:Deq2}\\
+			D''(\theta_k;\hat{\vect{p}},\hat{\vect{\theta}},\vect{x}) &\leq 0, && k = 1,\dots,m.
+			\label{eq:Deq3}
+		\end{align}
+		These three constraints restrict what a potential maximum likelihood solution can look like.
+		HOW DID LINDSAY USE THEM VS US?
+
 
 \section{Numerical Results}
 
@@ -461,24 +508,7 @@
 		\end{proof}
 
 \section{Results for general n}
-	\subsection{Directional Derivative}
-		One of the tools introduced in \cite{Lindsay1983-tf} was the function
-		\begin{equation}
-			D(\theta;\vect{p},\vect{\theta},\vect{x}) = -n + \sum_{i=1}^n \frac{f(x_i - \theta)}{\sum_{j=1}^m p_j f(x_i - \theta_j)}.
-		\end{equation}
-
-		Lindsay showed that if $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ form a maximum likelihood location mixture of $f$ for $\vect{x}$ then (under appropriate differentiability assumuptions) the function $D$ satisfies the following:
-		\begin{align}
-			D(\theta_k;\hat{\vect{p}},\hat{\vect{\theta}},\vect{x}) &= 0, && k = 1,\dots,m,
-			\label{eq:Deq1}\\
-			D'(\theta_k;\hat{\vect{p}},\hat{\vect{\theta}},\vect{x}) &= 0, && k = 1,\dots,m,
-			\label{eq:Deq2}\\
-			D''(\theta_k;\hat{\vect{p}},\hat{\vect{\theta}},\vect{x}) &\leq 0, && k = 1,\dots,m.
-			\label{eq:Deq3}
-		\end{align}
-		These three constraints restrict what a potential maximum likelihood solution can look like.
-		HOW DID LINDSAY USE THEM VS US?
-
+	
 	\subsection{Normal Constraints}
 		When our component density is normal with variance $\sigma^2$,
 		\begin{equation}
