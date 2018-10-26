@@ -65,21 +65,31 @@
 
 	In Chapters \ref{Ch:1D} and \ref{Ch:GeneralResults}, we will investigate the coupling time for the Ising heat-bath Glauber dynamics, both on the cycle, at any temperature, in Chapter \ref{Ch:1D}, and on any vertex transitive graph, at sufficiently high temperatures, in Chapter \ref{Ch:GeneralResults}. Our main result in each chapter will be proving that, when appropriately scaled, the distribution of the coupling time essentially converges to a Gumbel as the size of the graph increases. 
 
-	Prior to this work, not much has been written about the coupling time for the heat-bath dynamics. In \cite[Conjecture 7.1]{Collevecchio2018-nq}, the authors conjecture that on the $d$-dimensional lattice with side length $L$, $\mathbb{Z}^d_L$, the coupling time of the Ising heat-bath process converges to a Gumbel distribution as $L \rightarrow \infty$ at all temperatures above the critical temperature. This is then followed by numerical evidence supporting their conjecture. We may also use the results by Propp and Wilson in \cite[Section 5]{Propp1996-cf} to relate the \emph{mixing time} of the heat-bath Glauber dynamics with tail bounds of the coupling time.
-
-	[WRITE THE RESULTS]
+	Prior to this work, not much has been written about the coupling time for the heat-bath dynamics. In \cite[Conjecture 7.1]{Collevecchio2018-nq}, the authors conjecture that on the $d$-dimensional lattice with side length $L$, $\mathbb{Z}^d_L$, the coupling time of the Ising heat-bath process converges to a Gumbel distribution as $L \rightarrow \infty$ at all temperatures above the critical temperature. This is then followed by numerical evidence supporting their conjecture. We may also use the results by Propp and Wilson in \cite[Section 5]{Propp1996-cf} to relate the \emph{mixing time} of the heat-bath Glauber dynamics with tail bounds of the coupling time. 
 
 	Given a parameter $\epsilon$, a Markov Chain $Y_t$ has mixing time
 	\begin{equation}
 	\label{eq:mixing time definition}
-		t_\mathrm{MIX}(\epsilon) = \inf\left\{t: \max_{x_0 \in \Omega} ||\prob(X_t \in \cdot | X_0 = x_0) - \pi ||_\mathrm{TV} \leq \epsilon \right\}
+		t_\mathrm{MIX}(\epsilon) = \inf\left\{t: d(t) \leq \epsilon \right\}
 	\end{equation}
-	where the total variation distance between two distributions $\nu_1$ and $\nu_2$ is defined as 
+	where
+	\begin{equation}
+		d(t) = \max_{y_0 \in \Omega} ||\prob(Y_t \in \cdot | Y_0 = y_0) - \pi ||_\mathrm{TV}
+	\end{equation}
+	and where the total variation distance between two distributions $\nu_1$ and $\nu_2$ is defined as 
 	\begin{equation}
 		||\nu_1 - \nu_2||_\mathrm{TV} = \max_{A \in \Omega}|\nu_1(A) - \nu_2(A)| = \frac{1}{2}\sum_{\sigma \in \Omega} |\nu_1(\sigma) - \nu_2(\sigma)|.
 	\end{equation}
 
-	% [STATE RELATION]
+	The results of \cite[Theorem 5]{Propp1996-cf}, within the setting of the discrete time Ising heat-bath process, state that the coupling time, $T$, satisfies
+	\begin{equation}
+		\frac{\prob[T > k]}{n+1} \leq \bar{d}(k) \leq \prob[T > k]
+	\end{equation}
+	where
+	\begin{equation}
+		\bar{d}(k) = \max_{\mu_1, \mu_2} || \mu_1^k - \mu_2^k||_\mathrm{TV}
+	\end{equation}
+	and $\mu^k$ is the distribution of the Markov chain at time $k$ when started from a random state from distribution $\mu$. The relationship between $\bar{d}$ and the mixing time is given by the result $d(t) \leq \bar{d}(t) \leq 2d(t)$ \cite[Lemma 4.10]{Levin2009-fo}.
 	
 	On the complete graph, a complete characterisation of the mixing time as a function of temperature is obtained in \cite{Ding2009-du}. On other graphs, the mixing time is treated in \cite{Martinelli1994-bv} for sufficiently high temperature. More recently, a series of papers by Lubetzky and Sly (\cite{Lubetzky2013-yv}, \cite{Lubetzky2015-po}, \cite{Lubetzky2016-wd}, and \cite{Lubetzky2017-nc}) have established much sharper results concerning the mixing time on a wide class of graphs. Their methods form a key part of our proof and will be discussed further in Section \ref{sec:information percolation}.
 
