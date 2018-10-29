@@ -152,6 +152,10 @@
 		The solution $\hat{\vect{\gamma}}$ can be represented as $\vect{\gamma}(\hat{Q};\vect{x}, f)$, where $\hat{Q}$ has no more than $n$ points of support.
 		\label{thm: lindsay no more than n points}
 	\end{theorem}
+	This gives us our first bound on $K_\vect{x}$: for component densities that produce a closed and bounded likelihood curve,
+	\begin{equation}
+		K_\vect{x} \leq n.
+	\end{equation}
 
 	% \subsection{The likelihood curve}
 	% 	In \cite{Lindsay1983-tf}, the problem of mixture likelihoods was looked at from a geometrical perspective. One key construction introduced by Lindsay was the \emph{likelihood curve},
@@ -324,6 +328,16 @@
 	and so $\vect{\gamma}(\vect{\theta};\vect{x},f) \in \mathcal{H}$. Thus the question of determining the number of support points of $\hat{Q}$ can be answered by finding the number of points at which $\Gamma_{\vect{x},f}$ touches $\mathcal{H}_{\hat{Q}}$.
 
 	[FIGURE]
+
+	\subsection{Additional results on \texorpdfstring{$K_\vect{x}$}{Kx}}
+
+	Theorem \ref{thm: lindsay no more than n points} bounds $K_\vect{x}$ by $n$. To get tighter bounds on $K_\vect{x}$, we must make some assumptions about the form of the component densities, or the structure of $\vect{x}$.
+
+	[FOLLOWING IS NOTES FOR MYSELF]
+
+	Exponential family \cite{Lindsay1983a-he}, more general results including this one and others in \cite{Lindsay1993-rj}. In particular, $n/2$ for discrete densities. May want to cite \cite{Seregin2010-xe} since it has some very limited results on the support. Read \cite{Zhang2008-wn} for more citations.
+
+	[UP TO HERE]
 	
 
 	% \subsection{Directional Derivative}
@@ -346,7 +360,7 @@
 
 
 \section{Numerical Results}
-
+	
 
 	One point which we wish to emphasize is that, given a component density $f$, $K$ is a function of $\vect{x}$ only. We can visualise this for small values of $n$. In Figure \ref{fig:n3phase}, we empirically found the MLE for $\vect{x} = (0,x_2,x_3)$ and recorded the number of probability masses in the maximizing mixture. We took values for $x_2$ and $x_3$ from an evenly spaced grid with $-6\leq x_2,x_3\leq 6$. We fixed $x_1 = 0$ since the shape of the maximum likelihood mixture (and therefore $K_{\vect{x}}$) depends only on the relative location of the $x_i$, not their absolute location.
 	
