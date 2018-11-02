@@ -314,6 +314,49 @@
 			\liminf_{n \rightarrow \infty} \expect \left[\frac{1}{1 + U_i}| X_i = 1\right] \geq \frac{1}{2\sqrt{\frac{4}{\theta} - 1} - 1}.
 		\end{align}
 	\end{proof}
+
+	To prove that $\lambda$ converges we will show that $U_i^n$ converges in distribution to some other random variable. This then allows us to use [WHAT??] to prove that $\lambda$ converges. The proofs require the construction of some new random variables which we define now.
+
+	The update sequence on the cycle may be represented using the thinned processes $K_t^i$, $L_t^i$, and $R_t^i$. We may extend the update sequence into the interval $t < 0$ by mirroring these processes backwards in time from $t=0$ [HOW DO I SAY THIS PROPERLY?]. We then can use this extended update sequence to define the update support and update histories on the interval $(-\infty, t^*]$. For each $i \in V$, we define the indicators
+	\begin{equation}
+		\bar{X}_i = \begin{cases}
+			1 & \forall t \in (-\infty, t^*], \mathcal{H}_i(t) \neq \emptyset,\\
+			0 & \text{otherwise}.
+		\end{cases}
+	\end{equation}
+	and the random variables
+	\begin{equation}
+		\bar{U}_i = \sum_{j \in B_i} \bar{X}_j.
+	\end{equation}
+	With probability 1, $\bar{X}_i = 0$ and $\bar{U}_i = 0$ since the update histories eventually encounter an oblivious update with probability 1. 
+
+	The following lemma relates the distribution of $U_i$ with that of $\bar{U}_i$.
+
+	\begin{lemma}
+		\begin{equation}
+			\prob(\bar{U} \geq k | \bar{X}_i = 1) \leq \prob(U_i \geq k | X_i = 1) \leq \prob(\bar{U}_i \geq k | \bar{X}_i = 1) + \euler^{-z} \frac{|B_i|}{n}
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		We start with the lower bound. We first note that conditioning on $X_i = 1$ and $\bar{X}_i = 1$ have the same result along $[0, t^*]$. [WRITE THIS PROPERLY]. So
+		\begin{equation}
+			\prob(U_i \geq k | X_i = 1) = \prob(U_i \geq k | \bar{X}_i = 1).
+		\end{equation}
+		For every $j \in V$, if $\bar{X}_j = 1$, then $X_j = 1$. So $\bar{U}_i \leq U_i$ and
+		\begin{equation}
+			\prob(U_i \geq k | X_i = 1) \geq \prob(\bar{U}_i \geq k | \bar{X}_i = 1).
+		\end{equation}
+
+		We now treat the upper bound. Define the event
+		\begin{equation}
+			A_j = \{ \mathcal{H}_j(0) \neq \emptyset, \mathcal{H}_j \cap \mathcal{H}_i = \emptyset\}.
+		\end{equation}
+		and their union
+		\begin{equation}
+			A = \bigcup_{j \in B_i} A_j.
+		\end{equation}
+		We note that on the event $A^\mathrm{c} \cap \{\bar{X}_i = 1\}$, $U_i = \bar{U}_i$.
+	\end{proof}
 	
 	% To complete the proof, we need to show that the limit of 
 	% \begin{equation}
