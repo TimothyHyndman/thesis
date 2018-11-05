@@ -109,7 +109,7 @@ end
 if options.save
     %Print to file... Make sure that the current folder is where you want to
     %save it!!!
-    if options.filename == []
+    if strcmp(options.filename, '')
         filename = ['Sigma',num2str(sigma),'n3res',num2str(res),'width',num2str(width)];
         if options.ellipse
             filename = [filename,'ellipse'];
@@ -117,13 +117,14 @@ if options.save
         if options.lindsay_bound
             filename = [filename,'lindsaybound'];
         end
-        filename = [filename,'-blue'];
+        filename = [filename,'-blue','.png'];
     else
-        filename = options.filename
+        filename = options.filename;
     end
 
     % export_fig(filename,'-png','-transparent','-r600')
-    export_fig(filename,'-pdf')
+    % export_fig(filename,'-pdf')
+    saveas(h, filename)
     end
 end
 
@@ -147,6 +148,6 @@ function options = fill_default_options(options)
         options.line_width = 1;
     end
     if ~isfield(options, 'filename')
-        options.filename = [];
+        options.filename = '';
     end
 end

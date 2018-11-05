@@ -32,7 +32,7 @@
 	In this chapter, we will be concerned only with finite mixtures on the real line, whose component densities are parametrised by a single shifting parameter, $\theta$. This is what we will call a \emph{location mixture}, and it can be written as
 	\begin{equation}
 		f_{\vect{p}, \vect{\theta}} = \sum_{j = 1}^m p_j f(x - \theta_j)
-		\label{eq:mixturesum}
+		\label{eq:location mixture}
 	\end{equation}
 	for a single component density $f(x)$.
 	Looking only at mixtures of this form is not as restrictive as it may at first seem. Using a finite location mixture of normals, you can approximate any continuous density arbitrarily well [BETTER CITATION] \cite{McLachlan2004-ik}.
@@ -358,25 +358,50 @@
 
 
 \section{Numerical Results}
-	In this section we explore $K_\vect{x}$ through empirical results and figures. The process we use to generate the results is essentially the same throughout. We choose $\vect{x} \in \mathbb{R}^n$ either deterministically or randomly, and use a general purpose nonlinear programming solver to find the maximum likelihood mixture (we use the MATLAB function \emph{fmincon}). We can test that we have indeed reached the global maximum through the use of the derivative function conditions given in Theorem \ref{thm:Lindsay three statements that characterise maximizing mixture}. If the mixture that is returned by our general solver does not satisfy these conditions then we may use another method, such as the vertex direction method (VDM) or the vertex exchange method (VEM), which is guaranteed to converge to the global maximum (see \cite{Bohning1995-di} for a review of different methods). We note that the actual method used is not important so long as the final result satisfies the derivative conditions. In practise, we deal with $\vect{x} \in \mathbb{R}^n$ with $n$ small, for which a general purpose solver is sufficient, fast, and simple to implement.
+	In this section we explore $K_\vect{x}$ through empirical results and figures. The process we use to generate the results is essentially the same throughout. We choose $\vect{x} \in \mathbb{R}^n$ either deterministically or randomly, and use a general purpose nonlinear programming solver to find the maximum likelihood mixture (we use the MATLAB function \emph{fmincon}). We can test that we have indeed reached the global maximum through the use of the derivative function conditions given in Theorem \ref{thm:Lindsay three statements that characterise maximizing mixture}. If the mixture that is returned by our general solver does not satisfy these conditions then we may use another method, such as the vertex direction method (VDM) or the vertex exchange method (VEM), which is guaranteed to converge to the global maximum (see \cite{Bohning1995-di} for a review of different methods). We note that the actual method used is not important so long as the final result satisfies the derivative conditions. In practise, we deal with $\vect{x} \in \mathbb{R}^n$ with $n$ small, for which a general purpose solver is sufficient, fast, and simple to implement, and we rarely need to use a secondary method.
 
 	[MAY WISH TO BE MORE SPECIFIC HERE BUT WILL NEED TO REWRITE CODE TO MATCH]
 
-	We initiate our general purpose solver with a mixture distribution that has more points of support than is needed. Under the optimization, this collapses down to a distribution which may assign zero weight to some masses, and may concentrate multiple masses on the one point of support (see Figure [MAKE FIGURE]). We may simplify such a distribution by removing all masses with zero weight, and by combining all masses which share a point of support into one mass which takes the combined weight of the constituent masses. The number of probability masses in this simplified distribution is the value we take for $K_\vect{x}$.
+	We initiate our gene{}ral purpose solver with a mixture distribution that has more points of support than is needed. Under the optimization, this collapses down to a distribution which may assign zero weight to some masses, and may concentrate multiple masses on the one point of support (see Figure [MAKE FIGURE]). We may simplify such a distribution by removing all masses with zero weight, and by combining all masses which share a point of support into one mass which takes the combined weight of the constituent masses. The number of probability masses in this simplified distribution is the value we take for $K_\vect{x}$.
 
-	
+	Throughout this section, and for the remainder of this chapter, we will consider only location mixtures (see \eqref{eq:location mixture}). All component densities will be unimodal, with a mode at $x = 0$. We list here the component densities that we will use.
 
-	[UP TO HERE]
+	\begin{tabular}{l | c}
+		Density & $f(x) = $\\
+		\hline
+		normal with fixed variance $\sigma^2$ & $\frac{1}{\sigma \sqrt{2 \pi}} \exp\left(-\frac{x^2}{2\sigma^2}\right) $\\
+		cauchy with fixed scale $\gamma$ & $\frac{1}{\pi \gamma + \pi x^2/\gamma}$
+	\end{tabular}
+
+	[EXTEND AS REQUIRED]
 	% \subsection{Motivating Example?}
 
 	\subsection{Flag graphs}
+	When is $n$ is very small, we can plot $K_\vect{x}$ as a function of $\vect{x}$. For example, we may take $\vect{x} = (x_1, x_2)$ across a grid of values and color each point $\vect{x}$ according to the value of $K_\vect{x}$. We have done this in Figure \ref{fig:normal_flag_graph_n2} for a normal component density with fixed variance $\sigma^2 = 1$. We observe a band in which $K_\vect{x} = 1$ and outside of which $K_\vect{x} = 2$.
 
-	One point which we wish to emphasize is that, given a component density $f$, $K$ is a function of $\vect{x}$ only. We can visualise this for small values of $n$. In Figure \ref{fig:n3phase}, we empirically found the MLE for $\vect{x} = (0,x_2,x_3)$ and recorded the number of probability masses in the maximizing mixture. We took values for $x_2$ and $x_3$ from an evenly spaced grid with $-6\leq x_2,x_3\leq 6$. We fixed $x_1 = 0$ since the shape of the maximum likelihood mixture (and therefore $K_{\vect{x}}$) depends only on the relative location of the $x_i$, not their absolute location.
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width = 0.8\textwidth]{Figures/Mixtures/normal_flag_graph_n2.png}
+		\caption{[RENDER IN HD]}
+		\label{fig:normal_flag_graph_n2}
+	\end{figure}
+
+	However, 
+
+	[UP TO HERE]
+
+	One point that we wish to emphasize is that, given a component density $f$, $K$ is a function of $\vect{x}$ only. We can visualise this for small values of $n$. In Figure \ref{fig:n3phase}, we empirically found the MLE for $\vect{x} = (0,x_2,x_3)$ and recorded the number of probability masses in the maximizing mixture. We took values for $x_2$ and $x_3$ from an evenly spaced grid with $-6\leq x_2,x_3\leq 6$. We fixed $x_1 = 0$ since the shape of the maximum likelihood mixture (and therefore $K_{\vect{x}}$) depends only on the relative location of the $x_i$, not their absolute location.
 	
 	\begin{figure}[ht]
 		\centering
-		\includegraphics[width=0.8\textwidth]{Sigma1n3res1024width6}
-		\caption{$K$ as a function of $x_2$ and $x_3$ (with $x_1 = 0$) for a normal component density with unit variance.}\label{fig:n3phase}
+		\includegraphics[width=0.8\textwidth]{normal_flag_graph.png}
+		\caption{[RENDER IN HD] $K_\vect{x}$ as a function of $x_2$ and $x_3$ (with $x_1 = 0$) for a normal component density with unit variance.}\label{fig:n3phase}
+	\end{figure}
+
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width=0.8\textwidth]{cauchy_flag_graph.png}
+		\caption{[RENDER IN HD]}
 	\end{figure}
 	
 	For a particular choice of component density, we can partition $\mathbb{R}^n$ into sets 
