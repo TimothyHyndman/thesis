@@ -336,8 +336,6 @@
 	[FOLLOWING IS NOTES FOR MYSELF]
 
 	Exponential family \cite{Lindsay1983a-he}, more general results including this one and others in \cite{Lindsay1993-rj}. In particular, $n/2$ for discrete densities. May want to cite \cite{Seregin2010-xe} since it has some very limited results on the support. Read \cite{Zhang2008-wn} for more citations.
-
-	[UP TO HERE]
 	
 
 	% \subsection{Directional Derivative}
@@ -360,8 +358,17 @@
 
 
 \section{Numerical Results}
-	
+	In this section we explore $K_\vect{x}$ through empirical results and figures. The process we use to generate the results is essentially the same throughout. We choose $\vect{x} \in \mathbb{R}^n$ either deterministically or randomly, and use a general purpose nonlinear programming solver to find the maximum likelihood mixture (we use the MATLAB function \emph{fmincon}). We can test that we have indeed reached the global maximum through the use of the derivative function conditions given in Theorem \ref{thm:Lindsay three statements that characterise maximizing mixture}. If the mixture that is returned by our general solver does not satisfy these conditions then we may use another method, such as the vertex direction method (VDM) or the vertex exchange method (VEM), which is guaranteed to converge to the global maximum (see CITE for a review of different methods). We note that the actual method used is not important so long as the final result satisfies the derivative conditions. In practise, we deal with $\vect{x}$ which are very small and for which a general purpose solver is sufficient, fast, and simple to implement.
 
+	[MAY WISH TO BE MORE SPECIFIC HERE BUT WILL NEED TO REWRITE CODE TO MATCH]
+
+
+	\subsection{Motivating Example?}
+
+	\subsection{Flag graphs}
+
+	[UP TO HERE]
+	
 	One point which we wish to emphasize is that, given a component density $f$, $K$ is a function of $\vect{x}$ only. We can visualise this for small values of $n$. In Figure \ref{fig:n3phase}, we empirically found the MLE for $\vect{x} = (0,x_2,x_3)$ and recorded the number of probability masses in the maximizing mixture. We took values for $x_2$ and $x_3$ from an evenly spaced grid with $-6\leq x_2,x_3\leq 6$. We fixed $x_1 = 0$ since the shape of the maximum likelihood mixture (and therefore $K_{\vect{x}}$) depends only on the relative location of the $x_i$, not their absolute location.
 	
 	\begin{figure}[ht]
@@ -375,8 +382,6 @@
 		C_k = \{ \vect{x} \in \mathbb{R}^n | K_{\vect{x}} = k \}, \hspace{40pt} k = 1,\dots,n.
 	\end{equation}
 	The problem of determining $K_{\vect{x}}$ is then the same as determining in which of the $C_k$ $\vect{x}$ lies.
-
-	\subsection{Motivating Example}
 
 \section{Results for \texorpdfstring{$n = 2$}{n = 2}}
 	In this section, we present Theorem \ref{thm:n=2 inflection result} which 
