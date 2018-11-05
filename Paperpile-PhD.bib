@@ -3645,3 +3645,62 @@
                Projected gradient method; Partially projected gradient method;
                VDM; VEM;Mixtures;PhD"
 }
+
+% The entry below contains non-ASCII chars that could not be converted
+% to a LaTeX equivalent.
+@ARTICLE{Bohning1995-di,
+  title     = "A review of reliable maximum likelihood algorithms for
+               semiparametric mixture models",
+  author    = "B{\"o}hning, Dankmar",
+  abstract  = "This contribution reviews some of the major developments in the
+               algorithmic area connected with the construction of maximum
+               likelihood estimators in semiparametric mixture models. Mixture
+               models arise in a natural way in that they are modelling
+               unobserved population heterogeneity. It is assumed that the
+               population consists of a possibly unknown number k of
+               subpopulations with parameters ϑ1, …, ϑk receiving weights
+               $\alpha$1, …, $\alpha$k. Since it is not possible to observe the
+               subpopulation membership, one can only observe data coming from
+               the marginal or mixture density f (x, P) = $\sum$kj = 1f (x,
+               ϑj)$\alpha$j with P giving mass $\alpha$j to ϑj. The
+               log-likelihood $\lambda$(P) becomes $\sum$i log f (xi, P) and it
+               is easily seen that $\lambda$(P) forms a concave functional on
+               the convex set of all probability distributions and this
+               property in essence produces the basis for the construction
+               principles of reliable maximum likelihood algorithms. In Section
+               1, the gradient function is discussed. Any optimization
+               algorithm needs a search direction and the gradient function
+               serves as a basis for finding vertex directions. Section 2
+               discusses vertex direction methods. The fundamental idea of
+               vertex direction methods is as follows. Consider a vertex Pϑ
+               (the probability measure putting all mass at ϑ) and set up the
+               convex combination of some current P and Pϑ: (1 − $\alpha$) P +
+               $\alpha$Pϑ, where $\alpha$ is called the step-length. Good
+               choices will be discussed in the next section. The gradient
+               function is used to find the appropriate vertex direction. If ϑ
+               is chosen to maximize the gradient function the associated
+               convex combination is called the vertex direction method (VDM).
+               Large improvements of this method such as the vertex exchange
+               method (VEM) or the intra simplex direction method (ISDM) will
+               be discussed. In Section 3, the problem of finding a monotonic
+               step-length given some current value P and a search direction H
+               is studied. The idea of estimating the area above the second
+               derivative curve is introduced and related to existing
+               algorithms. The concept of area overestimation then leads to the
+               monotonicity of the associated algorithm. Section 4 discusses
+               the problem of maximizing a concave function of a finite number
+               of probabilities. Three algorithmic approaches are discussed:
+               the projection approach, the transformation approach and the
+               generalized EM approach. Concluding in Section 5, the case of a
+               fixed (known) number of components in the mixture model as well
+               as software packages available for all mentioned algorithms are
+               discussed.",
+  journal   = "J. Stat. Plan. Inference",
+  publisher = "Elsevier",
+  volume    =  47,
+  number    =  1,
+  pages     = "5--28",
+  month     =  oct,
+  year      =  1995,
+  keywords  = "Mixtures;PhD"
+}
