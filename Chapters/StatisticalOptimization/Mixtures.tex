@@ -379,9 +379,9 @@
 	\subsection{Flag graphs}
 	When is $n$ is very small, we can plot $K_\vect{x}$ as a function of $\vect{x}$. For example, we may take $\vect{x} = (x_1, x_2)$ across a grid of values and colour each point $\vect{x}$ according to the value of $K_\vect{x}$. We have done this in Figure \ref{fig:normal_flag_graph_n2} for a normal component density with fixed variance $\sigma^2 = 1$. We observe a band in which $K_\vect{x} = 1$ and outside of which $K_\vect{x} = 2$.
 
-	\begin{figure}[ht]
+	\begin{figure}
 		\centering
-		\includegraphics[width = 0.8\textwidth]{Figures/Mixtures/normal_flag_graph_n2.png}
+		\includegraphics[width = 0.9\textwidth]{Figures/Mixtures/normal_flag_graph_n2.png}
 		\caption{$K_\vect{x}$ as a function of $\vect{x} = (x_1, x_2)$, for a normal component density with fixed variance $\sigma^2 = 1$.}
 		\label{fig:normal_flag_graph_n2}
 	\end{figure}
@@ -390,30 +390,33 @@
 
 	This suggests increases $n$ to $3$, and fixing one of the $x_i$ while letting the other two vary. We do this by taking $\vect{x} = (0, x_2, x_3)$ with $x_2$ and $x_3$ varying across an evenly spaced grid. We do this for both a normal component density with variance $\sigma^2 = 1$ (Figure \ref{fig:normal_flag_graph}) and a Cauchy density with scale $\gamma = \sqrt{3}$ (Figure \ref{fig:cauchy_flag_graph}). We have chosen the scale of the Cauchy so that it has inflection points in the same places as the normal density, namely at $x = \pm 1$. This decision is made in light of Theorem \ref{thm:n=2 inflection result} which says that for $n = 2$ and for certain component densities $f$, $K_\vect{x}$ can be determined by comparing $|x_1 - x_2|$ and the distance between the inflection points of $f$. It seems reasonable to expect that the choice of scale that makes the $n = 2$ figures identical is a good choice for comparing the effects of choosing different component densities in the $n = 3$ case.
 
-	[UP TO HERE]
-
 	% One point that we wish to emphasize is that, given a component density $f$, $K$ is a function of $\vect{x}$ only. We can visualise this for small values of $n$. In Figure \ref{fig:normal_flag_graph}, we empirically found the MLE for $\vect{x} = (0,x_2,x_3)$ and recorded the number of probability masses in the maximizing mixture. We took values for $x_2$ and $x_3$ from an evenly spaced grid with $-6\leq x_2,x_3\leq 6$. We fixed $x_1 = 0$ since the shape of the maximum likelihood mixture (and therefore $K_{\vect{x}}$) depends only on the relative location of the $x_i$, not their absolute location.
 	
-	\begin{figure}[ht]
+	\begin{figure}
 		\centering
-		\includegraphics[width=0.8\textwidth]{normal_flag_graph.png}
+		\includegraphics[width=0.9\textwidth]{normal_flag_graph.png}
 		\caption{$K_\vect{x}$ as a function of $\vect{x} = (0, x_2, x_3)$ for a normal component density with fixed variance $\sigma^2 = 1$.}\label{fig:normal_flag_graph}
 	\end{figure}
 
-	\begin{figure}[ht]
+	\begin{figure}
 		\centering
-		\includegraphics[width=0.8\textwidth]{cauchy_flag_graph.png}
+		\includegraphics[width=0.9\textwidth]{cauchy_flag_graph.png}
 		\caption{$K_\vect{x}$ as a function of $\vect{x} = (0, x_2, x_3)$ for a Cauchy component density with fixed scale $\gamma = \sqrt{3}$.}
 		\label{fig:cauchy_flag_graph}
 	\end{figure}
 	
-	For a particular choice of component density, we can partition $\mathbb{R}^n$ into sets 
+	While $n = 2,3$ is not a very realistic scenario when it comes to real data to which we may wish to fit a mixture model, it does help demonstrate a particular way of thinking about the problem of determining $K_\vect{x}$. That is, that $K_\vect{x}$ is simply a function of where $\vect{x}$ lies in $\mathbb{R}^n$. For a particular choice of component density, we can partition $\mathbb{R}^n$ into sets 
 	\begin{equation}
 		C_k = \{ \vect{x} \in \mathbb{R}^n | K_{\vect{x}} = k \}, \hspace{40pt} k = 1,\dots,n.
 	\end{equation}
-	The problem of determining $K_{\vect{x}}$ is then the same as determining in which of the $C_k$ $\vect{x}$ lies.
+	The problem of determining $K_{\vect{x}}$ is then the same as determining in which of the $C_k$ $\vect{x}$ lies. If $\vect{x} = \vect{X}$ is randomly chosen, then the probability that $K_\vect{X} = k$ is simply the probability that $\vect{X} \in C_k$. In Section \ref{sec:mixture results}, we present various results which bound the regions $C_k$ in various settings.
 
-\section{Results for \texorpdfstring{$n = 2$}{n = 2}}
+	[UP TO HERE]
+
+	\section{Results}
+	\label{sec:mixture results}
+
+	\subsection{Results for \texorpdfstring{$n = 2$}{n = 2}}
 	In this section, we present Theorem \ref{thm:n=2 inflection result} which 
 	expands upon the results found in \cite{Lindsay1983-tf} and \cite{Lindsay1983a-he}.
 
