@@ -362,7 +362,7 @@
 
 	[MAY WISH TO BE MORE SPECIFIC HERE BUT WILL NEED TO REWRITE CODE TO MATCH]
 
-	We initiate our gene{}ral purpose solver with a mixture distribution that has more points of support than is needed. Under the optimization, this collapses down to a distribution which may assign zero weight to some masses, and may concentrate multiple masses on the one point of support (see Figure [MAKE FIGURE]). We may simplify such a distribution by removing all masses with zero weight, and by combining all masses which share a point of support into one mass which takes the combined weight of the constituent masses. The number of probability masses in this simplified distribution is the value we take for $K_\vect{x}$.
+	We initiate our general purpose solver with a mixture distribution that has more points of support than is needed. Under the optimization, this collapses down to a distribution which may assign zero weight to some masses, and may concentrate multiple masses on the one point of support (see Figure [MAKE FIGURE]). We may simplify such a distribution by removing all masses with zero weight, and by combining all masses which share a point of support into one mass which takes the combined weight of the constituent masses. The number of probability masses in this simplified distribution is the value we take for $K_\vect{x}$.
 
 	Throughout this section, and for the remainder of this chapter, we will consider only location mixtures (see \eqref{eq:location mixture}). All component densities will be unimodal, with a mode at $x = 0$. We list here the component densities that we will use.
 
@@ -370,38 +370,41 @@
 		Density & $f(x) = $\\
 		\hline
 		normal with fixed variance $\sigma^2$ & $\frac{1}{\sigma \sqrt{2 \pi}} \exp\left(-\frac{x^2}{2\sigma^2}\right) $\\
-		cauchy with fixed scale $\gamma$ & $\frac{1}{\pi \gamma + \pi x^2/\gamma}$
+		Cauchy with fixed scale $\gamma$ & $\frac{1}{\pi \gamma + \pi x^2/\gamma}$
 	\end{tabular}
 
 	[EXTEND AS REQUIRED]
 	% \subsection{Motivating Example?}
 
 	\subsection{Flag graphs}
-	When is $n$ is very small, we can plot $K_\vect{x}$ as a function of $\vect{x}$. For example, we may take $\vect{x} = (x_1, x_2)$ across a grid of values and color each point $\vect{x}$ according to the value of $K_\vect{x}$. We have done this in Figure \ref{fig:normal_flag_graph_n2} for a normal component density with fixed variance $\sigma^2 = 1$. We observe a band in which $K_\vect{x} = 1$ and outside of which $K_\vect{x} = 2$.
+	When is $n$ is very small, we can plot $K_\vect{x}$ as a function of $\vect{x}$. For example, we may take $\vect{x} = (x_1, x_2)$ across a grid of values and colour each point $\vect{x}$ according to the value of $K_\vect{x}$. We have done this in Figure \ref{fig:normal_flag_graph_n2} for a normal component density with fixed variance $\sigma^2 = 1$. We observe a band in which $K_\vect{x} = 1$ and outside of which $K_\vect{x} = 2$.
 
 	\begin{figure}[ht]
 		\centering
 		\includegraphics[width = 0.8\textwidth]{Figures/Mixtures/normal_flag_graph_n2.png}
-		\caption{[RENDER IN HD]}
+		\caption{$K_\vect{x}$ as a function of $\vect{x} = (x_1, x_2)$, for a normal component density with fixed variance $\sigma^2 = 1$.}
 		\label{fig:normal_flag_graph_n2}
 	\end{figure}
 
-	However, 
+	However, there is some redundancy in this plot which arises because we are using location mixtures. When using a location mixture, if the maximizing mixing distribution for $\vect{x}$ places weights $p_j$ at locations $\theta_j$, then a maximizing mixing distribution for $\vect{x} + (c, \dots, c)$ for some constant $c \in \mathbb{R}$ is simply the distribution that places weights $p_j$ at locations $\theta_j + c$. That is, shifting $\vect{x}$ by $c$ results in the maximizing mixture also shifting by $c$. A consequence of this fact is that $K_\vect{x}$ is invariant under translations of $\vect{x}$.
+
+	This suggests increases $n$ to $3$, and fixing one of the $x_i$ while letting the other two vary. We do this by taking $\vect{x} = (0, x_2, x_3)$ with $x_2$ and $x_3$ varying across an evenly spaced grid. We do this for both a normal component density with variance $\sigma^2 = 1$ (Figure \ref{fig:normal_flag_graph}) and a Cauchy density with scale $\gamma = \sqrt{3}$ (Figure \ref{fig:cauchy_flag_graph}). We have chosen the scale of the Cauchy so that it has inflection points in the same places as the normal density, namely at $x = \pm 1$. This decision is made in light of Theorem \ref{thm:n=2 inflection result} which says that for $n = 2$ and for certain component densities $f$, $K_\vect{x}$ can be determined by comparing $|x_1 - x_2|$ and the distance between the inflection points of $f$. It seems reasonable to expect that the choice of scale that makes the $n = 2$ figures identical is a good choice for comparing the effects of choosing different component densities in the $n = 3$ case.
 
 	[UP TO HERE]
 
-	One point that we wish to emphasize is that, given a component density $f$, $K$ is a function of $\vect{x}$ only. We can visualise this for small values of $n$. In Figure \ref{fig:n3phase}, we empirically found the MLE for $\vect{x} = (0,x_2,x_3)$ and recorded the number of probability masses in the maximizing mixture. We took values for $x_2$ and $x_3$ from an evenly spaced grid with $-6\leq x_2,x_3\leq 6$. We fixed $x_1 = 0$ since the shape of the maximum likelihood mixture (and therefore $K_{\vect{x}}$) depends only on the relative location of the $x_i$, not their absolute location.
+	% One point that we wish to emphasize is that, given a component density $f$, $K$ is a function of $\vect{x}$ only. We can visualise this for small values of $n$. In Figure \ref{fig:normal_flag_graph}, we empirically found the MLE for $\vect{x} = (0,x_2,x_3)$ and recorded the number of probability masses in the maximizing mixture. We took values for $x_2$ and $x_3$ from an evenly spaced grid with $-6\leq x_2,x_3\leq 6$. We fixed $x_1 = 0$ since the shape of the maximum likelihood mixture (and therefore $K_{\vect{x}}$) depends only on the relative location of the $x_i$, not their absolute location.
 	
 	\begin{figure}[ht]
 		\centering
 		\includegraphics[width=0.8\textwidth]{normal_flag_graph.png}
-		\caption{[RENDER IN HD] $K_\vect{x}$ as a function of $x_2$ and $x_3$ (with $x_1 = 0$) for a normal component density with unit variance.}\label{fig:n3phase}
+		\caption{$K_\vect{x}$ as a function of $\vect{x} = (0, x_2, x_3)$ for a normal component density with fixed variance $\sigma^2 = 1$.}\label{fig:normal_flag_graph}
 	\end{figure}
 
 	\begin{figure}[ht]
 		\centering
 		\includegraphics[width=0.8\textwidth]{cauchy_flag_graph.png}
-		\caption{[RENDER IN HD]}
+		\caption{$K_\vect{x}$ as a function of $\vect{x} = (0, x_2, x_3)$ for a Cauchy component density with fixed scale $\gamma = \sqrt{3}$.}
+		\label{fig:cauchy_flag_graph}
 	\end{figure}
 	
 	For a particular choice of component density, we can partition $\mathbb{R}^n$ into sets 
@@ -771,4 +774,4 @@
 		\end{proof}
 
 	\subsection{Discussion about what we hope to acheive}
-		The few original results above (Theorems \ref{thm:n=2 inflection result} and \ref{thm:general n constraints result}) seem to be special cases of what looks to be a much more general rule. Theorem \ref{thm:general n constraints result} seems to be too large by a factor of $m$ when you compare to numerics, and the distance between inflection points in Theorem \ref{thm:n=2 inflection result} seems to come up again when when you look at images like Figure \ref{fig:n3phase} (eg the thickness of the `bands' is this distance). It is therefore our hope that we can either generalize or add significantly to the Theorems stated so far.
+		The few original results above (Theorems \ref{thm:n=2 inflection result} and \ref{thm:general n constraints result}) seem to be special cases of what looks to be a much more general rule. Theorem \ref{thm:general n constraints result} seems to be too large by a factor of $m$ when you compare to numerics, and the distance between inflection points in Theorem \ref{thm:n=2 inflection result} seems to come up again when when you look at images like Figure \ref{fig:normal_flag_graph} (eg the thickness of the `bands' is this distance). It is therefore our hope that we can either generalize or add significantly to the Theorems stated so far.

@@ -28,8 +28,14 @@ hcb = colorbar;
 set(hcb,'YTick',[1.333,2,2.667],'YTickLabel',[1,2,3],'Location','EastOutside','FontSize',20)
 
 % Labels
-xlabel('x_2','FontSize',20)
-ylabel('x_3','FontSize',20)
+if options.n == 3
+    xlabel('x_2','FontSize',20)
+    ylabel('x_3','FontSize',20)
+end
+if options.n == 2
+    xlabel('x_1','FontSize',20)
+    ylabel('x_2','FontSize',20)
+end
 % title('Number of probability masses required (x_1 = 0)','FontSize',20)
 
 mid = 0 + width/(res-1);
@@ -149,5 +155,8 @@ function options = fill_default_options(options)
     end
     if ~isfield(options, 'filename')
         options.filename = '';
+    end
+    if ~isfield(options, 'n')
+        options.n = 3;
     end
 end
