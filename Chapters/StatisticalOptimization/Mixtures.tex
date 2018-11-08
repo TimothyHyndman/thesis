@@ -357,7 +357,7 @@
 	% 	HOW DID LINDSAY USE THEM VS US?
 
 
-\section{Numerical Results}
+\section{Empirical Results}
 	In this section we explore $K_\vect{x}$ through empirical results and figures. The process we use to generate the results is essentially the same throughout. We choose $\vect{x} \in \mathbb{R}^n$ either deterministically or randomly, and use a general purpose nonlinear programming solver to find the maximum likelihood mixture (we use the MATLAB function \emph{fmincon}). We can test that we have indeed reached the global maximum through the use of the derivative function conditions given in Theorem \ref{thm:Lindsay three statements that characterise maximizing mixture}. If the mixture that is returned by our general solver does not satisfy these conditions then we may use another method, such as the vertex direction method (VDM) or the vertex exchange method (VEM), which is guaranteed to converge to the global maximum (see \cite{Bohning1995-di} for a review of different methods). We note that the actual method used is not important so long as the final result satisfies the derivative conditions. In practise, we deal with $\vect{x} \in \mathbb{R}^n$ with $n$ small, for which a general purpose solver is sufficient, fast, and simple to implement, and we rarely need to use a secondary method.
 
 	[MAY WISH TO BE MORE SPECIFIC HERE BUT WILL NEED TO REWRITE CODE TO MATCH]
@@ -418,6 +418,9 @@
 	\end{equation}
 	The problem of determining $K_{\vect{x}}$ is then the same as determining in which of the $C_k$ $\vect{x}$ lies. If $\vect{x} = \vect{X}$ is randomly chosen, then the probability that $K_\vect{X} = k$ is simply the probability that $\vect{X} \in C_k$. In Section \ref{sec:mixture results}, we present various results which bound the regions $C_k$ in various settings.
 
+	\subsection{Other interesting things}
+	We end our empirical results section with 
+
 	[UP TO HERE]
 
 	\section{Results}
@@ -425,21 +428,7 @@
 
 	\subsection{Results for \texorpdfstring{$n = 2$}{n = 2}}
 	In this section, we present Theorem \ref{thm:n=2 inflection result} which 
-	expands upon the results found in \cite{Lindsay1983-tf} and \cite{Lindsay1983a-he}.
-
-	\subsection{Things that are referenced}
-	REWORK CONTENTS OF THIS SUBSECTION INTO MAIN TEXT.
-	\begin{equation}
-		M(\vect{u}) = \sum_{i=1}^n \log(u_i)
-		\label{eq:transformedlikelihood}
-	\end{equation}
-
-	\begin{theorem}
-		If $\Gamma$ is compact then there exists a unique point on the boundary of $\conv(\Gamma)$ which maximizes the likelihood. This point corresponds to a distribution $Q$ which maximizes the likelihood and that has no more than $n$ point masses.
-		\label{thm:LindsayGamma}
-	\end{theorem}
-
-	
+	expands upon the results found in \cite{Lindsay1983-tf} and \cite{Lindsay1983a-he}.	
 
 	\subsection{The likelihood curve for \texorpdfstring{$n = 2$}{n = 2}}
 		The shape of $\Gamma_\vect{x}$ can provide us with some insight into the behaviour of $K_\vect{x}$. In Figure \ref{fig:Gammaexample}, we give some examples of $\Gamma_\vect{x}$ for $n=2$ using a normal component density with variance $\sigma^2 = 1$. 
