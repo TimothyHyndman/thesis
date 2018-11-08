@@ -1,11 +1,11 @@
-function [Q,log_likelihood] = MixtureLikelihoodMovingMasses2(phi,X)
+function [Q,log_likelihood, Q_unsimplified] = MixtureLikelihoodMovingMasses2(phi,X)
 % Mixing Homogeneity Paper Log Likelihood Stuff
 
 %Example usage: 
 % sigma = 0.5;
 % phi = @(x,u) (1/(sigma*sqrt(2*pi)))*exp(-((repmat(x,[1,length(u)]) - repmat(u,[length(x),1])).^2)./(2*sigma^2));
 % Y = unifrnd(0,1,[50,1]);
-% [Q, log_likelihood] = MixtureLikelihoodMovingMasses(phi,Y);
+% [Q, log_likelihood, Q_unsimplified] = MixtureLikelihoodMovingMasses2(phi,Y);
 
 m = min(10,length(X));
 a = min(X);
@@ -70,6 +70,7 @@ while looping
         log_likelihood = -fval;
         Q.Support = solution_x(1:m);
         Q.ProbWeights = [solution_x(m+1:end),1 - sum(solution_x(m+1:end))];
+        Q_unsimplified = Q;
         Q = SimplifyDist(Q);
     else
 %         display(['fmincon ',num2str(counter),' failed'])
@@ -81,12 +82,14 @@ while looping
         break
     else
         [Q_test,log_likelihood_test] = max_weights(phi,X,Q,theta_star);
+        Q_unsimplified = Q;
         Q_test = SimplifyDist(Q_test);
         if log_likelihood_test >= log_likelihood
             Q = Q_test;
             log_likelihood = log_likelihood_test;
             x0 = [Q.Support,Q.ProbWeights];
             x0(end) = [];
+            Q_unsimplified = Q;
             Q = SimplifyDist(Q);
             [~,derivative] = max_theta2(phi,X,Q);
             if derivative <= 0+ tolerance
