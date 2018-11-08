@@ -362,12 +362,12 @@
 
 	[MAY WISH TO BE MORE SPECIFIC HERE BUT WILL NEED TO REWRITE CODE TO MATCH]
 
-	We initiate our general purpose solver with a mixture distribution that has more points of support than is needed. Under the optimization, this collapses down to a distribution which may assign zero weight to some masses, and may concentrate multiple masses on the one point of support (see Figure \ref{fig:collapsing distribution}). We may simplify such a distribution by removing all masses with zero weight, and by combining all masses which share a point of support into one mass which takes the combined weight of the constituent masses. The number of probability masses in this simplified distribution is the value we take for $K_\vect{x}$.
+	We initiate our general purpose solver with a mixture distribution that has more points of support than is needed. Under the optimization, this collapses down to a distribution which may assign zero weight to some masses, and may concentrate multiple masses on the one point of support. We may simplify such a distribution by removing all masses with zero weight, and by combining all masses which share a point of support into one mass which takes the combined weight of the constituent masses (see Figure \ref{fig:collapsing distribution}). The number of probability masses in this simplified distribution is the value we take for $K_\vect{x}$.
 
 	\begin{figure}
 		\centering
 		\includegraphics[width = \textwidth]{Figures/Mixtures/collapsing_distribution.png}
-		\caption[The unsimplified mixing distribution $Q^*$ that results from using more points of support than required when finding our maximizing mixture, as well as the equivalent simplifiied distribution, $Q$, and the resulting mixture density, $f_Q(x)$.]{The unsimplified mixing distribution $Q^*$ that results from using more points of support than required when finding our maximizing mixture, as well as the equivalent simplifiied distribution, $Q$, and the resulting mixture density, $f_Q(x)$. Each probability mass with support $\theta$ and weight $p$ is represeted by a point at $(\theta, p)$.}
+		\caption[The unsimplified mixing distribution $Q^*$ that results from using more points of support than required when finding our maximizing mixture, as well as the equivalent simplified distribution, $Q$, and the resulting mixture density, $f_Q(x)$.]{The unsimplified mixing distribution $Q^*$ that results from using more points of support than required when finding our maximizing mixture, as well as the equivalent simplified distribution, $Q$, and the resulting mixture density, $f_Q(x)$. Each probability mass with support $\theta$ and weight $p$ is represented by a point at $(\theta, p)$.}
 		\label{fig:collapsing distribution}
 	\end{figure}
 
