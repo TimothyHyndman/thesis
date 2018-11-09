@@ -1,11 +1,11 @@
 % X is column vector
 
-function [Q,log_likelihood] = VEM(phi,X)
+function [Q,log_likelihood] = VEM(phi, X, d_phi)
 
 	%Initial value
 	Q.Support = mean(X);
 	Q.ProbWeights = 1;
-
+	likelihood = Inf;
 	% m = 10;
 	% Q.Support = linspace(min(X), max(X), m);
 	% Q.ProbWeights = (1 / m) * ones(1, m);  
@@ -16,7 +16,7 @@ function [Q,log_likelihood] = VEM(phi,X)
 		% Find theta* = argmax D(theta)
 		[theta_star, derivative] = max_theta2(phi, X, Q);
 
-		if derivative < 1e-2
+		if derivative < 1e-3
 			looping = false;
 		end
 
@@ -26,38 +26,42 @@ function [Q,log_likelihood] = VEM(phi,X)
 
 		% Find point of support theta- which minimizes D(theta_j)
 		[~, index_min_support] = min(D(phi, X, Q, Q.Support));
-		index_reduce = index_min_support;
+		index_decrease = index_min_support;
 		index_increase = length(Q.Support);
 
-		[Q, likelihood] = exchange_mass(phi, X, Q, index_reduce, index_increase);
-		likelihood
+		% exchange_mass_2(phi, X, Q, index_decrease, index_increase);
+		[Q, likelihood_new] = exchange_mass(phi, X, Q, index_decrease, index_increase);
+		
+		% pause
+		% likelihood_new - likelihood
+		% likelihood = likelihood_new;
 
 		% Movement phase
-		move_loop = true;
-		while move_loop
-			[Q.Support, I] = sort(Q.Support);
-			Q.ProbWeights = Q.ProbWeights(I);
+		% move_loop = true;
+		% while move_loop
+		% 	[Q.Support, I] = sort(Q.Support);
+		% 	Q.ProbWeights = Q.ProbWeights(I);
 
-			support_diff = Q.Support(2:end) - Q.Support(1:end-1);
-			[~, I] = min(support_diff);
-			[~, which_index] = max(D(phi, X, Q, Q.Support(I:I+1)));
+		% 	support_diff = Q.Support(2:end) - Q.Support(1:end-1);
+		% 	[~, I] = min(support_diff);
+		% 	[~, which_index] = max(D(phi, X, Q, Q.Support(I:I+1)));
 
-			if which_index == 2
-				index_increase = I + 1;
-				index_reduce = I;
-			else
-				index_increase = I;
-				index_reduce = I + 1;
-			end
+		% 	if which_index == 2
+		% 		index_increase = I + 1;
+		% 		index_decrease = I;
+		% 	else
+		% 		index_increase = I;
+		% 		index_decrease = I + 1;
+		% 	end
 			
-			[Q_new, likelihood] = exchange_mass(phi, X, Q, index_reduce, index_increase);
+		% 	[Q_new, likelihood] = exchange_mass(phi, X, Q, index_decrease, index_increase);
 
-			if length(Q_new.ProbWeights) == length(Q.ProbWeights)
-				move_loop = false;
-			else
-				Q = Q_new;
-			end
-		end
+		% 	if length(Q_new.ProbWeights) == length(Q.ProbWeights)
+		% 		move_loop = false;
+		% 	else
+		% 		Q = Q_new;
+		% 	end
+		% end
 
 	end
 
@@ -84,13 +88,13 @@ function [theta_star,derivative] = max_theta2(phi, X, Q)
 	scatter(Q.Support, Q.ProbWeights)
 	hold off
 	drawnow
-	[~, ii] = max(yy);
+	[derivative, ii] = max(yy);
 
 	%Fine
-	res2 = 1000;
-	xx = linspace(xx(ii) - dx, xx(ii) + dx, res2);
-	yy = DQ(xx);
-	[derivative, ii] = max(yy);
+	% res2 = 1000;
+	% xx = linspace(xx(ii) - dx, xx(ii) + dx, res2);
+	% yy = DQ(xx);
+	% [derivative, ii] = max(yy);
 	theta_star = xx(ii);
 end
 
@@ -98,47 +102,55 @@ function log_likelihood = L(phi, X, Q)
 	log_likelihood = sum(log(Q.ProbWeights * phi(X, Q.Support)'));
 end
 
-function likelihood = blah(phi, X, Q, index_reduce, index_increase, x)
-	Q_test = Q;
-	Q_test.ProbWeights(index_increase) = Q_test.ProbWeights(index_increase) + x;
-	Q_test.ProbWeights(index_reduce) = Q_test.ProbWeights(index_reduce) - x;
-	likelihood = L(phi, X, Q_test);
+function likelihood = likelihood_Q1_to_Q2(phi, X, Q1, Q2, pp)
+	likelihood = sum(log(((1 - pp)' * Q1.ProbWeights + pp' * Q2.ProbWeights) * phi(X, Q1.Support)'), 2);
 end
 
-function [Q, likelihood] = exchange_mass(phi, X, Q, index_reduce, index_increase)
+function [Q, likelihood] = exchange_mass(phi, X, Q, index_decrease, index_increase)
 	%Find how much mass to move from theta- to theta*
-	res = 100;
-	h_max = Q.ProbWeights(index_reduce);
-	h = linspace(0, h_max, res);
-	delta_h = h(2) - h(1);
-	likelihoods = zeros(1, res);
-	for i = 1:res
-		likelihoods(i) = blah(phi, X, Q, index_reduce, index_increase, h(i));
-	end
+	res = 1000;
+	pp = linspace(0, 1, res);
+	Q1 = Q;
+	Q2 = Q;
+	Q2.ProbWeights(index_increase) = Q2.ProbWeights(index_increase) + Q2.ProbWeights(index_decrease);
+	Q2.ProbWeights(index_decrease) = 0;
+
+	likelihoods = likelihood_Q1_to_Q2(phi, X, Q1, Q2, pp);
+
 	[likelihood, index_max] = max(likelihoods);
-	coarse_h_sol = h(index_max);
+	p_sol = pp(index_max);
 
-	% res = 100;
-	% h = linspace(max(coarse_h_sol - delta_h, 0), min(coarse_h_sol + delta_h, h_max), res);
-	% likelihoods = zeros(1, res);
-	% for i = 1:res
-	% 	likelihoods(i) = blah(phi, X, Q, index_reduce, index_increase, h(i));
-	% end
-	% [likelihood, index_max] = max(likelihoods);
-	% h_sol = h(index_max);
-
-	h_sol = coarse_h_sol;
-	% figure(1)
-	% plot(h, likelihoods)
-	% drawnow
-	% pause
-
-	% Add that much mass to theta*
-	Q.ProbWeights(index_increase) = Q.ProbWeights(index_increase) + h_sol;
-	Q.ProbWeights(index_reduce) = Q.ProbWeights(index_reduce) - h_sol;
+	figure(1)
+	plot(pp, likelihoods)
+	drawnow
+	
+	Q.ProbWeights = (1 - p_sol) * Q1.ProbWeights + p_sol * Q2.ProbWeights;
 
 	index_remove = (Q.ProbWeights == 0);
 	Q.ProbWeights(index_remove) = [];
 	Q.Support(index_remove) = [];
 	Q.ProbWeights = Q.ProbWeights / sum(Q.ProbWeights);
+end
+
+function [Q, likelihood] = exchange_mass_2(phi, X, Q, index_decrease, index_increase)
+	% Along Q_1 to Q_2, the likelihood is a concave function. We can use this to find the minimium faster
+	Q1 = Q;
+	Q2 = Q;
+	Q2.ProbWeights(index_increase) = Q2.ProbWeights(index_increase) + Q2.ProbWeights(index_decrease);
+	Q2.ProbWeights(index_decrease) = 0;
+	
+	res = 100;
+	pp = linspace(0, 1, res);
+
+	f_Qpp = ((1 - pp)' * Q1.ProbWeights + pp' * Q2.ProbWeights) * phi(X, Q.Support)';
+	f_Q2 = Q2.ProbWeights * phi(X, Q2.Support)';
+	derivative = sum((repmat(f_Q2, [res, 1]) - f_Qpp) ./ f_Qpp, 2);
+
+	figure(3);
+	plot(pp, derivative);
+	drawnow
+
+	Q = 1;
+	likelihood = 1;
+
 end
