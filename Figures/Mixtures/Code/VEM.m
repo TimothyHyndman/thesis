@@ -36,7 +36,7 @@ function [Q,log_likelihood] = VEM(phi, X, d_phi)
 		% likelihood_new - likelihood
 		% likelihood = likelihood_new;
 
-		% Movement phase
+		% % Movement phase
 		% move_loop = true;
 		% while move_loop
 		% 	[Q.Support, I] = sort(Q.Support);
@@ -62,6 +62,27 @@ function [Q,log_likelihood] = VEM(phi, X, d_phi)
 		% 		Q = Q_new;
 		% 	end
 		% end
+
+		% Collection phase
+		%IDEA: TRY TO COLLECT POINTS IN SAME MODE INTO ONE POINT
+		move_loop = true;
+		while move_loop
+			[Q.Support, I] = sort(Q.Support);
+			Q.ProbWeights = Q.ProbWeights(I);
+			support_diff = Q.Support(2:end) - Q.Support(1:end-1);
+			[~, I] = min(support_diff);
+
+
+			iii = [I, I+1];
+			Q_new = collate_points(phi, X, Q, iii);
+
+			if length(Q_new.ProbWeights) == length(Q.ProbWeights)
+				move_loop = false;
+			else
+				Q = Q_new;
+			end
+
+		end
 
 	end
 
@@ -91,10 +112,10 @@ function [theta_star,derivative] = max_theta2(phi, X, Q)
 	[derivative, ii] = max(yy);
 
 	%Fine
-	% res2 = 1000;
-	% xx = linspace(xx(ii) - dx, xx(ii) + dx, res2);
-	% yy = DQ(xx);
-	% [derivative, ii] = max(yy);
+	res2 = 1000;
+	xx = linspace(xx(ii) - dx, xx(ii) + dx, res2);
+	yy = DQ(xx);
+	[derivative, ii] = max(yy);
 	theta_star = xx(ii);
 end
 
@@ -105,6 +126,7 @@ end
 function likelihood = likelihood_Q1_to_Q2(phi, X, Q1, Q2, pp)
 	likelihood = sum(log(((1 - pp)' * Q1.ProbWeights + pp' * Q2.ProbWeights) * phi(X, Q1.Support)'), 2);
 end
+
 
 function [Q, likelihood] = exchange_mass(phi, X, Q, index_decrease, index_increase)
 	%Find how much mass to move from theta- to theta*
@@ -120,9 +142,9 @@ function [Q, likelihood] = exchange_mass(phi, X, Q, index_decrease, index_increa
 	[likelihood, index_max] = max(likelihoods);
 	p_sol = pp(index_max);
 
-	figure(1)
-	plot(pp, likelihoods)
-	drawnow
+	% figure(1)
+	% plot(pp, likelihoods)
+	% drawnow
 	
 	Q.ProbWeights = (1 - p_sol) * Q1.ProbWeights + p_sol * Q2.ProbWeights;
 
@@ -153,4 +175,41 @@ function [Q, likelihood] = exchange_mass_2(phi, X, Q, index_decrease, index_incr
 	Q = 1;
 	likelihood = 1;
 
+end
+
+function Q_new = collate_points(phi, X, Q, iiii)
+	Q_new = Q;
+	current_likelihood = L(phi, X, Q);
+	p_collate = sum(Q.ProbWeights(iiii));
+	theta_min = min(Q.Support(iiii));
+	theta_max = max(Q.Support(iiii));
+
+	res = 1000;
+	theta_collate = linspace(theta_min, theta_max, res);
+
+	% likelihood = sum(log(((1 - pp)' * Q1.ProbWeights + pp' * Q2.ProbWeights) * phi(X, Q1.Support)'), 2);
+
+	ps = Q.ProbWeights;
+	thetas = Q.Support;
+
+	ps(iiii) = [];
+	thetas(iiii) = [];
+
+	likelihood = zeros(1, res);
+	for i = 1:res
+		likelihood(i) = sum(log( [ps, p_collate] * phi(X, [thetas, theta_collate(i)])'));
+	end
+
+
+	[d_likelihood, theta_index] = max(likelihood - current_likelihood);
+	if d_likelihood > 0
+		Q_new.Support = [thetas, theta_collate(theta_index)];
+		Q_new.ProbWeights = [ps, p_collate];
+	end
+
+	% figure(4)
+	% plot(theta_collate, likelihood - current_likelihood)
+	% drawnow
+
+	
 end
