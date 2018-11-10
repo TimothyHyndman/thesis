@@ -1,25 +1,25 @@
 % X is column vector
 
-function [Q,log_likelihood] = VEM(phi, X, d_phi)
+function [Q,log_likelihood] = VEM(phi, X)
 
 	%Initial value
 	Q.Support = mean(X);
 	Q.ProbWeights = 1;
-	likelihood = Inf;
+	likelihood = -Inf;
 	% m = 10;
 	% Q.Support = linspace(min(X), max(X), m);
 	% Q.ProbWeights = (1 / m) * ones(1, m);  
 
-	looping = true;
+	tol_L = 0;
+	[theta_star, derivative] = max_theta2(phi, X, Q);
+
+	if derivative <= 0
+		looping = false;
+	else
+		looping = true;
+	end
 
 	while looping
-		% Find theta* = argmax D(theta)
-		[theta_star, derivative] = max_theta2(phi, X, Q);
-
-		if derivative < 1e-3
-			looping = false;
-		end
-
 		% Add theta* to support
 		Q.Support = [Q.Support, theta_star];
 		Q.ProbWeights = [Q.ProbWeights, 0];
@@ -33,8 +33,11 @@ function [Q,log_likelihood] = VEM(phi, X, d_phi)
 		[Q, likelihood_new] = exchange_mass(phi, X, Q, index_decrease, index_increase);
 		
 		% pause
-		% likelihood_new - likelihood
-		% likelihood = likelihood_new;
+		if (likelihood_new - likelihood) <= tol_L
+			[theta_star, derivative] = max_theta2(phi, X, Q)
+			looping = false;
+		end
+		likelihood = likelihood_new;
 
 		% % Movement phase
 		% move_loop = true;
@@ -82,6 +85,12 @@ function [Q,log_likelihood] = VEM(phi, X, d_phi)
 				Q = Q_new;
 			end
 
+		end
+
+		[theta_star, derivative] = max_theta2(phi, X, Q);
+
+		if derivative <= 0
+			looping = false;
 		end
 
 	end
@@ -132,6 +141,7 @@ function [Q, likelihood] = exchange_mass(phi, X, Q, index_decrease, index_increa
 	%Find how much mass to move from theta- to theta*
 	res = 1000;
 	pp = linspace(0, 1, res);
+	dpp = pp(2) - pp(1);
 	Q1 = Q;
 	Q2 = Q;
 	Q2.ProbWeights(index_increase) = Q2.ProbWeights(index_increase) + Q2.ProbWeights(index_decrease);
@@ -141,6 +151,15 @@ function [Q, likelihood] = exchange_mass(phi, X, Q, index_decrease, index_increa
 
 	[likelihood, index_max] = max(likelihoods);
 	p_sol = pp(index_max);
+
+	res2 = 1000;
+	pp_fine = linspace(max(0, p_sol - dpp), min(1, p_sol + dpp), res2);
+
+	likelihoods_fine = likelihood_Q1_to_Q2(phi, X, Q1, Q2, pp_fine);
+
+	[likelihood, index_max] = max(likelihoods_fine);
+	p_sol = pp_fine(index_max);
+
 
 	% figure(1)
 	% plot(pp, likelihoods)
