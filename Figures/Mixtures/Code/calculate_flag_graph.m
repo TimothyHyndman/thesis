@@ -26,10 +26,14 @@ function Z = calculate_flag_graph(phi, width, res)
             if 1
     %             [solution_grid_points,solution_masses,likelihood] = MixtureLikelihoodMovingMasses(phi,Y);
                 [Q,likelihood] = MixtureLikelihoodMovingMasses2(phi,Y);
-                solution_masses = Q.ProbWeights;
-                solution_grid_points = Q.Support;
 
-                Z(i,j) = size(solution_masses,2);
+                m = number_points_support(phi, Y, Q);
+
+                % solution_masses = Q.ProbWeights;
+                % solution_grid_points = Q.Support;
+                % Z(i,j) = size(solution_masses,2);
+
+                Z(i, j) = m;
                 Z_likelihood(i,j) = likelihood;
             end
             

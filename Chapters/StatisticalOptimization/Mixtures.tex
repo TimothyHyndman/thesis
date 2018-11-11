@@ -358,11 +358,19 @@
 
 
 \section{Empirical Results}
-	In this section we explore $K_\vect{x}$ through empirical results and figures. The process we use to generate the results is essentially the same throughout. We choose $\vect{x} \in \mathbb{R}^n$ either deterministically or randomly, and use a general purpose nonlinear programming solver to find the maximum likelihood mixture (we use the MATLAB function \emph{fmincon}). We can test that we have indeed reached the global maximum through the use of the derivative function conditions given in Theorem \ref{thm:Lindsay three statements that characterise maximizing mixture}. If the mixture that is returned by our general solver does not satisfy these conditions then we may use another method, such as the vertex direction method (VDM) or the vertex exchange method (VEM), which is guaranteed to converge to the global maximum (see \cite{Bohning1995-di} for a review of different methods). We note that the actual method used is not important so long as the final result satisfies the derivative conditions. In practise, we deal with $\vect{x} \in \mathbb{R}^n$ with $n$ small, for which a general purpose solver is sufficient, fast, and simple to implement, and we rarely need to use a secondary method.
+	In this section we explore $K_\vect{x}$ through empirical results and figures. Throughout this section, and for the remainder of this chapter, we will consider only location mixtures (see \eqref{eq:location mixture}). All component densities will be unimodal, with a mode at $x = 0$. We list here the component densities that we will use.
 
-	[MAY WISH TO BE MORE SPECIFIC HERE BUT WILL NEED TO REWRITE CODE TO MATCH]
+	\begin{tabular}{l | c}
+		Density & $f(x) = $\\
+		\hline
+		normal with fixed variance $\sigma^2$ & $\frac{1}{\sigma \sqrt{2 \pi}} \exp\left(-\frac{x^2}{2\sigma^2}\right) $\\
+		Cauchy with fixed scale $\gamma$ & $\frac{1}{\pi \gamma + \pi x^2/\gamma}$
+	\end{tabular}
 
-	We initiate our general purpose solver with a mixture distribution that has more points of support than is needed. Under the optimization, this collapses down to a distribution which may assign zero weight to some masses, and may concentrate multiple masses on the one point of support. We may simplify such a distribution by removing all masses with zero weight, and by combining all masses which share a point of support into one mass which takes the combined weight of the constituent masses (see Figure \ref{fig:collapsing distribution}). The number of probability masses in this simplified distribution is the value we take for $K_\vect{x}$.
+	\subsection{Method}
+	There are two parts to determining $K_\vect{x}$ empirically. The first part is to find the maximum likelihood mixture, $\hat{Q}$, or at least a good approximation $Q^*$. Given $\vect{x} \in \mathbb{R}^n$, we use a general purpose nonlinear programming solver to find the maximum likelihood mixture (we use the MATLAB function \emph{fmincon}). We can test that we have indeed reached the global maximum through the use of the derivative function conditions given in Theorem \ref{thm:Lindsay three statements that characterise maximizing mixture}. If the mixture that is returned by our general solver does not satisfy these conditions then we may use another method, such as the vertex direction method (VDM) or the vertex exchange method (VEM), which is guaranteed to converge to the global maximum but converges slowly (see \cite{Bohning1995-di} for a review of different methods). We note that the actual method used is not important so long as the final result satisfies the derivative conditions. In practise, when $n$ is small, a general purpose solver is sufficient, fast, and simple to implement, and we rarely need to use a secondary method.
+
+	The second part is to determine the number of points of support of $Q^*$. We initiate our general purpose solver with a mixture distribution that has more points of support than is needed. Under the optimization, this collapses down to the distribution $Q^*$ which may assign zero weight to some masses, and may concentrate multiple masses on the one point of support. We may simplify such a distribution by removing all masses with zero weight, and by combining all masses which share a point of support into one mass which takes the combined weight of the constituent masses (see Figure \ref{fig:collapsing distribution}). A naive approach would be to take the number of probability masses in this simplified distribution as the value for $K_\vect{x}$.
 
 	\begin{figure}
 		\centering
@@ -371,14 +379,11 @@
 		\label{fig:collapsing distribution}
 	\end{figure}
 
-	Throughout this section, and for the remainder of this chapter, we will consider only location mixtures (see \eqref{eq:location mixture}). All component densities will be unimodal, with a mode at $x = 0$. We list here the component densities that we will use.
+	However, there are some problems with this approach. In practice, we do not remove masses with exactly zero weight, but rather remove masses with weight $p_j < \epsilon$ for some small $\epsilon > 0$. Similarly, we merge masses $i$ and $j$ with support $|\theta_j - \theta_i| < \delta$ for some small $\delta > 0$. It may be that the true maximum likelihood mixture does contain components that have either very small weight, or are located very close to other masses. In this scenario, we would produce a value for $K_\vect{x}$ that is too small.
 
-	\begin{tabular}{l | c}
-		Density & $f(x) = $\\
-		\hline
-		normal with fixed variance $\sigma^2$ & $\frac{1}{\sigma \sqrt{2 \pi}} \exp\left(-\frac{x^2}{2\sigma^2}\right) $\\
-		Cauchy with fixed scale $\gamma$ & $\frac{1}{\pi \gamma + \pi x^2/\gamma}$
-	\end{tabular}
+	Instead, we propose the following. From Theorem \ref{thm: Lindsay support is zeros of gradient}, each point of support, $\hat{\theta}_j$ of the maximizing mixture distribution $\hat{Q}$ is a local maximum of $D_{\hat{Q}}(\theta;\vect{x}, f)$ with $D_{\hat{Q}}(\theta_j;\vect{x},f) = 0$. So, given the mixing distribution $Q^*$ that results from our optimization, we take $K_\vect{x}$ to be the number of local maximums in $D_{Q^*}(\theta;\vect{x}, f)$ that take maximum value close to $0$.
+
+	[WHEN IS SUPPORT ALWAYS EQUAL TO SET OF D(THETA) = 0?]
 
 	[EXTEND AS REQUIRED]
 	% \subsection{Motivating Example?}
