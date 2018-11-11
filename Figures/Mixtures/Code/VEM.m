@@ -13,7 +13,9 @@ function [Q,log_likelihood] = VEM(phi, X)
 	tol_L = 0;
 	[theta_star, derivative] = max_theta2(phi, X, Q);
 
-	if derivative <= 0
+	tol_D = 1e-3;
+
+	if derivative <= tol_D
 		looping = false;
 	else
 		looping = true;
@@ -34,7 +36,7 @@ function [Q,log_likelihood] = VEM(phi, X)
 		
 		% pause
 		if (likelihood_new - likelihood) <= tol_L
-			[theta_star, derivative] = max_theta2(phi, X, Q)
+			[theta_star, derivative] = max_theta2(phi, X, Q);
 			looping = false;
 		end
 		likelihood = likelihood_new;
@@ -112,12 +114,13 @@ function [theta_star,derivative] = max_theta2(phi, X, Q)
 	xx = linspace(min(X), max(X), res);
 	dx = xx(2) - xx(1);
 	yy = DQ(xx);
-	figure(2)
-	plot(xx, yy)
-	hold on
-	scatter(Q.Support, Q.ProbWeights)
-	hold off
-	drawnow
+
+	% figure(2)
+	% plot(xx, yy)
+	% hold on
+	% scatter(Q.Support, Q.ProbWeights)
+	% hold off
+	% drawnow
 	[derivative, ii] = max(yy);
 
 	%Fine
