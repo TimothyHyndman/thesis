@@ -428,43 +428,20 @@
 	\subsection{Other interesting things}
 	We end our empirical results section with 
 
-	[UP TO HERE]
+	[PUT MORE RESULTS IN HERE]
 
 	\section{Results}
 	\label{sec:mixture results}
 	The figures obtained in Section \ref{sec:empirical results} suggest that the bounds on $K_\vect{x}$ from Section \ref{sec:summary of Lindsay} could be significantly tightened for location mixtures. The main bounds that we have discussed so far are Theorem \ref{thm: lindsay no more than n points} which states that under mild conditions, $K_\vect{x} \leq n$; and Theorems [FINISH THIS ONCE YOU FINISH THE LIT REVIEW BIT]. In this section we will present new bounds on $K_\vect{x}$ that either tighten these bounds, or extend them to different classes of component densities.
 
+
+	[UP TO HERE]
+
+
 	\subsection{Results for \texorpdfstring{$n = 2$}{n = 2}}
+	The first bound we present is Theorem \ref{thm:n=2 inflection result} which [HOW DOES IT RELATE TO THE LITERATURE??]. The theorem concerns component densities, $f(x)$, which satisfy the following assumptions.
 
-	In this section, we present Theorem \ref{thm:n=2 inflection result} which 
-	expands upon the results found in \cite{Lindsay1983-tf} and \cite{Lindsay1983a-he}.	
-
-	\subsection{The likelihood curve for \texorpdfstring{$n = 2$}{n = 2}}
-		The shape of $\Gamma_\vect{x}$ can provide us with some insight into the behaviour of $K_\vect{x}$. In Figure \ref{fig:Gammaexample}, we give some examples of $\Gamma_\vect{x}$ for $n=2$ using a normal component density with variance $\sigma^2 = 1$. 
-		\begin{figure}[ht]
-			\begin{subfigure}[t]{0.32\textwidth}
-				\centering
-				\includegraphics[width = \textwidth]{Sigma1x1_0-x2_1}
-				\caption{$\vect{x} = (0,1)$} \label{subfig:gammaexamplea}
-			\end{subfigure}
-			\begin{subfigure}[t]{0.32\textwidth}
-				\centering
-				\includegraphics[width = \textwidth]{Sigma1x1_0-x2_2}
-				\caption{$\vect{x} = (0,2)$} \label{subfig:gammaexampleb}
-			\end{subfigure}
-			\begin{subfigure}[t]{0.32\textwidth}
-				\centering
-				\includegraphics[width = \textwidth]{Sigma1x1_0-x2_3}
-				\caption{$\vect{x} = (0,3)$} \label{subfig:gammaexamplec}
-			\end{subfigure}
-			\caption{The curve $\Gamma_\vect{x}$ for three different $\vect{x}$ along with the boundary of $\conv(\Gamma_\vect{x})$. The objective function, $\mathcal{L}(\vect{\gamma})$, is represented as a heat map. The optimal point $\hat{\vect{\gamma}}$ is shown in yellow, and where applicable, the points $\vect{\gamma}(\theta_j)$ that make up $\hat{\vect{\gamma}}$ are shown in magenta.}
-			\label{fig:Gammaexample}
-		\end{figure}
-		In particular, we note that the distance between $x_1$ and $x_2$ has a strong effect on the shape of $\Gamma_\vect{x}$. In Figure \ref{subfig:gammaexamplea}, the points are distance 1 apart and $\Gamma_\vect{x}$ is the boundary of $\conv(\Gamma_\vect{x})$. In this case, it is clear that $K_\vect{x} = 1$. In Figure \ref{subfig:gammaexamplec}, the points are distance 3 apart and the optimal point no longer lies on $\Gamma_\vect{x}$. This results in the maximum likelihood mixing distribution needing two points of support and so $K_\vect{x} = 2$. The boundary case, where $\Gamma_\vect{x}$ goes from being a convex curve to having the indentation shown in Figure \ref{subfig:gammaexamplec}, is shown in Figure \ref{subfig:gammaexampleb}.
-
-		Obtaining results about where these boundaries lie is very difficult in higher dimensions. In \cite{Lindsay1983a-he}, Lindsay used the sign of the curvature of $\vect{\gamma}(\theta;\vect{x})$ to obtain results for $n=2$ when the component density is in the exponential family. Here we will present an extension to Lindsay's results by considering densities that satisfy the following assumptions.
-	
-		\begin{assumption}[Continuity]
+	\begin{assumption}[Continuity]
 			$f(x)$ is a continuous density and has the whole real line as its support.
 			\label{assump:reallinesupport}
 		\end{assumption}
@@ -501,6 +478,83 @@
 		\end{assumption}
 		
 		Some common densities that satisfy these assumptions include the normal density and the Cauchy density.
+
+		[SHORT PROOF OF CAUCHY SEEING AS THIS ONE IS NOT COVERED BY LINDSAY?]
+
+		\begin{theorem}
+			\label{thm:n=2 inflection result}
+			Let $f(x)$ satisfy assumptions \ref{assump:reallinesupport} through to \ref{assump:magnitudegradients}. Let $\vect{x} = (x_1,x_2)$ be the sample for which we a finding a maximum likelihood location mixture using $f$ as the component density. Then $K_\vect{x} = 1$ if and only if
+			\begin{equation}
+				|x_2 - x_1| \leq 2i.
+				\label{eq:x2-x1<int}
+			\end{equation}
+		\end{theorem}
+
+		The proof of Theorem \ref{thm:n=2 inflection result} will be given in Section \ref{sec:proof of n=2 inflection result} after some discussion concerning the likelihood curve when $n = 2$.
+		
+
+	\subsection{The likelihood curve for \texorpdfstring{$n = 2$}{n = 2}}
+		The shape of $\Gamma_\vect{x}$ can provide us with some insight into the behaviour of $K_\vect{x}$. In Figure \ref{fig:Gammaexample}, we give some examples of $\Gamma_\vect{x}$ for $n=2$ using a normal component density with variance $\sigma^2 = 1$. 
+		\begin{figure}[ht]
+			\begin{subfigure}[t]{0.32\textwidth}
+				\centering
+				\includegraphics[width = \textwidth]{Sigma1x1_0-x2_1}
+				\caption{$\vect{x} = (0,1)$} \label{subfig:gammaexamplea}
+			\end{subfigure}
+			\begin{subfigure}[t]{0.32\textwidth}
+				\centering
+				\includegraphics[width = \textwidth]{Sigma1x1_0-x2_2}
+				\caption{$\vect{x} = (0,2)$} \label{subfig:gammaexampleb}
+			\end{subfigure}
+			\begin{subfigure}[t]{0.32\textwidth}
+				\centering
+				\includegraphics[width = \textwidth]{Sigma1x1_0-x2_3}
+				\caption{$\vect{x} = (0,3)$} \label{subfig:gammaexamplec}
+			\end{subfigure}
+			\caption{The curve $\Gamma_\vect{x}$ for three different $\vect{x}$ along with the boundary of $\conv(\Gamma_\vect{x})$. The objective function, $\mathcal{L}(\vect{\gamma})$, is represented as a heat map. The optimal point $\hat{\vect{\gamma}}$ is shown in yellow, and where applicable, the points $\vect{\gamma}(\theta_j)$ that make up $\hat{\vect{\gamma}}$ are shown in magenta.}
+			\label{fig:Gammaexample}
+		\end{figure}
+		In particular, we note that the distance between $x_1$ and $x_2$ has a strong effect on the shape of $\Gamma_\vect{x}$. In Figure \ref{subfig:gammaexamplea}, the points are distance 1 apart and $\Gamma_\vect{x}$ is the boundary of $\conv(\Gamma_\vect{x})$. In this case, it is clear that $K_\vect{x} = 1$. In Figure \ref{subfig:gammaexamplec}, the points are distance 3 apart and the optimal point no longer lies on $\Gamma_\vect{x}$. This results in the maximum likelihood mixing distribution needing two points of support and so $K_\vect{x} = 2$. The boundary case, where $\Gamma_\vect{x}$ goes from being a convex curve to having the indentation shown in Figure \ref{subfig:gammaexamplec}, is shown in Figure \ref{subfig:gammaexampleb}.
+
+		Obtaining results about where these boundaries lie is very difficult in higher dimensions. In \cite{Lindsay1983a-he}, Lindsay used the sign of the curvature of $\vect{\gamma}(\theta;\vect{x})$ to obtain results for $n=2$ when the component density is in the exponential family. Here we will present an extension to Lindsay's results by considering densities that satisfy the following assumptions.
+	
+		% \begin{assumption}[Continuity]
+		% 	$f(x)$ is a continuous density and has the whole real line as its support.
+		% 	\label{assump:reallinesupport}
+		% \end{assumption}
+		
+		% \begin{assumption}[Differentiability]
+		% 	$f(x)$ is twice differentiable.
+		% 	\label{assump:twicediff}
+		% \end{assumption}
+		
+		% \begin{assumption}[Unimodality]
+		% 	$f(x)$ has a single mode at $x=0$. I.e. $f'(x) > 0$ for $x <0$, $f'(0) = 0$, and $f'(x) < 0$ for $x>0$.
+		% 	\label{assump:singlemode}
+		% \end{assumption}
+		
+		% \begin{assumption}[Symmetry]
+		% 	The density $f(x)$ is symmetric about $x = 0$.
+		% 	\label{assump:symmetric}
+		% \end{assumption}
+		
+		% \begin{assumption}
+		% 	$f$ has only two points of inflection
+		% 	\label{assump:twoinflectionpoints}
+		% \end{assumption}
+		
+		% \begin{definition}
+		% 	If $f$ satisfies assumptions \ref{assump:reallinesupport} through to \ref{assump:singlemode}, then define $[i^-,i^+]$ to be the largest interval that contains 0 and on which $f''(x) \leq 0$.
+		% 	\label{def:i-i+}
+		% \end{definition}
+		% That is, $i^-$ and $i^+$ are inflection points of $f$. Note that for any $f$ satisfying \ref{assump:symmetric}, $i^- = -i^+$. In this case we will write $i = i^+ = -i^-$.
+		
+		% \begin{assumption}
+		% 	$f'(x) > -f'(x - 2i)$ for $\theta \in (i,\infty)$
+		% 	\label{assump:magnitudegradients}
+		% \end{assumption}
+		
+		% Some common densities that satisfy these assumptions include the normal density and the Cauchy density.
 		
 		\begin{lemma}
 			\label{lem:magnitudegradients}
@@ -553,15 +607,9 @@
 			
 			Since the above intervals cover the real line and since we have shown that there is only one solution in one of these intervals, \eqref{eq:gradientsequal} must have only one solution.
 		\end{proof}
-		
-		\begin{theorem}
-			\label{thm:n=2 inflection result}
-			Let $f(x)$ satisfy assumptions \ref{assump:reallinesupport} through to \ref{assump:magnitudegradients}. Let $\vect{x} = (x_1,x_2)$ be the sample for which we a finding a maximum likelihood mixture using $f$ as the component density. Then $K_\vect{x} = 1$ if and only if
-			\begin{equation}
-				x_2 - x_1 \leq 2i
-				\label{eq:x2-x1<int}
-			\end{equation}
-		\end{theorem}
+
+		\subsection{Proof of Theorem \ref{thm:n=2 inflection result}}
+		\label{sec:proof of n=2 inflection result}
 		\begin{proof}
 			% Since $f(x)$ has a single mode at $x = 0$, the points of support of the maximizing mixing distribution must lie between $x_{1}$ and $x_{2}$. Hence we are
 			By the unimodality of $f$, the points of support of the maximizing mixing distribution must lie between $x_1$ and $x_2$. Hence we need only consider the behaviour of $\vect{\gamma}(\theta;\vect{x})$ for $\theta \in [x_1,x_2]$. By the symmetry of $f$, $\hat{\vect{u}}$ must lie on the line $u_1 = u_2$\footnote{This is obvious but may need a lemma}.
