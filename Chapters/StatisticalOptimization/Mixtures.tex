@@ -431,28 +431,28 @@
 	[PUT MORE RESULTS IN HERE]
 
 	\section{Results}
-	\label{sec:mixture results}
-	The figures obtained in Section \ref{sec:empirical results} suggest that the bounds on $K_\vect{x}$ from Section \ref{sec:summary of Lindsay} could be significantly tightened for location mixtures. The main bounds that we have discussed so far are Theorem \ref{thm: lindsay no more than n points} which states that under mild conditions, $K_\vect{x} \leq n$; and Theorems [FINISH THIS ONCE YOU FINISH THE LIT REVIEW BIT]. In this section we will present new bounds on $K_\vect{x}$ that either tighten these bounds, or extend them to different classes of component densities.
+		\label{sec:mixture results}
+		The figures obtained in Section \ref{sec:empirical results} suggest that the bounds on $K_\vect{x}$ from Section \ref{sec:summary of Lindsay} could be significantly tightened for location mixtures. The main bounds that we have discussed so far are Theorem \ref{thm: lindsay no more than n points} which states that under mild conditions, $K_\vect{x} \leq n$; and Theorems [FINISH THIS ONCE YOU FINISH THE LIT REVIEW BIT]. In this section we will present new bounds on $K_\vect{x}$ that either tighten these bounds, or extend them to different classes of component densities.
 
 
-	[UP TO HERE]
+		[UP TO HERE]
 
 
-	\subsection{Results for \texorpdfstring{$n = 2$}{n = 2}}
-	The first bound we present is Theorem \ref{thm:n=2 inflection result} which [HOW DOES IT RELATE TO THE LITERATURE??]. The theorem concerns component densities, $f(x)$, which satisfy the following assumptions.
+		\subsection{Results for \texorpdfstring{$n = 2$}{n = 2}}
+		The first bound we present is Theorem \ref{thm:n=2 inflection result} which [HOW DOES IT RELATE TO THE LITERATURE??]. The theorem concerns component densities, $f(x)$, which satisfy the following assumptions.
 
-	\begin{assumption}[Continuity]
-			$f(x)$ is a continuous density and has the whole real line as its support.
-			\label{assump:reallinesupport}
+		\begin{assumption}[Continuity]
+		\label{assump:reallinesupport}
+			The density $f(x)$ is continuous and is supported on the whole real line.
 		\end{assumption}
-		
+
 		\begin{assumption}[Differentiability]
-			$f(x)$ is twice differentiable.
+			The density $f(x)$ is twice differentiable.
 			\label{assump:twicediff}
 		\end{assumption}
 		
 		\begin{assumption}[Unimodality]
-			$f(x)$ has a single mode at $x=0$. I.e. $f'(x) > 0$ for $x <0$, $f'(0) = 0$, and $f'(x) < 0$ for $x>0$.
+			The density $f(x)$ has a single mode at $x=0$. That is, $f'(x) > 0$ for $x <0$, $f'(0) = 0$, and $f'(x) < 0$ for $x>0$.
 			\label{assump:singlemode}
 		\end{assumption}
 		
@@ -462,38 +462,59 @@
 		\end{assumption}
 		
 		\begin{assumption}
-			$f$ has only two points of inflection
+			The density $f(x)$ has only two points of inflection, located at $x = \pm i$.
 			\label{assump:twoinflectionpoints}
 		\end{assumption}
-		
-		\begin{definition}
-			If $f$ satisfies assumptions \ref{assump:reallinesupport} through to \ref{assump:singlemode}, then define $[i^-,i^+]$ to be the largest interval that contains 0 and on which $f''(x) \leq 0$.
-			\label{def:i-i+}
-		\end{definition}
-		That is, $i^-$ and $i^+$ are inflection points of $f$. Note that for any $f$ satisfying \ref{assump:symmetric}, $i^- = -i^+$. In this case we will write $i = i^+ = -i^-$.
+			
+			% \begin{definition}
+			% 	If $f$ satisfies assumptions \ref{assump:reallinesupport} through to \ref{assump:singlemode}, then define $[i^-,i^+]$ to be the largest interval that contains 0 and on which $f''(x) \leq 0$.
+			% 	\label{def:i-i+}
+			% \end{definition}
+			% That is, $i^-$ and $i^+$ are inflection points of $f$. Note that for any $f$ satisfying \ref{assump:symmetric}, $i^- = -i^+$. In this case we will write $i = i^+ = -i^-$.
 		
 		\begin{assumption}
-			$f'(x) > -f'(x - 2i)$ for $\theta \in (i,\infty)$
+			The density $f(x)$ satisfies $f'(x) < -f'(x - 2i)$ for $x \in (i,\infty)$. [FIX THIS]
 			\label{assump:magnitudegradients}
 		\end{assumption}
-		
-		Some common densities that satisfy these assumptions include the normal density and the Cauchy density.
-
-		[SHORT PROOF OF CAUCHY SEEING AS THIS ONE IS NOT COVERED BY LINDSAY?]
 
 		\begin{theorem}
 			\label{thm:n=2 inflection result}
-			Let $f(x)$ satisfy assumptions \ref{assump:reallinesupport} through to \ref{assump:magnitudegradients}. Let $\vect{x} = (x_1,x_2)$ be the sample for which we a finding a maximum likelihood location mixture using $f$ as the component density. Then $K_\vect{x} = 1$ if and only if
+			Let $f(x)$ satisfy assumptions \ref{assump:reallinesupport} through to \ref{assump:magnitudegradients}. Let $\vect{x} = (x_1,x_2)$ be the sample for which we a finding a maximum likelihood location mixture using $f$ as the component density. Then $K_\vect{x} = K(\vect{x};f) = 1$ if and only if
 			\begin{equation}
 				|x_2 - x_1| \leq 2i.
 				\label{eq:x2-x1<int}
 			\end{equation}
 		\end{theorem}
 
-		The proof of Theorem \ref{thm:n=2 inflection result} will be given in Section \ref{sec:proof of n=2 inflection result} after some discussion concerning the likelihood curve when $n = 2$.
+		The proof of Theorem \ref{thm:n=2 inflection result} will be given in Section \ref{sec:proof of n=2 inflection result} after some discussion concerning how the likelihood curve behaves when $n = 2$.
+
+		
+		It is worth verifying that Assumptions \ref{assump:reallinesupport} through to \ref{assump:magnitudegradients} are satisfied by some common densities. We do this in the following Lemma.
+
+		\begin{lemma}
+			The following densities satisfy Assumptions \ref{assump:reallinesupport} through to \ref{assump:magnitudegradients}:
+			\begin{align}
+				&\text{Normal with variance $\sigma^2$} && f(x) = \frac{1}{\sigma\sqrt{2\pi}} \euler^{-x^2/(2\sigma^2)}\\
+				&\text{Cauchy with scale $\gamma$} && g(x) = \frac{1}{\pi (\gamma + x^2/\gamma)}
+				% &\text{Student's t-distribution with $\nu$ degrees of freedom} && f(x) = (1 + x^2/\nu)^{-\frac{\nu + 1}{2}}
+			\end{align}
+		\end{lemma}
+		\begin{proof}
+			Clearly, Assumptions \ref{assump:reallinesupport} through to \ref{assump:symmetric} are satisfied for both $f(x)$ and $g(x)$.
+
+			The inflection points of $f(x)$ are located at $x = \pm \sigma$. We have
+			\begin{align}
+				-f'(x - 2\sigma) - f'(x) &= \frac{1}{\sigma^3 \sqrt{2 \pi}} \left((x - 2\sigma) \euler^{-(x - 2\sigma)^2/(2 \sigma^2)} - x \euler^{-x^2/(2 \sigma^2)}\right)\\
+				&=
+			\end{align}
+		\end{proof}
+
+		[DISCUSSION RELATING THEOREM TO THE LINDSAY EXPONENTIAL FAMILY ONE]
+
+		
 		
 
-	\subsection{The likelihood curve for \texorpdfstring{$n = 2$}{n = 2}}
+	\subsection{The likelihood curve when \texorpdfstring{$n = 2$}{n = 2}}
 		The shape of $\Gamma_\vect{x}$ can provide us with some insight into the behaviour of $K_\vect{x}$. In Figure \ref{fig:Gammaexample}, we give some examples of $\Gamma_\vect{x}$ for $n=2$ using a normal component density with variance $\sigma^2 = 1$. 
 		\begin{figure}[ht]
 			\begin{subfigure}[t]{0.32\textwidth}
@@ -516,7 +537,9 @@
 		\end{figure}
 		In particular, we note that the distance between $x_1$ and $x_2$ has a strong effect on the shape of $\Gamma_\vect{x}$. In Figure \ref{subfig:gammaexamplea}, the points are distance 1 apart and $\Gamma_\vect{x}$ is the boundary of $\conv(\Gamma_\vect{x})$. In this case, it is clear that $K_\vect{x} = 1$. In Figure \ref{subfig:gammaexamplec}, the points are distance 3 apart and the optimal point no longer lies on $\Gamma_\vect{x}$. This results in the maximum likelihood mixing distribution needing two points of support and so $K_\vect{x} = 2$. The boundary case, where $\Gamma_\vect{x}$ goes from being a convex curve to having the indentation shown in Figure \ref{subfig:gammaexamplec}, is shown in Figure \ref{subfig:gammaexampleb}.
 
-		Obtaining results about where these boundaries lie is very difficult in higher dimensions. In \cite{Lindsay1983a-he}, Lindsay used the sign of the curvature of $\vect{\gamma}(\theta;\vect{x})$ to obtain results for $n=2$ when the component density is in the exponential family. Here we will present an extension to Lindsay's results by considering densities that satisfy the following assumptions.
+		Obtaining results about where these boundaries lie is very difficult in higher dimensions. In \cite{Lindsay1983a-he}, Lindsay used the sign of the curvature of $\vect{\gamma}(\theta;\vect{x})$ to obtain results for $n=2$ when the component density is in the exponential family.
+
+		[WE USE UNIMODALITY TO BE ABLE TO JUST LOOK AT CURVATURE ALONG INTERVAL]
 	
 		% \begin{assumption}[Continuity]
 		% 	$f(x)$ is a continuous density and has the whole real line as its support.
@@ -555,7 +578,57 @@
 		% \end{assumption}
 		
 		% Some common densities that satisfy these assumptions include the normal density and the Cauchy density.
-		
+
+		\subsection{Proof of Theorem \ref{thm:n=2 inflection result}}
+		\label{sec:proof of n=2 inflection result}
+		\begin{proof}
+			% Since $f(x)$ has a single mode at $x = 0$, the points of support of the maximizing mixing distribution must lie between $x_{1}$ and $x_{2}$. Hence we are
+			By the unimodality of $f$ (\ref{assump:singlemode}), the points of support of any maximizing mixing distribution, $\hat{Q}$, must lie between $x_1$ and $x_2$ \cite[Proposition 25]{Lindsay1995-sq}. Hence $\hat{\vect{\gamma}} = \vect{\gamma}(\hat{Q}, \vect{x}, f)$ must lie in the convex hull of $\Gamma^*_{\vect{x}, f} = \{\vect{\gamma}(\theta; \vect{x}, f) : \theta \in [x_1, x_2]\}$.
+
+			Hence we need only consider the behaviour of $\vect{\gamma}(\theta;\vect{x})$ for $\theta \in [x_1,x_2]$. By the symmetry of $f$, $\hat{\vect{u}}$ must lie on the line $u_1 = u_2$\footnote{This is obvious but may need a lemma}.
+			
+			First we complete the only if direction of the proof. Assume that $x_2 - x_1 > 2i$. By the symmetry of $f$, $\vect{\gamma}(\theta;\vect{x})$ crosses the $u_1 = u_2$ line at $\theta = (x_1 + x_2)/2$. Now the curvature of $\vect{\gamma}$ has sign equal to
+			
+			\begin{equation}
+				S(\theta) = 
+				\begin{vmatrix}
+					\gamma_1'(\theta;\vect{x})&\gamma_1''(\theta;\vect{x})\\
+					\gamma_2'(\theta;\vect{x})&\gamma_2''(\theta;\vect{x})
+				\end{vmatrix} = 
+				\begin{vmatrix}
+					-f'(x_1 - \theta) & f''(x_1 - \theta)\\
+					-f'(x_2 - \theta) & f''(x_2 - \theta)
+				\end{vmatrix}.
+			\end{equation}
+			and so
+			\begin{equation}
+				S\left(\frac{x_1+x_2}{2}\right) = 
+				\begin{vmatrix}
+					-f'(\frac{x_1 - x_2}{2}) & f''(\frac{x_1 - x_2}{2})\\
+					-f'(\frac{x_2 - x_1}{2}) & f''(\frac{x_2 - x_1}{2})
+				\end{vmatrix}.
+			\end{equation}
+			Since $x_2 - x_1 > 2i$, $\frac{x_1 - x_2}{2} > i$ and so $f''((x_1 - x_2)/2) > 0$. Similarly, $f''((x_2 - x_1)/2)>0$. We also have that $-f((x_1 - x_2)/2) < 0$ and $-f((x_2 - x_1)/2) > 0$. Hence $S((x_1 + x_2)/2)<0$ and so $\vect{\gamma}((x_1 + x_2)/2;\vect{x})$ has negative curvature. The curve $\Gamma$ must have positive curvature at the points of support and so we cannot have that $K_\vect{x} = 1$.
+			
+			Now we complete the if direction. Assume that $x_2 - x_1 \leq 2i$. By Lemma \ref{lem:magnitudegradients}, there is only one point at which the curve is pointing perpendicular to the line $u_1 = u_2$ SAY THIS BETTER. By the symmetry of $f$ this occurs when $\gamma(\theta;\vect{x})$ is crossing the line $u_1 = u_2$. Since $f$ is continuous, the direction that $\gamma(\theta;\vect{x})$ is moving is also continuous. At $\theta = x_1$, $\gamma(\theta;\vect{x})$ is pointing straight up and so we have that for $\theta \in [x_1,(x_1 + x_2)/2]$, $\gamma(\theta;\vect{x})$ is travelling in a direction pointing above the line perpendicular to $u_1 = u_2$. For $\theta \in [(x_1 + x_2)/2,x_2]$, $\gamma(\theta;\vect{x})$ points below the line. It is now obvious that $\gamma((x_1 + x_2)/2;\vect{x})$ is the furthest point from the origin that lies on $u_1 = u_2$ and is in the convex hull of $\Gamma_\vect{x}$. Since the likelihood increases as we move away from the origin along the line $u_1 = u_2$ in the positive quadrant, we must have
+			$$\hat{\vect{u}} = \gamma((x_1 + x_2)/2;\vect{x})$$
+			and so $K_\vect{x} = 1$.
+			
+			% Basic idea just here - 		
+			% Now either made up of two points or lies on $\Gamma_\vect{x}$. If made up of two points then these two points are symmetrical about $u_1 = u_2$ and the part of $\Gamma_\vect{x}$ that crosses $u_1 = u_2$ is closer to origin. However, if angle of $\gamma$ is always above angle that is perpendicular to $u_1 = u_2$ before crossing $u_1 = u_2$ then impossible for point where it crosses to be closer to origin than that of line between any two symmetrical points.
+		\end{proof}
+
+		\begin{lemma}
+			If $f(x)$ is symmetric around $x = 0$, then $\hat{\vect{\gamma}} = (u, u)$ for some $u \in \mathbb{R}$.
+		\end{lemma}
+		\begin{proof}
+			Let $(u, v)$ denote the coordinates of $\hat{\vect{\gamma}} \in \mathbb{R}^2$. We have
+			\begin{align}
+				(u, v) = p \vect{\gamma}(\theta_1; \vect{x}, f) + (1 - p) \vect{\gamma}(\theta_2;\vect{x}, f)
+			\end{align}
+			for some choice of $p$, $\theta_1$, and $\theta_2$.
+		\end{proof}
+
 		\begin{lemma}
 			\label{lem:magnitudegradients}
 			% Prove stuff about magnitude of gradients (i.e. $\gamma_x < \gamma_y$)
@@ -606,43 +679,6 @@
 			Similarly by symmetry of $f$, for $\theta \in (0,-i+x_2-x_1)$,  $f'(\theta)>-f'(\theta - 2i) > -f'(\theta - x_2 - x_1)$ and there are no solutions to \eqref{eq:gradientsequalequivalent} on this interval either.
 			
 			Since the above intervals cover the real line and since we have shown that there is only one solution in one of these intervals, \eqref{eq:gradientsequal} must have only one solution.
-		\end{proof}
-
-		\subsection{Proof of Theorem \ref{thm:n=2 inflection result}}
-		\label{sec:proof of n=2 inflection result}
-		\begin{proof}
-			% Since $f(x)$ has a single mode at $x = 0$, the points of support of the maximizing mixing distribution must lie between $x_{1}$ and $x_{2}$. Hence we are
-			By the unimodality of $f$, the points of support of the maximizing mixing distribution must lie between $x_1$ and $x_2$. Hence we need only consider the behaviour of $\vect{\gamma}(\theta;\vect{x})$ for $\theta \in [x_1,x_2]$. By the symmetry of $f$, $\hat{\vect{u}}$ must lie on the line $u_1 = u_2$\footnote{This is obvious but may need a lemma}.
-			
-			First we complete the only if direction of the proof. Assume that $x_2 - x_1 > 2i$. By the symmetry of $f$, $\vect{\gamma}(\theta;\vect{x})$ crosses the $u_1 = u_2$ line at $\theta = (x_1 + x_2)/2$. Now the curvature of $\vect{\gamma}$ has sign equal to
-			
-			\begin{equation}
-				S(\theta) = 
-				\begin{vmatrix}
-					\gamma_1'(\theta;\vect{x})&\gamma_1''(\theta;\vect{x})\\
-					\gamma_2'(\theta;\vect{x})&\gamma_2''(\theta;\vect{x})
-				\end{vmatrix} = 
-				\begin{vmatrix}
-					-f'(x_1 - \theta) & f''(x_1 - \theta)\\
-					-f'(x_2 - \theta) & f''(x_2 - \theta)
-				\end{vmatrix}.
-			\end{equation}
-			and so
-			\begin{equation}
-				S\left(\frac{x_1+x_2}{2}\right) = 
-				\begin{vmatrix}
-					-f'(\frac{x_1 - x_2}{2}) & f''(\frac{x_1 - x_2}{2})\\
-					-f'(\frac{x_2 - x_1}{2}) & f''(\frac{x_2 - x_1}{2})
-				\end{vmatrix}.
-			\end{equation}
-			Since $x_2 - x_1 > 2i$, $\frac{x_1 - x_2}{2} > i$ and so $f''((x_1 - x_2)/2) > 0$. Similarly, $f''((x_2 - x_1)/2)>0$. We also have that $-f((x_1 - x_2)/2) < 0$ and $-f((x_2 - x_1)/2) > 0$. Hence $S((x_1 + x_2)/2)<0$ and so $\vect{\gamma}((x_1 + x_2)/2;\vect{x})$ has negative curvature. The curve $\Gamma$ must have positive curvature at the points of support and so we cannot have that $K_\vect{x} = 1$.
-			
-			Now we complete the if direction. Assume that $x_2 - x_1 \leq 2i$. By Lemma \ref{lem:magnitudegradients}, there is only one point at which the curve is pointing perpendicular to the line $u_1 = u_2$ SAY THIS BETTER. By the symmetry of $f$ this occurs when $\gamma(\theta;\vect{x})$ is crossing the line $u_1 = u_2$. Since $f$ is continuous, the direction that $\gamma(\theta;\vect{x})$ is moving is also continuous. At $\theta = x_1$, $\gamma(\theta;\vect{x})$ is pointing straight up and so we have that for $\theta \in [x_1,(x_1 + x_2)/2]$, $\gamma(\theta;\vect{x})$ is travelling in a direction pointing above the line perpendicular to $u_1 = u_2$. For $\theta \in [(x_1 + x_2)/2,x_2]$, $\gamma(\theta;\vect{x})$ points below the line. It is now obvious that $\gamma((x_1 + x_2)/2;\vect{x})$ is the furthest point from the origin that lies on $u_1 = u_2$ and is in the convex hull of $\Gamma_\vect{x}$. Since the likelihood increases as we move away from the origin along the line $u_1 = u_2$ in the positive quadrant, we must have
-			$$\hat{\vect{u}} = \gamma((x_1 + x_2)/2;\vect{x})$$
-			and so $K_\vect{x} = 1$.
-			
-			% Basic idea just here - 		
-			% Now either made up of two points or lies on $\Gamma_\vect{x}$. If made up of two points then these two points are symmetrical about $u_1 = u_2$ and the part of $\Gamma_\vect{x}$ that crosses $u_1 = u_2$ is closer to origin. However, if angle of $\gamma$ is always above angle that is perpendicular to $u_1 = u_2$ before crossing $u_1 = u_2$ then impossible for point where it crosses to be closer to origin than that of line between any two symmetrical points.
 		\end{proof}
 
 \section{Results for general n}
