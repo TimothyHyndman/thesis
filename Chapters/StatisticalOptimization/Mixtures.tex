@@ -583,9 +583,9 @@
 		\label{sec:proof of n=2 inflection result}
 		\begin{proof}
 			% Since $f(x)$ has a single mode at $x = 0$, the points of support of the maximizing mixing distribution must lie between $x_{1}$ and $x_{2}$. Hence we are
-			By the unimodality of $f$ (\ref{assump:singlemode}), the points of support of any maximizing mixing distribution, $\hat{Q}$, must lie between $x_1$ and $x_2$ \cite[Proposition 25]{Lindsay1995-sq}. Hence $\hat{\vect{\gamma}} = \vect{\gamma}(\hat{Q}, \vect{x}, f)$ must lie in the convex hull of $\Gamma^*_{\vect{x}, f} = \{\vect{\gamma}(\theta; \vect{x}, f) : \theta \in [x_1, x_2]\}$.
+			By the unimodality of $f$ (\ref{assump:singlemode}), the points of support of any maximizing mixing distribution, $\hat{Q}$, must lie between $x_1$ and $x_2$ \cite[Proposition 25]{Lindsay1995-sq}. Hence $\hat{\vect{\gamma}} = \vect{\gamma}(\hat{Q}, \vect{x}, f)$ must lie in the convex hull of $\Gamma^*_{\vect{x}, f} = \{\vect{\gamma}(\theta; \vect{x}, f) : \theta \in [x_1, x_2]\}$. Hence we need only consider the behaviour of $\vect{\gamma}(\theta;\vect{x})$ for $\theta \in [x_1,x_2]$. From the symmetry of $f$ (\ref{assump:symmetric}) and Lemma \ref{lemma: maximizing point on line u = v}, $\hat{\vect{\gamma}}$ must lie on the line $\gamma_1 = \gamma_2$.
 
-			Hence we need only consider the behaviour of $\vect{\gamma}(\theta;\vect{x})$ for $\theta \in [x_1,x_2]$. By the symmetry of $f$, $\hat{\vect{u}}$ must lie on the line $u_1 = u_2$\footnote{This is obvious but may need a lemma}.
+			
 			
 			First we complete the only if direction of the proof. Assume that $x_2 - x_1 > 2i$. By the symmetry of $f$, $\vect{\gamma}(\theta;\vect{x})$ crosses the $u_1 = u_2$ line at $\theta = (x_1 + x_2)/2$. Now the curvature of $\vect{\gamma}$ has sign equal to
 			
@@ -608,9 +608,13 @@
 					-f'(\frac{x_2 - x_1}{2}) & f''(\frac{x_2 - x_1}{2})
 				\end{vmatrix}.
 			\end{equation}
-			Since $x_2 - x_1 > 2i$, $\frac{x_1 - x_2}{2} > i$ and so $f''((x_1 - x_2)/2) > 0$. Similarly, $f''((x_2 - x_1)/2)>0$. We also have that $-f((x_1 - x_2)/2) < 0$ and $-f((x_2 - x_1)/2) > 0$. Hence $S((x_1 + x_2)/2)<0$ and so $\vect{\gamma}((x_1 + x_2)/2;\vect{x})$ has negative curvature. The curve $\Gamma$ must have positive curvature at the points of support and so we cannot have that $K_\vect{x} = 1$.
+			Since $x_2 - x_1 > 2i$, $\frac{x_1 - x_2}{2} > i$ and so $f''((x_1 - x_2)/2) > 0$. Similarly, $f''((x_2 - x_1)/2)>0$. We also have that $-f((x_1 - x_2)/2) < 0$ and $-f((x_2 - x_1)/2) > 0$. Hence $S((x_1 + x_2)/2)<0$ and so $\vect{\gamma}((x_1 + x_2)/2;\vect{x})$ has negative curvature. By Lemma \ref{lemma: gamma has non-negative curvature at points of support} the curve $\Gamma$ cannot have negative curvature at the points of support and so we cannot have that $K_\vect{x} = 1$.
 			
-			Now we complete the if direction. Assume that $x_2 - x_1 \leq 2i$. By Lemma \ref{lem:magnitudegradients}, there is only one point at which the curve is pointing perpendicular to the line $u_1 = u_2$ SAY THIS BETTER. By the symmetry of $f$ this occurs when $\gamma(\theta;\vect{x})$ is crossing the line $u_1 = u_2$. Since $f$ is continuous, the direction that $\gamma(\theta;\vect{x})$ is moving is also continuous. At $\theta = x_1$, $\gamma(\theta;\vect{x})$ is pointing straight up and so we have that for $\theta \in [x_1,(x_1 + x_2)/2]$, $\gamma(\theta;\vect{x})$ is travelling in a direction pointing above the line perpendicular to $u_1 = u_2$. For $\theta \in [(x_1 + x_2)/2,x_2]$, $\gamma(\theta;\vect{x})$ points below the line. It is now obvious that $\gamma((x_1 + x_2)/2;\vect{x})$ is the furthest point from the origin that lies on $u_1 = u_2$ and is in the convex hull of $\Gamma_\vect{x}$. Since the likelihood increases as we move away from the origin along the line $u_1 = u_2$ in the positive quadrant, we must have
+			Now we complete the if direction. Assume that $x_2 - x_1 \leq 2i$. By Lemma \ref{lem:magnitudegradients}, there is only one point at which the curve is pointing perpendicular to the line $u_1 = u_2$ SAY THIS BETTER. 
+
+			[JUST USE SUPORT HYPERPLANE WHICH MUST BE PARALLEL TO u1 = -u2]
+
+			By the symmetry of $f$ this occurs when $\gamma(\theta;\vect{x})$ is crossing the line $u_1 = u_2$. Since $f$ is continuous, the direction that $\gamma(\theta;\vect{x})$ is moving is also continuous. At $\theta = x_1$, $\gamma(\theta;\vect{x})$ is pointing straight up and so we have that for $\theta \in [x_1,(x_1 + x_2)/2]$, $\gamma(\theta;\vect{x})$ is travelling in a direction pointing above the line perpendicular to $u_1 = u_2$. For $\theta \in [(x_1 + x_2)/2,x_2]$, $\gamma(\theta;\vect{x})$ points below the line. It is now obvious that $\gamma((x_1 + x_2)/2;\vect{x})$ is the furthest point from the origin that lies on $u_1 = u_2$ and is in the convex hull of $\Gamma_\vect{x}$. Since the likelihood increases as we move away from the origin along the line $u_1 = u_2$ in the positive quadrant, we must have
 			$$\hat{\vect{u}} = \gamma((x_1 + x_2)/2;\vect{x})$$
 			and so $K_\vect{x} = 1$.
 			
@@ -619,14 +623,46 @@
 		\end{proof}
 
 		\begin{lemma}
-			If $f(x)$ is symmetric around $x = 0$, then $\hat{\vect{\gamma}} = (u, u)$ for some $u \in \mathbb{R}$.
+		\label{lemma: maximizing point on line u = v}
+			Let $f(x)$ be a component density symmetric around $x = 0$, and $\vect{x} = (x_1, x_2) \in \mathbb{R}^2$ such that the conditions of Theorem \ref{thm: lindsay maximizing likelihood vector point} are met. Let $\hat{Q}$ be a maximum likelihood location mixture of $f(x)$ to $\vect{x}$. Then $f_{\hat{Q}}(x_1) = f_{\hat{Q}}(x_2)$.
 		\end{lemma}
 		\begin{proof}
-			Let $(u, v)$ denote the coordinates of $\hat{\vect{\gamma}} \in \mathbb{R}^2$. We have
+			Let $(u, v)$ denote the coordinates of $\hat{\vect{\gamma}}  = (f_{\hat{Q}}(x_1), f_{\hat{Q}}(x_2))$. By Theorem \ref{thm: lindsay no more than n points} we have
 			\begin{align}
-				(u, v) = p \vect{\gamma}(\theta_1; \vect{x}, f) + (1 - p) \vect{\gamma}(\theta_2;\vect{x}, f)
+				(u, v) &= p \vect{\gamma}(\theta_1; \vect{x}, f) + (1 - p) \vect{\gamma}(\theta_2;\vect{x}, f)\\
+					&= p (f(x_1 - \theta_1), f(x_2 - \theta_1)) + (1 -p) (f(x_1 - \theta_2), f(x_2 - \theta_2))
 			\end{align}
-			for some choice of $p$, $\theta_1$, and $\theta_2$.
+			for some choice of $p \in (0, 1]$, and $\theta_1, \theta_2 \in \mathbb{R}$. By the symmetry of $f(x)$, $f(x) = f(-x)$ and so
+			\begin{align}
+				u &= p f(x_1 - \theta_1) + (1 - p)f(x_1 - \theta_2)\\
+					&= p f(\theta_1 - x_1) + (1 - p)f(\theta_2 - x_1)\\
+					&= p f(x_2 - [x_1 + x_2 - \theta_1]) + (1 - p) (f(x_2 - [x_1 + x_2 - \theta_2])
+			\end{align}
+			and likewise
+			\begin{align}
+				v &= p f(x_1 - [x_1+x_2 - \theta_1]) + (1 - p) f(x_1 - [x_1 + x_2 - \theta_2]).
+			\end{align}
+			Hence the point $(v, u)$ can be written as
+			\begin{align}
+				(v, u) = p \vect{\gamma}(x_1 + x_2 - \theta_1;\vect{x}, f) + (1 - p) \vect{\gamma}(x_1 + x_2 - \theta_2;\vect{x}, f),
+			\end{align}
+			and so $(v, u) \in \conv(\Gamma_{\vect{x}, f})$.
+			Since both $(u, v), (v, u) \in \conv(\Gamma_{\vect{x}, f})$, we must have that $\frac{1}{2}(u+v, u + v) \in \conv(\Gamma_{\vect{x}, f})$. Now
+			\begin{align}
+				\mathcal{L}\left(\frac{1}{2}(u+v, u + v)\right) &= 2\ln((u+v)/2)\\
+					&= \ln\left(\left(\frac{u+v}{2}\right)^2\right)\\
+					&\geq \ln(uv)\\
+					&= \mathcal{L}(u,v).
+			\end{align}
+			However, $(u, v) = \hat{\vect{\gamma}}$, which by Theorem \ref{thm: lindsay maximizing likelihood vector point} is the unique maximizing point of $\mathcal{L}$ in $\conv(\Gamma_{\vect{x}, f})$. Hence $(u, v) = \frac{1}{2}(u+v, u+v)$ and so $u = v$.
+		\end{proof}
+
+		\begin{lemma}
+		\label{lemma: gamma has non-negative curvature at points of support}
+			If $f(x)$ satisfies some stuff then the points of support can only be where the curvature is non-negative.
+		\end{lemma}
+		\begin{proof}
+			[DO PROOF]
 		\end{proof}
 
 		\begin{lemma}
