@@ -785,9 +785,9 @@
 	% for ease of notation. Using this notation, equations \eqref{eq:Deq1} to \eqref{eq:Deq3} become
 	and equations \eqref{eq:Deq1} to \eqref{eq:Deq3} become
 	\begin{align}
-		&\frac{1}{n} \sum_{i=1}^n \Psi_k(x_i;\vect{p},\vect{\theta}) = 1, &&k = 1,\dots, m, \label{eq:PsiEq1}\\
-		&\frac{1}{n} \sum_{i=1}^n x_i \Psi_k(x_i;\vect{p},\vect{\theta}) = \theta_k, &&k = 1,\dots, m,\label{eq:PsiEq2}\\
-		&\frac{1}{n} \sum_{i=1}^n (x_i - \theta_k)^2 \Psi_k(x_i;\vect{p},\vect{\theta}) \leq \sigma^2, &&k = 1,\dots, m,
+		&\frac{1}{n} \sum_{i=1}^n \Psi_k(x_i;\vect{\theta},\vect{p}) = 1, &&k = 1,\dots, m, \label{eq:PsiEq1}\\
+		&\frac{1}{n} \sum_{i=1}^n x_i \Psi_k(x_i;\vect{\theta},\vect{p}) = \theta_k, &&k = 1,\dots, m,\label{eq:PsiEq2}\\
+		&\frac{1}{n} \sum_{i=1}^n (x_i - \theta_k)^2 \Psi_k(x_i;\vect{\theta},\vect{p}) \leq \sigma^2, &&k = 1,\dots, m,
 		\label{eq:PsiEq3}
 	\end{align}
 	 where we have written
@@ -831,13 +831,49 @@
 		% 	&= \left( \erf\left(\frac{\sigma_2}{\sqrt{2}\sigma_1}\right)\right)^n
 		% \end{align*}
 
+	
+	\subsection{Bounding \texorpdfstring{$C_m$}{Cm}}
+	We now state a generalisation of Theorem \ref{thm:general n C1 bound} that bounds the regions $C_1, \dots, C_n$.
+
+	\label{sec:bounding Cm}
+		\begin{theorem}
+			If $\vect{x} \in C_m$ for some $m \leq n$, then there exists a subset of the $x_i$, $A$, such that $A$ contains at least $n/m$ elements and
+			\begin{equation}
+				\frac{1}{n} \sum_{i \in A} \left(x_i - \bar{x}_A\right)^2 \leq \sigma^2,
+			\end{equation}
+			where
+			\begin{equation}
+				\bar{x}_A = \frac{1}{|A|}\sum_{i \in A} x_i.
+			\end{equation}
+			\label{thm:general n constraints result}
+		\end{theorem}
+		\begin{proof}
+			Let $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ represent the $m$ point maximizing mixture of $\vect{x} \in C_m$. By Lemma \ref{lem:maxkGamma}, there exists a $k^*$ such that $\Psi_{k^*}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$ for at least $\lceil \frac{n}{m} \rceil$ different $x_i$.
+			% Let $\vect{x} = (x_1,\dots,x_n)$ and assume that the maximum likelihood mixture for $\vect{x}$ has no more than $m$ components. Let $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ denote this maximizing mixture. %Let $\hat{\vect{\theta}} = (\hat{\theta}_1,\dots,\hat{\theta}_m)$ and $\hat{\vect{p}} = (\hat{p}_1,\dots,\hat{p}_m)$ be a maximizing mixture for $\vect{x}$
+			% Then by Lemma \ref{lem:maxkGamma}, there exists a $k^*$ such that $\Psi_{k^*}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$ for at least $\lceil \frac{n}{m} \rceil$ different $x_i$. Let $A_{k^*}$ be the set of all these $x_i$. 
+
+			Let $A_{\theta_{k^*}}$ be the set of the $|A_{k^*}|$ closest $x_i$ to $\theta_{k^*}$. Then
+			\begin{align}
+				\frac{1}{n} \sum_{i=1}^n (x_i - \theta_{k^*})^2 \Psi_{k^*}(x_i; \hat{\vect{p}},\hat{\vect{\theta}}) &\geq \frac{1}{n} \sum_{i \in A_{\theta_{k^*}}} (x_i - \theta_{k^*})^2 \\
+				&\geq \frac{1}{n} \left \lceil \frac{n}{m} \right \rceil \var\left(A_{\theta_{k^*}}\right) &&\text{(Biased Variance)}
+			\end{align}
+
+			From \eqref{eq:PsiEq3},
+			\begin{equation}
+				\var\left(A_{\theta_{k^*}}\right) \leq \frac{n \sigma^2}{\left\lceil \frac{n}{m} \right\rceil}.
+			\end{equation}
+		\end{proof}		
+
+		% This means that if we cannot find a subset of the $x_i$ that has at least $\frac{n}{m}$ elements and has (biased) variance less than $\frac{n\sigma^2}{\left\lceil \frac{n}{m} \right\rceil}$ then we need more than $m$ components in our maximum likelihood mixture.
 	\subsection{Properties of \texorpdfstring{$\Psi$}{Psi}}
-		In order to obtains bounds on the regions $C_2, \dots, C_n$, we will need to get a handle on the behaviour of $\Psi_k(x;\vect{\theta}, \vect{p})$. In this section, we list and prove some properties that will be required in Section \ref{sec:bounding Cm}.
+		% In order to obtains bounds on the regions $C_2, \dots, C_n$, we will need to get a handle on the behaviour of $\Psi_k(x;\vect{\theta}, \vect{p})$. 
+		This section contains statements and proofs of Lemmas concerning the properties of $\Psi$ that are used in the proof of Theorem \ref{thm:general n constraints result}.
 
 		\begin{lemma}
 		\label{lem:maxkGamma}
+		For all $x \in \mathbb{R}$, and all discrete probability distributions with masses $\vect{p}$ at locations $\vect{\theta}$,
 			\begin{equation}
-				\max_k \left( \Psi_k(x;\vect{p},\vect{\theta}) \right) \geq 1
+				\max_k \left( \Psi_k(x;\vect{p},\vect{\theta}) \right) \geq 1.
 			\end{equation}
 		\end{lemma}	
 		\begin{proof}
@@ -877,27 +913,6 @@
 		\begin{proof}
 			CURRENTLY UNUSED. PROOF IN TIM'S NOTEBOOK.
 		\end{proof}
-
-	\subsection{Bounding \texorpdfstring{$C_m$}{Cm}}
-	\label{sec:bounding Cm}
-		\begin{theorem}
-			THM AND PROOF IS BELOW
-			\label{thm:general n constraints result}
-		\end{theorem}
-		Let $\vect{x} = (x_1,\dots,x_n)$ and assume that the maximum likelihood mixture for $\vect{x}$ has no more than $m$ components. Let $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ denote this maximizing mixture. %Let $\hat{\vect{\theta}} = (\hat{\theta}_1,\dots,\hat{\theta}_m)$ and $\hat{\vect{p}} = (\hat{p}_1,\dots,\hat{p}_m)$ be a maximizing mixture for $\vect{x}$
-		Then by Lemma \ref{lem:maxkGamma}, there exists a $k^*$ such that $\Psi_{k^*}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$ for at least $\lceil \frac{n}{m} \rceil$ different $x_i$. Let $A_{k^*}$ be the set of all these $x_i$. 
-		Let $A_{\theta_{k^*}}$ be the set of the $|A_{k^*}|$ closest $x_i$ to $\theta_{k^*}$. Then
-		\begin{align}
-			\frac{1}{n} \sum_{i=1}^n (x_i - \theta_{k^*})^2 \Psi_{k^*}(x_i; \hat{\vect{p}},\hat{\vect{\theta}}) &\geq \frac{1}{n} \sum_{i \in A_{\theta_{k^*}}} (x_i - \theta_{k^*})^2 \\
-			&\geq \frac{1}{n} \left \lceil \frac{n}{m} \right \rceil \var\left(A_{\theta_{k^*}}\right) &&\text{(Biased Variance)}
-		\end{align}
-
-		From \eqref{eq:PsiEq3},
-		\begin{equation}
-			\var\left(A_{\theta_{k^*}}\right) \leq \frac{n \sigma^2}{\left\lceil \frac{n}{m} \right\rceil}.
-		\end{equation}
-
-		This means that if we cannot find a subset of the $x_i$ that has at least $\frac{n}{m}$ elements and has (biased) variance less than $\frac{n\sigma^2}{\left\lceil \frac{n}{m} \right\rceil}$ then we need more than $m$ components in our maximum likelihood mixture.
 
 	\subsubsection{Treating \texorpdfstring{$\vect{x}$}{x} as random}
 
