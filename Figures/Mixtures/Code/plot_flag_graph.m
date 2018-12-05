@@ -131,7 +131,7 @@ if options.save
     % export_fig(filename,'-png','-transparent','-r600')
     % export_fig(filename,'-pdf')
     saveas(h, filename)
-    end
+end
 end
 
 function options = fill_default_options(options)

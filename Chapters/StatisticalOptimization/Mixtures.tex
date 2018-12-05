@@ -394,6 +394,7 @@
 	% \subsection{Motivating Example?}
 
 	\subsection{Flag graphs}
+	\label{sec: flag graphs}
 	When is $n$ is very small, we can plot $K_\vect{x}$ as a function of $\vect{x}$. For example, we may take $\vect{x} = (x_1, x_2)$ across a grid of values and colour each point $\vect{x}$ according to the value of $K_\vect{x}$. We have done this in Figure \ref{fig:normal_flag_graph_n2} for a normal component density with fixed variance $\sigma^2 = 1$. We observe a band in which $K_\vect{x} = 1$ and outside of which $K_\vect{x} = 2$.
 
 	\begin{figure}
@@ -437,10 +438,6 @@
 	\section{Results}
 		\label{sec:mixture results}
 		The figures obtained in Section \ref{sec:empirical results} suggest that the bounds on $K_\vect{x}$ from Section \ref{sec:summary of Lindsay} could be significantly tightened for location mixtures. The main bounds that we have discussed so far are Theorem \ref{thm: lindsay no more than n points} which states that under mild conditions, $K_\vect{x} \leq n$; and Theorems [FINISH THIS ONCE YOU FINISH THE LIT REVIEW BIT]. In this section we will present new bounds on $K_\vect{x}$ that either tighten these bounds, or extend them to different classes of component densities.
-
-
-		[UP TO HERE]
-
 
 		\subsection{Results for \texorpdfstring{$n = 2$}{n = 2}}
 		The first bound we present is Theorem \ref{thm:n=2 inflection result} which [HOW DOES IT RELATE TO THE LITERATURE??]. The theorem concerns component densities, $f(x)$, which satisfy the following assumptions.
@@ -766,9 +763,6 @@
 			\end{equation}
 
 			So for $\theta \in (0,-i+x_2-x_1)$,  $f'(\theta)>-f'(\theta - 2i) > -f'(\theta - x_2 - x_1)$ and there are no solutions to \eqref{eq:gradientsequalequivalent} on this interval either.
-
-			
-			
 			
 			Since the above intervals cover the real line and since we have shown that there is only one solution in one of these intervals, \eqref{eq:gradientsequal} must have only one solution.
 		\end{proof}
@@ -780,56 +774,54 @@
 	\begin{equation}
 		f(x;\sigma) = \frac{1}{\sigma \sqrt{2\pi}} \euler^{-x^2/2\sigma^2},
 	\end{equation}
-	the gradient function defined in \eqref{eq:def gradient function}, evaluated at a mixture $Q$ which places masses $\vect{p}$ at locations $\vect{\theta}$, can be written as
+	the gradient function defined in \eqref{eq:def gradient function}, evaluated at a mixture $Q$ which places masses $\vect{p}$ at locations $\vect{\theta}$, becomes
 	\begin{equation}
-		D_Q(\theta; \vect{x}, f) = n - \sum_{i = 1}^n\Gamma_k(\theta;\vect{\theta},\vect{p})
+		D_Q(\theta; \vect{x}, f) = - n + \sum_{i = 1}^n \frac{\exp({-(x_i - \theta)^2/2\sigma^2})}{\sum_{j=1}^m p_j \exp({-(x_i - \theta_j)^2/2\sigma^2})},
 	\end{equation}
-	where we have written
-	\begin{equation}{}
-		\Gamma_k(x;\vect{\theta},\vect{p}) = \frac{f(x - \theta_k;\sigma)}{\sum_{j=1}^m p_j f(x - \theta_j;\sigma)}.
-	\end{equation}
-	for ease of notation. Using this notation, equations \eqref{eq:Deq1} to \eqref{eq:Deq3} become
+	% where we have written
+	% \begin{equation}{}
+	% 	\Gamma_k(x;\vect{\theta},\vect{p}) = \frac{f(x - \theta_k;\sigma)}{\sum_{j=1}^m p_j f(x - \theta_j;\sigma)}.
+	% \end{equation}
+	% for ease of notation. Using this notation, equations \eqref{eq:Deq1} to \eqref{eq:Deq3} become
+	and equations \eqref{eq:Deq1} to \eqref{eq:Deq3} become
 	\begin{align}
-		&\frac{1}{n} \sum_{i=1}^n \Gamma_k(x_i;\vect{p},\vect{\theta}) = 1 \label{eq:GammaEq1}\\
-		&\frac{1}{n} \sum_{i=1}^n x_i \Gamma_k(x_i;\vect{p},\vect{\theta}) = \theta_k \label{eq:GammaEq2}\\
-		&\frac{1}{n} \sum_{i=1}^n (x_i - \theta_k)^2 \Gamma_k(x_i;\vect{p},\vect{\theta}) \leq \sigma^2.
-		\label{eq:GammaEq3}
-	\end{align} 
+		&\frac{1}{n} \sum_{i=1}^n \Psi_k(x_i;\vect{p},\vect{\theta}) = 1, &&k = 1,\dots, m, \label{eq:PsiEq1}\\
+		&\frac{1}{n} \sum_{i=1}^n x_i \Psi_k(x_i;\vect{p},\vect{\theta}) = \theta_k, &&k = 1,\dots, m,\label{eq:PsiEq2}\\
+		&\frac{1}{n} \sum_{i=1}^n (x_i - \theta_k)^2 \Psi_k(x_i;\vect{p},\vect{\theta}) \leq \sigma^2, &&k = 1,\dots, m,
+		\label{eq:PsiEq3}
+	\end{align}
+	 where we have written
+	\begin{equation}{}
+		\Psi_k(x;\vect{\theta},\vect{p}) = \frac{f(x - \theta_k;\sigma)}{\sum_{j=1}^m p_j f(x - \theta_j;\sigma)}.
+	\end{equation}
+	for ease of notation.
 
 	We will show that these three equations constrain the regions $C_1, \dots, C_n$ as defined in \eqref{eq: C_k partition sets}. This will be done in Theorem \ref{thm:general n constraints result}. However, as a gentle introduction, we will start with the much simpler problem of just bounding $C_1$.
 
 	\begin{theorem}
 		\label{thm:general n C1 bound}
-		Write $\bar{\vect{x}}$ for the mean of $\vect{x}$. If $\vect{x} \in C_1$ then 
+		If $\vect{x} \in C_1$ then 
 		\begin{equation}
-			\frac{1}{n} \sum_{i=1}^n (x_i - \bar{\vect{x}})^2 \leq \sigma^2.
+			\frac{1}{n} \sum_{i=1}^n (x_i - \bar{\vect{x}})^2 \leq \sigma^2,
+		\end{equation}
+		where 
+		\begin{equation}
+			\bar{\vect{x}} = \frac{1}{n}\sum_{i = 1}^n x_i.
 		\end{equation}
 	\end{theorem}
 	\begin{proof}
-		If $\vect{x} \in C_1$ then the maximizing mixture has one component and so $\Gamma_1(x; \vect{\theta}, \vect{p}) = 1$. Then \eqref{eq:GammaEq2} gives us that $\theta_1 = \bar{\vect{x}}$ and combining this with \eqref{eq:GammaEq3} completes the proof.
+		If $\vect{x} \in C_1$ then the maximizing mixture has one component and so $\Psi_1(x; \vect{\theta}, \vect{p}) = 1$. Then \eqref{eq:PsiEq2} gives us that $\theta_1 = \bar{\vect{x}}$ and combining this with \eqref{eq:PsiEq3} completes the proof.
 	\end{proof}
+	In Figure \ref{fig:flag graph m1 bound} we compare this bound to the `flag graphs' we produced in section \ref{sec: flag graphs}.
 
-	\subsubsection{Treating \texorpdfstring{$\vect{x}$}{x} as random}
+	\begin{figure}
+		\centering
+		\includegraphics[width = \textwidth]{Figures/Mixtures/normal_flag_graph_m1_bound.png}
+		\caption{The bound obtanied in Theorem \ref{thm:general n C1 bound} tells us that $C_1$ must lie within the orange ellipse. The true shape of $C_1$ is given by the dark blue region.}
+		\label{fig:flag graph m1 bound}
+	\end{figure}
 
-		Up until now, we have treated $\vect{x}$ as fixed, not random, and treated the maximum likelihood problem purely as an optimization one, rather than a statistical one. However, for this section we make the assumption that $\vect{x}$ is made up of i.i.d. random variables, $x_i$, which have distribution
-		$$x_i \sim N(\mu,\sigma_1^2)$$
-		for $i = 1,\dots,n$. Our component density, $f_\theta$, is normal with variance $\sigma_2^2$. From Theorem \ref{thm:general n C1 bound},
-		\begin{align*}
-		p_u &= \prob \left( \sum_{i=1}^n (x_i - \bar{\vect{x}})^2 \leq n \sigma_2^2  \right)
-		\end{align*}
-		is an upper bound to $\prob(\vect{x} \in C_1)$. Writing $s^2$ for the unbiased sample variance of $\vect{x}$
-		\begin{align*}
-		p_u 
-		%&= \prob\left( \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2 \leq \frac{n\sigma}{n-1}\right)\\
-		&= \prob\left( s^2 \leq \frac{n \sigma_2^2}{n-1}\right)\\
-		&= \prob\left( \frac{(n-1)s^2}{\sigma_1^2} \leq \frac{n \sigma_2^2}{\sigma_1^2}\right)\\
-		&= \prob\left(\chi_{n-1}^2  \leq \frac{n \sigma_2^2}{\sigma_1^2} \right)
-		\end{align*}
-		where $\chi_{n-1}^2$ is chi-squared with $n-1$ degrees of freedom.
-
-		\begin{remark}
-			Of particular interest is the case where $\sigma_1 = \sigma_2$. In this case, $p_u \rightarrow 1/2$ as $n \rightarrow \infty$. While not a new result [CITE SOMETHING HERE], this tells us that the maximum likelihood estimator is not a consistent estimator for the number of components.
-		\end{remark}
+	[UP TO HERE]
 
 		% From Theorem \ref{thm:shapeofC1normalb}, an lower bound to $\prob(\vect{x} \in C_1)$ is
 		% \begin{align*}
@@ -839,31 +831,31 @@
 		% 	&= \left( \erf\left(\frac{\sigma_2}{\sqrt{2}\sigma_1}\right)\right)^n
 		% \end{align*}
 
-	\subsection{Properties of \texorpdfstring{$\Gamma$}{Gamma}}
-		In order to bound regions where $m \geq 2$, we will need to get a handle on $\Gamma_k(x;\vect{\theta}, \vect{p})$. In this section, we list and prove some properties that will be required in Section \ref{sec:bounding Cm}.
+	\subsection{Properties of \texorpdfstring{$\Psi$}{Psi}}
+		In order to obtains bounds on the regions $C_2, \dots, C_n$, we will need to get a handle on the behaviour of $\Psi_k(x;\vect{\theta}, \vect{p})$. In this section, we list and prove some properties that will be required in Section \ref{sec:bounding Cm}.
 
 		\begin{lemma}
 		\label{lem:maxkGamma}
 			\begin{equation}
-				\max_k \left( \Gamma_k(x;\vect{p},\vect{\theta}) \right) \geq 1
+				\max_k \left( \Psi_k(x;\vect{p},\vect{\theta}) \right) \geq 1
 			\end{equation}
 		\end{lemma}	
 		\begin{proof}
 			For each $x$, there exists a $k_0$ such that $f(x - \theta_{k_0};\sigma) \geq f(x - \theta_k;\sigma)$ for all $k$. It follows that
 			\begin{equation}
-				\Gamma_{k_0}(x;\vect{p},\vect{\theta}) = \frac{f(x - \theta_{k_0};\sigma)}{\sum_{j=1}^m p_j f(x - \theta_j;\sigma)} \geq \frac{f(x - k_0;\sigma)}{\sum_{j=1}^m p_j f(x - \theta_{k_0};\sigma)} = 1.
+				\Psi_{k_0}(x;\vect{p},\vect{\theta}) = \frac{f(x - \theta_{k_0};\sigma)}{\sum_{j=1}^m p_j f(x - \theta_j;\sigma)} \geq \frac{f(x - k_0;\sigma)}{\sum_{j=1}^m p_j f(x - \theta_{k_0};\sigma)} = 1.
 			\end{equation}
 		\end{proof}
 
 		\begin{lemma}
 			\begin{equation}
-			\Gamma_k(x;\vect{p},\vect{\theta}) \leq \frac{1}{p_k}
+			\Psi_k(x;\vect{p},\vect{\theta}) \leq \frac{1}{p_k}
 			\end{equation}
 		\end{lemma}
 		\begin{proof}
 			Since $f(x) > 0$,
 			\begin{equation}
-				\Gamma_k(x;\vect{p},\vect{\theta}) = \frac{f(x - \theta_k;\sigma)}{\sum_{j=1}^m p_j f(x - \theta_j;\sigma)} \leq \frac{f(x - \theta_k;\sigma)}{p_k f(x - \theta_k;\sigma)} = \frac{1}{p_k}.
+				\Psi_k(x;\vect{p},\vect{\theta}) = \frac{f(x - \theta_k;\sigma)}{\sum_{j=1}^m p_j f(x - \theta_j;\sigma)} \leq \frac{f(x - \theta_k;\sigma)}{p_k f(x - \theta_k;\sigma)} = \frac{1}{p_k}.
 			\end{equation}
 		\end{proof}
 
@@ -893,19 +885,41 @@
 			\label{thm:general n constraints result}
 		\end{theorem}
 		Let $\vect{x} = (x_1,\dots,x_n)$ and assume that the maximum likelihood mixture for $\vect{x}$ has no more than $m$ components. Let $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ denote this maximizing mixture. %Let $\hat{\vect{\theta}} = (\hat{\theta}_1,\dots,\hat{\theta}_m)$ and $\hat{\vect{p}} = (\hat{p}_1,\dots,\hat{p}_m)$ be a maximizing mixture for $\vect{x}$
-		Then by Lemma \ref{lem:maxkGamma}, there exists a $k^*$ such that $\Gamma_{k^*}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$ for at least $\lceil \frac{n}{m} \rceil$ different $x_i$. Let $A_{k^*}$ be the set of all these $x_i$. 
+		Then by Lemma \ref{lem:maxkGamma}, there exists a $k^*$ such that $\Psi_{k^*}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$ for at least $\lceil \frac{n}{m} \rceil$ different $x_i$. Let $A_{k^*}$ be the set of all these $x_i$. 
 		Let $A_{\theta_{k^*}}$ be the set of the $|A_{k^*}|$ closest $x_i$ to $\theta_{k^*}$. Then
 		\begin{align}
-			\frac{1}{n} \sum_{i=1}^n (x_i - \theta_{k^*})^2 \Gamma_{k^*}(x_i; \hat{\vect{p}},\hat{\vect{\theta}}) &\geq \frac{1}{n} \sum_{i \in A_{\theta_{k^*}}} (x_i - \theta_{k^*})^2 \\
+			\frac{1}{n} \sum_{i=1}^n (x_i - \theta_{k^*})^2 \Psi_{k^*}(x_i; \hat{\vect{p}},\hat{\vect{\theta}}) &\geq \frac{1}{n} \sum_{i \in A_{\theta_{k^*}}} (x_i - \theta_{k^*})^2 \\
 			&\geq \frac{1}{n} \left \lceil \frac{n}{m} \right \rceil \var\left(A_{\theta_{k^*}}\right) &&\text{(Biased Variance)}
 		\end{align}
 
-		From \eqref{eq:GammaEq3},
+		From \eqref{eq:PsiEq3},
 		\begin{equation}
 			\var\left(A_{\theta_{k^*}}\right) \leq \frac{n \sigma^2}{\left\lceil \frac{n}{m} \right\rceil}.
 		\end{equation}
 
 		This means that if we cannot find a subset of the $x_i$ that has at least $\frac{n}{m}$ elements and has (biased) variance less than $\frac{n\sigma^2}{\left\lceil \frac{n}{m} \right\rceil}$ then we need more than $m$ components in our maximum likelihood mixture.
+
+	\subsubsection{Treating \texorpdfstring{$\vect{x}$}{x} as random}
+
+		Up until now, we have treated $\vect{x}$ as fixed, not random, and treated the maximum likelihood problem purely as an optimization one, rather than a statistical one. However, for this section we make the assumption that $\vect{x}$ is made up of i.i.d. random variables, $x_i$, which have distribution
+		$$x_i \sim N(\mu,\sigma_1^2)$$
+		for $i = 1,\dots,n$. Our component density, $f_\theta$, is normal with variance $\sigma_2^2$. From Theorem \ref{thm:general n C1 bound},
+		\begin{align*}
+		p_u &= \prob \left( \sum_{i=1}^n (x_i - \bar{\vect{x}})^2 \leq n \sigma_2^2  \right)
+		\end{align*}
+		is an upper bound to $\prob(\vect{x} \in C_1)$. Writing $s^2$ for the unbiased sample variance of $\vect{x}$
+		\begin{align*}
+		p_u 
+		%&= \prob\left( \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2 \leq \frac{n\sigma}{n-1}\right)\\
+		&= \prob\left( s^2 \leq \frac{n \sigma_2^2}{n-1}\right)\\
+		&= \prob\left( \frac{(n-1)s^2}{\sigma_1^2} \leq \frac{n \sigma_2^2}{\sigma_1^2}\right)\\
+		&= \prob\left(\chi_{n-1}^2  \leq \frac{n \sigma_2^2}{\sigma_1^2} \right)
+		\end{align*}
+		where $\chi_{n-1}^2$ is chi-squared with $n-1$ degrees of freedom.
+
+		\begin{remark}
+			Of particular interest is the case where $\sigma_1 = \sigma_2$. In this case, $p_u \rightarrow 1/2$ as $n \rightarrow \infty$. While not a new result [CITE SOMETHING HERE], this tells us that the maximum likelihood estimator is not a consistent estimator for the number of components.
+		\end{remark}
 
 
 	\subsection{A particular class of optimization problem}
@@ -937,7 +951,7 @@
 		\end{proof}
 
 	\subsection{Derive Constraints again}
-	WE SHOULD BE ABLE TO DERIVE \eqref{eq:GammaEq1} THROUGH \eqref{eq:GammaEq3} AGAIN USING THEOREM \ref{thm:solution in interior}.
+	WE SHOULD BE ABLE TO DERIVE \eqref{eq:PsiEq1} THROUGH \eqref{eq:PsiEq3} AGAIN USING THEOREM \ref{thm:solution in interior}.
 
 % \section{Other Results}
 	\subsection{All points separated by \texorpdfstring{$\alpha$}{a}}
