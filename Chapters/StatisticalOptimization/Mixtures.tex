@@ -772,11 +772,11 @@
 
 	When our component density is normal with variance $\sigma^2$, that is
 	\begin{equation}
-		f(x;\sigma) = \frac{1}{\sigma \sqrt{2\pi}} \euler^{-x^2/2\sigma^2},
+		f_\sigma(x) = \frac{1}{\sigma \sqrt{2\pi}} \euler^{-x^2/2\sigma^2},
 	\end{equation}
 	the gradient function defined in \eqref{eq:def gradient function}, evaluated at a mixture $Q$ which places masses $\vect{p}$ at locations $\vect{\theta}$, becomes
 	\begin{equation}
-		D_Q(\theta; \vect{x}, f) = - n + \sum_{i = 1}^n \frac{\exp({-(x_i - \theta)^2/2\sigma^2})}{\sum_{j=1}^m p_j \exp({-(x_i - \theta_j)^2/2\sigma^2})},
+		D_Q(\theta; \vect{x}, f_\sigma) = - n + \sum_{i = 1}^n \frac{\exp({-(x_i - \theta)^2/2\sigma^2})}{\sum_{j=1}^m p_j \exp({-(x_i - \theta_j)^2/2\sigma^2})},
 	\end{equation}
 	% where we have written
 	% \begin{equation}{}
@@ -792,7 +792,7 @@
 	\end{align}
 	 where we have written
 	\begin{equation}{}
-		\Psi_k(x;\vect{\theta},\vect{p}) = \frac{f(x - \theta_k;\sigma)}{\sum_{j=1}^m p_j f(x - \theta_j;\sigma)}.
+		\Psi_k(x;\vect{\theta},\vect{p}) = \Psi_k(x;\vect{\theta},\vect{p}, f_\sigma) = \frac{f_\sigma(x - \theta_k)}{\sum_{j=1}^m p_j f_\sigma(x - \theta_j)}.
 	\end{equation}
 	for ease of notation.
 
@@ -848,38 +848,41 @@
 			\label{thm:general n constraints result}
 		\end{theorem}
 		\begin{proof}
-			Let $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ represent the $m$ point maximizing mixture of $\vect{x} \in C_m$. By Lemma \ref{lem:maxkGamma}, there exists a $k^*$ such that $\Psi_{k^*}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$ for at least $\lceil \frac{n}{m} \rceil$ different $x_i$.
+			Let $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ represent the $m$ point maximizing mixture of $\vect{x} \in C_m$. By Lemma \ref{lem:maxkGamma}, there exists a $k^*$ such that $\Psi_{k^*}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$ for at least $n / m$ different $x_i$. Call the set of these $x_i$, $A_{k^*}$.
 			% Let $\vect{x} = (x_1,\dots,x_n)$ and assume that the maximum likelihood mixture for $\vect{x}$ has no more than $m$ components. Let $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ denote this maximizing mixture. %Let $\hat{\vect{\theta}} = (\hat{\theta}_1,\dots,\hat{\theta}_m)$ and $\hat{\vect{p}} = (\hat{p}_1,\dots,\hat{p}_m)$ be a maximizing mixture for $\vect{x}$
 			% Then by Lemma \ref{lem:maxkGamma}, there exists a $k^*$ such that $\Psi_{k^*}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$ for at least $\lceil \frac{n}{m} \rceil$ different $x_i$. Let $A_{k^*}$ be the set of all these $x_i$. 
 
 			Let $A_{\theta_{k^*}}$ be the set of the $|A_{k^*}|$ closest $x_i$ to $\theta_{k^*}$. Then
 			\begin{align}
 				\frac{1}{n} \sum_{i=1}^n (x_i - \theta_{k^*})^2 \Psi_{k^*}(x_i; \hat{\vect{p}},\hat{\vect{\theta}}) &\geq \frac{1}{n} \sum_{i \in A_{\theta_{k^*}}} (x_i - \theta_{k^*})^2 \\
-				&\geq \frac{1}{n} \left \lceil \frac{n}{m} \right \rceil \var\left(A_{\theta_{k^*}}\right) &&\text{(Biased Variance)}
+				&\geq \frac{1}{n} \sum_{i \in A_{\theta_{k^*}}} \left(x_i - \bar{x}_{A_{\theta_{k^*}}}\right)^2.
 			\end{align}
-
 			From \eqref{eq:PsiEq3},
 			\begin{equation}
-				\var\left(A_{\theta_{k^*}}\right) \leq \frac{n \sigma^2}{\left\lceil \frac{n}{m} \right\rceil}.
+				\frac{1}{n} \sum_{i \in A_{\theta_{k^*}}} \left(x_i - \bar{x}_{A_{\theta_{k^*}}}\right)^2 \leq \sigma^2.
 			\end{equation}
 		\end{proof}		
 
 		% This means that if we cannot find a subset of the $x_i$ that has at least $\frac{n}{m}$ elements and has (biased) variance less than $\frac{n\sigma^2}{\left\lceil \frac{n}{m} \right\rceil}$ then we need more than $m$ components in our maximum likelihood mixture.
-	\subsection{Properties of \texorpdfstring{$\Psi$}{Psi}}
-		% In order to obtains bounds on the regions $C_2, \dots, C_n$, we will need to get a handle on the behaviour of $\Psi_k(x;\vect{\theta}, \vect{p})$. 
-		This section contains statements and proofs of Lemmas concerning the properties of $\Psi$ that are used in the proof of Theorem \ref{thm:general n constraints result}.
+	% \subsection{Properties of \texorpdfstring{$\Psi$}{Psi}}
+	% 	% In order to obtains bounds on the regions $C_2, \dots, C_n$, we will need to get a handle on the behaviour of $\Psi_k(x;\vect{\theta}, \vect{p})$. 
+	% 	This section contains statements and proofs of Lemmas concerning the properties of $\Psi$ that are used in the proof of Theorem \ref{thm:general n constraints result}.
 
 		\begin{lemma}
 		\label{lem:maxkGamma}
-		For all $x \in \mathbb{R}$, and all discrete probability distributions with masses $\vect{p}$ at locations $\vect{\theta}$,
+		Let $f$ be a density supported on all of $\mathbb{R}$. For all $x \in \mathbb{R}$, and all discrete probability distributions with masses $\vect{p}$ at locations $\vect{\theta}$,
 			\begin{equation}
-				\max_k \left( \Psi_k(x;\vect{p},\vect{\theta}) \right) \geq 1.
+				\max_k \left[ \Psi_k(x;\vect{p},\vect{\theta},f) \right] \geq 1.
 			\end{equation}
 		\end{lemma}	
 		\begin{proof}
-			For each $x$, there exists a $k_0$ such that $f(x - \theta_{k_0};\sigma) \geq f(x - \theta_k;\sigma)$ for all $k$. It follows that
+			Let $x \in \mathbb{R}$, and $\vect{\theta},\vect{p}$ be the location and weights of an $m$ point discrete probability distribution. Choose $\theta_{k^*}$ to be the smallest $\theta_j$ that satisfies
+			\begin{align}
+				f(x - \theta_{k^*}) &\geq f(x - \theta_j) && j = 1, \dots, m.
+			\end{align}
+			(We choose the smallest in case there is more than one $\theta_j$ which satisfies the above). Then
 			\begin{equation}
-				\Psi_{k_0}(x;\vect{p},\vect{\theta}) = \frac{f(x - \theta_{k_0};\sigma)}{\sum_{j=1}^m p_j f(x - \theta_j;\sigma)} \geq \frac{f(x - k_0;\sigma)}{\sum_{j=1}^m p_j f(x - \theta_{k_0};\sigma)} = 1.
+				\Psi_{k^*}(x;\vect{p},\vect{\theta},f) = \frac{f(x - \theta_{k^*})}{\sum_{j=1}^m p_j f(x - \theta_j)} \geq \frac{f(x - \theta_{k^*})}{\sum_{j=1}^m p_j f(x - \theta_{k^*})} = 1.
 			\end{equation}
 		\end{proof}
 
