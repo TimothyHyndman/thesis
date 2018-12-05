@@ -480,7 +480,7 @@
 			% That is, $i^-$ and $i^+$ are inflection points of $f$. Note that for any $f$ satisfying \ref{assump:symmetric}, $i^- = -i^+$. In this case we will write $i = i^+ = -i^-$.
 		
 		\begin{assumption}
-			The density $f(x)$ satisfies $f'(x) < -f'(x - 2i)$ for $x \in (i,\infty)$. [FIX THIS]
+			The density $f(x)$ satisfies $f'(x) < -f'(x - 2i)$ for $x \in (i,\infty)$.
 			\label{assump:magnitudegradients}
 		\end{assumption}
 
@@ -499,25 +499,38 @@
 		The proof of Theorem \ref{thm:n=2 inflection result} will be given in Section \ref{sec:proof of n=2 inflection result} after some discussion concerning how the likelihood curve behaves when $n = 2$.
 
 		
-		It is worth verifying that Assumptions \ref{assump:reallinesupport} through to \ref{assump:magnitudegradients} are satisfied by some common densities. We do this in the following Lemma.
+		It is worth verifying that Assumptions \ref{assump:reallinesupport} through to \ref{assump:magnitudegradients} are satisfied by some common densities. 
+		We remark here on the following common unimodal densities:
+		\begin{align}
+			&\text{Normal with variance $\sigma^2$} && f(x) = \frac{1}{\sigma\sqrt{2\pi}} \euler^{-x^2/(2\sigma^2)}\\
+			&\text{Cauchy with scale $\gamma$} && g(x) = \frac{1}{\pi (\gamma + x^2/\gamma)}
+			% &\text{Student's t-distribution with $\nu$ degrees of freedom} && f(x) = (1 + x^2/\nu)^{-\frac{\nu + 1}{2}}
+		\end{align}
+		Clearly, Assumptions \ref{assump:reallinesupport} through to \ref{assump:symmetric} are satisfied for both $f(x)$ and $g(x)$.
+		The inflection points of $f(x)$ are located at $x = \pm \sigma$ and the inflection points of $g(x)$ are located at $x = \pm \gamma/\sqrt{3}$, satisfying Assumption \ref{assump:twoinflectionpoints}. A plot of $f'(x)$ against $-f'(x - 2\sigma)$ and of $g'(x)$ against $-g'(x - 2\gamma/\sqrt{3})$ in Figure \ref{fig:assumption6} makes it clear that Assumption \ref{assump:magnitudegradients} is satisfied too. Of course, one could make this rigourous if desired.
 
-		\begin{lemma}
-			The following densities satisfy Assumptions \ref{assump:reallinesupport} through to \ref{assump:magnitudegradients}:
-			\begin{align}
-				&\text{Normal with variance $\sigma^2$} && f(x) = \frac{1}{\sigma\sqrt{2\pi}} \euler^{-x^2/(2\sigma^2)}\\
-				&\text{Cauchy with scale $\gamma$} && g(x) = \frac{1}{\pi (\gamma + x^2/\gamma)}
-				% &\text{Student's t-distribution with $\nu$ degrees of freedom} && f(x) = (1 + x^2/\nu)^{-\frac{\nu + 1}{2}}
-			\end{align}
-		\end{lemma}
-		\begin{proof}
-			Clearly, Assumptions \ref{assump:reallinesupport} through to \ref{assump:symmetric} are satisfied for both $f(x)$ and $g(x)$.
+		\begin{figure}
+			\centering
+			\includegraphics[width = \textwidth]{Figures/Mixtures/assumption6_normal.png}
+			\includegraphics[width = \textwidth]{Figures/Mixtures/assumption6_cauchy.png}
+			\caption{Plots of $f'(x)$ against $-f'(x - 2\sigma)$ and $g'(x)$ against $-g'(x - 2\gamma/\sqrt{3})$ for $\sigma = 1$ and $\gamma = 1$.}
+			\label{fig:assumption6}
+		\end{figure}
+		% We do this in the following Lemma.
 
-			The inflection points of $f(x)$ are located at $x = \pm \sigma$. We have
-			\begin{align}
-				-f'(x - 2\sigma) - f'(x) &= \frac{1}{\sigma^3 \sqrt{2 \pi}} \left((x - 2\sigma) \euler^{-(x - 2\sigma)^2/(2 \sigma^2)} - x \euler^{-x^2/(2 \sigma^2)}\right)\\
-				&=
-			\end{align}
-		\end{proof}
+		% \begin{lemma}
+		% 	The following densities satisfy Assumptions \ref{assump:reallinesupport} through to \ref{assump:magnitudegradients}:
+		% 	\begin{align}
+		% 		&\text{Normal with variance $\sigma^2$} && f(x) = \frac{1}{\sigma\sqrt{2\pi}} \euler^{-x^2/(2\sigma^2)}\\
+		% 		&\text{Cauchy with scale $\gamma$} && g(x) = \frac{1}{\pi (\gamma + x^2/\gamma)}
+		% 		% &\text{Student's t-distribution with $\nu$ degrees of freedom} && f(x) = (1 + x^2/\nu)^{-\frac{\nu + 1}{2}}
+		% 	\end{align}
+		% \end{lemma}
+		% \begin{proof}
+		% 	Clearly, Assumptions \ref{assump:reallinesupport} through to \ref{assump:symmetric} are satisfied for both $f(x)$ and $g(x)$.
+
+		% 	The inflection points of $f(x)$ are located at $x = \pm \sigma$ and the inflection points of $g(x)$ are located at $x = \pm \gamma/\sqrt{3}$. A plot of $f'(x)$ against $-f'(x - 2\sigma)$ and of $g'(x)$ against $-g'(x - 2\sigma)$ makes it clear that Assumption \ref{assump:magnitudegradients} is satisfied too. 
+		% \end{proof}
 
 		[DISCUSSION RELATING THEOREM TO THE LINDSAY EXPONENTIAL FAMILY ONE]
 
@@ -618,7 +631,7 @@
 
 			Recall from Section \ref{sec: support hyperplane}, that the points of support of a maximizing mixture $\hat{Q}$, correspond with the contact points of $\Gamma_{\vect{x}, f}$ with the support hyperplane of $\conv(\Gamma_{\vect{x}, f})$ that contains $\hat{\vect{\gamma}}$. Note that any point $\vect{\gamma}(\theta_j;\vect{x},f)$ that is in contact with a support hyperplane of $\conv(\Gamma_{\vect{x}, f})$ must have non-negative curvature.
 
-			First, let us assume that $x_2 - x_1 > 2i$. By the symmetry of $f$, $\vect{\gamma}(\theta;\vect{x})$ crosses the $u_1 = u_2$ line at $\theta = (x_1 + x_2)/2$. At this point, the curvature of $\vect{\gamma}$ the same sign as
+			First, let us assume that $x_2 - x_1 > 2i$. By the symmetry of $f$, $\vect{\gamma}(\theta;\vect{x})$ crosses the $u_1 = u_2$ line at $\theta = (x_1 + x_2)/2$. At this point, the curvature of $\vect{\gamma}$ has the same sign as
 			\begin{equation}
 				S\left(\frac{x_1+x_2}{2}\right) = 
 				\begin{vmatrix}
@@ -626,7 +639,7 @@
 					-f'(\frac{x_2 - x_1}{2}) & f''(\frac{x_2 - x_1}{2})
 				\end{vmatrix}.
 			\end{equation}
-			Since $x_2 - x_1 > 2i$, by \ref{assump:twoinflectionpoints},  $f''((x_2 - x_1)/2)>0$. Similarly, $f''((x_1 - x_2)/2) > 0$. We also have that $-f((x_1 - x_2)/2) < 0$ and $-f((x_2 - x_1)/2) > 0$. Hence $S((x_1 + x_2)/2)<0$ and so $\vect{\gamma}((x_1 + x_2)/2;\vect{x})$ has negative curvature. Since $\vect{\gamma}$ has negative curvature when it crosses the line $\gamma_1 = \gamma_2$, and since $\hat{\gamma}$ lies on that line, the maximizing point $\hat{\gamma}$ must be the convex combination of two separate points in $\Gamma_{\vect{x},f}$ and so $K_\vect{x} = 2$.
+			Since $x_2 - x_1 > 2i$, by \ref{assump:twoinflectionpoints},  $f''((x_2 - x_1)/2)>0$. Similarly, $f''((x_1 - x_2)/2) > 0$. We also have that $-f'((x_1 - x_2)/2) < 0$ and $-f'((x_2 - x_1)/2) > 0$. Hence $S((x_1 + x_2)/2)<0$ and so $\vect{\gamma}((x_1 + x_2)/2;\vect{x})$ has negative curvature. Since $\vect{\gamma}$ has negative curvature when it crosses the line $\gamma_1 = \gamma_2$, and since $\hat{\gamma}$ lies on that line, the maximizing point $\hat{\gamma}$ must be the convex combination of two separate points in $\Gamma_{\vect{x},f}$ and so $K_\vect{x} = 2$.
 
 			% By Lemma \ref{lemma: gamma has non-negative curvature at points of support} the curve $\Gamma$ cannot have negative curvature at the points of support and so we cannot have that $K_\vect{x} = 1$.
 			
@@ -732,7 +745,27 @@
 
 			For $\theta \in (i,x_2 - x_1)$, from assumption \ref{assump:magnitudegradients}, $f'(\theta) < -f'(\theta - 2i) < -f'(\theta - (x_2 - x_1))$ since both $-f'(\theta - 2i)$ and $-f'(\theta - (x_2 - x_1))$ are increasing on this interval. Hence there can be no solutions to \eqref{eq:gradientsequalequivalent} on this interval.
 			
-			Similarly by symmetry of $f$, for $\theta \in (0,-i+x_2-x_1)$,  $f'(\theta)>-f'(\theta - 2i) > -f'(\theta - x_2 - x_1)$ and there are no solutions to \eqref{eq:gradientsequalequivalent} on this interval either.
+			For $\theta \in (0, -i+x_2 - x_1)$ we can again use assumption \ref{assump:magnitudegradients} by observing that since 
+			\begin{equation}
+				f'(\theta) < -f'(\theta - 2i)
+			\end{equation}
+			for $\theta \in (i, \infty)$, we also have that for $\theta \in (-\infty, -i)$
+			\begin{equation}
+				f'(-\theta) < -f'(-\theta - 2i)
+			\end{equation}
+			and so for $\theta \in (-\infty, i)$,
+			\begin{equation}
+				f'(-\theta + 2i) < -f'(-\theta)
+			\end{equation}
+			which, since $f'$ is odd, is equivalent to 
+			\begin{equation}
+				-f'(\theta - 2i) < f'(\theta).
+			\end{equation}
+
+			So for $\theta \in (0,-i+x_2-x_1)$,  $f'(\theta)>-f'(\theta - 2i) > -f'(\theta - x_2 - x_1)$ and there are no solutions to \eqref{eq:gradientsequalequivalent} on this interval either.
+
+			
+			
 			
 			Since the above intervals cover the real line and since we have shown that there is only one solution in one of these intervals, \eqref{eq:gradientsequal} must have only one solution.
 		\end{proof}
