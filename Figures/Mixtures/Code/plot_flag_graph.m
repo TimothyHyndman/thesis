@@ -92,6 +92,32 @@ if options.sigma_lines
     hold off
 end
 
+if options.m2lines
+%     colour = 'k';
+%     colour = 'w';
+    colour = [0.8,0.8,0.8];
+    colour = [255 189 76]/255;
+%     options.line_width = 2;
+    dist = sqrt(2)*sqrt(3)*sigma;   %For normal
+    
+    hold on
+    
+    line([mid+dist mid+dist], [min(y1) max(y1)],'Color',colour,'LineWidth',options.line_width);  
+    line([mid-dist mid-dist], [min(y1) max(y1)],'Color',colour,'LineWidth',options.line_width);  
+
+    line([min(y1) max(y1)],[mid-dist mid-dist],'Color',colour,'LineWidth',options.line_width); 
+    line([min(y1) max(y1)],[mid+dist mid+dist],'Color',colour,'LineWidth',options.line_width);
+
+    shift = dist;
+    x_line_1 = linspace(min(y1),max(y1)-shift,100);
+    x_line_2 = linspace(min(y1)+shift,max(y1),100);
+    y_line_1 = x_line_1 + shift;
+    y_line_2 = x_line_2 - shift;
+    plot(x_line_1,y_line_1,'Color',colour,'LineWidth',options.line_width)
+    plot(x_line_2,y_line_2,'Color',colour,'LineWidth',options.line_width)
+    hold off
+end
+
 % Linsday1983b bound
 if options.lindsay_bound
     colour = 'w';
@@ -158,5 +184,8 @@ function options = fill_default_options(options)
     end
     if ~isfield(options, 'n')
         options.n = 3;
+    end
+    if ~isfield(options,'m2lines')
+        options.m2lines = false;
     end
 end
