@@ -602,6 +602,8 @@
 		
 		% Some common densities that satisfy these assumptions include the normal density and the Cauchy density.
 
+		[WHAT ABOUT IF $N>2$ AND ALL POINTS WITHIN DISTANCE 2I?]
+
 		\subsection{Proof of Theorem \ref{thm:n=2 inflection result}}
 		The proof of Theorem \ref{thm:n=2 inflection result} is based on the discussion contained in \cite[Section 4]{Lindsay1983a-he}, in which Lindsay discussed how the curvature of $\Gamma$ relates to the support points of $\hat{Q}$. The important realisation we use here is that points of support must correspond to regions of non-negative curvature of $\Gamma$.
 
@@ -812,7 +814,7 @@
 	\begin{proof}
 		If $\vect{x} \in C_1$ then the maximizing mixture has one component and so $\Psi_1(x; \vect{\theta}, \vect{p}) = 1$. Then \eqref{eq:PsiEq2} gives us that $\theta_1 = \bar{\vect{x}}$ and combining this with \eqref{eq:PsiEq3} completes the proof.
 	\end{proof}
-	In Figure \ref{fig:flag graph m1 bound} we compare this bound to the `flag graphs' we produced in section \ref{sec: flag graphs}.
+	In Figure \ref{fig:flag graph m1 bound} we compare the bound above to the `flag graphs' we produced in section \ref{sec: flag graphs}.
 
 	\begin{figure}
 		\centering
@@ -820,8 +822,6 @@
 		\caption{The bound obtanied in Theorem \ref{thm:general n C1 bound} tells us that $C_1$ must lie within the orange ellipse. The true shape of $C_1$ is given by the dark blue region.}
 		\label{fig:flag graph m1 bound}
 	\end{figure}
-
-	[UP TO HERE]
 
 		% From Theorem \ref{thm:shapeofC1normalb}, an lower bound to $\prob(\vect{x} \in C_1)$ is
 		% \begin{align*}
@@ -832,7 +832,7 @@
 		% \end{align*}
 
 	
-	\subsection{Bounding \texorpdfstring{$C_m$}{Cm}}
+	% \subsection{Bounding \texorpdfstring{$C_m$}{Cm}}
 	We now state a generalisation of Theorem \ref{thm:general n C1 bound} that bounds the regions $C_1, \dots, C_n$.
 
 	\label{sec:bounding Cm}
@@ -886,87 +886,87 @@
 			\end{equation}
 		\end{proof}
 
-		\begin{lemma}
-			\begin{equation}
-			\Psi_k(x;\vect{p},\vect{\theta}) \leq \frac{1}{p_k}
-			\end{equation}
-		\end{lemma}
-		\begin{proof}
-			Since $f(x) > 0$,
-			\begin{equation}
-				\Psi_k(x;\vect{p},\vect{\theta}) = \frac{f(x - \theta_k;\sigma)}{\sum_{j=1}^m p_j f(x - \theta_j;\sigma)} \leq \frac{f(x - \theta_k;\sigma)}{p_k f(x - \theta_k;\sigma)} = \frac{1}{p_k}.
-			\end{equation}
-		\end{proof}
+		% \begin{lemma}
+		% 	\begin{equation}
+		% 	\Psi_k(x;\vect{p},\vect{\theta}) \leq \frac{1}{p_k}
+		% 	\end{equation}
+		% \end{lemma}
+		% \begin{proof}
+		% 	Since $f(x) > 0$,
+		% 	\begin{equation}
+		% 		\Psi_k(x;\vect{p},\vect{\theta}) = \frac{f(x - \theta_k;\sigma)}{\sum_{j=1}^m p_j f(x - \theta_j;\sigma)} \leq \frac{f(x - \theta_k;\sigma)}{p_k f(x - \theta_k;\sigma)} = \frac{1}{p_k}.
+		% 	\end{equation}
+		% \end{proof}
 
-		\begin{lemma}
-			Let $\gamma(x)$ be a non-negative function that satisfies
-			\begin{equation}
-				\frac{1}{n} \sum_{i=1}^n \gamma(x_i) = 1.
-			\end{equation}
+		% \begin{lemma}
+		% 	Let $\gamma(x)$ be a non-negative function that satisfies
+		% 	\begin{equation}
+		% 		\frac{1}{n} \sum_{i=1}^n \gamma(x_i) = 1.
+		% 	\end{equation}
 
-			Then the $\theta$ that minimizes 
-			\begin{equation}
-				\frac{1}{n} \sum_{i=1}^n (x_i - \theta)^2 \gamma(x_i)
-			\end{equation}
-			is
-			\begin{equation}
-				\theta = \frac{1}{n} \sum_{i=1}^n x_i \gamma(x_i).
-			\end{equation}
-		\end{lemma}
-		\begin{proof}
-			CURRENTLY UNUSED. PROOF IN TIM'S NOTEBOOK.
-		\end{proof}
+		% 	Then the $\theta$ that minimizes 
+		% 	\begin{equation}
+		% 		\frac{1}{n} \sum_{i=1}^n (x_i - \theta)^2 \gamma(x_i)
+		% 	\end{equation}
+		% 	is
+		% 	\begin{equation}
+		% 		\theta = \frac{1}{n} \sum_{i=1}^n x_i \gamma(x_i).
+		% 	\end{equation}
+		% \end{lemma}
+		% \begin{proof}
+		% 	CURRENTLY UNUSED. PROOF IN TIM'S NOTEBOOK.
+		% \end{proof}
 
-	\subsubsection{Treating \texorpdfstring{$\vect{x}$}{x} as random}
+	\subsection{Treating \texorpdfstring{$\vect{x}$}{x} as random}
 
-		Up until now, we have treated $\vect{x}$ as fixed, not random, and treated the maximum likelihood problem purely as an optimization one, rather than a statistical one. However, for this section we make the assumption that $\vect{x}$ is made up of i.i.d. random variables, $x_i$, which have distribution
-		$$x_i \sim N(\mu,\sigma_1^2)$$
-		for $i = 1,\dots,n$. Our component density, $f_\theta$, is normal with variance $\sigma_2^2$. From Theorem \ref{thm:general n C1 bound},
-		\begin{align*}
-		p_u &= \prob \left( \sum_{i=1}^n (x_i - \bar{\vect{x}})^2 \leq n \sigma_2^2  \right)
-		\end{align*}
-		is an upper bound to $\prob(\vect{x} \in C_1)$. Writing $s^2$ for the unbiased sample variance of $\vect{x}$
-		\begin{align*}
-		p_u 
-		%&= \prob\left( \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2 \leq \frac{n\sigma}{n-1}\right)\\
-		&= \prob\left( s^2 \leq \frac{n \sigma_2^2}{n-1}\right)\\
-		&= \prob\left( \frac{(n-1)s^2}{\sigma_1^2} \leq \frac{n \sigma_2^2}{\sigma_1^2}\right)\\
-		&= \prob\left(\chi_{n-1}^2  \leq \frac{n \sigma_2^2}{\sigma_1^2} \right)
-		\end{align*}
-		where $\chi_{n-1}^2$ is chi-squared with $n-1$ degrees of freedom.
-
-		\begin{remark}
-			Of particular interest is the case where $\sigma_1 = \sigma_2$. In this case, $p_u \rightarrow 1/2$ as $n \rightarrow \infty$. While not a new result [CITE SOMETHING HERE], this tells us that the maximum likelihood estimator is not a consistent estimator for the number of components.
-		\end{remark}
-
-
-	\subsection{A particular class of optimization problem}
-		"The results follow from this general theorem which seems obvious."
-
+		Up until now, we have treated $\vect{x}$ as fixed, not random, and treated the maximum likelihood problem purely as an optimization one, rather than a statistical one. However, for this section we consider a random sample
+		\begin{equation}
+			\vect{X} = (X_1, \dots, X_n)
+		\end{equation}
+		where the $X_i$ are i.i.d. with normal distribution 
+		\begin{equation}
+			X_i \sim N(\mu, \sigma_1^2).
+		\end{equation}
+		Given a component density, we may consider the probabilities
+		\begin{align}
+			&\prob[\vect{X} \in C_m],	&&m = 1,\dots,n.
+		\end{align}
+		
 		\begin{theorem}
-			\label{thm:solution in interior}
-			Let $(E_m)_{m=1}^\infty$ be a sequence of appropriately defined sets and let
-			$(g_m)_{m=1}^\infty, g_m: E_m \mapsto \mathbb{R}$ be a sequence of
-			functions that satisfy the following properties
-			\begin{enumerate}
-				\item $\forall \vect{x} \in \partial E_m, \exists n < m, \vect{y} \in E_n$ such that
-				$g_m(\vect{x}) \leq g_n(\vect{y})$.
-				\label{prop:one}
-				\item $\exists m_0, \vect{x}_0 \in E_{m_0}$ such that $\forall m, \vect{x} \in 
-				E_m$, $g_m(\vect{x}) \leq g_{m_0}(\vect{x}_0)$.
-			\end{enumerate}
-			Then $\exists m_*, \vect{x}_* \in E_{m_*} \setminus \partial E_{m_*}$ such
-			that $\forall m, \vect{x} \in E_m$, $g_m(\vect{x}) \leq g_{m_*}(\vect{x}_*)$.
+		\label{thm:probability in C1}
+			Let the component density with which we are finding a maximum likelihood location mixture be normal with variance $\sigma_2^2$. Then 
+			\begin{equation}
+				\prob[\vect{X} \in C_1] \leq \prob\left(\chi_{n-1}^2 \leq \frac{n \sigma_2^2}{\sigma_1^2}\right)
+			\end{equation}
+			where $\chi_{n-1}^2$ is chi-squared with $n-1$ degrees of freedom.
 		\end{theorem}
 		\begin{proof}
-			The proof is simple. If $\vect{x}_0 \notin \partial E_{m_0}$ then we are done.
-			Otherwise, by property \ref{prop:one} we can find a $n$ and $\vect{y} \in 
-			E_n$ such that $g_n(y) = g_{m_0}(\vect{x}_0)$. If $\vect{y} \notin \partial 
-			E_n$ then we are done, otherwise we repeat the process until we find a $m, 
-			\vect{x}$ pair with $\vect{x} \notin \partial E_m$. %Note that property 
-			% \ref{prop:one} implies that $\partial E_1 = \emptyset$ and so this process
-			% must end.
+			From Theorem \ref{thm:general n C1 bound},
+			\begin{align}
+			\prob\left(\vect{X} \in C_1 \right) &\leq \prob \left( \sum_{i=1}^n (X_i - \bar{\vect{X}})^2 \leq n \sigma_2^2  \right) \\
+				&= \prob\left( \frac{1}{\sigma_1^2}\sum_{i=1}^n (X_i - \bar{\vect{X}})^2 \leq \frac{n \sigma_2^2}{\sigma_1^2}\right)\\
+				% &= \prob\left( \frac{s^2}{\sigma_1^2} \leq \frac{n \sigma_2^2}{\sigma_1^2}\right)\\
+				&= \prob\left(\chi_{n-1}^2  \leq \frac{n \sigma_2^2}{\sigma_1^2} \right).
+			\end{align}
 		\end{proof}
+
+		Theorem \ref{thm:probability in C1} is of particular interest when the $\sigma_1 = \sigma_2$. In this case, our mixture can select the `true' number of components, which will happen if $\vect{X} \in C_1$. The probability of this occuring satisfies
+		\begin{align}
+			\prob\left(\vect{X} \in C_1\right) &\leq \prob\left(\chi_{n-1}^2 \leq n\right)
+		\end{align}
+		which converges to $1/2$ as $n \rightarrow \infty$. This is a simple proof that the number of components chosen by a normal location mixture is not a consistent estimator for the true number of components.
+
+		Similar results to this have already been discovered. In \cite{Hartigan1985-wn}, Hartigan considered the mixture 
+		\begin{equation}
+			(1 - p)N(0,1) + pN(\theta, 1)
+		\end{equation}
+		and showed that the likelihood ratio between $\theta = 0$ and $\theta \neq 0$ converges to $\infty$ as $n \rightarrow \infty$. Also related is the result \cite{Leroux1992-ek} that certain penalised likelihoods do not underestimate the true number of components (and so it is reasonable to expect that the unpenalised likelihood might overestimate the true number of components).
+
+		[SOMETHING RELATED TO RESULT FOR N = 2?]
+
+		[UP TO HERE]
+
+	
 
 	\subsection{Derive Constraints again}
 	WE SHOULD BE ABLE TO DERIVE \eqref{eq:PsiEq1} THROUGH \eqref{eq:PsiEq3} AGAIN USING THEOREM \ref{thm:solution in interior}.
@@ -993,5 +993,5 @@
 			So if $f(\alpha/2) < \frac{f(0)}{n} \left(\frac{n-1}{n}\right)^{n-1}$ then $L_n > L_{n-1}$ and so $\vect{x} \in C_n$.
 		\end{proof}
 
-	\subsection{Discussion about what we hope to acheive}
-		The few original results above (Theorems \ref{thm:n=2 inflection result} and \ref{thm:general n constraints result}) seem to be special cases of what looks to be a much more general rule. Theorem \ref{thm:general n constraints result} seems to be too large by a factor of $m$ when you compare to numerics, and the distance between inflection points in Theorem \ref{thm:n=2 inflection result} seems to come up again when when you look at images like Figure \ref{fig:normal_flag_graph} (eg the thickness of the `bands' is this distance). It is therefore our hope that we can either generalize or add significantly to the Theorems stated so far.
+	% \subsection{Discussion about what we hope to acheive}
+	% 	The few original results above (Theorems \ref{thm:n=2 inflection result} and \ref{thm:general n constraints result}) seem to be special cases of what looks to be a much more general rule. Theorem \ref{thm:general n constraints result} seems to be too large by a factor of $m$ when you compare to numerics, and the distance between inflection points in Theorem \ref{thm:n=2 inflection result} seems to come up again when when you look at images like Figure \ref{fig:normal_flag_graph} (eg the thickness of the `bands' is this distance). It is therefore our hope that we can either generalize or add significantly to the Theorems stated so far.
