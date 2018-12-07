@@ -62,7 +62,7 @@
 	which counts the smallest number of probability masses needed to maximize the likelihood.
 
 
-	There are a few considerations to be made here. The first is that there is not necessarily a unique mixing distribution that maximizes \eqref{eq:loglikelihood} and so we have defined the quantity of interest as the smallest number of points of support required for a maximizing distribution. However, in many cases, including most cases where the component density is from the exponential family, we know that the maximizing mixing distribution is unique. This question of uniqueness was addressed by Lindsay in \cite{Lindsay1983-tf} and in \cite{Lindsay1983a-he} for univariate component densities in the exponential family. A generalization of these results can be found in \cite{Lindsay1993-rj}.
+	There are a few considerations to be made here. The first is that there is not necessarily a unique mixing distribution that maximizes \eqref{eq:loglikelihood} and so we have defined the quantity of interest as the smallest number of points of support required for a maximizing distribution. However, in many cases, including when the component density is from the exponential family, we know that the maximizing mixing distribution is unique. This question of uniqueness was addressed by Lindsay in \cite{Lindsay1983-tf} and in \cite{Lindsay1983a-he} for continuous univariate component densities in the exponential family. A generalization of these results to discrete exponential families be found in \cite{Lindsay1993-rj}.
 
 	The second, is that our choice to only consider location mixtures is significant in that it guarantees the likelihood to be bounded so long as the component density is bounded. In general, this is not the case. Consider the likelihood function for a mixture of normals parametrized by both the mean and variance. We can create a mixture by placing equally weighted normals with very small variance at each $x_i$ in our sample. This corresponds to a mixing distribution $Q$ which places probability mass $1/n$ at points $(x_i, \sigma^2)$ for $i = 1, \dots, n$. As $\sigma^2$ approaches zero, the density at each $x_i$, $f_Q(x_i)$, increases without bound and so the likelihood is unbounded. There are a number of techniques that can be employed to ensure the likelihood is bounded such as restricting the parameter space appropriately or restricting the number of components to some number that grows slowly with $n$ (the sieve method \cite{Grenander1981-dy}).
 
@@ -337,9 +337,24 @@
 
 	Theorem \ref{thm: lindsay no more than n points} bounds $K_\vect{x}$ by $n$. To get tighter bounds on $K_\vect{x}$, we must make some assumptions about the form of the component densities, or the structure of $\vect{x}$.
 
-	[FOLLOWING IS NOTES FOR MYSELF]
+	In \cite{Lindsay1983a-he}, Lindsay looked at the special case of  component densities in the exponential family. He related the behaviour of certain polynomials to the location of the support points of the maximizing mixture. A consequence of this was a sufficient condition for the maximizing mixture to have exactly one point of support. We restate part of this theorem here.
 
-	Exponential family \cite{Lindsay1983a-he}, more general results including this one and others in \cite{Lindsay1993-rj}. In particular, $n/2$ for discrete densities. May want to cite \cite{Seregin2010-xe} since it has some very limited results on the support. Read \cite{Zhang2008-wn} for more citations.
+	\begin{theorem}[Theorem 4.1, \cite{Lindsay1983a-he}]
+	\label{thm:exponential family k=1 bound}
+		Let $f_\theta$ belong to the exponential class of densities and be parameterized by its mean value $\theta$. Let $\vect{x} = (x_1, \dots, x_n)$, $x_1 \leq \dots \leq x_n$, be the sample to which we are finding the maximum likelihood mixture of $f_\theta$. Define the function
+		\begin{equation}
+			M(\theta) = (x_1 - \theta)(x_2 - \theta) + \var_\theta(X).
+		\end{equation}
+		If $M(\theta)$ is strictly positive on $[x_1, x_n]$, then the maximimum likelihood mixing distribution, $\hat{Q}$, has exactly one point of support located at $\theta = \bar{x}$.
+	\end{theorem}
+
+	The above is a sufficient condition for $K_\vect{x} = 1$. However, Linsday also showed that in the case of two observations ($n=2$), one could easily visualise the likelihood curve for a location mixture of normals and observe that the above sufficient condition also seems to be necessary for a normal density. However, he also stated that "these results were very difficult to obtain in higher dimensions, and hard to generalize outside the exponential family" \cite{Lindsay1995-sq}. Some generalizations to the results in \cite{Lindsay1983a-he} were presented in \cite{Lindsay1993-rj}. This paper gave improved bounds on $K_\vect{x}$ for discrete component densities.
+
+	In Section \ref{sec:mixture results} we will present a necessary and sufficient condition for $K_\vect{x} = 1$ in the case of two observations for a certain class of densities that include the normal density. We will also present a necessary condition for $K_\vect{x} = m$, $m = 1, \dots, n$, for normal densities in the case of $n$ observations.
+
+	% [FOLLOWING IS NOTES FOR MYSELF]
+
+	% Exponential family \cite{Lindsay1983a-he}, more general results including this one and others in \cite{Lindsay1993-rj}. In particular, $n/2$ for discrete densities. May want to cite \cite{Seregin2010-xe} since it has some very limited results on the support. Read \cite{Zhang2008-wn} for more citations.
 	
 
 	% \subsection{Directional Derivative}
@@ -437,10 +452,10 @@
 
 	\section{Results}
 		\label{sec:mixture results}
-		The figures obtained in Section \ref{sec:empirical results} suggest that the bounds on $K_\vect{x}$ from Section \ref{sec:summary of Lindsay} could be significantly tightened for location mixtures. The main bounds that we have discussed so far are Theorem \ref{thm: lindsay no more than n points} which states that under mild conditions, $K_\vect{x} \leq n$; and Theorems [FINISH THIS ONCE YOU FINISH THE LIT REVIEW BIT]. In this section we will present new bounds on $K_\vect{x}$ that either tighten these bounds, or extend them to different classes of component densities.
+		The figures obtained in Section \ref{sec:empirical results} suggest that the bounds on $K_\vect{x}$ from Section \ref{sec:summary of Lindsay} could be significantly tightened for location mixtures. The main bounds that we have discussed so far are Theorem \ref{thm: lindsay no more than n points} which states that under mild conditions, $K_\vect{x} \leq n$; and Theorem \ref{thm:exponential family k=1 bound} which provides a sufficient condition for $K_\vect{x} = 1$ for component densities in the exponential class of densities. In this section we will present new bounds on $K_\vect{x}$ that either tighten these bounds, or extend them to different classes of component densities.
 
 		\subsection{Results for \texorpdfstring{$n = 2$}{n = 2}}
-		The first bound we present is Theorem \ref{thm:n=2 inflection result} which [HOW DOES IT RELATE TO THE LITERATURE??]. The theorem concerns component densities, $f(x)$, which satisfy the following assumptions.
+		The first bound we present is Theorem \ref{thm:n=2 inflection result} which extends Theorem \ref{thm:exponential family k=1 bound} to a different class of component densities, and which tightens the result to be both sufficient and necessary on this class. The theorem concerns component densities, $f(x)$, which satisfy the following assumptions.
 
 		\begin{assumption}[Continuity]
 		\label{assump:reallinesupport}
@@ -532,11 +547,8 @@
 		% 	The inflection points of $f(x)$ are located at $x = \pm \sigma$ and the inflection points of $g(x)$ are located at $x = \pm \gamma/\sqrt{3}$. A plot of $f'(x)$ against $-f'(x - 2\sigma)$ and of $g'(x)$ against $-g'(x - 2\sigma)$ makes it clear that Assumption \ref{assump:magnitudegradients} is satisfied too. 
 		% \end{proof}
 
-		[DISCUSSION RELATING THEOREM TO THE LINDSAY EXPONENTIAL FAMILY ONE]
-
+		% [DISCUSSION RELATING THEOREM TO THE LINDSAY EXPONENTIAL FAMILY ONE]
 		
-		
-
 	\subsection{The likelihood curve when \texorpdfstring{$n = 2$}{n = 2}}
 		The shape of $\Gamma_\vect{x}$ can provide us with some insight into the behaviour of $K_\vect{x}$. In Figure \ref{fig:Gammaexample}, we give some examples of $\Gamma_\vect{x}$ for $n=2$ using a normal component density with variance $\sigma^2 = 1$. 
 		\begin{figure}[ht]
@@ -981,26 +993,26 @@
 	% WE SHOULD BE ABLE TO DERIVE \eqref{eq:PsiEq1} THROUGH \eqref{eq:PsiEq3} AGAIN USING THEOREM \ref{thm:solution in interior}.
 
 % \section{Other Results}
-	\subsection{All points separated by \texorpdfstring{$\alpha$}{a}}
-		Consider the situation in which $|x_i - x_j| > \alpha$ for all $i\neq j$. Intuitively, we would expect that there is some $\alpha^*$ such that if $\alpha > \alpha^*$ then $\vect{x} \in C_n$.
+	% \subsection{All points separated by \texorpdfstring{$\alpha$}{a}}
+	% 	Consider the situation in which $|x_i - x_j| > \alpha$ for all $i\neq j$. Intuitively, we would expect that there is some $\alpha^*$ such that if $\alpha > \alpha^*$ then $\vect{x} \in C_n$.
 		
-		\begin{theorem}
-			If our component density is unimodal and symmetric about zero, and
-			$$\frac{f(\alpha/2)}{f(0)} < \frac{1}{n}\left(\frac{n-1}{n}\right)^{n-1}.$$
-			Then if $|x_i - x_j| > \alpha$ for all $i\neq j$, $\vect{x} \in C_n$.
-		\end{theorem}
-		\begin{proof}
-			Let $\hat{f}_{n-1}$ be the maximum likelihood mixture density of $\vect{x}$ with no more than $n-1$ components and let $L_{n-1}$ be the corresponding likelihood. Since all the $x_i$ are separated by at least $\alpha$, there exists an $x_{i^*}$ such that $|x_{i^*} - \theta_j|>\frac{\alpha}{2}$ for all $j$. Hence
-			$$\hat{f}_{n-1}(x_{i^*}) < f(\alpha/2)$$
-			and so
-			$$L_{n-1} < f(\alpha/2) \prod_{i\neq i^*} \hat{f}_{n-1}(x_{i}).$$
+	% 	\begin{theorem}
+	% 		If our component density is unimodal and symmetric about zero, and
+	% 		$$\frac{f(\alpha/2)}{f(0)} < \frac{1}{n}\left(\frac{n-1}{n}\right)^{n-1}.$$
+	% 		Then if $|x_i - x_j| > \alpha$ for all $i\neq j$, $\vect{x} \in C_n$.
+	% 	\end{theorem}
+	% 	\begin{proof}
+	% 		Let $\hat{f}_{n-1}$ be the maximum likelihood mixture density of $\vect{x}$ with no more than $n-1$ components and let $L_{n-1}$ be the corresponding likelihood. Since all the $x_i$ are separated by at least $\alpha$, there exists an $x_{i^*}$ such that $|x_{i^*} - \theta_j|>\frac{\alpha}{2}$ for all $j$. Hence
+	% 		$$\hat{f}_{n-1}(x_{i^*}) < f(\alpha/2)$$
+	% 		and so
+	% 		$$L_{n-1} < f(\alpha/2) \prod_{i\neq i^*} \hat{f}_{n-1}(x_{i}).$$
 			
-			We will now construct a mixture density that has one more component that $\hat{f}_{n-1}$. We do this by scaling all the components of $\hat{f}_{n-1}$ by a factor of $\frac{n-1}{n}$ and introducing a new component with parameters $(p,\theta) = (\frac{1}{n},x_{i^*})$. Call this function $f^*_n$ and the corresponding likelihood $L_n$. Now
+	% 		We will now construct a mixture density that has one more component that $\hat{f}_{n-1}$. We do this by scaling all the components of $\hat{f}_{n-1}$ by a factor of $\frac{n-1}{n}$ and introducing a new component with parameters $(p,\theta) = (\frac{1}{n},x_{i^*})$. Call this function $f^*_n$ and the corresponding likelihood $L_n$. Now
 			
-			$$L_n > \frac{f(0)}{n} \left(\frac{n-1}{n}\right)^{n-1}\prod_{i\neq i^*} \hat{f}_{n-1}(x_i).$$
+	% 		$$L_n > \frac{f(0)}{n} \left(\frac{n-1}{n}\right)^{n-1}\prod_{i\neq i^*} \hat{f}_{n-1}(x_i).$$
 			
-			So if $f(\alpha/2) < \frac{f(0)}{n} \left(\frac{n-1}{n}\right)^{n-1}$ then $L_n > L_{n-1}$ and so $\vect{x} \in C_n$.
-		\end{proof}
+	% 		So if $f(\alpha/2) < \frac{f(0)}{n} \left(\frac{n-1}{n}\right)^{n-1}$ then $L_n > L_{n-1}$ and so $\vect{x} \in C_n$.
+	% 	\end{proof}
 
 	% \subsection{Discussion about what we hope to acheive}
 	% 	The few original results above (Theorems \ref{thm:n=2 inflection result} and \ref{thm:general n constraints result}) seem to be special cases of what looks to be a much more general rule. Theorem \ref{thm:general n constraints result} seems to be too large by a factor of $m$ when you compare to numerics, and the distance between inflection points in Theorem \ref{thm:n=2 inflection result} seems to come up again when when you look at images like Figure \ref{fig:normal_flag_graph} (eg the thickness of the `bands' is this distance). It is therefore our hope that we can either generalize or add significantly to the Theorems stated so far.
