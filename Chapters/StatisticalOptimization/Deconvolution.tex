@@ -9,6 +9,15 @@
 %-------------------------------------------------------------------------------
 
 \section{Introduction}
+	In this final chapter, we look at another statistical problem in which we perform an optimization over discrete probability distributions and find that the number of points of support of the maximizing distribution is much smaller than expected. In contrast to Chapter \ref{Ch:Mixtures}, we will take a descriptive and practically minded point of view, rather than the more theory driven previous chapter. This is partly due to the additional complexity of the problem, which prevents many of the tools used on maximum likeilhood mixtures from working here. However, this does not stop us from pointing out many similarities between the two problems, and numerical analysis allows us to benefit from the similar phenomenon that occurs.
+
+	The problem is one of \emph{deconvolution}, the recovery of the distribution of some variable $X$ when we can only measure 
+	\begin{equation}
+		W = X+U
+	\end{equation}
+	where $U$ represents some measurement error.
+
+
 	From here to the end of Section \ref{ssec:KernelSmoothing} is a summary of \cite{Delaigle2016-la}.
 	We want to find the distribution of a random variable $X$ but only measure 
 	$$W = X + U$$
