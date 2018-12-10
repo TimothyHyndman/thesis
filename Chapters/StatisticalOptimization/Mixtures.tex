@@ -158,6 +158,39 @@
 		K_\vect{x} \leq n.
 	\end{equation}
 
+	\subsection{All points separated by \texorpdfstring{$\alpha$}{a}}
+		Lindsay states that for normal mixtures with fixed variance, $\sigma^2$, ``one can construct sets of data for which the bound [$K_\vect{x} = n$] is attained simply by spreading the observations widely apart,'' \cite[Section 5.2]{Lindsay1995-sq}. Here we make this intuition concrete by saying how far apart we should spread our observations to ensure that we use all $n$ components.
+
+		% Consider the situation in which $|x_i - x_j| > \alpha$ for all $i\neq j$. Intuitively, we would expect that there is some $\alpha^*$ such that if $\alpha > \alpha^*$ then $\vect{x} \in C_n$.
+		
+		\begin{theorem}
+			Let $\vect{x} = (x_1, \dots, x_n)$ be the sample for which we are finding a maximum likelihood location mixture using $f(x)$ as our component density. Let $f(x)$ be a unimodal density on $\mathbb{R}$, symmetric about $x = 0$, and such that the conditions of Theorem \ref{thm: lindsay no more than n points} hold. Let $\alpha > 0$ be such that
+			\begin{equation}
+				\frac{f(\alpha/2)}{f(0)} < \frac{1}{n}\left(\frac{n-1}{n}\right)^{n-1}.
+				\label{eq:alpha condition}
+			\end{equation}
+			
+
+			Then if for all $i\neq j$, $|x_i - x_j| > \alpha$ we must have $K_\vect{x} = n$.
+		\end{theorem}
+		\begin{proof}
+			First consider constructing the maximum likelihood mixture density using no more than $n-1$ components. Let $\hat{f}_{n-1}$ be this maximum likelihood mixture density of $\vect{x}$ with no more than $n-1$ components and let $L_{n-1}$ be the corresponding likelihood. Since all the $x_i$ are separated by at least $\alpha$, there exists an $x_{i^*}$ such that $|x_{i^*} - \theta_j|>\frac{\alpha}{2}$ for all $j$. Hence
+			\begin{equation}
+				\hat{f}_{n-1}(x_{i^*}) < f(\alpha/2),
+			\end{equation}
+			and so
+			\begin{equation}
+				L_{n-1} < f(\alpha/2) \prod_{i\neq i^*} \hat{f}_{n-1}(x_{i}).	
+			\end{equation}
+						
+			We will now construct a mixture density that has one more component that $\hat{f}_{n-1}$. We do this by scaling all the components of $\hat{f}_{n-1}$ by a factor of $\frac{n-1}{n}$ and introducing a new component with parameters $(\theta, p) = (x_{i^*},\frac{1}{n})$. Call this function $f^*_n$ and the corresponding likelihood $L_n$. At each $x_i \neq x_{i^*}$ the likelihood has decreased by $(n-1)/n$ and at $x_{i^*}$ the likelihood is at least $f(0)/n$. So
+			\begin{equation}
+				L_n > \frac{f(0)}{n} \left(\frac{n-1}{n}\right)^{n-1}\prod_{i\neq i^*} \hat{f}_{n-1}(x_i).	
+			\end{equation}
+			
+			By \eqref{eq:alpha condition}, we get that $L_n > L_{n-1}$. Since the likelihood strictly increases when we allow an additional component, the maximum likelihood solution must have at least $n$ components. By Theorem \ref{thm: lindsay no more than n points}, the maximum likelihood solution cannot have any more than $n$ components and so $K_\vect{x} = n$.
+		\end{proof}
+
 	% \subsection{The likelihood curve}
 	% 	In \cite{Lindsay1983-tf}, the problem of mixture likelihoods was looked at from a geometrical perspective. One key construction introduced by Lindsay was the \emph{likelihood curve},
 	% 	\begin{equation}
@@ -331,7 +364,11 @@
 	\end{equation}
 	and so $\vect{\gamma}(\vect{\theta};\vect{x},f) \in \mathcal{H}$. Thus the question of determining the number of support points of $\hat{Q}$ can be answered by finding the number of points at which $\Gamma_{\vect{x},f}$ touches $\mathcal{H}_{\hat{Q}}$.
 
-	[FIGURE]
+	[FIGURE?]
+
+	\subsection{KKT Conditions}
+
+	[SHOW THAT KKT CONDITIONS ARE RELATED TO DIRECTIONAL DERIVATIVE CONSTRAINTS]
 
 	\subsection{Additional results on \texorpdfstring{$K_\vect{x}$}{Kx}}
 
@@ -993,26 +1030,7 @@
 	% WE SHOULD BE ABLE TO DERIVE \eqref{eq:PsiEq1} THROUGH \eqref{eq:PsiEq3} AGAIN USING THEOREM \ref{thm:solution in interior}.
 
 % \section{Other Results}
-	% \subsection{All points separated by \texorpdfstring{$\alpha$}{a}}
-	% 	Consider the situation in which $|x_i - x_j| > \alpha$ for all $i\neq j$. Intuitively, we would expect that there is some $\alpha^*$ such that if $\alpha > \alpha^*$ then $\vect{x} \in C_n$.
-		
-	% 	\begin{theorem}
-	% 		If our component density is unimodal and symmetric about zero, and
-	% 		$$\frac{f(\alpha/2)}{f(0)} < \frac{1}{n}\left(\frac{n-1}{n}\right)^{n-1}.$$
-	% 		Then if $|x_i - x_j| > \alpha$ for all $i\neq j$, $\vect{x} \in C_n$.
-	% 	\end{theorem}
-	% 	\begin{proof}
-	% 		Let $\hat{f}_{n-1}$ be the maximum likelihood mixture density of $\vect{x}$ with no more than $n-1$ components and let $L_{n-1}$ be the corresponding likelihood. Since all the $x_i$ are separated by at least $\alpha$, there exists an $x_{i^*}$ such that $|x_{i^*} - \theta_j|>\frac{\alpha}{2}$ for all $j$. Hence
-	% 		$$\hat{f}_{n-1}(x_{i^*}) < f(\alpha/2)$$
-	% 		and so
-	% 		$$L_{n-1} < f(\alpha/2) \prod_{i\neq i^*} \hat{f}_{n-1}(x_{i}).$$
-			
-	% 		We will now construct a mixture density that has one more component that $\hat{f}_{n-1}$. We do this by scaling all the components of $\hat{f}_{n-1}$ by a factor of $\frac{n-1}{n}$ and introducing a new component with parameters $(p,\theta) = (\frac{1}{n},x_{i^*})$. Call this function $f^*_n$ and the corresponding likelihood $L_n$. Now
-			
-	% 		$$L_n > \frac{f(0)}{n} \left(\frac{n-1}{n}\right)^{n-1}\prod_{i\neq i^*} \hat{f}_{n-1}(x_i).$$
-			
-	% 		So if $f(\alpha/2) < \frac{f(0)}{n} \left(\frac{n-1}{n}\right)^{n-1}$ then $L_n > L_{n-1}$ and so $\vect{x} \in C_n$.
-	% 	\end{proof}
+
 
 	% \subsection{Discussion about what we hope to acheive}
 	% 	The few original results above (Theorems \ref{thm:n=2 inflection result} and \ref{thm:general n constraints result}) seem to be special cases of what looks to be a much more general rule. Theorem \ref{thm:general n constraints result} seems to be too large by a factor of $m$ when you compare to numerics, and the distance between inflection points in Theorem \ref{thm:n=2 inflection result} seems to come up again when when you look at images like Figure \ref{fig:normal_flag_graph} (eg the thickness of the `bands' is this distance). It is therefore our hope that we can either generalize or add significantly to the Theorems stated so far.
