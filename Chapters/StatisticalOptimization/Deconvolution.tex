@@ -11,12 +11,19 @@
 \section{Introduction}
 	In this final chapter, we look at another statistical problem in which we perform an optimization over discrete probability distributions and find that the number of points of support of the maximizing distribution is much smaller than expected. In contrast to Chapter \ref{Ch:Mixtures}, we will take a descriptive and practically minded point of view, rather than the more theory driven previous chapter. This is partly due to the additional complexity of the problem, which prevents many of the tools used on maximum likeilhood mixtures from working here. However, this does not stop us from pointing out many similarities between the two problems, and numerical analysis allows us to benefit from the similar phenomenon that occurs.
 
-	The problem is one of \emph{deconvolution}, the recovery of the distribution of some variable $X$ when we can only measure 
+	The problem is one of \emph{deconvolution}, the recovery of the distribution, $F_X$, or density, $f_X$, of some random variable $X$, but only measure 
 	\begin{equation}
-		W = X+U
+		W = X + U
 	\end{equation}
-	where $U$ represents some measurement error.
+	where the measurement error $U$ is independent of $X$.
 
+	[BRIEF SUMMARY OF LITERATURE]
+
+	In this chapter, we focus on the methods introduced by Delaigle and Hall in their 2016 paper, ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' \cite{Delaigle2016-la}. We will start by summarizing the methods in Section \ref{sec:summary of delaigle hall}. In Section \ref{sec:deconvolution empirical results}, we will empirically demonstrate that these methods produce a similar phenomenon to the one encountered when using maximimum likelihood location mixtures, and we will explore how this phenomenon manifests under various conditions. Finally, we point out how we can take advantage of this phenomenon in Section \ref{sec:deconvolution observations and results}.
+
+
+\section{Summary of Delaigle Hall 2016}
+\label{sec:summary of delaigle hall}
 
 	From here to the end of Section \ref{ssec:KernelSmoothing} is a summary of \cite{Delaigle2016-la}.
 	We want to find the distribution of a random variable $X$ but only measure 
@@ -61,9 +68,12 @@
 		%Choice of bandwidth
 		%Integral considerations (stuff I did about how to integrate this thing)
 
-\section{Examples and Relation to Mixture Phenomenon}
+\section{Empirical Results}
+\label{sec:deconvolution empirical results}
+% \section{Examples and Relation to Mixture Phenomenon}
 
-\section{General Theorem?}
+\section{General Observations and Results}
+\label{sec:deconvolution observations and results}
 
 \subsection{A particular class of optimization problem}
 		"The results follow from this general theorem which seems obvious."
