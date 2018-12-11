@@ -176,7 +176,9 @@
 
 	In order to prove Theorem \ref{thm:Coupling Distribution on Cycle}, we will actually prove a stronger statement using Theorem \ref{thm: compound poisson approximation}. The general idea is that at some fixed time $t^*$ we will count the number of vertices at which the bottom and top chains differ. This number is a random variable, which we will call $W$, and we can bound the total variation distance between its distribution and that of an appropriate compound Poisson distribution. As a special case, we can then bound the probability that $W$ is zero. Of course, if $W$ is zero then the top and bottom chains must have coupled and so we can use this to establish Theorem \ref{thm:Coupling Distribution on Cycle}.
 
-	Bounding the total variation distance between $W$ and the compound Poisson will be done using compound Poisson approximation as described in \cite{Barbour2001-nh}. This paper reviews a number of different methods by which approximations may be made. The specific method that we will employ is based on Stein's method for the compound Poisson distribution, introduced in \cite{Barbour1992-mc}.
+	Bounding the total variation distance between $W$ and the compound Poisson will be done using compound Poisson approximation 
+
+	[REWRITE TO REFERENCE INTRO SECTION ON THIS]
 
 	We now make precise the ideas stated above.	Fix $z$ and a time of interest, 
 	\begin{equation}
@@ -220,31 +222,31 @@
 
 	[GOING THROUGH TIM'S COMMENTS UP TO HERE]
 	
-	We now define the quantities
-	\begin{align}
-		\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \indicator[ X_i + U_i \geq 1] \right],\\
-		\mu_l &= \frac{1}{l \lambda} \sum_{i \in V} \expect\left[ X_i \indicator[X_i + U_i = l] \right], && l\geq 1,
-		\label{eq:mu definition}
-	\end{align}
-	which will be the parameters of the approximating compound Poisson distribution to $W$. We also define
-	\begin{align}
-		\delta_1 &= \sum_{i \in V}  \sum_{k \geq 0} \prob[X_i = 1, U_i = k] \expect \left|\frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|, \label{eq:1D delta_1 definition}\\ 
-		% \delta_2 &= \\
-		% \delta_3 &= \\
-		\delta_4 &= \sum_{i \in V} \left( \expect[X_i Z_i] + \expect[X_i] \expect[X_i + U_i + Z_i] \right), \label{eq:1D delta_4 definition}
-	\end{align}
-	% which we will require to vanish as $n \rightarrow \infty$.
-	which we desire to be small for the compound Poisson approximation to be good.
+	% We now define the quantities
+	% \begin{align}
+	% 	\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \indicator[ X_i + U_i \geq 1] \right],\\
+	% 	\mu_l &= \frac{1}{l \lambda} \sum_{i \in V} \expect\left[ X_i \indicator[X_i + U_i = l] \right], && l\geq 1,
+	% 	\label{eq:mu definition}
+	% \end{align}
+	% which will be the parameters of the approximating compound Poisson distribution to $W$. We also define
+	% \begin{align}
+	% 	\delta_1 &= \sum_{i \in V}  \sum_{k \geq 0} \prob[X_i = 1, U_i = k] \expect \left|\frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|, \label{eq:1D delta_1 definition}\\ 
+	% 	% \delta_2 &= \\
+	% 	% \delta_3 &= \\
+	% 	\delta_4 &= \sum_{i \in V} \left( \expect[X_i Z_i] + \expect[X_i] \expect[X_i + U_i + Z_i] \right), \label{eq:1D delta_4 definition}
+	% \end{align}
+	% % which we will require to vanish as $n \rightarrow \infty$.
+	% which we desire to be small for the compound Poisson approximation to be good.
 
-	The following theorem (reworked from \cite{Barbour2001-nh}) bounds the distance between the distributions of $W$ and the approximating compound Poisson.
+	% The following theorem (reworked from \cite{Barbour2001-nh}) bounds the distance between the distributions of $W$ and the approximating compound Poisson.
 
-	\begin{theorem}[\cite{Barbour2001-nh}]
-	\label{thm: compound poisson approximation}
-		Let $W$, $\lambda$, $\vect{\mu}$, $\delta_1$ and $\delta_4$ be as defined above. Then
-		\begin{equation}
-			d_{\mathrm{TV}}(\mathscr{L}(W), \mathrm{CP}(\lambda, \vect{\mu})) \leq (\delta_1 + \delta_4)\euler^\lambda.
-		\end{equation}
-	\end{theorem}
+	% \begin{theorem}[\cite{Barbour2001-nh}]
+	% \label{thm: compound poisson approximation}
+	% 	Let $W$, $\lambda$, $\vect{\mu}$, $\delta_1$ and $\delta_4$ be as defined above. Then
+	% 	\begin{equation}
+	% 		d_{\mathrm{TV}}(\mathscr{L}(W), \mathrm{CP}(\lambda, \vect{\mu})) \leq (\delta_1 + \delta_4)\euler^\lambda.
+	% 	\end{equation}
+	% \end{theorem}
 	Note that $W$ is zero precisely when $T < t^*$ and so the events $\{W = 0\}$ and $\{T \leq t^*\}$ are the same. Furthermore, $\vect{\mu}$ as defined above in \eqref{eq:mu definition}, is supported only on the positive integers and so $\prob[\mathrm{CP}(\lambda, \vect{\mu}) = 0] = \euler^{-\lambda}$. These observations lead to the following corollary of Theorem \ref{thm: compound poisson approximation}.
 	\begin{corollary}
 	\label{cor:bound distance prob[w=0] and e^-lambda}
@@ -490,7 +492,7 @@
 	\label{lem:conditioning on A removes conditioning on W}
 		Let $i$ be a vertex in a graph and let
 		\begin{equation}
-			C_i^c = \{j : |j - i| \leq (b_n - c_n)/2\}
+			C_i^c = \{j : |j - i| \leq (b_n + c_n)/2\}
 		\end{equation}
 		be the set of vertices within distance $(b_n + c_n)/2$ of $i$. Define the events
 		\begin{equation}

@@ -48,7 +48,7 @@
 		m(\beta) = \lim_{L \rightarrow \infty} \expect_\beta \left|\frac{M_{G(L)}(\sigma)}{|G(L)|} \right|
 		\label{eq:limitmagnetizationdensity}
 	\end{equation}
-	depends on the inverse temperature $\beta$. When $d = 1$, $m(\beta) = 0$ for any $\beta$ and there is no phase transition. However, when $d > 1$, there exists some critical $\beta_c(d)$ such that $m(\beta) = 0$ for $\beta < \beta_c(d)$ and $m(\beta) > 0$ for $\beta > \beta_c(d)$ \cite{Friedli2017-xm}. This $\beta_c(d)$ is the critical inverse temperature at which we observe a phase transition.
+	depends on the inverse temperature $\beta$. When $d = 1$, $m(\beta) = 0$ for any $\beta$ and there is no phase transition \cite{Friedli2017-xm}. However, when $d > 1$, there exists some critical $\beta_c(d)$ such that $m(\beta) = 0$ for $\beta < \beta_c(d)$ and $m(\beta) > 0$ for $\beta > \beta_c(d)$ \cite{Friedli2017-xm}. This $\beta_c(d)$ is the critical inverse temperature at which we observe a phase transition.
 
 	% On most graphs [FIND OUT WHICH] the Ising model undergoes a phase transition at a critical inverse temperature $\beta_c = \beta_c(G)$ that is dependent on the graph. Roughly speaking, for $\beta < \beta_c$ (the high-temperature regime), the correlation of spins dies off quickly with the distance between them and for $\beta > \beta_c$ (the low-temperature regime), spins remain correlated at a large distance.
 
@@ -333,7 +333,7 @@
 	% for some distribution $G(z)$. The following Lemma shows that if this is the case, in order for either \eqref{eq:Y_n goes to zero} or \eqref{eq:Z_n goes to zero} to hold, it is enough that $b_n$ dominates $a_n$.
 
 	\begin{remark}
-		We apply Claim \ref{claim:discrete vs continuous distributions} to the coupling time of the Glauber heat-bath dynamics in the following way. Take $N_n$ to be the discrete coupling time on a graph of size $n$. The continuous time coupling time is given by $T(N_n)$. Note that $N_n \geq m_n = n$ since each vertex must be updated at least once for coupling to occur. Finally Theorems \ref{thm:Coupling Distribution on Cycle} and \ref{thm:Coupling Distribution on transitive graph} establish the limiting distribution of the continuous-time coupling time using scaling and shifting sequences $a_n$ and $b_n$ whose ratio is 
+		We apply Proposition \ref{claim:discrete vs continuous distributions} to the coupling time of the Glauber heat-bath dynamics in the following way. Take $N_n$ to be the discrete coupling time on a graph of size $n$. The continuous time coupling time is given by $T(N_n)$. Note that $N_n \geq m_n = n$ since each vertex must be updated at least once for coupling to occur. Finally Theorems \ref{thm:Coupling Distribution on Cycle} and \ref{thm:Coupling Distribution on transitive graph} establish the limiting distribution of the continuous-time coupling time using scaling and shifting sequences $a_n$ and $b_n$ whose ratio is 
 		\begin{equation}
 			\frac{b_n}{a_n} = \log n
 		\end{equation}
@@ -437,7 +437,7 @@
 	\begin{equation}
 		\mathcal{H}_i(t) := \mathscr{F}(i, t, t^*)
 	\end{equation}
-	where $t^*$ is some target time that should be clear from context. We call this the \emph{update support} of vertex $i$ at time $t$. Tracing $\mathcal{H}_i(t)$ backwards in time from $t^*$ produces a subgraph of $\Omega \times [0, t^*]$ which we write as $\mathcal{H}_i$ and which we call the \emph{update history} of vertex $i$. To be slightly more precise, to produce $\mathcal{H}_i$ we connect $(j,t)$ to $(j,t')$ if $j \in \mathcal{H}_i(t)$ and there are no updates of $j$ along $(t', t]$ and we connect $(j,t)$ to $(j',t)$ if there was an update at $(j, t)$, $j \in \mathcal{H}_i(t)$, $j' \notin \mathcal{H}_i(t)$, and $j' \in \mathcal{H}_i(t+\epsilon)$ for all sufficiently small $\epsilon > 0$.
+	where $t^*$ is some target time that should be clear from context. We call this the \emph{update support} of vertex $i$ at time $t$. Tracing $\mathcal{H}_i(t)$ backwards in time from $t^*$ produces a subgraph of $V \times [0, t^*]$ which we write as $\mathcal{H}_i$ and which we call the \emph{update history} of vertex $i$. To be slightly more precise, to produce $\mathcal{H}_i$ we connect $(j,t)$ to $(j,t')$ if $j \in \mathcal{H}_i(t)$ and there are no updates of $j$ along $(t', t]$ and we connect $(j,t)$ to $(j',t)$ if there was an update at $(j, t)$, $j \in \mathcal{H}_i(t)$, $j' \notin \mathcal{H}_i(t)$, and $j' \in \mathcal{H}_i(t-\epsilon)$ for all sufficiently small $\epsilon > 0$.
 
 	Similarly, we also use 
 	\begin{equation}
@@ -536,3 +536,105 @@
 	\end{figure}
 	
 
+\section{Compound Poisson Approximation}
+	In addition to the framework of information percolation, we will also make use of compound Poisson approximation, as described in \cite{Barbour2001-nh}. This paper reviews a number of different methods by which approximations may be made. The specific method that we will employ is based on Stein's method for the compound Poisson distribution, introduced in \cite{Barbour1992-mc}.
+
+	A compound Poisson distribution, $\mathrm{CP}(\lambda, \vect{\mu})$, is the distribution of the sum of a rate $\lambda$ Poisson number of independent random variables, each with distribution $\vect{\mu}$. That is, a compound Poisson random variable can be defined by
+	\begin{equation}
+		\mathrm{CP}(\lambda, \vect{\mu}) = \mathscr{L}\left(\sum_{j=1}^M Y_j\right)
+	\end{equation}
+	for any $\lambda > 0$, and any probability distribution $\mu$ on $\mathbb{N}$, where the $Y_j$ are independent and identically distributed with distribution $\vect{\mu}$ and are also independent of $M \sim \mathrm{Po}(\lambda)$.
+
+	The goal of compound Poisson approximation is to bound the distance between the distribution of a random variable $W$, and some canonically chosen compound Poisson distribution. A common scenario, and the one which we address here, is that
+	\begin{equation}
+		W = \sum_{i \in V} X_i
+	\end{equation}
+	for some countable index set $V$, where each $X_i$ is a nonnegative integer valued random variable. The following approach to compound Poisson approximation is taken from \cite[Section 2.2]{Barbour2001-nh}.
+
+	For each $i \in V$, partition $V$ into subsets $\{i\}$, $B_i$, $C_i$, and $D_i$ and set 
+	\begin{align}
+		U_i &= \sum_{j \in B_i} X_j, &
+		Z_i &= \sum_{j \in C_i} X_j, &
+		W_i &= \sum_{j \in D_i} X_j.
+	\end{align}
+	so that for each $i \in V$ we have the decomposition 
+	\begin{equation}
+		W = X_i + U_i + Z_i + W_i.
+	\end{equation}
+	For our approximation to be good, we want $B_i$ to contain those $X_j$ which strongly influence $X_i$, $D_i$ to contain those $X_j$ which have a neglibible effect on $X_i$ and $C_i$ to contain the remainder.
+
+	Using $I(\cdot)$ to denote the indicator function, we now define the canonical parameters $\lambda$ and $\vect{\mu}$ by
+	\begin{align}
+		\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \, \indicator[ X_i + U_i \geq 1] \right],\\
+		\mu_l &= \frac{1}{l \lambda} \sum_{i \in V} \expect\left[ X_i \, \indicator[X_i + U_i = l] \right], && l\geq 1.
+		\label{eq:mu definition}
+	\end{align}
+	These will be the parameters of the approximating compound Poisson distribution to $W$. We also define
+	\begin{align}
+		\delta_1 &= \sum_{i \in V}  \sum_{k \geq 0} \prob[X_i = 1, U_i = k] \expect \left|\frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|, \label{eq:1D delta_1 definition}\\ 
+		% \delta_2 &= \\
+		% \delta_3 &= \\
+		\delta_4 &= \sum_{i \in V} \left( \expect[X_i Z_i] + \expect[X_i] \expect[X_i + U_i + Z_i] \right), \label{eq:1D delta_4 definition}
+	\end{align}
+	% which we will require to vanish as $n \rightarrow \infty$.
+	which we desire to be small for the compound Poisson approximation to be good.
+
+	We can bound the total variation distance between $W$ and the canonically chosen compound Poisson using the following theorem, reworked from \cite[CPA 1A]{Barbour2001-nh} with bounds for the constants provided there substituted from \cite[Equation 2.17]{Barbour2001-nh}.
+
+	\begin{theorem}[\cite{Barbour2001-nh}]
+	\label{thm: compound poisson approximation}
+		Let $W$, $\lambda$, $\vect{\mu}$, $\delta_1$ and $\delta_4$ be as defined above. Then
+		\begin{equation}
+			d_{\mathrm{TV}}(\mathscr{L}(W), \mathrm{CP}(\lambda, \vect{\mu})) \leq (\delta_1 + \delta_4)\euler^\lambda.
+		\end{equation}
+	\end{theorem}
+
+	Since the canonical parameter $\vect{\mu}$ is constructed to only place mass on the positive integers, we have that
+	\begin{align}
+		\prob\left(\mathrm{CP}(\lambda, \vect{\mu}) = 0\right) &= \prob\left(\mathrm{P}(\lambda) = 0 \right) \\
+		&= \euler^{-\lambda}.
+	\end{align}
+	This gives us the following corollary of Theorem \ref{thm: compound poisson approximation}.
+
+	\begin{corollary}
+	\label{cor: bound prob W = 0}
+		Let $W$, $\lambda$, $\delta_1$ and $\delta_4$ be as defined above. Then
+		\begin{equation}
+			\left|\prob\left(W = 0\right) - \euler^{-\lambda}\right| \leq (\delta_1 + \delta_4)\euler^\lambda.
+		\end{equation}
+	\end{corollary}
+
+	\subsection{Application to our problem}
+	We will now give an overview of how we will apply compound Poisson approximation to the problem of finding the limiting distribution of the coupling time of the Ising heat-bath process. The exact implementation will depend on the class of graphs on which the heat-bath process is running, and so we leave some of the specifics for the following chapters.
+
+	For a given graph, $G_L = (V, E)$, in a given sequence of graphs, $(G_L)_{L \geq 1}$, we fix $z \in \mathbb{R}$ and a time of interest 
+	\begin{equation}
+		t^* = a_L z + d_L.
+	\end{equation}
+	The specific choices for $a_L$ and $d_L$ depend on the graph $G_L$. We choose these such that for large enough $L$, $t^* > 0$, and then only consider these $L$. For each $i \in V$, define the indicator
+	\begin{equation}
+		X_i = I\left(\mathscr{B}_{t^*}[i] \neq \mathscr{T}_{t^*}[i]\right)
+	\end{equation}
+	and set 
+	\begin{equation}
+		W = \sum_{i \in V} X_i.
+	\end{equation}
+	For each $i \in V$, we partition $V$ into the sets $\{i\}, B_i, C_i$, and $D_i$ defined by
+	\begin{align}
+		B_i &= \{j\neq i : d(i,j) \leq b_L \},\\
+		C_i &= \{j\notin B_i\cup \{i\}: d(i,j) \leq c_L \},\\
+		D_i &= V \setminus (B_i \cup C_i \cup \{i\}),
+	\end{align}
+	where we use $d(i, j)$ to denote the graph distance between vertices $i$ and $j$. The specific choices for $b_L$ and $c_L$ again depend on the graph $G_L$.
+
+	We can now define $U_i, Z_i$, and $W_i$ as above, along with $\lambda, \vect{\mu}, \delta_1$, and $\delta_4$. We can then directly apply Theorem \ref{thm: compound poisson approximation} to get that
+	\begin{equation}
+		d_{\mathrm{TV}}(\mathscr{L}(W), \mathrm{CP}(\lambda, \vect{\mu})) \leq (\delta_1 + \delta_4)\euler^\lambda.
+	\end{equation}
+
+
+	To relate $W$ to the coupling time, observe that $W$ is zero precisely when $T \leq t^*$ and so the events $\{W = 0\}$ and $\{T \leq t^*\}$ coincide. So using Corollary \ref{cor: bound prob W = 0},
+	\begin{equation}
+		\left|\prob\left(T \leq t^*\right)  - \euler^{-\lambda}\right| \leq (\delta_1 + \delta_4) \euler^\lambda.
+	\end{equation}
+	The bulk of the work is therefore in calculating $\lambda$, and in showing that $\delta_1$ and $\delta_4$ go to zero as $L \rightarrow \infty$. (Note that $W, T, t^*, \lambda, \vect{\mu}, \delta_1$, and $\delta_4$ all depend on $L$ but we have omitted this in the notation for convenience).
