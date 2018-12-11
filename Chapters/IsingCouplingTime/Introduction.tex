@@ -537,6 +537,7 @@
 	
 
 \section{Compound Poisson Approximation}
+\label{sec:compound poisson overview}
 	In addition to the framework of information percolation, we will also make use of compound Poisson approximation, as described in \cite{Barbour2001-nh}. This paper reviews a number of different methods by which approximations may be made. The specific method that we will employ is based on Stein's method for the compound Poisson distribution, introduced in \cite{Barbour1992-mc}.
 
 	A compound Poisson distribution, $\mathrm{CP}(\lambda, \vect{\mu})$, is the distribution of the sum of a rate $\lambda$ Poisson number of independent random variables, each with distribution $\vect{\mu}$. That is, a compound Poisson random variable can be defined by
@@ -563,7 +564,7 @@
 	\end{equation}
 	For our approximation to be good, we want $B_i$ to contain those $X_j$ which strongly influence $X_i$, $D_i$ to contain those $X_j$ which have a neglibible effect on $X_i$ and $C_i$ to contain the remainder.
 
-	Using $I(\cdot)$ to denote the indicator function, we now define the canonical parameters $\lambda$ and $\vect{\mu}$ by
+	Using $I[\cdot]$ to denote the indicator function, we now define the canonical parameters $\lambda$ and $\vect{\mu}$ by
 	\begin{align}
 		\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \, \indicator[ X_i + U_i \geq 1] \right],\\
 		\mu_l &= \frac{1}{l \lambda} \sum_{i \in V} \expect\left[ X_i \, \indicator[X_i + U_i = l] \right], && l\geq 1.
@@ -605,15 +606,16 @@
 	\end{corollary}
 
 	\subsection{Application to our problem}
+	\label{sec:application of compound poisson}
 	We will now give an overview of how we will apply compound Poisson approximation to the problem of finding the limiting distribution of the coupling time of the Ising heat-bath process. The exact implementation will depend on the class of graphs on which the heat-bath process is running, and so we leave some of the specifics for the following chapters.
 
 	For a given graph, $G_L = (V, E)$, in a given sequence of graphs, $(G_L)_{L \geq 1}$, we fix $z \in \mathbb{R}$ and a time of interest 
 	\begin{equation}
 		t^* = a_L z + d_L.
 	\end{equation}
-	The specific choices for $a_L$ and $d_L$ depend on the graph $G_L$. We choose these such that for large enough $L$, $t^* > 0$, and then only consider these $L$. For each $i \in V$, define the indicator
+	The specific choices for $a_L$ and $d_L$ depend on the sequence $(G_L)_{L \geq 1}$. We choose these such that for large enough $L$, $t^* > 0$, and then only consider these $L$. For each $i \in V$, define the indicator
 	\begin{equation}
-		X_i = I\left(\mathscr{B}_{t^*}[i] \neq \mathscr{T}_{t^*}[i]\right)
+		X_i = I\left[\mathscr{B}_{t^*}[i] \neq \mathscr{T}_{t^*}[i]\right]
 	\end{equation}
 	and set 
 	\begin{equation}
@@ -635,6 +637,7 @@
 
 	To relate $W$ to the coupling time, observe that $W$ is zero precisely when $T \leq t^*$ and so the events $\{W = 0\}$ and $\{T \leq t^*\}$ coincide. So using Corollary \ref{cor: bound prob W = 0},
 	\begin{equation}
+		\label{eq:bound distribution T}
 		\left|\prob\left(T \leq t^*\right)  - \euler^{-\lambda}\right| \leq (\delta_1 + \delta_4) \euler^\lambda.
 	\end{equation}
 	The bulk of the work is therefore in calculating $\lambda$, and in showing that $\delta_1$ and $\delta_4$ go to zero as $L \rightarrow \infty$. (Note that $W, T, t^*, \lambda, \vect{\mu}, \delta_1$, and $\delta_4$ all depend on $L$ but we have omitted this in the notation for convenience).

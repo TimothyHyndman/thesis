@@ -172,33 +172,53 @@
 
 	\section{Problem set-up}
 	\label{sec:1D problem setup}
-	["MIGHT IT BE CLEARER TO HAVE A SECTION SOMEWHERE, MAYBE CH2 WHERE THE GENERAL COMPOUND POISSON RESULTS COULD BE STATED IN GENERAL? SINCE THIS STUFF IS BASICALLY IDENTICAL ON $Z_n$ OR AN ARBITRARY GRAPH, IT MAY BE A LITTLE OUT OF PLACE HERE??"]
+	% ["MIGHT IT BE CLEARER TO HAVE A SECTION SOMEWHERE, MAYBE CH2 WHERE THE GENERAL COMPOUND POISSON RESULTS COULD BE STATED IN GENERAL? SINCE THIS STUFF IS BASICALLY IDENTICAL ON $Z_n$ OR AN ARBITRARY GRAPH, IT MAY BE A LITTLE OUT OF PLACE HERE??"]
 
-	In order to prove Theorem \ref{thm:Coupling Distribution on Cycle}, we will actually prove a stronger statement using Theorem \ref{thm: compound poisson approximation}. The general idea is that at some fixed time $t^*$ we will count the number of vertices at which the bottom and top chains differ. This number is a random variable, which we will call $W$, and we can bound the total variation distance between its distribution and that of an appropriate compound Poisson distribution. As a special case, we can then bound the probability that $W$ is zero. Of course, if $W$ is zero then the top and bottom chains must have coupled and so we can use this to establish Theorem \ref{thm:Coupling Distribution on Cycle}.
+	% In order to prove Theorem \ref{thm:Coupling Distribution on Cycle}, we will actually prove a stronger statement using Theorem \ref{thm: compound poisson approximation}. The general idea is that at some fixed time $t^*$ we will count the number of vertices at which the bottom and top chains differ. This number is a random variable, which we will call $W$, and we can bound the total variation distance between its distribution and that of an appropriate compound Poisson distribution. As a special case, we can then bound the probability that $W$ is zero. Of course, if $W$ is zero then the top and bottom chains must have coupled and so we can use this to establish Theorem \ref{thm:Coupling Distribution on Cycle}.
 
-	Bounding the total variation distance between $W$ and the compound Poisson will be done using compound Poisson approximation 
+	In order to prove Theorem \ref{thm:Coupling Distribution on Cycle}, we will use the method sketched out in Section \ref{sec:application of compound poisson}. Here we provide the specific choices for the various quantities that were left unspecified there. The graph of interest here is of course $G_n = (\mathbb{Z} / n \mathbb{Z})$.
 
-	[REWRITE TO REFERENCE INTRO SECTION ON THIS]
-
-	We now make precise the ideas stated above.	Fix $z$ and a time of interest, 
+	Fix $z \in \mathbb{R}$ and set 
 	\begin{equation}
 		t^* = (z + \ln n)/\theta.
 	\end{equation}
-	For any fixed $z \in \mathbb{R}$, $t^* > 0$ for all sufficiently large $n$. We only consider such $n$ in what follows.
-	For each vertex $i \in V$, define the indicator
-	\begin{equation}
-		X_i = 
-		\begin{cases}
-			1 & \mathscr{B}_{t^*}[i] \neq \mathscr{T}_{t^*}[i],\\
-			0 & \mathscr{B}_{t^*}[i] = \mathscr{T}_{t^*}[i]
-		\end{cases}
-	\end{equation}
-	and set $W = \sum_{i \in V} X_i$.
-	Note that from \eqref{eq:1D bernoulli prob} we get
+	For any fixed $z \in \mathbb{R}$, $t^* > 0$ for all sufficiently large $n$ and we only consider such $n$ in what follows. We define $X_i$ and $W$ as in Section \ref{sec:application of compound poisson} using this choice of $t^*$ and note that from \eqref{eq:1D bernoulli prob} we get
 	\begin{equation}
 		\label{eq:1D prob X_i}
 		\prob[X_i = 1] = \euler^{-\theta t^*} = \frac{e^{-z}}{n}.
 	\end{equation}
+
+	The vertex sets $B_i, C_i$, and $D_i$ are chosen by
+	\begin{align}
+		B_i &= \{j\neq i : d(i,j) \leq b_n \},\\
+		C_i &= \{j\notin B_i\cup \{i\}: d(i,j) \leq c_n\},\\
+		D_i &= V \setminus (B_i \cup C_i \cup \{i\}),
+	\end{align}
+	with $b_n = \ln(n)$ and $c_n = \ln^2(n)$. We then define $U_i, Z_i, W_i, \lambda, \vect{\mu}, \delta_1$, and $\delta_4$ as in Section \ref{sec:application of compound poisson} using these particular choices for $B_i$, $C_i$, and $D_i$. From \eqref{eq:bound distribution T}, we get the following corollary of Theorem \ref{thm: compound poisson approximation}.
+
+	% Bounding the total variation distance between $W$ and the compound Poisson will be done using compound Poisson approximation 
+
+	% [REWRITE TO REFERENCE INTRO SECTION ON THIS]
+
+	% We now make precise the ideas stated above.	Fix $z$ and a time of interest, 
+	% \begin{equation}
+	% 	t^* = (z + \ln n)/\theta.
+	% \end{equation}
+	% For any fixed $z \in \mathbb{R}$, $t^* > 0$ for all sufficiently large $n$. We only consider such $n$ in what follows.
+	% For each vertex $i \in V$, define the indicator
+	% \begin{equation}
+	% 	X_i = 
+	% 	\begin{cases}
+	% 		1 & \mathscr{B}_{t^*}[i] \neq \mathscr{T}_{t^*}[i],\\
+	% 		0 & \mathscr{B}_{t^*}[i] = \mathscr{T}_{t^*}[i]
+	% 	\end{cases}
+	% \end{equation}
+	% and set $W = \sum_{i \in V} X_i$.
+	% Note that from \eqref{eq:1D bernoulli prob} we get
+	% \begin{equation}
+	% 	\label{eq:1D prob X_i}
+	% 	\prob[X_i = 1] = \euler^{-\theta t^*} = \frac{e^{-z}}{n}.
+	% \end{equation}
 	% We create vertex sets
 	% \begin{align}
 	% 	B_i &= \{j\neq i : |j - i| \leq b_n \},\\
@@ -206,22 +226,20 @@
 	% 	D_i &= V \setminus (B_i \cup C_i \cup \{i\}).
 	% \end{align}
 	% where $b_n = \ln(n)$ and $c_n = \ln(n)^2$. 
-	For each $i \in V$, decompose $W$ into $W = X_i + U_i + Z_i + W_i$ where
-	\begin{align}
-		U_i &= \sum_{j \in B_i} X_j, &
-		Z_i &= \sum_{j \in C_i} X_j, &
-		W_i &= \sum_{j \in D_i} X_j.
-	\end{align}
-	and using $d(i, j)$ to denote the distance between vertices $i$ and $j$ on the cycle, $B_i, C_i$, and $D_i$ are the vertex sets
-	\begin{align}
-		B_i &= \{j\neq i : d(i,j) \leq b_n \},\\
-		C_i &= \{j\notin B_i\cup \{i\}: d(i,j) \leq c_n \},\\
-		D_i &= V \setminus (B_i \cup C_i \cup \{i\}).
-	\end{align}
-	We have some freedom in choosing $b_n$ and $c_n$; they are chosen to control the asymptotics of various quantities to be defined later. For this chapter, we will choose $b_n = \ln(n)$ and $c_n = \ln(n)^2$.
+	% For each $i \in V$, decompose $W$ into $W = X_i + U_i + Z_i + W_i$ where
+	% \begin{align}
+	% 	U_i &= \sum_{j \in B_i} X_j, &
+	% 	Z_i &= \sum_{j \in C_i} X_j, &
+	% 	W_i &= \sum_{j \in D_i} X_j.
+	% \end{align}
+	% and using $d(i, j)$ to denote the distance between vertices $i$ and $j$ on the cycle, $B_i, C_i$, and $D_i$ are the vertex sets
+	% \begin{align}
+	% 	B_i &= \{j\neq i : d(i,j) \leq b_n \},\\
+	% 	C_i &= \{j\notin B_i\cup \{i\}: d(i,j) \leq c_n \},\\
+	% 	D_i &= V \setminus (B_i \cup C_i \cup \{i\}).
+	% \end{align}
+	% We have some freedom in choosing $b_n$ and $c_n$; they are chosen to control the asymptotics of various quantities to be defined later. For this chapter, we will choose $b_n = \ln(n)$ and $c_n = \ln(n)^2$.
 
-	[GOING THROUGH TIM'S COMMENTS UP TO HERE]
-	
 	% We now define the quantities
 	% \begin{align}
 	% 	\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \indicator[ X_i + U_i \geq 1] \right],\\
@@ -247,7 +265,7 @@
 	% 		d_{\mathrm{TV}}(\mathscr{L}(W), \mathrm{CP}(\lambda, \vect{\mu})) \leq (\delta_1 + \delta_4)\euler^\lambda.
 	% 	\end{equation}
 	% \end{theorem}
-	Note that $W$ is zero precisely when $T < t^*$ and so the events $\{W = 0\}$ and $\{T \leq t^*\}$ are the same. Furthermore, $\vect{\mu}$ as defined above in \eqref{eq:mu definition}, is supported only on the positive integers and so $\prob[\mathrm{CP}(\lambda, \vect{\mu}) = 0] = \euler^{-\lambda}$. These observations lead to the following corollary of Theorem \ref{thm: compound poisson approximation}.
+	% Note that $W$ is zero precisely when $T < t^*$ and so the events $\{W = 0\}$ and $\{T \leq t^*\}$ are the same. Furthermore, $\vect{\mu}$ as defined above in \eqref{eq:mu definition}, is supported only on the positive integers and so $\prob[\mathrm{CP}(\lambda, \vect{\mu}) = 0] = \euler^{-\lambda}$. These observations lead to the following corollary of Theorem \ref{thm: compound poisson approximation}.
 	\begin{corollary}
 	\label{cor:bound distance prob[w=0] and e^-lambda}
 	Let $T_n$ be the coupling time of the continuous-time heat-bath Glauber dynamics for the zero-field Ising model at inverse-temperature $\beta$ on the cycle $(\mathbb{Z}/n\mathbb{Z})$ and let $\delta_1$, $\delta_4$ and $\lambda$ be as defined above. Then
@@ -257,6 +275,8 @@
 		\end{equation}
 		where $\theta = 1 - \tanh(2\beta)$.
 	\end{corollary}	
+
+	[GOING THROUGH TIM'S COMMENTS UP TO HERE]
 
 	\section{Proof of Theorem \ref{thm:Coupling Distribution on Cycle}}
 	\label{sec:proof thm coupling cycle}
