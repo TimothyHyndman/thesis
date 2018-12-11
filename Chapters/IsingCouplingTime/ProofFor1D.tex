@@ -276,13 +276,11 @@
 		where $\theta = 1 - \tanh(2\beta)$.
 	\end{corollary}	
 
-	[GOING THROUGH TIM'S COMMENTS UP TO HERE]
-
 	\section{Proof of Theorem \ref{thm:Coupling Distribution on Cycle}}
 	\label{sec:proof thm coupling cycle}
 	In this section we use Corollary \ref{cor:bound distance prob[w=0] and e^-lambda} to prove Theorem \ref{thm:Coupling Distribution on Cycle} by bounding $\lambda$ and showing that $\delta_1$ and $\delta_4$ go to zero as $n \rightarrow \infty$. This is done in Lemmas \ref{lem:1Dlambda}, \ref{lem:delta1 goes to 0}, and \ref{lem:delta4 goes to 0}. The proofs of these require some additional lemmas concerning properties of the update histories which have been deferred to Section \ref{sec:additional lemmas 1D}.
 
-	We begin by bounding $\lambda$. Note that bounding $\lambda$ is enough to show that there is a subsequence of graphs on which $\lambda$ converges as required by Theorem \ref{thm:Coupling Distribution on Cycle}.
+	We begin by bounding $\lambda$.
 	\begin{lemma}
 	\label{lem:1Dlambda}
 		Using the above set-up
@@ -301,28 +299,30 @@
 	\begin{proof}
 	Beginning with the definition of $\lambda$, we have
 		\begin{align}
-			\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \indicator[ X_i + U_i \geq 1] \right]\\
-				&= \sum_{i = 1}^n \prob(X_i = 1) \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]\\
-				&= \sum_{i = 1}^n \frac{\euler^{-z}}{n} \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]\\
-				&= \euler^{-z} \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]
+			\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \, \indicator[ X_i + U_i \geq 1] \right]\\
+				&= \sum_{i = 1}^n \prob(X_i = 1) \expect \left[\left.\frac{1}{1 + U_i}\right| X_i = 1\right]\\
+				&= \sum_{i = 1}^n \frac{\euler^{-z}}{n} \expect \left[\left.\frac{1}{1 + U_i}\right| X_i = 1\right]\\
+				&= \euler^{-z} \expect \left[\left.\frac{1}{1 + U_i}\right| X_i = 1\right]
 		\end{align}
 		where we have used that $X_i$ is either zero or one, \eqref{eq:1D prob X_i}, and the transitivity of the graph in each step respectively.
 		Clearly 
 		\begin{align}
-			\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] \leq 1.
+			\expect \left[\left.\frac{1}{1 + U_i}\right| X_i = 1\right] \leq 1,
 		\end{align}
+		and we therefore obtain the upper bound.
 		% and so $C_\theta \leq 1$.
 
 		By Jensen's inequality
 		\begin{align}
-			\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] &\geq \frac{1}{\expect[1 + U_i | X_i = 1]}\\
-				&= \frac{1}{1 + \expect[U_i | X_i = 1]}.
+			\expect \left[\left.\frac{1}{1 + U_i}\right| X_i = 1\right] &\geq %\frac{1}{\expect[1 + U_i | X_i = 1]}\\
+				%&= 
+				\frac{1}{1 + \expect[U_i | X_i = 1]}.
 		\end{align}
 		% so in order to find a lower bound for $C_\theta$ we will find an upper bound to $\expect[U_i | X_i = 1]$. 
 		Now
 		\begin{align}
 			\expect[U_i | X_i = 1] &= \sum_{j \in B_i} \prob[X_j = 1| X_i = 1]\\
-				&= \sum_{k=1}^{\lfloor b_n\rfloor} \sum_{|j - i| = k} \prob[X_j = 1| X_i = 1]\\
+				&= \sum_{k=1}^{\lfloor b_n\rfloor} \sum_{j \in \{i-k,i+k\}} \prob[X_j = 1| X_i = 1]\\
 				&= 2 \sum_{k=1}^{\lfloor b_n\rfloor} \prob[X_{i+k} = 1 | X_i = 1]
 		\end{align}
 		where we have used the symmetry of $X_{i+k}$ and $X_{i -k}$ in the last step. From Lemma \ref{lem:X_i+k given X_i}, 
@@ -333,51 +333,84 @@
 		\end{align}
 		Finally, as $n \rightarrow \infty$ the first term vanishes and
 		\begin{align}
-			\liminf_{n \rightarrow \infty} \expect \left[\frac{1}{1 + U_i}| X_i = 1\right] \geq \frac{1}{2\sqrt{\frac{4}{\theta} - 1} - 1}.
+			\liminf_{n \rightarrow \infty} \expect \left[\left.\frac{1}{1 + U_i}\right| X_i = 1\right] \geq \frac{1}{2\sqrt{\frac{4}{\theta} - 1} - 1}.
 		\end{align}
 	\end{proof}
+
+	[GOING THROUGH TIM'S COMMENTS UP TO HERE]
+
+	Up until this point, we have chosen in our notation of several variables to omit references to their dependence on $n$. However, it will prove useful for the next section to use a superscript $n$ on some variables to make this explicit.
+
+	\begin{lemma}
+		$\lim_{n \rightarrow \infty} \lambda$ exists
+	\end{lemma}
 
 	To prove that $\lambda$ converges we will show that $U_i^n$ converges in distribution to some other random variable. This then allows us to use [WHAT??] to prove that $\lambda$ converges. The proofs require the construction of some new random variables which we define now.
 
 	The update sequence on the cycle may be represented using the thinned processes $K_t^i$, $L_t^i$, and $R_t^i$. We may extend the update sequence into the interval $t < 0$ by mirroring these processes backwards in time from $t=0$ [HOW DO I SAY THIS PROPERLY?]. We then can use this extended update sequence to define the update support and update histories on the interval $(-\infty, t^*]$. For each $i \in V$, we define the indicators
 	\begin{equation}
-		\bar{X}_i = \begin{cases}
+		\bar{X}_i^n = \begin{cases}
 			1 & \forall t \in (-\infty, t^*], \mathcal{H}_i(t) \neq \emptyset,\\
 			0 & \text{otherwise}.
 		\end{cases}
 	\end{equation}
 	and the random variables
 	\begin{equation}
-		\bar{U}_i = \sum_{j \in B_i} \bar{X}_j.
+		\bar{U}_i^n = \sum_{j \in B_i} \bar{X}_j^n.
 	\end{equation}
-	With probability 1, $\bar{X}_i = 0$ and $\bar{U}_i = 0$ since the update histories eventually encounter an oblivious update with probability 1. 
+	With probability 1, $\bar{X}_i^n = 0$ and $\bar{U}_i^n = 0$ since the update histories eventually encounter an oblivious update with probability 1. Note that we use the superscript $n$ so that we can easily distinguish these random variables defined on different sized cycles.
 
-	The following lemma relates the distribution of $U_i$ with that of $\bar{U}_i$.
+	The following lemma relates the distribution of $U_i$ with that of $\bar{U}_i^n$.
 
 	\begin{lemma}
 		\begin{equation}
-			\prob(\bar{U} \geq k | \bar{X}_i = 1) \leq \prob(U_i \geq k | X_i = 1) \leq \prob(\bar{U}_i \geq k | \bar{X}_i = 1) + \euler^{-z} \frac{|B_i|}{n}
+			\prob(\bar{U}_i \geq k | \bar{X}_i = 1) \leq \prob(U_i \geq k | X_i = 1) \leq \prob(\bar{U}_i \geq k | \bar{X}_i = 1) + \euler^{-z} \frac{|B_i|}{n}
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
-		We start with the lower bound. We first note that conditioning on $X_i = 1$ and $\bar{X}_i = 1$ have the same result along $[0, t^*]$. [WRITE THIS PROPERLY]. So
-		\begin{equation}
-			\prob(U_i \geq k | X_i = 1) = \prob(U_i \geq k | \bar{X}_i = 1).
-		\end{equation}
+		We start with the lower bound. We first note that the event $\{U_i \geq k\}$ depends only on the update sequence along $[0, t^*]$. So we may freely condition on the updates in $(-\infty, 0)$ (which are independent of those in $[0, t^*]$) without affecting the probability of this event. Hence
+		% $\{X_i = 1\}$ coincides with the event $\{\hist_i \text{ encounters no oblivious updates along } [0, t^*]\}$. 
+		% and $\bar{X}_i = 1$ have the same result along $[0, t^*]$. [WRITE THIS PROPERLY]. So
+		\begin{align}
+			\prob(U_i \geq k | X_i = 1) &= \prob(U_i \geq k | \hist_i \text{ doesn't die along } [0, t^*])\\
+			&= \prob(U_i \geq k | \hist_i \text{ doesn't die along } (-\infty, t^*])\\
+			&= \prob(U_i \geq k | \bar{X}_i = 1).
+		\end{align}
+
+		[THIS ONLY WORKS FOR 1D BECAUSE OF INDEPENDENCE STUFF... SAY MORE ABOUT THIS?]
+
 		For every $j \in V$, if $\bar{X}_j = 1$, then $X_j = 1$. So $\bar{U}_i \leq U_i$ and
 		\begin{equation}
 			\prob(U_i \geq k | X_i = 1) \geq \prob(\bar{U}_i \geq k | \bar{X}_i = 1).
 		\end{equation}
 
-		We now treat the upper bound. Define the event
+		We now treat the upper bound. For each $j \in B_i$, define the event
 		\begin{equation}
-			A_j = \{ \mathcal{H}_j(0) \neq \emptyset, \mathcal{H}_j \cap \mathcal{H}_i = \emptyset\}.
+			A_j = \{ \mathcal{H}_j(0) \neq \emptyset, \mathcal{H}_j \cap \mathcal{H}_i = \emptyset\}, 
 		\end{equation}
-		and their union
+		and define the union of these events,
 		\begin{equation}
 			A = \bigcup_{j \in B_i} A_j.
 		\end{equation}
-		We note that on the event $A^\mathrm{c} \cap \{\bar{X}_i = 1\}$, $U_i = \bar{U}_i$.
+		We note that on the event $A^\mathrm{c} \cap \{\bar{X}_i = 1\}$, we have that $U_i = \bar{U}_i$. So 
+		\begin{align}
+			\prob\left(U_i \geq k | X_i = 1 \right) &= \prob\left(U_i \geq k, A | X_i = 1 \right) + \prob\left(U_i \geq k, A^\mathrm{c} | X_i = 1 \right)\\
+			&= \prob[X_i = 1] ^{-1} \prob\left(U_i \geq k, A, X_i = 1\right) + \prob\left(\bar{U}_i \geq k, A^\mathrm{c}| \bar{X}_i = 1\right)\\ 
+			&\leq \prob[X_i = 1] ^{-1} \prob\left(A, X_i = 1\right) + \prob\left(\bar{U}_i \geq k| \bar{X}_i = 1\right).%\\
+			% &\leq \prob[X_i = 1] ^{-1} \sum_{j \in B_i} \prob[A_j, X_i = 1]
+		\end{align}
+%
+		Now by a union bound,
+		\begin{align}
+			\prob[A, X_i = 1] &\leq \sum_{j \in B_i} \prob[A_j, X_i = 1]\\
+				&= \sum_{j \in B_i} \prob[\hist_j(0) \neq \emptyset, \hist_i(0) \neq \emptyset, \hist_j \cap \hist_i \neq \emptyset]
+		\end{align}
+		and by Lemma \ref{lem:prob Xj Xi and no intersect},
+		\begin{equation}
+			\prob[A, X_i = 1] \leq |B_i| \prob[X_i = 1]^2.
+		\end{equation}
+
+		From \eqref{eq:1D prob X_i} we get the desired result.
 	\end{proof}
 	
 	% To complete the proof, we need to show that the limit of 
@@ -654,6 +687,23 @@
 	\end{proof}
 
 	\begin{lemma}
+	\label{lem:prob Xj Xi and no intersect}
+		Let $i$ and $j$ be the indices of two vertices in a graph. Then
+		\begin{equation}
+			\prob\left(\hist_j(0) \neq \emptyset, \hist_i(0) \neq \emptyset, \hist_j \cup \hist_i \neq \emptyset \right) \leq 
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		Define $S$ to be the first time that the histories of $i$ and $j$ intersect, or define $S = 0$ if the histories do not intersect before time $0$. We construct a new history, $\hist_j'$, in the following way. Along the interval $[S, t^*)$, $\hist_j'$ is constructed from the update sequence in the exact same way as $\hist_j$. However, along the interval $[0, S)$, we replace the update sequence with an another i.i.d.\ copy of the update sequence. We have constructed $\hist_j'$ to be independent of $\hist_i$. This is obvious for $t < S$. For $t \geq S$ we note that no updates are a part of both histories. From the memoryless property of the exponential waiting times between updates, we get that each update is independent of the rest, and so the histories are independent too. Note that in the event $\{\hist_i \cap \hist_j = \emptyset\}$, we have $\hist_j = \hist_j'$ and so
+		\begin{align}
+			\prob[\hist_i(0) \neq \emptyset, \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset] &= \prob[\hist_i(0) \neq \emptyset, \hist_j'(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset]\\
+			&\leq \prob[\hist_i(0) \neq \emptyset, \hist_j'(0) \neq \emptyset]\\
+			&= \prob[\hist_i(0) \neq \emptyset] \prob[\hist_j'(0) \neq \emptyset]\\
+			&= \prob[\hist_i(0) \neq \emptyset]^2
+		\end{align}
+		since $\hist_i$ and $\hist_j'$ are independent and $\prob[\hist_i(0) \neq \emptyset] = \prob[\hist_j'(0) \neq \emptyset]$.
+	\end{proof}
+	\begin{lemma}
 		\label{lem:prob Xj and no intersect given Xi}
 		Let $i$ and $j$ be the indices of two vertices on the cycle $(\mathbb{Z}/n\mathbb{Z})$. Then
 		\begin{equation}
@@ -664,15 +714,14 @@
 		To begin
 		\begin{align}
 			\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] &= \prob[X_i = 1]^{-1}\prob[X_i = 1, X_j = 1, \hist_i \cap\hist_j = \emptyset]\\
-			&= \frac{\prob[\hist_i(0) \cup \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset]}{\prob[\hist_i(0) \neq \emptyset]}.
+			&= \frac{\prob[\hist_i(0) \neq \emptyset, \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset]}{\prob[\hist_i(0) \neq \emptyset]}.
 		\end{align}
-		Define $S$ to be the first time that the histories intersect, or define $S = 0$ if the histories do not intersect before time $0$. We construct a new history, $\hist_j'$, in the following way. Along the interval $[S, t^*)$, $\hist_j'$ is constructed from the update sequence in the exact same way as $\hist_j$. However, along the interval $[0, S)$, we replace the update sequence with an another i.i.d.\ copy of the update sequence. We have constructed $\hist_j'$ to be independent of $\hist_i$. This is obvious for $t < S$. For $t \geq S$ we note that no updates are a part of both histories. From the memoryless property of the exponential waiting times between updates, we get that each update is independent of the rest, and so the histories are independent too. Note that in the event $\{\hist_i \cap \hist_j = \emptyset\}$, we have $\hist_j = \hist_j'$ and so
+		By Lemma \ref{lem:prob Xj Xi and no intersect},
 		\begin{align}
-			\prob[\hist_i(0) \cup \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset] &= \prob[\hist_i(0) \cup \hist_j'(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset]\\
-			&\leq \prob[\hist_i(0) \cup \hist_j'(0) \neq \emptyset]\\
-			&= \prob[\hist_i(0) \neq \emptyset] \prob[\hist_j'(0) \neq \emptyset]
-		\end{align}
-		since $\hist_i$ and $\hist_j'$ are independent. Since $\prob[\hist_j'(0) \neq \emptyset] = \prob[\hist_j(0) \neq \emptyset] = \euler^{-z}/n$ we get the desired result.
+			\prob[\hist_i(0) \neq \emptyset, \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset] 
+			&\leq \prob[\hist_i(0) \neq \emptyset]^2.
+		\end{align} 
+		Since $\prob[\hist_j(0) \neq \emptyset] = \euler^{-z}/n$ we get the desired result.
 	\end{proof}
 
 \begin{lemma}
