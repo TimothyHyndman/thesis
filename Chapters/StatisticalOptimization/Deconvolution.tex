@@ -9,7 +9,7 @@
 %-------------------------------------------------------------------------------
 
 \section{Introduction}
-	In this final chapter, we look at another statistical problem in which we perform an optimization over discrete probability distributions and find that the number of points of support of the maximizing distribution is much smaller than expected. In contrast to Chapter \ref{Ch:Mixtures}, we will take a descriptive and practically minded point of view, rather than the more theory driven previous chapter. This is partly due to the additional complexity of the problem, which prevents many of the tools used on maximum likeilhood mixtures from working here. However, this does not stop us from pointing out many similarities between the two problems, and numerical analysis allows us to benefit from the similar phenomenon that occurs.
+	In this final chapter, we look at another statistical problem in which we perform an optimization over discrete probability distributions and find that the number of points of support of the maximizing distribution is much smaller than expected. In contrast to Chapter \ref{Ch:Mixtures}, we will take a descriptive and practically minded point of view, rather than the more theory driven previous chapter. This is partly due to the additional complexity of the problem, which prevents many of the tools used on maximum likelihood mixtures from working here. However, this does not stop us from pointing out many similarities between the two problems, and numerical analysis allows us to benefit from the similar phenomenon that occurs.
 
 	The problem is one of \emph{deconvolution}, the recovery of the distribution, $F_X$, or density, $f_X$, of some random variable $X$, but only measure 
 	\begin{equation}
@@ -19,26 +19,101 @@
 
 	[BRIEF SUMMARY OF LITERATURE]
 
-	In this chapter, we focus on the methods introduced by Delaigle and Hall in their 2016 paper, ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' \cite{Delaigle2016-la}. We will start by summarizing the methods in Section \ref{sec:summary of delaigle hall}. In Section \ref{sec:deconvolution empirical results}, we will empirically demonstrate that these methods produce a similar phenomenon to the one encountered when using maximimum likelihood location mixtures, and we will explore how this phenomenon manifests under various conditions. Finally, we point out how we can take advantage of this phenomenon in Section \ref{sec:deconvolution observations and results}.
+	In this chapter, we focus on the methods introduced by Delaigle and Hall in their 2016 paper, ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' \cite{Delaigle2016-la}. We will start by summarizing the methods in Section \ref{sec:summary of delaigle hall}. In Section \ref{sec:deconvolution empirical results}, we will empirically demonstrate that these methods produce a similar phenomenon to the one encountered when using maximum likelihood location mixtures, and we will explore how this phenomenon manifests under various conditions. Finally, we point out how we can take advantage of this phenomenon in Section \ref{sec:deconvolution observations and results}.
 
 
 \section{Summary of Delaigle Hall 2016}
 \label{sec:summary of delaigle hall}
+	Suppose that we have $n$ observations of
+	\begin{align}
+		W_i &= X_i + U_i &&i = 1, \dots, n
+	\end{align}
+	where $X_i$ and $U_i$ are independent and identically distributed as $X$ and $U$ respectively, and $X$ and $U$ are independent. We use $\phi_X$ and $\phi_U$ to denote the characteristics functions of $X$ and $U$, and $F_X$ and $F_U$ for the distributions. We use $f_X$ and $f_U$ for the densities if they exist.
 
-	From here to the end of Section \ref{ssec:KernelSmoothing} is a summary of \cite{Delaigle2016-la}.
-	We want to find the distribution of a random variable $X$ but only measure 
-	$$W = X + U$$
-	where $U$ is symmetric (and hence $\phi_U(t)$ is real-valued and even). We also additionally require that $\phi_U(t) \geq 0$. We write
-	$$\rho_X = \frac{\phi_X}{|\phi_X|}$$
-	for the phase function of $X$. Then 
-	\begin{align*}
-	\phi_W &= \phi_X \phi_U	&&\text{as $X$ and $U$ are independent,}\\
-	\frac{\phi_W}{|\phi_W|} &= \frac{\phi_X}{|\phi_X|}\frac{\phi_U}{|\phi_U|},\\
-	\rho_W &= \rho_X	&&\text{as $\phi_U$ is real and non-negative.}
-	\end{align*}
+	Suppose also that we do not know any information concerning the distribution of $U$. This is unusual in deconvolution problems; we usually assume that we either know the distribution of $U$, at least up to a scaling factor, or that replicate measurements of the $W_i$s are available for the same $X_i$. 
 
-	Given a probability distribution, there are an infinite number of other distributions that have the same phase function. We make the choice that out of all the distributions with phase function $\rho_W$, we choose the one that has smallest variance. Hence, we want to find a distribution $F_Y$ that minimizes $\var(Y)$ such that
-	$$\rho_Y = \rho_W.$$
+	\subsection{Assumptions}
+	We still make some assumptions about $U$ and its characteristic function, $\phi_U$. These are 
+	\begin{assumption}
+	\label{assump:phiU real}
+		$\phi_U$ is real-valued.
+	\end{assumption}
+	\begin{assumption}
+	\label{assump:phiU non zero}
+		For $U$ discrete, $\phi_U$ is non-negative and is zero at at most a countable number of points, and for $U$ continuous, $\phi_U$ is strictly positive on the whole real line.
+	\end{assumption}
+
+	Assumption \ref{assump:phiU real} is equivalent to assuming that $F_U$ is symmetric. Assumption \ref{assump:phiU non zero} is a standard assumption in deconvolution problems.
+
+	We also make assumptions on the distribution of $X$. 
+	% We write the convolution of distributions $F$ and $G$ as
+	% \begin{equation}
+	% 	(F \circ G)(x) = \int F(x - u) \intd G(u).
+	% \end{equation}
+	\begin{assumption}
+	\label{assumpt: X not symmetric}
+		$F_X$ is not symmetric.
+	\end{assumption}
+	\begin{assumption}
+		\label{assump: X indecomposable}
+		It is not possible to decompose $X$ as
+		\begin{equation}
+			X = Y + Z
+		\end{equation}
+		for nondegenerate and independent random variables $Y$ and $Z$ with $F_Z$ symmetric.
+	\end{assumption}
+
+	We require these assumptions because all we know about $F_U$ is that it is symmetric. So if $F_X$ was also symmetric, we could not distinguish it from $F_U$, and if $X$ is itself made up of a symmetric part $Z$, we could not distinguish $U$ from $Z+U$.
+
+
+	To form the estimator for $F_X$, we will make use of the \emph{phase function}, which for a random variable $V$, is defined by
+	\begin{equation}
+		\rho_V = \frac{\phi_V}{|\phi_V|}
+	\end{equation}
+	on all points where $\phi_V \neq 0$.
+	Note that from Assumption \ref{assump:phiU real}, we have that 
+	\begin{equation}
+	\label{eq: phiU equal mod phiU}
+		\phi_U = |\phi_U|
+	\end{equation}
+	and so $\rho_U = 1$.
+	Since $W = X+U$, with $X$ and $U$ independent, we have that
+	\begin{align}
+		\phi_W = \phi_X \phi_U
+	\end{align}
+	and so from \eqref{eq: phiU equal mod phiU}, on all points where $\phi_U \neq 0$,
+	\begin{align}
+		\rho_W = \rho_X.
+	\end{align}
+	In fact, all random variables of the form $V = X + Z$, where $Z$ is symmetric and independent of $X$, will have phase function $\rho_W$, and the variance of these will satisfy $\var(V) \geq \var(X)$. This motivates the final assumption we make for $X$.
+
+	\begin{assumption}
+	\label{assump:X has smallest variance}
+		$F_X$ has the uniquely smallest variance out of all distributions with phase function $\rho_X$.
+	\end{assumption}
+
+	\subsection{Estimator}
+	The discussion above
+
+
+
+
+
+
+	% From here to the end of Section \ref{ssec:KernelSmoothing} is a summary of \cite{Delaigle2016-la}.
+	% We want to find the distribution of a random variable $X$ but only measure 
+	% $$W = X + U$$
+	% where $U$ is symmetric (and hence $\phi_U(t)$ is real-valued and even). We also additionally require that $\phi_U(t) \geq 0$. We write
+	% $$\rho_X = \frac{\phi_X}{|\phi_X|}$$
+	% for the phase function of $X$. Then 
+	% \begin{align*}
+	% \phi_W &= \phi_X \phi_U	&&\text{as $X$ and $U$ are independent,}\\
+	% \frac{\phi_W}{|\phi_W|} &= \frac{\phi_X}{|\phi_X|}\frac{\phi_U}{|\phi_U|},\\
+	% \rho_W &= \rho_X	&&\text{as $\phi_U$ is real and non-negative.}
+	% \end{align*}
+
+	% Given a probability distribution, there are an infinite number of other distributions that have the same phase function. We make the choice that out of all the distributions with phase function $\rho_W$, we choose the one that has smallest variance. Hence, we want to find a distribution $F_Y$ that minimizes $\var(Y)$ such that
+	% $$\rho_Y = \rho_W.$$
 
 	\subsection{Optimization problem}
 		\label{ssec:optimizationproblem}
