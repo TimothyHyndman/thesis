@@ -45,6 +45,8 @@
 
 	Assumption \ref{assump:phiU real} is equivalent to assuming that $F_U$ is symmetric. Assumption \ref{assump:phiU non zero} is a standard assumption in deconvolution problems.
 
+	[WHAT DOES $\phi_U \geq 0$ MEAN FOR $f_U$]
+
 	We also make assumptions on the distribution of $X$. 
 	% We write the convolution of distributions $F$ and $G$ as
 	% \begin{equation}
@@ -102,10 +104,12 @@
 	\end{equation}
 	where
 	\begin{equation}
+	\label{eq:define hat phi W}
 		\hat{\phi}_W(t) = \frac{1}{n}\sum_{j = 1}^n \exp(it W_j)
 	\end{equation}
 	and 
 	\begin{equation}
+	\label{eq:define hat psi W}
 		\hat{\psi}_W(t) = \frac{1}{n(n-1)} \sum_{k=1}^n \sum_{j \neq k} \exp(it (W_j - W_k)).
 	\end{equation}
 
@@ -134,8 +138,59 @@
 		\var(F_{\vect{\theta}, \vect{p}}) = \sum_{j = 1}^m p_j \theta_j^2 - \left( \sum_{j=1}^m p_j \theta_j \right)^2.
 	\end{equation}
 
+	For the weight function, $w(t)$, Delaigle and Hall use the Epanechnikov kernel, rescaled to an interval $[-t^*, t^*]$ where $t^*$ is the smallest $t > 0$ such that 
+	\begin{equation}
+	\label{eq:define t star}
+		\left|\hat{\phi}_W(t)\right| \leq n^{-1/4}.
+	\end{equation}
+	There is some freedom of choice in the number of points in the approximating discrete distribution but $m = 5\sqrt{n}$ is suggested as reasonable.
+
+	Delaigle and Hall also impose some additional constraints. We desire that 
+	\begin{equation}
+		\hat{\phi}_U = \frac{\hat{\phi}_W}{\phi_{\vect{\theta}, \hat{\vect{p}}}}
+	\end{equation}
+	is both symmetric (to be consistent with Assumption \ref{assump:phiU real}) and satisfies $\hat{\phi}_U(t) \leq 1$ (as all characteristic functions must satisfy this). In \cite{Delaigle2016-la}, these are stated as hard constraints, however in practise [CITE CODE OR CORREPONDENCE], these are added via penalty terms to $T(F)$.
+
+	Overall, the final method is as follows.
+
+	\begin{enumerate}
+		\item Set $m = 5\sqrt{n}$ and fix $\vect{\theta} = (\theta_1, \dots, \theta_m)$ to be distributed uniformly at random along $[\min(W_i), \max(W_i)]$.
+		% \item 
+		\item Define $\hat{\phi}_W$ and $\hat{\psi}_W$ as in \eqref{eq:define hat phi W} and \eqref{eq:define hat psi W}.
+		\item Define $t^*$ as in \eqref{eq:define t star}.
+		\item Define
+		\begin{equation}
+			T(F_{\vect{\theta}, \vect{p}}) = \int_{-\infty}^\infty \left| \hat{\phi}_W(t) - \left|\hat{\psi}_W(t)\right|^{1/2} \frac{ \sum_{j = 1}^m p_j \exp(it\theta_j)}{\left| \sum_{j = 1}^m p_j \exp(it\theta_j)\right|} \right|^2 w(t) \intd t.
+		\end{equation}
+		where $w(t)$ is the Epanechnikov kernel rescaled to $[-t^*, t^*]$.
+		\item
+		Calculate
+		\begin{equation}
+			 \vect{p}' = \argmin_{\vect{p}} \left\{T(F_{\vect{\theta}, \hat{\vect{p}}}) + \mathrm{penalties}(\vect{p}')\right\}
+		\end{equation}
+		and set
+		\begin{align}
+			T_\mathrm{min} &= T(F_{\vect{\theta}, \vect{p}'})\\
+			\mathrm{penalties}_\mathrm{min} &= \mathrm{penalties}(\vect{p}')
+		\end{align}
+		\item Calculate
+		\begin{equation}
+			\hat{\vect{p}} = \argmin \left\{ \sum_{j = 1}^m p_j \theta_j^2 - \left( \sum_{j=1}^m p_j \theta_j \right)^2 \right\}
+		\end{equation}
+		subject to
+		\begin{equation}
+			T(F_{\vect{\theta}, \vect{p}}) \leq T_\mathrm{min}
+		\end{equation}
+		and 
+		\begin{equation}
+			\mathrm{penalties} \leq \mathrm{penalties}_\mathrm{min}
+		\end{equation}
+		\item The final estimator for $F_X$ is $F_{\vect{\theta}, \hat{\vect{p}}}$.
+	\end{enumerate}
+	[BE MORE PRECISE ABOUT PENALTIES?]
 
 
+	\subsection{Converting to continuous distribution}
 
 
 
@@ -155,15 +210,15 @@
 	% Given a probability distribution, there are an infinite number of other distributions that have the same phase function. We make the choice that out of all the distributions with phase function $\rho_W$, we choose the one that has smallest variance. Hence, we want to find a distribution $F_Y$ that minimizes $\var(Y)$ such that
 	% $$\rho_Y = \rho_W.$$
 
-	\subsection{Optimization problem}
-		\label{ssec:optimizationproblem}
-		Ideally, we would like to minimize the variance of $Y$ under the constraint that $\rho_Y = \rho_W$. However, we can't do this since we only estimate $\rho_W(t)$ from a random sample of size $n$ and this estimate is bad for large $|t|$. So we instead choose a $Y_0$ to minimize 
-		\begin{equation}
-		T(Y) = \int_{-\infty}^{\infty} \Big| \hat{\phi}_W(t) - |\hat{\phi}_W(t)| \rho_Y(t) \Big|^2 w(t) \intd t
-		\end{equation}\label{eq:T(Y)}
-		where $w(t)$ is some suitably chosen weight function and $\hat{\phi}_W(t)$ is our empirical estimate for $\phi_W(t)$. We then search for $Y$ which minimizes $\var(Y)$ subject to $T(Y) \leq T(Y_0)$.
+	% \subsection{Optimization problem}
+	% 	\label{ssec:optimizationproblem}
+	% 	Ideally, we would like to minimize the variance of $Y$ under the constraint that $\rho_Y = \rho_W$. However, we can't do this since we only estimate $\rho_W(t)$ from a random sample of size $n$ and this estimate is bad for large $|t|$. So we instead choose a $Y_0$ to minimize 
+	% 	\begin{equation}
+	% 	T(Y) = \int_{-\infty}^{\infty} \Big| \hat{\phi}_W(t) - |\hat{\phi}_W(t)| \rho_Y(t) \Big|^2 w(t) \intd t
+	% 	\end{equation}\label{eq:T(Y)}
+	% 	where $w(t)$ is some suitably chosen weight function and $\hat{\phi}_W(t)$ is our empirical estimate for $\phi_W(t)$. We then search for $Y$ which minimizes $\var(Y)$ subject to $T(Y) \leq T(Y_0)$.
 
-		We restrict our search to $Y$ discrete with point masses $p_j$ at locations $x_j$ for $j = 1,2,\dots,m$. We place our $x_j$ uniformly at random along the interval $[\min W, \max W]$ and choose the $p_j$ to solve the optimization problem described above. Numerical investigations indicate that $m = 5 \sqrt{n}$ is a reasonable choice.
+	% 	We restrict our search to $Y$ discrete with point masses $p_j$ at locations $x_j$ for $j = 1,2,\dots,m$. We place our $x_j$ uniformly at random along the interval $[\min W, \max W]$ and choose the $p_j$ to solve the optimization problem described above. Numerical investigations indicate that $m = 5 \sqrt{n}$ is a reasonable choice.
 
 	\subsection{Kernel Smoothing}
 		\label{ssec:KernelSmoothing}
