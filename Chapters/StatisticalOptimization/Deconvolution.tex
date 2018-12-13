@@ -26,11 +26,11 @@
 \label{sec:summary of delaigle hall}
 	Suppose that we have $n$ observations of
 	\begin{align}
-		W_i &= X_i + U_i &&i = 1, \dots, n
+		W_j &= X_j + U_j &&j = 1, \dots, n
 	\end{align}
-	where $X_i$ and $U_i$ are independent and identically distributed as $X$ and $U$ respectively, and $X$ and $U$ are independent. We use $\phi_X$ and $\phi_U$ to denote the characteristics functions of $X$ and $U$, and $F_X$ and $F_U$ for the distributions. We use $f_X$ and $f_U$ for the densities if they exist.
+	where $X_j$ and $U_j$ are independent and identically distributed as $X$ and $U$ respectively, and $X$ and $U$ are independent. We use $\phi_X$ and $\phi_U$ to denote the characteristics functions of $X$ and $U$, and $F_X$ and $F_U$ for the distributions. We use $f_X$ and $f_U$ for the densities if they exist.
 
-	Suppose also that we do not know any information concerning the distribution of $U$. This is unusual in deconvolution problems; we usually assume that we either know the distribution of $U$, at least up to a scaling factor, or that replicate measurements of the $W_i$s are available for the same $X_i$. 
+	Suppose also that we do not know any information concerning the distribution of $U$. This is unusual in deconvolution problems; we usually assume that we either know the distribution of $U$, at least up to a scaling factor, or that replicate measurements of the $W_j$s are available for the same $X_j$. 
 
 	\subsection{Assumptions}
 	We still make some assumptions about $U$ and its characteristic function, $\phi_U$. These are 
@@ -93,7 +93,47 @@
 	\end{assumption}
 
 	\subsection{Estimator}
-	The discussion above
+	% The discussion above suggests the following estimator for $F_X$. 
+	% we might think to take our estimator of $F_X$ to be the distribution with minimum variance that has phase function equal to an estimator of $\rho_W$ constructed from $W_1, \dots, W_n$. However, there are a few considerations to be made.
+	% Firstly, 
+	We can estimate $\rho_X = \rho_W$ by
+	\begin{equation}
+		\hat{\rho}_X = \frac{\hat{\phi}_W}{\left|\hat{\psi}_W\right|^{1/2}}
+	\end{equation}
+	where
+	\begin{equation}
+		\hat{\phi}_W(t) = \frac{1}{n}\sum_{j = 1}^n \exp(it W_j)
+	\end{equation}
+	and 
+	\begin{equation}
+		\hat{\psi}_W(t) = \frac{1}{n(n-1)} \sum_{k=1}^n \sum_{j \neq k} \exp(it (W_j - W_k)).
+	\end{equation}
+
+	Ideally, we would like to choose our estimate for $F_X$ to have phase function $\rho = \hat{\rho}_X$. However, $\hat{\rho}_X(t)$ grows less reliable for large values of $|t|$. So we instead aim to minimise 
+	\begin{equation}
+		T(F) = \int_{-\infty}^\infty \left| \hat{\phi}_W(t) - \left|\hat{\psi}_W(t)\right|^{1/2} \rho(t) \right|^2 w(t) \intd t,
+	\end{equation}
+	where $\rho(t)$ is the phase function of the distribution $F$, and $w(t)$ is some non-negative weight function that assigns greater value when $t$ is small. In practise, we perform this minimization over some set of distributions $F$ (for example, discrete distributions with no more than $m$ points of support). Call this set $\mathscr{F}$. Having found
+	\begin{equation}
+		T_\mathrm{min} = \min_{F \in \mathscr{F}} T(F),
+	\end{equation}
+	we then choose our estimator to be the distribution $F \in \mathscr{F}$ that has smallest variance, under the constraint that $T(F) = T_\mathrm{min}$.
+
+	\subsection{Numerical Implementation}
+
+	Delaigle and Hall suggest performing this optimization problem by approximating $F_X$ with a discrete distribution on $m$ points. They suggest choosing the location of the probability masses, $\vect{\theta} = (\theta_1, \dots, \theta_m)$, to be fixed and distributed uniformly but randomly along $[\min(W_i), \max(W_i)]$ and letting the probability weights $\vect{p} = (p_1, \dots p_m)$ be the variables over which we find the solution. Denote by $F_{\vect{\theta}, \vect{p}}$ the distribution that places mass $p_j$ at $\theta_j$ for $j = 1,\dots, m$. Its characteristic function is given by
+	\begin{equation}
+		\phi_{\vect{\theta}, \vect{p}} = \sum_{j = 1}^m p_j \exp(it\theta_j)
+	\end{equation}
+	and its phase function by
+	\begin{equation}
+		\rho_{\vect{\theta}, \vect{p}} = \frac{ \sum_{j = 1}^m p_j \exp(it\theta_j)}{\left| \sum_{j = 1}^m p_j \exp(it\theta_j)\right|}.
+	\end{equation}
+	It has variance
+	\begin{equation}
+		\var(F_{\vect{\theta}, \vect{p}}) = \sum_{j = 1}^m p_j \theta_j^2 - \left( \sum_{j=1}^m p_j \theta_j \right)^2.
+	\end{equation}
+
 
 
 
