@@ -11,15 +11,15 @@
 \section{Introduction}
 	In this final chapter, we look at another statistical problem in which we perform an optimization over discrete probability distributions and find that the number of points of support of the maximizing distribution is much smaller than expected. In contrast to Chapter \ref{Ch:Mixtures}, we will take a descriptive and practically minded point of view, rather than the more theory driven previous chapter. This is partly due to the additional complexity of the problem, which prevents many of the tools used on maximum likelihood mixtures from working here. However, this does not stop us from pointing out many similarities between the two problems, and numerical analysis allows us to benefit from the similar phenomenon that occurs.
 
-	The problem is one of \emph{deconvolution}, the recovery of the distribution, $F_X$, or density, $f_X$, of some random variable $X$, but only measure 
+	The problem is one of \emph{deconvolution}, the recovery of the distribution, $F_X$, or density, $f_X$, of some random variable $X$, from measurements of
 	\begin{equation}
 		W = X + U
 	\end{equation}
-	where the measurement error $U$ is independent of $X$.
+	where the measurement error $U$ is independent of $X$. In the case that we know the distribution of $U$, Carroll and Hall \cite{Carroll1988-aj} and Carroll and Stefanski \cite{Stefanski1990-uo} proposed a deconvolution kernel density estimator of $f_X$. If the distribution of $U$ is unknown, then we may hope to estimate it from replicate measurements, $W_{jk} = X_j + U_{jk}$, for $1 \leq k \leq N_j$ and $1 \leq j \leq n$. Delaigle, Hall, and Meister provide an estimator for $f_X$ in this scenario. However, up until Delaigle's and Hall's 2016 paper, ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' \cite{Delaigle2016-la}, there had been no method to estimate the distribution of $X$ when we had no data on the distribution of $U$.
 
-	[BRIEF SUMMARY OF LITERATURE]
+	% [BRIEF SUMMARY OF LITERATURE]
 
-	In this chapter, we focus on the methods introduced by Delaigle and Hall in their 2016 paper, ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' \cite{Delaigle2016-la}. We will start by summarizing the methods in Section \ref{sec:summary of delaigle hall}. In Section \ref{sec:deconvolution empirical results}, we will empirically demonstrate that these methods produce a similar phenomenon to the one encountered when using maximum likelihood location mixtures, and we will explore how this phenomenon manifests under various conditions. Finally, we point out how we can take advantage of this phenomenon in Section \ref{sec:deconvolution observations and results}.
+	In this chapter, we focus on the methods introduced in this paper. We will start by summarizing the methods in Section \ref{sec:summary of delaigle hall}. In Section \ref{sec:deconvolution empirical results}, we will empirically demonstrate that these methods produce a similar phenomenon to the one encountered when using maximum likelihood location mixtures, and we will explore how this phenomenon manifests under various conditions. Finally, we point out how we can take advantage of this phenomenon in Section \ref{sec:deconvolution observations and results}.
 
 
 \section{Summary of Delaigle Hall 2016}
@@ -160,7 +160,7 @@
 		\item Define $t^*$ as in \eqref{eq:define t star}.
 		\item Define
 		\begin{equation}
-			T(F_{\vect{\theta}, \vect{p}}) = \int_{-\infty}^\infty \left| \hat{\phi}_W(t) - \left|\hat{\psi}_W(t)\right|^{1/2} \frac{ \sum_{j = 1}^m p_j \exp(it\theta_j)}{\left| \sum_{j = 1}^m p_j \exp(it\theta_j)\right|} \right|^2 w(t) \intd t.
+			T(F_{\vect{\theta}, \vect{p}}) = \int_{-t^*}^{t^*} \left| \hat{\phi}_W(t) - \left|\hat{\psi}_W(t)\right|^{1/2} \frac{ \sum_{j = 1}^m p_j \exp(it\theta_j)}{\left| \sum_{j = 1}^m p_j \exp(it\theta_j)\right|} \right|^2 w(t) \intd t.
 		\end{equation}
 		where $w(t)$ is the Epanechnikov kernel rescaled to $[-t^*, t^*]$.
 		\item
@@ -185,13 +185,36 @@
 		\begin{equation}
 			\mathrm{penalties} \leq \mathrm{penalties}_\mathrm{min}
 		\end{equation}
-		\item The final estimator for $F_X$ is $F_{\vect{\theta}, \hat{\vect{p}}}$.
+		\item The final estimator for $F_X$ is $\hat{F}_X = F_{\vect{\theta}, \hat{\vect{p}}}$.
 	\end{enumerate}
 	[BE MORE PRECISE ABOUT PENALTIES?]
 
 
 	\subsection{Converting to continuous distribution}
 
+	If $X$ is continuous, then we will often want to use $\hat{F}_X = F_{\vect{\theta}, \vect{p}}$ to create an estimate of the density, $f_X$. Perhaps the most obvious solution is to use
+	\begin{equation}
+		\hat{f}_X(x) = \sum_{j=1}^m p_j K_h(x - \theta_j)
+	\end{equation}
+	where $K_h(x)$ is a kernel with some bandwidth $h > 0$. This is exactly equivalent to 
+	\begin{equation}
+		\hat{f}_X(x) = \frac{1}{2\pi}\int_{-\infty}^{\infty} \euler^{-itx} \phi_{\vect{\theta}, \vect{p}} \phi_K(ht) \intd t
+	\end{equation}
+	where $\phi_K$ is the Fourier transform of $K_1(x)$. However, since we only used $t \in [-t^*, t^*]$ when constructing $\phi_{\vect{\theta}, \vect{p}}$, it is reasonable to assume that $\phi_{\vect{\theta}, \vect{p}}$ is less reliable for $t$ outside this range. This motivates replacing $\phi_{\vect{\theta}, \vect{p}}$ with
+	\begin{equation}
+		\tilde{\phi} = 
+		\begin{cases}
+			\phi_{\vect{\theta}, \vect{p}}, & t \in [-t^*, t^*],\\
+			r(t), & \text{otherwise},
+		\end{cases}
+	\end{equation}
+	where $r(t)$ is some ridge function. Delaigle and Hall suggest following \cite{Delaigle2008-hl} and using
+	\begin{equation}
+		r = \hat{\phi}_W / \hat{\phi}_{U,P}
+	\end{equation}
+	where $\hat{\phi}_{U,P}$ is the characteristic function of a Laplace distribution with variance equal to an estimator of the variance of $U$. They also suggest choosing the bandwidth, $h$, using the two-stage plug-in bandwidth of Delaigle and Gijbels \cite{Delaigle2002-pa} \cite{Delaigle2004-fy}.
+
+	We wish to remark here that the conversion from the discrete $F_{\vect{\theta}, \vect{p}}$ to the continuous $\hat{f}_X(x)$ has no effect on the phenomenon of interest in this chapter. We are interested only in the discrete distribution $F_{\vect{\theta}, \vect{p}}$. However, we have included this section for completeness.
 
 
 
@@ -220,20 +243,20 @@
 
 	% 	We restrict our search to $Y$ discrete with point masses $p_j$ at locations $x_j$ for $j = 1,2,\dots,m$. We place our $x_j$ uniformly at random along the interval $[\min W, \max W]$ and choose the $p_j$ to solve the optimization problem described above. Numerical investigations indicate that $m = 5 \sqrt{n}$ is a reasonable choice.
 
-	\subsection{Kernel Smoothing}
-		\label{ssec:KernelSmoothing}
-		Once we have our discrete distribution $Y$ we can create a continuous density approximation using
-		\begin{equation}
-		\hat{f}_Y(x) = \frac{1}{2\pi} \int e^{-itx} \phi_Y(t) \phi_K(ht)  \intd t
-		\label{eq:f_Y(x)integral}
-		\end{equation}
-		where $K$ is some kernel with bandwidth $h$. This is exactly equivalent to
-		\begin{equation}
-		\hat{f}_Y(x) = \sum_{j=1}^m p_j K_h(x - x_j).
-		\label{eq:f_Y(x)sum}
-		\end{equation}
+	% \subsection{Kernel Smoothing}
+	% 	\label{ssec:KernelSmoothing}
+	% 	Once we have our discrete distribution $Y$ we can create a continuous density approximation using
+	% 	\begin{equation}
+	% 	\hat{f}_Y(x) = \frac{1}{2\pi} \int e^{-itx} \phi_Y(t) \phi_K(ht)  \intd t
+	% 	\label{eq:f_Y(x)integral}
+	% 	\end{equation}
+	% 	where $K$ is some kernel with bandwidth $h$. This is exactly equivalent to
+	% 	\begin{equation}
+	% 	\hat{f}_Y(x) = \sum_{j=1}^m p_j K_h(x - x_j).
+	% 	\label{eq:f_Y(x)sum}
+	% 	\end{equation}
 
-		However, we can get a better result by using \eqref{eq:f_Y(x)integral} and replacing $\phi_Y(t)$ with an appropriate ridge function for $t \geq t^*$.
+	% 	However, we can get a better result by using \eqref{eq:f_Y(x)integral} and replacing $\phi_Y(t)$ with an appropriate ridge function for $t \geq t^*$.
 		%Ridging stuff
 		%Choice of bandwidth
 		%Integral considerations (stuff I did about how to integrate this thing)
