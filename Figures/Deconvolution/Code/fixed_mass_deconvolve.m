@@ -1,4 +1,4 @@
-function [yy, Q, tt, optim_values] = fixed_mass_deconvolve(W, xx)
+function [yy, Q, tt, optim_values, misc_variables] = fixed_mass_deconvolve(W, xx)
     
     global fmax Term1boot fctargs  penalite Termequality;
     
@@ -179,6 +179,16 @@ function [yy, Q, tt, optim_values] = fixed_mass_deconvolve(W, xx)
     optim_values.tp_final = fobjUnconstB(psol(1:(m-1)));
     optim_values.var_final = fobjBoot(psol(1:(m-1)));
     optim_values.penalty1_final = Termequality;
+    
+    misc_variables.tt = tt;
+    misc_variables.rehatphiW = rehatphiW;
+    misc_variables.imhatphiW = imhatphiW;
+    misc_variables.sqabshatpsi = sqabshatpsi;
+    
+    sigt=-tt(1)/2;
+    weight=0.75/(2*sigt)*(1-(tt/(2*sigt)).^2);
+    
+    misc_variables.weight = weight;
     
 
 end
