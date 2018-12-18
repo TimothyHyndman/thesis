@@ -109,10 +109,6 @@ function [yy, Q] = fixed_mass_deconvolve(W, xx)
     % Now turn the discrete distribution into a density
     %---------------------------------------------------
     %---------------------------------------------------
-    % [pj_new,xj_new] = simplify_masses(psol,xgrid);
-    % psol = pj_new;
-    % xgrid = xj_new;
-    % m = length(psol);
     %----------------------------
     % Estimate phi_X and phi_U
     %----------------------------
@@ -147,7 +143,6 @@ function [yy, Q] = fixed_mass_deconvolve(W, xx)
 
 
     %Then compute density estimator as indicated in the paper
-
     tlim=[min(tt),max(tt)];
 
     %Adjust estimator of phi_U as recommended in the paper
