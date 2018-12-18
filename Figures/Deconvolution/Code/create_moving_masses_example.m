@@ -17,13 +17,13 @@ sigU = sqrt(NSR * varX);
 U = normrnd(0, sigU, 1, n);
 
 W = X + U;
-xx = linspace(min(W), max(W), 100);
+xx_moving = linspace(min(W), max(W), 100);
 
-% [yy, Q] = fixed_mass_deconvolve(W, xx);
+[yy_moving, Q_moving, tt_moving, optim_values_moving] = moving_mass_deconvolve(W, xx_moving);
 
-options.save = true;
-options.filename = 'fixed_masses_example.png';
+options.save = false;
+options.filename = 'moving_masses_example.png';
 options.plot_histogram = false;
 options.plot_density = true;
 options.plot_masses = true;
-plot_deconvolution_graph(Q, xx, yy, W, options);
+plot_deconvolution_graph(Q_moving, xx_moving, yy_moving, W, options);

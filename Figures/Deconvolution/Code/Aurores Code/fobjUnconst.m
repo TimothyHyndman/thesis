@@ -61,4 +61,3 @@ global fctargs Termequality;
     %%Testing stuff, can safely delete
 	
 	y;
-

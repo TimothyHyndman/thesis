@@ -1,4 +1,4 @@
-function [yy, Q] = fixed_mass_deconvolve(W, xx)
+function [yy, Q, tt, optim_values] = fixed_mass_deconvolve(W, xx)
     
     global fmax Term1boot fctargs  penalite Termequality;
     
@@ -7,14 +7,22 @@ function [yy, Q] = fixed_mass_deconvolve(W, xx)
     dx=xx(2)-xx(1);
     
     % FIX THIS TO CHOOSE GOOD VALUES AS IN DECONVOLVE PACKAGE
-    longt = 50;
-    a = -8;
-    b = 8;
+    longt = 99;
+    mu_K2 = 6;
+    RK = 1024 / 3003 / pi;
+    hnaive = ((8 * sqrt(pi) * RK/3/mu_K2^2)^0.2) * sqrt(var(W)) * n^(-1/5);
+    hmin = hnaive/3;
+    a = -1/hmin;
+    b = 1/hmin;
+%     a = -8;
+%     b = 8;
     tt = a:((b - a) / longt):b;
+    
     
     % Compute phiW and psiW
     [tt1, tt2, rehatphiW, imhatphiW, normhatphiW] = computephiW(tt,longt,W,n);
     tt = tt1:(tt2-tt1)/longt:tt2;
+    
     [~, ~, sqabshatpsi] = computepsiW(tt,W,n);
 
     %----------------------------------------------------------------------
@@ -167,5 +175,10 @@ function [yy, Q] = fixed_mass_deconvolve(W, xx)
     yy = fXtest;
     Q.Support = xgrid;
     Q.ProbWeights = psol;
+     
+    optim_values.tp_final = fobjUnconstB(psol(1:(m-1)));
+    optim_values.var_final = fobjBoot(psol(1:(m-1)));
+    optim_values.penalty1_final = Termequality;
+    
 
 end
