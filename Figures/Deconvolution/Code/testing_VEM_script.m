@@ -45,20 +45,27 @@ Q.Support = mean(W);
 Q.ProbWeights = 1;
 
 looping = true;
+counter = 0;
 while looping
-    theta_star = find_theta_star(Q, W, tt, hat_phi_W, sqrt_psi_hat_W, weight);
-    p_max = find_p_max(Q, theta_star, tt, hat_phi_W, sqrt_psi_hat_W, weight);
+    [theta_min, theta_max] = find_theta_star(Q, W, tt, hat_phi_W, sqrt_psi_hat_W, weight);
+    p_min = find_p_min(Q, theta_min, tt, hat_phi_W, sqrt_psi_hat_W, weight);
 
-    Q.Support = [Q.Support, theta_star];
-    Q.ProbWeights = [Q.ProbWeights * (1 - p_max), p_max]; 
+    Q.Support = [Q.Support, theta_min];
+    Q.ProbWeights = [Q.ProbWeights * (1 - p_min), p_min]; 
     I_remove = Q.ProbWeights <= 0;
     Q.Support(I_remove) = [];
     Q.ProbWeights(I_remove) = [];
     
-    pause;
+    counter = counter + 1;
+    if counter > 100
+        looping = false;
+    end
 end
 
-function theta_star = find_theta_star(Q, W, tt, hat_phi_W, sqrt_psi_hat_W, weight)
+
+calculate_tp(tt, Q.ProbWeights, Q.Support, hat_phi_W, sqrt_psi_hat_W, weight)
+
+function [theta_min, theta_max] = find_theta_star(Q, W, tt, hat_phi_W, sqrt_psi_hat_W, weight)
     res = 1000;
     theta = linspace(min(W), max(W), res);
 
@@ -69,10 +76,13 @@ function theta_star = find_theta_star(Q, W, tt, hat_phi_W, sqrt_psi_hat_W, weigh
     drawnow;
 
     [~, I] = min(derivative);
-    theta_star = theta(I);
+    theta_min = theta(I);
+    
+    [~, I] = max(derivative);
+    theta_max = theta(I);
 end
 
-function p_max = find_p_max(Q, theta_star, tt, hat_phi_W, sqrt_psi_hat_W, weight)
+function p_min = find_p_min(Q, theta_star, tt, hat_phi_W, sqrt_psi_hat_W, weight)
     p_res = 1000;
     p_test = linspace(0, 1, p_res);
     tp_values = zeros(1, p_res);
@@ -84,5 +94,5 @@ function p_max = find_p_max(Q, theta_star, tt, hat_phi_W, sqrt_psi_hat_W, weight
     end
 
     [~, I] = min(tp_values);
-    p_max = p_test(I);
+    p_min = p_test(I);
 end
