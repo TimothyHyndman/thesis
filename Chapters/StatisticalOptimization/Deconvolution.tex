@@ -281,6 +281,45 @@
 
 \section{General Observations and Results}
 \label{sec:deconvolution observations and results}
+	
+	\subsection{Results concerning phase functions}
+	\begin{theorem}
+		Let $F_X$ and $F_Y$ be two distributions, and let
+		\begin{align}
+			F_Z &= (1 - \lambda) F_X + \lambda F_Y && \lambda \in [0,1]
+		\end{align}
+		be a convex combination of these distributions. If $\rho_X = \rho_Y$, then 
+		\begin{equation}
+			\rho_Z = \rho_X = \rho_Y.
+		\end{equation}
+	\end{theorem}
+	\begin{proof}
+		Write $\phi_X$ and $\phi_Y$ for the characteristic functions of $X$ and $Y$. These are complex valued functions which we can write in the form
+		\begin{align}
+			\phi_X &= r_X(t) \euler^{i\theta_X(t)},\\
+			\phi_Y &= r_Y(t) \euler^{i\theta_Y(t)},
+		\end{align}
+		where $r_X(t), r_Y(t)$ take values on $[0, 1]$ and where
+		\begin{align}
+			\rho_X &= \euler^{i\theta_X(t)},\\
+			\rho_Y &= \euler^{i\theta_Y(t)}.
+		\end{align}
+		The characteristic function of $F_Z$ is 
+		\begin{align}
+			\phi_Z &= \int \euler^{itx} \intd \left[(1 - \lambda)F_X(x) + \lambda F_Y(x)\right]\\
+			&= (1 - \lambda)\phi_X + \lambda \phi_Y\\
+			&= (1 - \lambda) r_X(t) \rho_X + \lambda r_Y(t) \rho_Y.
+		\end{align}
+
+		If $\rho_X = \rho_Y$ then
+		\begin{equation}
+			\phi_Z = \left((1 - \lambda)r_X(t) + \lambda r_Y(t)\right) \rho_X
+		\end{equation}
+		and so 
+		\begin{equation}
+			\rho_Z = \rho_X = \rho_Y.
+		\end{equation}
+	\end{proof}
 
 \subsection{A particular class of optimization problem}
 		"The results follow from this general theorem which seems obvious."
