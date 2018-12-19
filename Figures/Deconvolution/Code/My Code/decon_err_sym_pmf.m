@@ -212,18 +212,6 @@ function [c,ceq] = phaseconstraint(x, tp_max, penalty1_max, penalty2_max, t, hat
     ceq=[];
 end
 
-function tp = calculate_tp(t, pj, xj, hat_phi_W, sqrt_psi_hat_W, weight)
-
-    %Calculate characteristic function of our discrete distribution
-    [re_phi_p, im_phi_p, norm_phi_p] = computephiX(t, xj, pj);
-    phi_p = complex(re_phi_p, im_phi_p);
-
-    %Calculate integrand
-    integrand = abs(hat_phi_W - sqrt_psi_hat_W .* phi_p.' ./ norm_phi_p').^2.*weight;
-    dt = t(2) - t(1);
-    tp = dt * sum(integrand);
-end
-
 function [penalty1, penalty2, penalty3] = penalties(pj, xj, t, hat_phi_W)
 
 re_hat_phi_W = real(hat_phi_W);
@@ -292,24 +280,6 @@ function [pj, xj] = simplify_masses(pj, xj)
     end
 
     pj = pj/sum(pj);    %Normalise
-end
-
-function weight = KernelWeight(weight_type, x)
-    length_x = length(x);
-    switch weight_type
-        case 'Epanechnikov'
-            sig_x=-x(1)/2;
-            weight=0.75/(2*sig_x)*(1-(x/(2*sig_x)).^2);
-        case 'Uniform'
-            max_x=-x(1);
-            weight = zeros(1,length_x) + 1/(2*max_x);
-        case 'Triangular'
-            max_x = -x(1);
-            weight = -1/(max_x^2)*(abs(x)-max_x);
-        case 'Triweight'
-            max_x = -x(1);
-            weight = 35/(32*max_x)*(1 - (x/max_x).^2).^3;
-    end
 end
 
 function [A, B] = create_bound_matrices(W, m)
