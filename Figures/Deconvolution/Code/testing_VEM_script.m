@@ -11,12 +11,19 @@ X = chi2rnd(dchi,1,n);
 varX = 2 * dchi;
 X = X / sqrt(varX);
 varX = 1;
+varXlong=2*dchi;
+cvar=sqrt(varXlong);
+truedens=@(xx) cvar*chi2pdf(xx*cvar,dchi);
 
 % U
 sigU = sqrt(NSR * varX);
 U = normrnd(0, sigU, 1, n);
 
+% W
 W = X + U;
+h=bwsjpiSM(W');
+
+
 xx = linspace(min(W), max(W), 100);
 
 % ------------------------------------------------------------------------
@@ -60,7 +67,22 @@ while looping
     
     %Move mass from highest tp_masses to lowest
     objective_func = @(pj) calculate_tp(tt, pj, Q.Support, hat_phi_W, sqrt_psi_hat_W, weight);
-    Q = exchange_mass(Q, I, objective_func);
+    Q = exchange_mass(Q, I(1), I, objective_func);
+    
+    % ALTERNATE BETWEEN RANKING BY DERIVATIVE AND RANKING BY ABSOLUTE SIZE
+    % (to get rid of clusters and thin down the distribution a bit)
+    
+%     % Add theta which minimizes tp to support
+%     theta_min = find_theta_star(Q, W, tt, hat_phi_W, sqrt_psi_hat_W, weight);
+%     Q.Support = [Q.Support, theta_min];
+%     Q.ProbWeights = [Q.ProbWeights, 0];
+%     
+%     %Rank point masses by size
+%     [~, I] = sort(Q.ProbWeights, 'descend'); %Move smallest into largest
+%     
+%     %Move mass from smallest masses to theta_min
+%     objective_func = @(pj) calculate_tp(tt, pj, Q.Support, hat_phi_W, sqrt_psi_hat_W, weight);
+%     Q = exchange_mass(Q, length(Q.ProbWeights), I, objective_func);
     
     counter = counter + 1;
     if counter > 100
@@ -70,9 +92,19 @@ end
 
 calculate_tp(tt, Q.ProbWeights, Q.Support, hat_phi_W, sqrt_psi_hat_W, weight)
 
-figure(2)
-scatter(Q.Support, Q.ProbWeights)
-drawnow
+xx = linspace(min(W), max(W), 100);
+yy = decon_err_sym_pmf2pdf(xx, tt, Q.Support, Q.ProbWeights, W, []);
+
+options.save = false;
+options.filename = 'VEM_example.png';
+options.plot_histogram = false;
+options.plot_density = true;
+options.plot_masses = true;
+options.true_dens = truedens;
+options.plot_true_dens = true;
+options.naivebw = h;
+options.plot_naive = true;
+plot_deconvolution_graph(Q, xx, yy, W, options);
 
 
 function theta_min = find_theta_star(Q, W, tt, hat_phi_W, sqrt_psi_hat_W, weight)
@@ -95,7 +127,7 @@ function theta_min = find_theta_star(Q, W, tt, hat_phi_W, sqrt_psi_hat_W, weight
     theta_min = theta(I);
 end
 
-function Q = exchange_mass(Q, I, objective_func)
+function Q = exchange_mass(Q, theta_star, I, objective_func)
     coarse_res = 100;
     p_coarse = linspace(0, 1, coarse_res);
     tp_coarse = linspace(1, coarse_res);
@@ -103,7 +135,7 @@ function Q = exchange_mass(Q, I, objective_func)
     for i = 1:coarse_res
         p_test = p_coarse(i);
         pj = Q.ProbWeights;
-        pj = shift_mass(pj, p_test, I);
+        pj = shift_mass(pj, p_test, theta_star, I);
         
         % Calculate tp at new distribution
         tp_coarse(i) = objective_func(pj);
@@ -119,7 +151,7 @@ function Q = exchange_mass(Q, I, objective_func)
     for i = 1:fine_res
         p_test = p_fine(i);
         pj = Q.ProbWeights;
-        pj = shift_mass(pj, p_test, I);
+        pj = shift_mass(pj, p_test, theta_star, I);
         
         % Calculate tp at new distribution
         tp_fine(i) = objective_func(pj);
@@ -131,11 +163,16 @@ function Q = exchange_mass(Q, I, objective_func)
 %     plot(p_coarse, tp_coarse);
 %     p_star
     
-    Q.ProbWeights = shift_mass(Q.ProbWeights, p_star, I);
+    Q.ProbWeights = shift_mass(Q.ProbWeights, p_star, theta_star, I);
+    
+    remove_mass = Q.ProbWeights <= 0.000001;
+    Q.Support(remove_mass) = [];
+    Q.ProbWeights(remove_mass) = [];
+    Q.ProbWeights = Q.ProbWeights / sum(Q.ProbWeights);
 end
 
-function pj = shift_mass(pj, p_star, I)
-    pj(I(1)) = p_star; %Put mass p_test at theta_min
+function pj = shift_mass(pj, p_star, theta_star, I)
+    pj(theta_star) = p_star; %Put mass p_test at theta_star
         
     %Remove mass p_test from the prob weights in reverse order from I
     %(ie move mass from worst masses to the best mass)
