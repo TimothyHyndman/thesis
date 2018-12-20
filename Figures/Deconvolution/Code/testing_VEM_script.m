@@ -44,17 +44,23 @@ weight = KernelWeight('Epanechnikov', tt);
 Q.Support = mean(W);
 Q.ProbWeights = 1;
 
+calculate_tp(tt, Q.ProbWeights, Q.Support, hat_phi_W, sqrt_psi_hat_W, weight)
+
 looping = true;
 counter = 0;
 while looping
-    [theta_min, theta_max] = find_theta_star(Q, W, tt, hat_phi_W, sqrt_psi_hat_W, weight);
-    p_min = find_p_min(Q, theta_min, tt, hat_phi_W, sqrt_psi_hat_W, weight);
-
+    % Add theta which minimizes tp to support
+    theta_min = find_theta_star(Q, W, tt, hat_phi_W, sqrt_psi_hat_W, weight);
     Q.Support = [Q.Support, theta_min];
-    Q.ProbWeights = [Q.ProbWeights * (1 - p_min), p_min]; 
-    I_remove = Q.ProbWeights <= 0;
-    Q.Support(I_remove) = [];
-    Q.ProbWeights(I_remove) = [];
+    Q.ProbWeights = [Q.ProbWeights, 0];
+    
+    %Rank support points by their tp_derivative value
+    theta_derivatives = tp_derivative(Q.Support, Q, tt, hat_phi_W, sqrt_psi_hat_W, weight);
+    [~, I] = sort(theta_derivatives);
+    
+    %Move mass from highest tp_masses to lowest
+    objective_func = @(pj) calculate_tp(tt, pj, Q.Support, hat_phi_W, sqrt_psi_hat_W, weight);
+    Q = exchange_mass(Q, I, objective_func);
     
     counter = counter + 1;
     if counter > 100
@@ -62,37 +68,85 @@ while looping
     end
 end
 
-
 calculate_tp(tt, Q.ProbWeights, Q.Support, hat_phi_W, sqrt_psi_hat_W, weight)
 
-function [theta_min, theta_max] = find_theta_star(Q, W, tt, hat_phi_W, sqrt_psi_hat_W, weight)
-    res = 1000;
-    theta = linspace(min(W), max(W), res);
+figure(2)
+scatter(Q.Support, Q.ProbWeights)
+drawnow
 
+
+function theta_min = find_theta_star(Q, W, tt, hat_phi_W, sqrt_psi_hat_W, weight)
+    coarse_res = 100;
+    theta = linspace(min(W), max(W), coarse_res);
     derivative = tp_derivative(theta, Q, tt, hat_phi_W, sqrt_psi_hat_W, weight);
-
-    figure(1)
-    plot(theta, derivative)
-    drawnow;
-
+    [~, I] = min(derivative);
+    
+    I_low = max(I - 1, 1);
+    I_high = min(I + 1, coarse_res);
+    
+    %     figure(1)
+    %     plot(theta, derivative)
+    %     drawnow;
+    
+    fine_res = 100;
+    theta = linspace(theta(I_low), theta(I_high), fine_res);
+    derivative = tp_derivative(theta, Q, tt, hat_phi_W, sqrt_psi_hat_W, weight);
     [~, I] = min(derivative);
     theta_min = theta(I);
-    
-    [~, I] = max(derivative);
-    theta_max = theta(I);
 end
 
-function p_min = find_p_min(Q, theta_star, tt, hat_phi_W, sqrt_psi_hat_W, weight)
-    p_res = 1000;
-    p_test = linspace(0, 1, p_res);
-    tp_values = zeros(1, p_res);
-
-    for i = 1:p_res
-        xj_test = [Q.Support, theta_star];
-        pj_test = [Q.ProbWeights * (1 - p_test(i)), p_test(i)];
-        tp_values(i) = calculate_tp(tt, pj_test, xj_test, hat_phi_W, sqrt_psi_hat_W, weight);
+function Q = exchange_mass(Q, I, objective_func)
+    coarse_res = 100;
+    p_coarse = linspace(0, 1, coarse_res);
+    tp_coarse = linspace(1, coarse_res);
+    
+    for i = 1:coarse_res
+        p_test = p_coarse(i);
+        pj = Q.ProbWeights;
+        pj = shift_mass(pj, p_test, I);
+        
+        % Calculate tp at new distribution
+        tp_coarse(i) = objective_func(pj);
     end
+    
+    [~, I_min] = min(tp_coarse);
+    I_low = max(I_min - 1, 1);
+    I_high = min(I_min + 1, coarse_res);
+    fine_res = 100;
+    p_fine = linspace(p_coarse(I_low), p_coarse(I_high), fine_res);
+    tp_fine = linspace(1, fine_res);
+    
+    for i = 1:fine_res
+        p_test = p_fine(i);
+        pj = Q.ProbWeights;
+        pj = shift_mass(pj, p_test, I);
+        
+        % Calculate tp at new distribution
+        tp_fine(i) = objective_func(pj);
+    end
+    
+    [~, I_star] = min(tp_fine);
+    p_star = p_fine(I_star);
+    
+%     plot(p_coarse, tp_coarse);
+%     p_star
+    
+    Q.ProbWeights = shift_mass(Q.ProbWeights, p_star, I);
+end
 
-    [~, I] = min(tp_values);
-    p_min = p_test(I);
+function pj = shift_mass(pj, p_star, I)
+    pj(I(1)) = p_star; %Put mass p_test at theta_min
+        
+    %Remove mass p_test from the prob weights in reverse order from I
+    %(ie move mass from worst masses to the best mass)
+    freddy = (cumsum(pj(I(end:-1:1)))) < p_star;
+    pj(I(freddy(end:-1:1))) = 0;
+
+    % Partial amount to remove from 
+    leftover = sum(pj) - 1;
+    % Indices we haven't removed stuff from 
+    part_index = I(~freddy(end:-1:1));
+    % Last index is the one we want to remove some things from
+    part_index = part_index(end);
+    pj(part_index) = pj(part_index) - leftover;
 end
