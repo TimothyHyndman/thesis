@@ -62,8 +62,9 @@ max_n_loops = 1000;
 while looping
     % Add theta which minimizes tp to support
     theta_min = find_theta_star(Q, W, tt, hat_phi_W, sqrt_psi_hat_W, weight);
-    Q.Support = [Q.Support, theta_min];
+    [Q.Support, I] = sort([Q.Support, theta_min]);
     Q.ProbWeights = [Q.ProbWeights, 0];
+%     Q.ProbWeights = Q.ProbWeights(I);
     
     %Rank support points by their tp_derivative value
     theta_derivatives = tp_derivative(Q.Support, Q, tt, hat_phi_W, sqrt_psi_hat_W, weight);
