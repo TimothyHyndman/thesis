@@ -107,6 +107,14 @@ options.naivebw = h;
 options.plot_naive = true;
 plot_deconvolution_graph(Q, xx, yy, W, options);
 
+function yy = var_derivative(theta, Q)
+    xj = Q.Support;
+    pj = Q.ProbWeights;
+    mu = pj*xj';
+    
+    yy = (theta - mu).^2 - pj*(xj - mu).^2.';
+end
+
 function Q = merge_points(Q, tt, hat_phi_W, sqrt_psi_hat_W, weight)
     [xj, I] = sort(Q.Support);
     pj = Q.ProbWeights(I);
@@ -156,9 +164,9 @@ function theta_min = find_theta_star(Q, W, tt, hat_phi_W, sqrt_psi_hat_W, weight
     I_low = max(I - 1, 1);
     I_high = min(I + 1, coarse_res);
     
-    %     figure(1)
-    %     plot(theta, derivative)
-    %     drawnow;
+%     figure(1)
+%     plot(theta, derivative)
+%     drawnow;
     
     fine_res = 100;
     theta = linspace(theta(I_low), theta(I_high), fine_res);
