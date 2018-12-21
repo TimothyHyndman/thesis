@@ -19,7 +19,7 @@ truedens=@(xx) cvar*chi2pdf(xx*cvar,dchi);
 sigU = sqrt(NSR * varX);
 U = normrnd(0, sigU, 1, n);
 
-%W
+% W
 W = X + U;
 h=bwsjpiSM(W');
 
