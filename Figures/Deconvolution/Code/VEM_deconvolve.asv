@@ -42,8 +42,8 @@ function [Q, tt, optim_values_VEM] = VEM_deconvolve(W, Q_init)
     looping = true;
     counter = 0;
     tp_old = Inf;
-    tp_update_tol = 0;
-    max_n_loops = 5000;
+    tp_update_tol = 1e-6;
+    max_n_loops = 500;
 
     while looping
         % Add theta which minimizes tp to support
@@ -60,43 +60,20 @@ function [Q, tt, optim_values_VEM] = VEM_deconvolve(W, Q_init)
         objective_func_2 = @(pj) tp_and_penalties(tt, pj, Q.Support, hat_phi_W, sqrt_psi_hat_W, weight, use_penalties);
         Q = exchange_mass(Q, I(1), I, objective_func_2);
         
-        % Check for convergence
-        tp_new = objective_func(Q.ProbWeights, Q.Support);
-        
-        if tp_new > tp_old + 1e-15
-            looping = false;
-            display('problem in exchange')
-            tp_new
-            tp_old
-        end
-        if abs(tp_new - tp_old) <= tp_update_tol
-            looping = false;
-        else
-            tp_old = tp_new;
-        end
-        
-        % Add theta which minimizes tp to support
-        theta_min = find_theta_star(Q, W, objective_func);
-        Q.Support = [Q.Support, theta_min];
-        Q.ProbWeights = [Q.ProbWeights, 0];
+        %Rank support points by their tp_derivative value
+        theta_derivatives = tp_derivative(Q.Support, Q, objective_func);
+        [~, I] = sort(theta_derivatives);
         
         %Add mass using same method as derivative (to ensure we decrease if
         %the derivative is below zero).
-        objective_func_3 = @(pj) tp_and_penalties(tt, pj, Q.Support, hat_phi_W, sqrt_psi_hat_W, weight, use_penalties);
-        Q = add_mass(Q, objective_func_3);
+        
+        Q = add_mass(Q, 
 
         % Merge points that are close together
         Q = merge_points(Q, objective_func);
 
         % Check for convergence
         tp_new = objective_func(Q.ProbWeights, Q.Support);
-        
-        if tp_new > tp_old
-            looping = false;
-            display('problem in add')
-            tp_new
-            tp_old
-        end
         if abs(tp_new - tp_old) <= tp_update_tol
             looping = false;
         else
@@ -107,8 +84,6 @@ function [Q, tt, optim_values_VEM] = VEM_deconvolve(W, Q_init)
         if counter > max_n_loops
             looping = false;
         end
-        
-       
     end
 
     optim_values_VEM.n_loops = counter - 1;
@@ -129,51 +104,6 @@ function yy = var_derivative(theta, Q)
     mu = pj*xj';
     
     yy = (theta - mu).^2 - pj*(xj - mu).^2.';
-end
-
-function Q = add_mass(Q, objective_func)
-    coarse_res = 100;
-    p_coarse = linspace(0, 1, coarse_res);
-    tp_coarse = zeros(1, coarse_res);
-    
-    for i = 1:coarse_res
-        pj = Q.ProbWeights;
-        pj(end) = p_coarse(i);
-        pj = pj/sum(pj);
-        
-        % Calculate tp at new distribution
-        tp_coarse(i) = objective_func(pj);
-    end
-    [~, I_min] = min(tp_coarse);
-    I_low = max(I_min - 1, 1);
-    I_high = min(I_min + 1, coarse_res);
-    
-    
-    fine_res = 20;
-    for j = 1:10
-        p_fine = linspace(p_coarse(I_low), p_coarse(I_high), fine_res);
-        tp_fine = zeros(1, fine_res);
-
-        for i = 1:fine_res
-            pj = Q.ProbWeights;
-            pj(end) = p_fine(i);
-            pj = pj/sum(pj);
-            
-            % Calculate tp at new distribution
-            tp_fine(i) = objective_func(pj);
-        end
-        
-        [~, I_min] = min(tp_fine);
-        I_low = max(I_min - 1, 1);
-        I_high = min(I_min + 1, fine_res);
-        
-        p_coarse = p_fine;
-    end
-    
-    p_star = p_fine(I_min);
-    
-    Q.ProbWeights(end) = p_star;
-    Q.ProbWeights = Q.ProbWeights/sum(Q.ProbWeights);
 end
 
 function sigma = calculate_var(Q)
@@ -292,8 +222,6 @@ function Q = exchange_mass(Q, theta_star, I, objective_func)
 %     p_star
     
     Q.ProbWeights = shift_mass(Q.ProbWeights, p_star, theta_star, I);
-    
-    
 end
 
 function pj = shift_mass(pj, p_star, theta_star, I)
