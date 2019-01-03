@@ -386,18 +386,17 @@
 	\end{equation}
 	and
 	\begin{equation}
-		U_i^n = \sum_{j \in B_i} X_j^n.
+		U_i^n = \sum_{j \in B_i^n} X_j^n.
 	\end{equation}
 	Note that these are not strictly identical to the $X_i$ and $U_i$ defined earlier, but they have the same distribution. Also note that with probability 1, $\bar{X}_i^n = 0$ and $\bar{U}_i^n = 0$ since the update histories eventually encounter an oblivious update with probability 1.
 
 	The following lemma relates the distribution of $U_i^n$ with that of $\bar{U}_i^n$.
 
-	[GOING THROUGH TIM'S COMMENTS UP TO HERE]
-
 	\begin{lemma}
 	\label{lem: bound U by U bar}
+	Let $\bar{X}_i^n$ and $\bar{U}_i^n$ be as defined above. Then
 		\begin{equation}
-			\prob(\bar{U}_i^n \geq k | \bar{X}_i^n = 1) \leq \prob(U_i^n \geq k | X_i^n = 1) \leq \prob(\bar{U}_i^n \geq k | \bar{X}_i^n = 1) + \euler^{-z} \frac{|B_i|}{n}
+			\prob(\bar{U}_i^n \geq k | \bar{X}_i^n = 1) \leq \prob(U_i^n \geq k | X_i^n = 1) \leq \prob(\bar{U}_i^n \geq k | \bar{X}_i^n = 1) + \euler^{-z} \frac{|B_i^n|}{n}.
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
@@ -405,47 +404,52 @@
 		% $\{X_i = 1\}$ coincides with the event $\{\hist_i \text{ encounters no oblivious updates along } [0, t^*]\}$. 
 		% and $\bar{X}_i = 1$ have the same result along $[0, t^*]$. [WRITE THIS PROPERLY]. So
 		\begin{align}
-			\prob(U_i^n \geq k | X_i^n = 1) &= \prob(U_i^n \geq k | \hist_i^n \text{ doesn't die along } [0, t^*])\\
-			&= \prob(U_i^n \geq k | \hist_i^n \text{ doesn't die along } (-\infty, t^*])\\
+			\prob(U_i^n \geq k | X_i^n = 1) &= \prob(U_i^n \geq k | \hist_i^n \text{ doesn't die along } [0, t^*]) \label{eq:condition along 0 to t*}\\
+			&= \prob(U_i^n \geq k | \hist_i^n \text{ doesn't die along } (-\infty, t^*]) \label{eq:condition along -inf to t*}\\
 			&= \prob(U_i^n \geq k | \bar{X}_i^n = 1).
 		\end{align}
 
-		[THIS ONLY WORKS FOR 1D BECAUSE OF INDEPENDENCE STUFF... SAY MORE ABOUT THIS?]
+		Note that we are only able to go from \eqref{eq:condition along 0 to t*} to \eqref{eq:condition along -inf to t*} because the survival of $\mathcal{H}_i$ along an interval $(a, b)$, conditional on it being alive at time $b$, is independent of the behaviour of $\mathcal{H}_i$ along the interval $[b, t^*]$. This is because the update support is always a single vertex while the history survives, and because the updates along each vertex are independent and identically distributed. We would not be able to make this step if, for instance, the update support can contain more than one vertex (as we have in Chapter \ref{Ch:GeneralResults}).
 
-		For every $j \in V$, if $\bar{X}_j = 1$, then $X_j = 1$. So $\bar{U}_i \leq U_i$ and
+		Now, for every $j \in V$, if $\bar{X}_j^n = 1$, then $X_j^n = 1$. So $\bar{U}_i^n \leq U_i^n$ and
 		\begin{equation}
-			\prob(U_i \geq k | X_i = 1) \geq \prob(\bar{U}_i \geq k | \bar{X}_i = 1).
+			\prob(U_i^n \geq k | X_i^n = 1) \geq \prob(\bar{U}_i^n \geq k | \bar{X}_i^n = 1),
 		\end{equation}
+		which completes the lower bound.
 
-		We now treat the upper bound. For each $j \in B_i$, define the event
+		We now treat the upper bound. For each $j \in B_i^n$, define the event
 		\begin{equation}
-			A_j = \{ \mathcal{H}_j(0) \neq \emptyset, \mathcal{H}_j \cap \mathcal{H}_i = \emptyset\}, 
+			A_j^n = \{ \mathcal{H}_j^n(0) \neq \emptyset, \mathcal{H}_j^n \cap \mathcal{H}_i^n = \emptyset\}, 
 		\end{equation}
 		and define the union of these events,
 		\begin{equation}
-			A = \bigcup_{j \in B_i} A_j.
+			A^n = \bigcup_{j \in B_i^n} A_j^n.
 		\end{equation}
-		We note that on the event $A^\mathrm{c} \cap \{\bar{X}_i = 1\}$, we have that $U_i = \bar{U}_i$. So 
+		We note that on the event $({A^n})^\mathrm{c} \cap \{\bar{X}_i^n = 1\}$, we have that $U_i^n = \bar{U}_i^n$. So 
 		\begin{align}
-			\prob\left(U_i \geq k | X_i = 1 \right) &= \prob\left(U_i \geq k, A | X_i = 1 \right) + \prob\left(U_i \geq k, A^\mathrm{c} | X_i = 1 \right)\\
-			&= \prob[X_i = 1] ^{-1} \prob\left(U_i \geq k, A, X_i = 1\right) + \prob\left(\bar{U}_i \geq k, A^\mathrm{c}| \bar{X}_i = 1\right)\\ 
-			&\leq \prob[X_i = 1] ^{-1} \prob\left(A, X_i = 1\right) + \prob\left(\bar{U}_i \geq k| \bar{X}_i = 1\right).%\\
+			\prob\left(U_i^n \geq k | X_i^n = 1 \right) &= \prob\left(U_i^n \geq k, A^n | X_i^n = 1 \right) + \prob\left(U_i^n \geq k, (A^n)^\mathrm{c} | X_i^n = 1 \right) \label{eq:condition non bar X}\\
+			&= \prob\left(U_i^n \geq k, A^n | X_i^n = 1 \right) + \prob\left(U_i^n \geq k, (A^n)^\mathrm{c} | \bar{X}_i^n = 1 \right) \label{eq:condition bar X}\\
+			&= \prob[X_i^n = 1] ^{-1} \prob\left(U_i^n \geq k, A^n, X_i^n = 1\right) \\
+			&\phantom{=} + \prob\left(\bar{U}_i^n \geq k, (A^n)^\mathrm{c}| \bar{X}_i^n = 1\right)\\ 
+			&\leq \prob[X_i^n = 1] ^{-1} \prob\left(A^n, X_i^n = 1\right) + \prob\left(\bar{U}_i^n \geq k| \bar{X}_i^n = 1\right).%\\
 			% &\leq \prob[X_i = 1] ^{-1} \sum_{j \in B_i} \prob[A_j, X_i = 1]
 		\end{align}
-%
+		where we proceed from \eqref{eq:condition non bar X} to \eqref{eq:condition bar X} in the same way as we did going from \eqref{eq:condition along 0 to t*} to \eqref{eq:condition along -inf to t*}.
+
 		Now by a union bound,
 		\begin{align}
-			\prob[A, X_i = 1] &\leq \sum_{j \in B_i} \prob[A_j, X_i = 1]\\
-				&= \sum_{j \in B_i} \prob[\hist_j(0) \neq \emptyset, \hist_i(0) \neq \emptyset, \hist_j \cap \hist_i \neq \emptyset]
+			\prob[A^n, X_i^n = 1] &\leq \sum_{j \in B_i^n} \prob[A_j^n, X_i^n = 1]\\
+				&= \sum_{j \in B_i^n} \prob[\hist_j^n(0) \neq \emptyset, \hist_i^n(0) \neq \emptyset, \hist_j^n \cap \hist_i^n \neq \emptyset]
 		\end{align}
-		and by Lemma \ref{lem:prob Xj Xi and no intersect},
+		and from Lemma \ref{lem:prob Xj Xi and no intersect} we get,
 		\begin{equation}
-			\prob[A, X_i = 1] \leq |B_i| \prob[X_i = 1]^2.
+			\prob[A^n, X_i^n = 1] \leq |B_i| \prob[X_i^n = 1]^2.
 		\end{equation}
-
-		From \eqref{eq:1D prob X_i} we get the desired result.
+		Equation \eqref{eq:1D prob X_i} gives us the desired result.
 	\end{proof}
 
+	[GOING THROUGH TIM'S COMMENTS UP TO HERE]
+	
 	\begin{lemma}
 		\label{lem: lim U bar exists}
 		The limit of $\prob(\bar{U}_i \geq k | \bar{X}_i = 1)$ exists.
@@ -731,7 +735,7 @@
 	\label{lem:prob Xj Xi and no intersect}
 		Let $i$ and $j$ be the indices of two vertices in a graph. Then
 		\begin{equation}
-			\prob\left(\hist_j(0) \neq \emptyset, \hist_i(0) \neq \emptyset, \hist_j \cup \hist_i \neq \emptyset \right) \leq 
+			\prob\left(\hist_j(0) \neq \emptyset, \hist_i(0) \neq \emptyset, \hist_j \cup \hist_i \neq \emptyset \right) \leq \prob[X_i = 1]^2.
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
