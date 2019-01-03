@@ -52,6 +52,7 @@ function [yy, Q, tt, optim_values, misc_variables] = fixed_mass_deconvolve(W, xx
 
     display('Doing First Minimization')
     [psolA,fvalA]=findpsolBoot2(m,'fobjUnconst');
+   
     display('Finished First Minimization')
     Termequality
 
@@ -67,6 +68,12 @@ function [yy, Q, tt, optim_values, misc_variables] = fixed_mass_deconvolve(W, xx
     display('Doing Second Minimization')
     [psolB,fvalB]=findpsolBoot(m,'fobjBoot',pstartB);
     display('Finished Second Minimization')
+    
+    
+    optim_values.tp_thinned_optim = fmax;
+    optim_values.penalty1_thinned_optim = Termequality;
+    optim_values.objective_func_thinned_optim = fvalA;
+    optim_values.var_thinned_optim = fvalB;
 
     %--------------------------------------------------------------------------------------------------------------------------
     % Second step: recompute solution on a larger grid of x_j values in a neighborhood of what we just found on the small grid
@@ -93,8 +100,9 @@ function [yy, Q, tt, optim_values, misc_variables] = fixed_mass_deconvolve(W, xx
 
     pstart=pstart/sum(pstart);
     pstartB=pstartB/sum(pstartB);
-
-
+    
+    misc_variables.pstart = pstart;
+    misc_variables.pstartB = pstartB;
 
     fctargs=struct('xgrid',xgrid,'n',n,'tt',tt,'rehatphiW',rehatphiW,'imhatphiW',imhatphiW,'normhatphiW',normhatphiW,'sqabshatpsi',sqabshatpsi,'varW',varW);
 

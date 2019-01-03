@@ -1,7 +1,7 @@
-function [Q, tt, optim_values_VEM] = VEM_deconvolve(W, xx, Q_init)
+function [Q, tt, optim_values_VEM] = VEM_deconvolve(W, Q_init)
     
     % Initial distribution
-    if nargin < 3
+    if nargin < 2
         Q.Support = mean(W);
         Q.ProbWeights = 1;
     else
@@ -12,8 +12,6 @@ function [Q, tt, optim_values_VEM] = VEM_deconvolve(W, xx, Q_init)
     use_penalties = true;
     n = length(W);
     % ------------------------------------------------------------------------
-    varW = var(W);
-    dx=xx(2)-xx(1);
     longt = 99;
     mu_K2 = 6;
     RK = 1024 / 3003 / pi;
@@ -44,8 +42,8 @@ function [Q, tt, optim_values_VEM] = VEM_deconvolve(W, xx, Q_init)
     looping = true;
     counter = 0;
     tp_old = Inf;
-    tp_update_tol = 0;
-    max_n_loops = 1000;
+    tp_update_tol = 1e-6;
+    max_n_loops = 500;
 
     while looping
         % Add theta which minimizes tp to support

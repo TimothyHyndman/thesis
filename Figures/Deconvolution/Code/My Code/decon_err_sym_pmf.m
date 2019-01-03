@@ -78,6 +78,15 @@ function [Q, tt, normhatphiW, optim_values] = decon_err_sym_pmf(W, m, n_tp_iter,
             counter = counter + 1;
         end
     end
+    
+    % USE VEM TO GET BETTER RESULT
+    Q_tp.Support = xj;
+    Q_tp.ProbWeights = pj;
+    [Q, ~, optim_values_VEM] = VEM_deconvolve(W, Q_tp);
+    
+    optim_values_VEM
+    pj = Q.ProbWeights;
+    xj = Q.Support;
 
     % ------------------
     % Min Var
