@@ -102,6 +102,15 @@ function [yy, Q, tt, optim_values, misc_variables] = fixed_mass_deconvolve(W, xx
     [psolA,fvalA]=findpsolWithStart(pstart,m,'fobjUnconst');
     %Compute the corresponding value of the objective function (fvalA does NOT provide this as it contains some penalties we do not want to take into account here)
     fmax=fobjUnconstB(psolA(1:(m-1)));
+    
+    optim_values.tp_first_optim = fmax;
+    optim_values.penalty1_first_optim = Termequality;
+    optim_values.objective_func_first_optim = fvalA;
+    
+    %Calculate variance for diagnostics
+    EX=sum(xgrid.*psolA);
+	optim_values.var_first_optim = sum((xgrid-EX).^2.*psolA);
+	
 
 
     %Now recompute the estimator but impose a minimum variance constraint. 
@@ -179,6 +188,8 @@ function [yy, Q, tt, optim_values, misc_variables] = fixed_mass_deconvolve(W, xx
     optim_values.tp_final = fobjUnconstB(psol(1:(m-1)));
     optim_values.var_final = fobjBoot(psol(1:(m-1)));
     optim_values.penalty1_final = Termequality;
+    
+    optim_values = orderfields(optim_values);
     
     misc_variables.tt = tt;
     misc_variables.rehatphiW = rehatphiW;
