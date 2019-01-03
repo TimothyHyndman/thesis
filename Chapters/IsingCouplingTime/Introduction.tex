@@ -403,12 +403,12 @@
 	Using information percolation, Lubetzky and Sly proved the existence of cutoff for the continous time Glauber dynamics for the Ising model with an $\mathcal{O}(1)$ window on $\mathbb{Z}^d$ for all temperatures up to the critical temperature. In a companion paper \cite{Lubetzky2017-nc}, they extended this result to include any graph with maximum degree $d$ provided that $\beta < \kappa/d$ for some absolute constant $\kappa$. Recently, information percolation has also been used to establish cutoff for the Swendsen-Wang dynamics on the lattice \cite{Nam2018-io}, suggesting that the technique is effective on a broader class of problems than simply Glauber dynamics for Ising.
 	
 	\subsection{The framework}
-	At its core, information percolation is a way of tracking how the dependencies of the final spins of the Glauber heat-bath dynamics percolate through the graph over time. These dependencies are traced backwards through time from some designated time $t^*$ on the space-time slab $V \times [0, t^*]$ to create the update history (see Figure \ref{fig:typical percolation} for example). These histories are made in such a way so that, if for every $j \in V$ no path exists connecting $(i, t^*)$ to $(j, 0)$, then the spin of $i$ does not depend on the initial state (and thus at time $t^*$ vertex $i$ takes $+1$ and $-1$ spins with equal probability by symmetry). The main constructs used to create this history are the update sequence, and the update support function which we will now define.
+	At its core, information percolation is a way of tracking how the dependencies of the final spins of the Glauber heat-bath dynamics percolate through the graph over time. These dependencies are traced backwards through time from some designated time $t_*$ on the space-time slab $V \times [0, t_*]$ to create the update history (see Figure \ref{fig:typical percolation} for example). These histories are made in such a way so that, if for every $j \in V$ no path exists connecting $(i, t_*)$ to $(j, 0)$, then the spin of $i$ does not depend on the initial state (and thus at time $t_*$ vertex $i$ takes $+1$ and $-1$ spins with equal probability by symmetry). The main constructs used to create this history are the update sequence, and the update support function which we will now define.
 
 	\begin{figure}
 		\centering
 		\includegraphics[width = 0.8\textwidth]{Figures/IsingCouplingTime/typical_percolation.pdf}
-		\caption[Typical appearance of the update histories for two vertices on the cycle]{A section of the space-time slab $V \times [0, t^*]$ along with a typical appearance of the update histories for two vertices on the cycle. Time runs vertically from bottom to top, and the vertices are represented by circles, laid out horizontally. If there is a path in the update history of $v$ between points $(u, t)$ and $(v, t^*)$, then the spin of $v$ at time $t^*$ depends on the spin of $u$ at time $t$. In this example, since there is no path from vertex $(i, t^*)$ to time $0$, the final spin at $i$ does not depend on the initial configuration whereas the final spin at $j$ does.}
+		\caption[Typical appearance of the update histories for two vertices on the cycle]{A section of the space-time slab $V \times [0, t_*]$ along with a typical appearance of the update histories for two vertices on the cycle. Time runs vertically from bottom to top, and the vertices are represented by circles, laid out horizontally. If there is a path in the update history of $v$ between points $(u, t)$ and $(v, t_*)$, then the spin of $v$ at time $t_*$ depends on the spin of $u$ at time $t$. In this example, since there is no path from vertex $(i, t_*)$ to time $0$, the final spin at $i$ does not depend on the initial configuration whereas the final spin at $j$ does.}
 		\label{fig:typical percolation}
 	\end{figure}
 
@@ -435,13 +435,13 @@
 
 	For ease of notation, we will often use the shorthand
 	\begin{equation}
-		\mathcal{H}_i(t) := \mathscr{F}(i, t, t^*)
+		\mathcal{H}_i(t) := \mathscr{F}(i, t, t_*)
 	\end{equation}
-	where $t^*$ is some target time that should be clear from context. We call this the \emph{update support} of vertex $i$ at time $t$. Tracing $\mathcal{H}_i(t)$ backwards in time from $t^*$ produces a subgraph of $V \times [0, t^*]$ which we write as $\mathcal{H}_i$ and which we call the \emph{update history} of vertex $i$. To be slightly more precise, to produce $\mathcal{H}_i$ we connect $(j,t)$ to $(j,t')$ if $j \in \mathcal{H}_i(t)$ and there are no updates of $j$ along $(t', t]$ and we connect $(j,t)$ to $(j',t)$ if there was an update at $(j, t)$, $j \in \mathcal{H}_i(t)$, $j' \notin \mathcal{H}_i(t)$, and $j' \in \mathcal{H}_i(t-\epsilon)$ for all sufficiently small $\epsilon > 0$.
+	where $t_*$ is some target time that should be clear from context. We call this the \emph{update support} of vertex $i$ at time $t$. Tracing $\mathcal{H}_i(t)$ backwards in time from $t_*$ produces a subgraph of $V \times [0, t_*]$ which we write as $\mathcal{H}_i$ and which we call the \emph{update history} of vertex $i$. To be slightly more precise, to produce $\mathcal{H}_i$ we connect $(j,t)$ to $(j,t')$ if $j \in \mathcal{H}_i(t)$ and there are no updates of $j$ along $(t', t]$ and we connect $(j,t)$ to $(j',t)$ if there was an update at $(j, t)$, $j \in \mathcal{H}_i(t)$, $j' \notin \mathcal{H}_i(t)$, and $j' \in \mathcal{H}_i(t-\epsilon)$ for all sufficiently small $\epsilon > 0$.
 
 	Similarly, we also use 
 	\begin{equation}
-		\hist_A(t) := \mathscr{F}(A, t, t^*)
+		\hist_A(t) := \mathscr{F}(A, t, t_*)
 	\end{equation}
 	for the update history of a vertex set $A$ at time $t$ and $\hist_A$ for the update history of vertex set $A$. Note that
 	\begin{equation}
@@ -458,9 +458,9 @@
 	\label{sec: definition update function}
 	It is usually non-trivial to construct the update support function from the update sequence. So in order to give some intuition to the definitions above, we describe another function which contains the update support and which is simple to construct. We define the \emph{update function}, $\mathscr{F}_\mathrm{UPD}(A, t_1, t_2)$, to be the set of all vertices that $A$ can `reach' through the update function. That is, $i \in \mathscr{F}_\mathrm{UPD}(A, t_1, t_2)$ if and only if there exists a subsequence of the updates, $(\mathcal{V}_k, U_k, S_k)$, such that $t_1 < S_1 < S_2, \dots, \leq S_m$ and $i, \mathcal{V}_1, \mathcal{V}_2, \dots, \mathcal{V}_m$ is a path connecting $i$ to some vertex $\mathcal{V}_m \in A$. 
 
-	Just as we traced the update support backwards through time to create the update history, we can also trace $\mathscr{F}_\mathrm{UPD}(i, t, t^*)$ backwards through time to create the analogous \emph{update trace}, $\mathcal{G}_i$. It is clear that $\mathscr{F}(A, t_1, t_2) \subseteq \mathscr{F}_\mathrm{UPD}(A, t_1, t_2)$ since a vertex $i$ can only affect the spins of $A$ if there is a path of updates connecting it to $A$. Likewise we also have that $\mathcal{G}_i \subseteq \hist_i$.
+	Just as we traced the update support backwards through time to create the update history, we can also trace $\mathscr{F}_\mathrm{UPD}(i, t, t_*)$ backwards through time to create the analogous \emph{update trace}, $\mathcal{G}_i$. It is clear that $\mathscr{F}(A, t_1, t_2) \subseteq \mathscr{F}_\mathrm{UPD}(A, t_1, t_2)$ since a vertex $i$ can only affect the spins of $A$ if there is a path of updates connecting it to $A$. Likewise we also have that $\mathcal{G}_i \subseteq \hist_i$.
 	
-	Consider how we can construct the update trace of a vertex $i$ from some target time $t^*$. We have at our disposal the update sequence along $(0, t^*]$ which is placed in order of decreasing time. If vertex $i$ does not appear in the update sequence then we create a temporal edge between $(i, t^*)$ and $(i, 0)$ and our update history is complete. Otherwise, we create a temporal edge between $(i, t^*)$ and $(i, t_i)$ where $t_i$ is the last time vertex $i$ was updated. At this point we add spatial edges from $(i, t_i)$ to $(j, t_i)$ for each $j\sim i$. Then, we iterate this process for $i$ and each of its neighbours starting at time $t_i$ until every edge has reached time $0$. In Figure \ref{fig:example trace construction} we have followed this procedure to show an example update trace for a single vertex on the cycle. 
+	Consider how we can construct the update trace of a vertex $i$ from some target time $t_*$. We have at our disposal the update sequence along $(0, t_*]$ which is placed in order of decreasing time. If vertex $i$ does not appear in the update sequence then we create a temporal edge between $(i, t_*)$ and $(i, 0)$ and our update history is complete. Otherwise, we create a temporal edge between $(i, t_*)$ and $(i, t_i)$ where $t_i$ is the last time vertex $i$ was updated. At this point we add spatial edges from $(i, t_i)$ to $(j, t_i)$ for each $j\sim i$. Then, we iterate this process for $i$ and each of its neighbours starting at time $t_i$ until every edge has reached time $0$. In Figure \ref{fig:example trace construction} we have followed this procedure to show an example update trace for a single vertex on the cycle. 
 
 	\begin{figure}
 		\centering
@@ -516,7 +516,7 @@
 			-1	& U > \theta/2.
 		\end{cases}
 	\end{equation}
-	We can therefore represent each update $(\mathcal{V}, U, t)$ in the update sequence by placing at $(\mathcal{V}, t)$ one of the symbols $+$, $\vee$, $\wedge$, or $-$ choosen according to $U$. We then trace back from time $t^*$, branching to either side when we encounter a $\vee$ or $\wedge$, and terminating whenever we encounter a $+$ or $-$.
+	We can therefore represent each update $(\mathcal{V}, U, t)$ in the update sequence by placing at $(\mathcal{V}, t)$ one of the symbols $+$, $\vee$, $\wedge$, or $-$ choosen according to $U$. We then trace back from time $t_*$, branching to either side when we encounter a $\vee$ or $\wedge$, and terminating whenever we encounter a $+$ or $-$.
 
 	\begin{figure}
 		\centering
@@ -611,11 +611,11 @@
 
 	For a given graph, $G_L = (V, E)$, in a given sequence of graphs, $(G_L)_{L \geq 1}$, we fix $z \in \mathbb{R}$ and a time of interest 
 	\begin{equation}
-		t^* = a_L z + d_L.
+		t_* = a_L z + d_L.
 	\end{equation}
-	The specific choices for $a_L$ and $d_L$ depend on the sequence $(G_L)_{L \geq 1}$. We choose these such that for large enough $L$, $t^* > 0$, and then only consider these $L$. For each $i \in V$, define the indicator
+	The specific choices for $a_L$ and $d_L$ depend on the sequence $(G_L)_{L \geq 1}$. We choose these such that for large enough $L$, $t_* > 0$, and then only consider these $L$. For each $i \in V$, define the indicator
 	\begin{equation}
-		X_i = \indicator\left[\mathscr{B}_{t^*}[i] \neq \mathscr{T}_{t^*}[i]\right]
+		X_i = \indicator\left[\mathscr{B}_{t_*}[i] \neq \mathscr{T}_{t_*}[i]\right]
 	\end{equation}
 	and set 
 	\begin{equation}
@@ -635,9 +635,9 @@
 	\end{equation}
 
 
-	To relate $W$ to the coupling time, observe that $W$ is zero precisely when $T \leq t^*$ and so the events $\{W = 0\}$ and $\{T \leq t^*\}$ coincide. So using Corollary \ref{cor: bound prob W = 0},
+	To relate $W$ to the coupling time, observe that $W$ is zero precisely when $T \leq t_*$ and so the events $\{W = 0\}$ and $\{T \leq t_*\}$ coincide. So using Corollary \ref{cor: bound prob W = 0},
 	\begin{equation}
 		\label{eq:bound distribution T}
-		\left|\prob\left(T \leq t^*\right)  - \euler^{-\lambda}\right| \leq (\delta_1 + \delta_4) \euler^\lambda.
+		\left|\prob\left(T \leq t_*\right)  - \euler^{-\lambda}\right| \leq (\delta_1 + \delta_4) \euler^\lambda.
 	\end{equation}
-	The bulk of the work is therefore in calculating $\lambda$, and in showing that $\delta_1$ and $\delta_4$ go to zero as $L \rightarrow \infty$. (Note that $W, T, t^*, \lambda, \vect{\mu}, \delta_1$, and $\delta_4$ all depend on $L$ but we have omitted this in the notation for convenience).
+	The bulk of the work is therefore in calculating $\lambda$, and in showing that $\delta_1$ and $\delta_4$ go to zero as $L \rightarrow \infty$. (Note that $W, T, t_*, \lambda, \vect{\mu}, \delta_1$, and $\delta_4$ all depend on $L$ but we have omitted this in the notation for convenience).
