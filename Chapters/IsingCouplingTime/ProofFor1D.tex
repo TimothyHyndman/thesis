@@ -122,6 +122,7 @@
 	% It is easy to verify that for each possible configuration, the joint distribution for $\sigma_i'$ in the top and bottom chains is the same whether we use these rules or the ones given in \eqref{eq:plusorminusrules}. Hence the coupling time is unchanged in distribution in this new random mapping representation.
 
 	\subsection{Update histories on the cycle}
+	\label{sec:update histories on the cycle}
 	Under the update rules in \eqref{eq:new update rules}, each time a vertex is updated, it is either an oblivious update with probability $\theta$, or it takes the spin of a uniformly chosen neighbour. Unlike the histories considered earlier (for example Figure \ref{fig:example percolation construction oblivious}), this time a non-oblivious update does not cause the history to branch out to both its neighbours. Rather, given a non-oblivious update to some vertex $v$, we only need to know the spins of one of its neighbours to update it (the left spin if $U  < 1/2$ and the right if $U \geq 1/2$). So the history simply moves either right or left without branching. As before, encountering an oblivious update causes $\mathcal{H}_i$ to terminate. 
 
 	Let us give an explicit construction for the update histories just described. Let $N_t$ be the rate $n$ Poisson process used to continuize the discrete process and let $(\mathcal{V}_k, U_k)_{k\geq1}$ be the discrete noise sequence (as in Section \ref{sec:the coupling time}). For each vertex $i \in V$ define the thinned processes,
@@ -337,44 +338,76 @@
 		\end{align}
 	\end{proof}
 
-	[GOING THROUGH TIM'S COMMENTS UP TO HERE]
-
-	Up until this point, we have chosen in our notation of several variables to omit references to their dependence on $n$. However, it will prove useful for the next section to use a superscript $n$ on some variables to make this explicit.
+	Having bounded $\lambda$, we now turn to proving that it converges.
+	Up until this point, we have chosen in our notation of several variables to omit references to their dependence on $n$. However, it will prove useful here to use a superscript $n$ on some variables to make this explicit. 
 
 	\begin{lemma}
-		$\lim_{n \rightarrow \infty} \lambda$ exists
+		The limit of $\lambda^n$ as $n \rightarrow \infty$ exists.
 	\end{lemma}
+	\begin{proof}
+		From Lemmas \ref{lem: bound U by U bar} and \ref{lem: lim U bar exists}
+		we have that $U_i^n | X_i^n = 1$ converges in distribution. Via the Portmanteau Theorem \cite[Theorem 25.8]{Billingsley1995-en} we immediately obtain that
+		\begin{equation}
+			\lambda^n = \euler^{-z} \expect \left[\left.\frac{1}{1 + U_i^n}\right| X_i^n = 1\right]
+		\end{equation}
+		converges. 
+	\end{proof}
 
-	To prove that $\lambda$ converges we will show that $U_i^n$ converges in distribution to some other random variable. This then allows us to use [WHAT??] to prove that $\lambda$ converges. The proofs require the construction of some new random variables which we define now.
+	The statements and proofs of Lemmas \ref{lem: bound U by U bar} and \ref{lem: lim U bar exists} require the construction of some new random variables which we define now.
 
-	The update sequence on the cycle may be represented using the thinned processes $K_t^i$, $L_t^i$, and $R_t^i$. We may extend the update sequence into the interval $t < 0$ by mirroring these processes backwards in time from $t=0$ [HOW DO I SAY THIS PROPERLY?]. We then can use this extended update sequence to define the update support and update histories on the interval $(-\infty, t^*]$. For each $i \in V$, we define the indicators
+	The update sequence on the cycle may be represented using the Poisson processes $K_t^i$, $L_t^i$, and $R_t^i$, as introduced in Section \ref{sec:update histories on the cycle}. In that section, we constructed these processes by counting the rings of a rate $n$ Poisson clock going forwards in time from $0$ to $t^*$. However, we may also choose to define similar processes going backwards in time. Let $N'_t$ and $(\mathcal{V}'_k, U'_k)_{k \geq 1}$ be i.i.d. copies of $N_t$ and $(\mathcal{V}_k, U_k)_{k \geq 1}$ (as in Section \ref{sec:update histories on the cycle}). Define
+	\begin{align}
+		\hat{K}^i_t &= \#\{k \leq N'_{t^*-t}: \mathcal{V}'_k = i, U'_k \in \left[0, \theta/2\right) \cup \left(1 - \theta/2, 1\right]\}\\
+		\hat{L}^i_t &= \#\{k \leq N'_{t^*-t}: \mathcal{V}'_k = i, U'_k \in \left[\theta/2, 1/2\right)\}\\
+		\hat{R}^i_t &= \#\{k \leq N'_{t^*-t}: \mathcal{V}'_k = i, U'_k \in \left[1/2, 1 - \theta/2\right)\}.
+	\end{align}
+
+	Along $[0, t^*]$, these backwards processes have the same distribution as their corresponding forwards ones. So we may freely use them to make statements about the distributions of $U_i$ and $X_i$. However, we can also extend these processes along the interval $(-\infty, 0)$ by letting $N'_s$ continue to ring for $s > t^*$. This allows us to define the update support and update histories on the interval $(-\infty, t^*]$.
+
+	% We may extend the update sequence into the interval $t < 0$ by mirroring these processes backwards in time from $t=0$ [HOW DO I SAY THIS PROPERLY?]. We then can use this extended update sequence to define the update support and update histories on the interval $(-\infty, t^*]$. 
+
+	Using these extended histories, for each $i \in V$, define the indicators
 	\begin{equation}
 		\bar{X}_i^n = \begin{cases}
-			1 & \forall t \in (-\infty, t^*], \mathcal{H}_i(t) \neq \emptyset,\\
-			0 & \text{otherwise}.
+			1 & \forall t \in (-\infty, t^*], \mathcal{H}_i^n(t) \neq \emptyset,\\
+			0 & \text{otherwise},
 		\end{cases}
 	\end{equation}
 	and the random variables
 	\begin{equation}
 		\bar{U}_i^n = \sum_{j \in B_i} \bar{X}_j^n.
 	\end{equation}
-	With probability 1, $\bar{X}_i^n = 0$ and $\bar{U}_i^n = 0$ since the update histories eventually encounter an oblivious update with probability 1. Note that we use the superscript $n$ so that we can easily distinguish these random variables defined on different sized cycles.
+	We define $X_i^n$ and $U_i^n$ as before, but using these extended histories.
+	\begin{equation}
+		X_i^n = \begin{cases}
+			1 & \forall t \in [0, t^*], \mathcal{H}_i^n(t) \neq \emptyset,\\
+			0 & \text{otherwise},
+		\end{cases}
+	\end{equation}
+	and
+	\begin{equation}
+		U_i^n = \sum_{j \in B_i} X_j^n.
+	\end{equation}
+	Note that these are not strictly identical to the $X_i$ and $U_i$ defined earlier, but they have the same distribution. Also note that with probability 1, $\bar{X}_i^n = 0$ and $\bar{U}_i^n = 0$ since the update histories eventually encounter an oblivious update with probability 1.
 
-	The following lemma relates the distribution of $U_i$ with that of $\bar{U}_i^n$.
+	The following lemma relates the distribution of $U_i^n$ with that of $\bar{U}_i^n$.
+
+	[GOING THROUGH TIM'S COMMENTS UP TO HERE]
 
 	\begin{lemma}
+	\label{lem: bound U by U bar}
 		\begin{equation}
-			\prob(\bar{U}_i \geq k | \bar{X}_i = 1) \leq \prob(U_i \geq k | X_i = 1) \leq \prob(\bar{U}_i \geq k | \bar{X}_i = 1) + \euler^{-z} \frac{|B_i|}{n}
+			\prob(\bar{U}_i^n \geq k | \bar{X}_i^n = 1) \leq \prob(U_i^n \geq k | X_i^n = 1) \leq \prob(\bar{U}_i^n \geq k | \bar{X}_i^n = 1) + \euler^{-z} \frac{|B_i|}{n}
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
-		We start with the lower bound. We first note that the event $\{U_i \geq k\}$ depends only on the update sequence along $[0, t^*]$. So we may freely condition on the updates in $(-\infty, 0)$ (which are independent of those in $[0, t^*]$) without affecting the probability of this event. Hence
+		We start with the lower bound. We first note that the event $\{U_i^n \geq k\}$ depends only on the update sequence along $[0, t^*]$. So we may freely condition on the updates in $(-\infty, 0)$ (which are independent of those in $[0, t^*]$) without affecting the probability of this event. Hence
 		% $\{X_i = 1\}$ coincides with the event $\{\hist_i \text{ encounters no oblivious updates along } [0, t^*]\}$. 
 		% and $\bar{X}_i = 1$ have the same result along $[0, t^*]$. [WRITE THIS PROPERLY]. So
 		\begin{align}
-			\prob(U_i \geq k | X_i = 1) &= \prob(U_i \geq k | \hist_i \text{ doesn't die along } [0, t^*])\\
-			&= \prob(U_i \geq k | \hist_i \text{ doesn't die along } (-\infty, t^*])\\
-			&= \prob(U_i \geq k | \bar{X}_i = 1).
+			\prob(U_i^n \geq k | X_i^n = 1) &= \prob(U_i^n \geq k | \hist_i^n \text{ doesn't die along } [0, t^*])\\
+			&= \prob(U_i^n \geq k | \hist_i^n \text{ doesn't die along } (-\infty, t^*])\\
+			&= \prob(U_i^n \geq k | \bar{X}_i^n = 1).
 		\end{align}
 
 		[THIS ONLY WORKS FOR 1D BECAUSE OF INDEPENDENCE STUFF... SAY MORE ABOUT THIS?]
@@ -411,6 +444,14 @@
 		\end{equation}
 
 		From \eqref{eq:1D prob X_i} we get the desired result.
+	\end{proof}
+
+	\begin{lemma}
+		\label{lem: lim U bar exists}
+		The limit of $\prob(\bar{U}_i \geq k | \bar{X}_i = 1)$ exists.
+	\end{lemma}
+	\begin{proof}
+		MONOTONIC STUFF HERE
 	\end{proof}
 	
 	% To complete the proof, we need to show that the limit of 
