@@ -15,7 +15,6 @@ OO=outerop(tt,xgrid,'*');
 pmat=repmat(psol,length(tt),1);
 cosO=cos(OO).*pmat;
 sinO=sin(OO).*pmat;
-clear OO;
 
 rephip=sum(cosO,2);
 imphip=sum(sinO,2);

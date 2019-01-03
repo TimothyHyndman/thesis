@@ -213,22 +213,21 @@ function [c,ceq] = phaseconstraint(x, tp_max, penalty1_max, penalty2_max, t, hat
 end
 
 function [penalty1, penalty2, penalty3] = penalties(pj, xj, t, hat_phi_W)
+    re_hat_phi_W = real(hat_phi_W);
+    im_hat_phi_W = imag(hat_phi_W);
+    norm_hat_phi_W = sqrt(re_hat_phi_W.^2 + im_hat_phi_W.^2);
+    [re_phi_p, im_phi_p, norm_phi_p] = computephiX(t, xj, pj);
 
-re_hat_phi_W = real(hat_phi_W);
-im_hat_phi_W = imag(hat_phi_W);
-norm_hat_phi_W = sqrt(re_hat_phi_W.^2 + im_hat_phi_W.^2);
-[re_phi_p, im_phi_p, norm_phi_p] = computephiX(t, xj, pj);
+    %Need phi_U to be real
+    a = re_phi_p(:) .* im_hat_phi_W(:);
+    b = im_phi_p(:) .* re_hat_phi_W(:);
+    penalty1  = sum(abs(a - b));
 
-%Need phi_U to be real
-a = re_phi_p' .* im_hat_phi_W;
-b = im_phi_p' .* re_hat_phi_W;
-penalty1  = sum(abs(a - b));
-
-%impose a penalty if |phi_U| is greater than 1:
-hat_phi_U = norm_hat_phi_W ./ norm_phi_p';
-penalty2 = sum(hat_phi_U(hat_phi_U > 1));
-
-penalty3 = 0;   %Removed this penalty
+    %impose a penalty if |phi_U| is greater than 1:
+    hat_phi_U = norm_hat_phi_W(:) ./ norm_phi_p(:);
+    penalty2 = sum(hat_phi_U(hat_phi_U > 1));
+    
+    penalty3 = 0;   %Removed this penalty
 end
 
 function [pj, xj] = simplify_masses(pj, xj)
