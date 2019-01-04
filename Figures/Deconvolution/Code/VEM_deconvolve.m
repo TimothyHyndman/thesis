@@ -1,4 +1,4 @@
-function [Q, tt, optim_values_VEM] = VEM_deconvolve(W, Q_init)
+function [Q, tt, optim_values_VEM, misc_variables] = VEM_deconvolve(W, Q_init)
     
     % Initial distribution
     if nargin < 2
@@ -9,7 +9,8 @@ function [Q, tt, optim_values_VEM] = VEM_deconvolve(W, Q_init)
     end
 
     % VEM like algorithm for TP
-    use_penalties = true;
+    use_penalty_1 = true;
+    use_penalty_2 = true;
     n = length(W);
     % ------------------------------------------------------------------------
     longt = 99;
@@ -29,7 +30,7 @@ function [Q, tt, optim_values_VEM] = VEM_deconvolve(W, Q_init)
     hat_phi_W = complex(rehatphiW, imhatphiW);
     weight = KernelWeight('Epanechnikov', tt);
 
-    objective_func = @(pj, xj) tp_and_penalties(tt, pj, xj, hat_phi_W, sqrt_psi_hat_W, weight, use_penalties);
+    objective_func = @(pj, xj) tp_and_penalties(tt, pj, xj, hat_phi_W, sqrt_psi_hat_W, weight, use_penalty_1, use_penalty_2);
     % -------------------------------------------------------------------------
     
     optim_values_VEM.tp_initial = calculate_tp(tt, Q.ProbWeights, Q.Support, hat_phi_W, sqrt_psi_hat_W, weight);
@@ -42,12 +43,18 @@ function [Q, tt, optim_values_VEM] = VEM_deconvolve(W, Q_init)
     looping = true;
     counter = 0;
     tp_old = Inf;
+    tp_prior = Inf;
     tp_update_tol = 0;
     max_n_loops = 5000;
 
     while looping
         % Add theta which minimizes tp to support
-        theta_min = find_theta_star(Q, W, objective_func);
+        [theta_min, dvalue] = find_theta_star(Q, W, objective_func);
+        
+        if dvalue >= 0
+            break
+        end
+        
         Q.Support = [Q.Support, theta_min];
         Q.ProbWeights = [Q.ProbWeights, 0];
 
@@ -57,22 +64,27 @@ function [Q, tt, optim_values_VEM] = VEM_deconvolve(W, Q_init)
 
         %Move mass from highest tp_masses to lowest
     %     objective_func = @(pj) calculate_tp(tt, pj, Q.Support, hat_phi_W, sqrt_psi_hat_W, weight);
-        objective_func_2 = @(pj) tp_and_penalties(tt, pj, Q.Support, hat_phi_W, sqrt_psi_hat_W, weight, use_penalties);
+        objective_func_2 = @(pj) tp_and_penalties(tt, pj, Q.Support, hat_phi_W, sqrt_psi_hat_W, weight, use_penalty_1, use_penalty_2);
+        
+        misc_variables.objective_func_2 = objective_func_2;
+        misc_variables.Q_prior_exchange = Q;
+        misc_variables.theta_star = I(1);
+        misc_variables.theta_sort = I;
+        misc_variables.tp_old = tp_old;
+        misc_variables.sum_masses = sum(Q.ProbWeights);
+        
         Q = exchange_mass(Q, I(1), I, objective_func_2);
         
         % Check for convergence
         tp_new = objective_func(Q.ProbWeights, Q.Support);
         
-        if tp_new > tp_old + 1e-15
+        if tp_new > tp_prior
             looping = false;
             display('problem in exchange')
-            tp_new
-            tp_old
-        end
-        if abs(tp_new - tp_old) <= tp_update_tol
-            looping = false;
+            tp_new - tp_prior
+            break
         else
-            tp_old = tp_new;
+            tp_prior = tp_new;
         end
         
         % Add theta which minimizes tp to support
@@ -82,24 +94,38 @@ function [Q, tt, optim_values_VEM] = VEM_deconvolve(W, Q_init)
         
         %Add mass using same method as derivative (to ensure we decrease if
         %the derivative is below zero).
-        objective_func_3 = @(pj) tp_and_penalties(tt, pj, Q.Support, hat_phi_W, sqrt_psi_hat_W, weight, use_penalties);
+        objective_func_3 = @(pj) tp_and_penalties(tt, pj, Q.Support, hat_phi_W, sqrt_psi_hat_W, weight, use_penalty_1, use_penalty_2);
         Q = add_mass(Q, objective_func_3);
-
-        % Merge points that are close together
-        Q = merge_points(Q, objective_func);
-
+    
         % Check for convergence
         tp_new = objective_func(Q.ProbWeights, Q.Support);
         
-        if tp_new > tp_old
+         if tp_new > tp_prior
             looping = false;
             display('problem in add')
-            tp_new
-            tp_old
+            tp_new - tp_prior
+            break
+        else
+            tp_prior = tp_new;
         end
+        
+        % Merge points that are close together
+        Q = merge_points(Q, objective_func);
+        tp_new = objective_func(Q.ProbWeights, Q.Support);
+        
+         if tp_new > tp_prior
+            looping = false;
+            display('problem in merge')
+            tp_new - tp_prior
+            break
+        else
+            tp_prior = tp_new;
+        end
+
         if abs(tp_new - tp_old) <= tp_update_tol
             looping = false;
         else
+            %Only has to update in either exchange or add
             tp_old = tp_new;
         end
 
@@ -185,6 +211,7 @@ end
 function Q = merge_points(Q, objective_func)
     [xj, I] = sort(Q.Support);
     pj = Q.ProbWeights(I);
+    
     if length(xj) == 1
         looping = false;
     else
@@ -222,7 +249,7 @@ function Q = merge_points(Q, objective_func)
     
 end
 
-function theta_min = find_theta_star(Q, W, objective_func)
+function [theta_min, dvalue] = find_theta_star(Q, W, objective_func)
     coarse_res = 100;
     theta = linspace(min(W), max(W), coarse_res);
     derivative = tp_derivative(theta, Q, objective_func);
@@ -231,15 +258,17 @@ function theta_min = find_theta_star(Q, W, objective_func)
     I_low = max(I - 1, 1);
     I_high = min(I + 1, coarse_res);
     
+    current_tp = objective_func(Q.ProbWeights, Q.Support);
     figure(1)
     plot(theta, derivative)
+    title(num2str(current_tp))
     drawnow;
     
     fine_res = 20;
     for j = 1:5
         theta = linspace(theta(I_low), theta(I_high), fine_res);
         derivative = tp_derivative(theta, Q, objective_func);
-        [~, I] = min(derivative);
+        [dvalue, I] = min(derivative);
         I_low = max(I - 1, 1);
         I_high = min(I + 1, fine_res);
     end
@@ -293,10 +322,16 @@ function Q = exchange_mass(Q, theta_star, I, objective_func)
     
     Q.ProbWeights = shift_mass(Q.ProbWeights, p_star, theta_star, I);
     
+%     Q.ProbWeights = Q.ProbWeights/sum(Q.ProbWeights);
+    
     
 end
 
 function pj = shift_mass(pj, p_star, theta_star, I)
+
+    if p_star == 0
+        return
+    end
     pj(theta_star) = p_star; %Put mass p_test at theta_star
         
     %Remove mass p_test from the prob weights in reverse order from I
@@ -311,6 +346,8 @@ function pj = shift_mass(pj, p_star, theta_star, I)
     % Last index is the one we want to remove some things from
     part_index = part_index(end);
     pj(part_index) = pj(part_index) - leftover;
+    
+    pj = pj/sum(pj);
 end
 
 function [penalty1, penalty2] = penalties(pj, xj, t, hat_phi_W)
@@ -330,12 +367,20 @@ function [penalty1, penalty2] = penalties(pj, xj, t, hat_phi_W)
     penalty2 = sum(hat_phi_U(hat_phi_U > 1));
 end
 
-function fval = tp_and_penalties(t, pj, xj, hat_phi_W, sqrt_psi_hat_W, weight, use_penalties)
-
+function fval = tp_and_penalties(t, pj, xj, hat_phi_W, sqrt_psi_hat_W, weight, use_penalty_1, use_penalty_2)
+    
+    [xj, I] = sort(xj);
+    pj = pj(I);
+    
     fval = calculate_tp(t, pj, xj, hat_phi_W, sqrt_psi_hat_W, weight);
     
-    if use_penalties
+    if use_penalty_1 || use_penalty_2
         [penalty1, penalty2] = penalties(pj, xj, t, hat_phi_W);
-        fval = fval + 500*penalty1 + 500*penalty2;
+        if use_penalty_1
+            fval = fval + 500*penalty1;
+        end
+        if use_penalty_2
+            fval = fval + 500*penalty2;
+        end
     end
 end

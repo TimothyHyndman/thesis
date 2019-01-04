@@ -190,6 +190,8 @@
 	[BE MORE PRECISE ABOUT PENALTIES?]
 
 
+	[DIFFERENT DEFINITION FOR T(P) THAT AURORE USES (AND NOW ME TOO)]
+
 	\subsection{Converting to continuous distribution}
 
 	If $X$ is continuous, then we will often want to use $\hat{F}_X = F_{\vect{\theta}, \vect{p}}$ to create an estimate of the density, $f_X$. Perhaps the most obvious solution is to use
@@ -266,31 +268,39 @@
 % \section{Examples and Relation to Mixture Phenomenon}
 
 \begin{figure}
-	\begin{minipage}{0.8\textwidth}
+	\begin{minipage}{0.5\textwidth}
 
 		\centering
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/emp_masses_example.png}
+		\begin{tabular}{r l}
+			$\var \hat{F}_X$ & 1.0370\\
+			$T(\hat{F}_X)$ & 2.7810e-07
+		\end{tabular}
+		\caption{The empirical distribution of W}
+		\label{fig:emp masses example}
+
 		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example.png}
 		\begin{tabular}{r l}
-			$\var \hat{F}_X$ & 0.7832\\
-			$T(\hat{F}_X)$ & 4.7357e-07
+			$\var \hat{F}_X$ & 0.7578\\
+			$T(\hat{F}_X)$ & 5.0759e-07
 		\end{tabular}
-		\caption{hello}
+		\caption{121 fixed masses}
 		\label{fig:fixed masses example}
 
 		\includegraphics[width = \textwidth]{Figures/Deconvolution/moving_masses_m20_example.png}
 		\begin{tabular}{r l}
-			$\var \hat{F}_X$ & 0.7189\\
-			$T(\hat{F}_X)$ & 1.6469e-06
+			$\var \hat{F}_X$ & 0.8401\\
+			$T(\hat{F}_X)$ & 4.0700e-07
 		\end{tabular}
-		\caption{hello}
+		\caption{20 moving masses}
 		\label{fig:moving masses m20 example}
 
 		\includegraphics[width = \textwidth]{Figures/Deconvolution/moving_masses_m5_example.png}
 		\begin{tabular}{r l}
-			$\var \hat{F}_X$ & 0.6300\\
-			$T(\hat{F}_X)$ & 6.9853e-06
+			$\var \hat{F}_X$ & 0.7080\\
+			$T(\hat{F}_X)$ & 5.8358e-07
 		\end{tabular}
-		\caption{hello}
+		\caption{5 moving masses}
 		\label{fig:moving masses m5 example}
 
 	\end{minipage}

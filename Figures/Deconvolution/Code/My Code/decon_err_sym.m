@@ -26,8 +26,8 @@ function [fXdeconvoluted, Q, tt, optim_values] = decon_err_sym(W, xx, m, pmf, bw
 
 
     % Deconvolve to pmf --------------------------------------------------------
-    n_tp_iter = 10;
-    n_var_iter = 10;
+    n_tp_iter = 20;
+    n_var_iter = 20;
     [Q, tt, normhatphiW, optim_values] = decon_err_sym_pmf(W, ...
                                              m, ...
                                              n_tp_iter, ...

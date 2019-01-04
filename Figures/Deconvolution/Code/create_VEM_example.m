@@ -25,8 +25,9 @@ h=bwsjpiSM(W');
 
 
 xx_VEM = linspace(min(W), max(W), 100);
-
-[Q_VEM, tt_VEM, optim_values_VEM] = VEM_deconvolve(W);
+% Q_init.Support = W;
+% Q_init.ProbWeights = ones(1, n)/n;
+[Q_VEM, tt_VEM, optim_values_VEM, misc_variables_VEM] = VEM_deconvolve(W);
 
 yy_VEM = decon_err_sym_pmf2pdf(xx_VEM, tt_VEM, Q_VEM.Support, Q_VEM.ProbWeights, W, []);
 

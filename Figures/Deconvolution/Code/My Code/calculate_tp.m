@@ -15,7 +15,10 @@ function tp = calculate_tp(t, pj, xj, hat_phi_W, sqrt_psi_hat_W, weight)
     phi_p = phi_p(:);
 
     %Calculate integrand
-    integrand = abs(hat_phi_W - sqrt_psi_hat_W .* phi_p ./ norm_phi_p).^2.*weight;
+%     integrand = abs(hat_phi_W - sqrt_psi_hat_W .* phi_p ./ norm_phi_p).^2.*weight;
+    
+    % This is what Aurore uses instead of the version in the paper
+    integrand = abs(hat_phi_W .* norm_phi_p - sqrt_psi_hat_W .* phi_p).^2.*weight;
     dt = t(2) - t(1);
     tp = dt * sum(integrand);
 end
