@@ -28,7 +28,7 @@ xx_moving = linspace(min(W), max(W), 100);
 
 [yy_moving, Q_moving, tt_moving, optim_values_moving] = moving_mass_deconvolve(W, xx_moving, 20);
 
-options.save = true;
+options.save = false;
 options.filename = 'moving_masses_m20_example.png';
 options.plot_histogram = false;
 options.plot_density = true;

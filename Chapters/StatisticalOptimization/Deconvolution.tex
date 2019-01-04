@@ -263,6 +263,7 @@
 		%Choice of bandwidth
 		%Integral considerations (stuff I did about how to integrate this thing)
 
+\FloatBarrier
 \section{Empirical Results}
 \label{sec:deconvolution empirical results}
 % \section{Examples and Relation to Mixture Phenomenon}
@@ -274,35 +275,48 @@
 		\includegraphics[width = \textwidth]{Figures/Deconvolution/emp_masses_example.png}
 		\begin{tabular}{r l}
 			$\var \hat{F}_X$ & 1.0370\\
-			$T(\hat{F}_X)$ & 2.7810e-07
+			$T(\hat{F}_X)$ & 2.7810e-07\\
+			$P1$ & 1.4878e-14\\
+			$P2$ & 34
 		\end{tabular}
 		\caption{The empirical distribution of W}
 		\label{fig:emp masses example}
-
-		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example.png}
-		\begin{tabular}{r l}
-			$\var \hat{F}_X$ & 0.7578\\
-			$T(\hat{F}_X)$ & 5.0759e-07
-		\end{tabular}
-		\caption{121 fixed masses}
-		\label{fig:fixed masses example}
-
+	\end{minipage}
+	\begin{minipage}{0.5\textwidth}
+	\centering
 		\includegraphics[width = \textwidth]{Figures/Deconvolution/moving_masses_m20_example.png}
 		\begin{tabular}{r l}
 			$\var \hat{F}_X$ & 0.8401\\
-			$T(\hat{F}_X)$ & 4.0700e-07
+			$T(\hat{F}_X)$ & 4.0700e-07\\
+			$P1$ & 1.6003e-03\\
+			$P2$ & 0
 		\end{tabular}
 		\caption{20 moving masses}
 		\label{fig:moving masses m20 example}
-
+	\end{minipage}
+	\begin{minipage}{0.5\textwidth}
+	\centering
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example.png}
+		\begin{tabular}{r l}
+			$\var \hat{F}_X$ & 0.7578\\
+			$T(\hat{F}_X)$ & 5.0759e-07\\
+			$P1$ & 2.5960e-04\\
+			$P2$ & 0
+		\end{tabular}
+		\caption{112 fixed masses}
+		\label{fig:fixed masses example}
+	\end{minipage}
+	\begin{minipage}{0.5\textwidth}
+	\centering
 		\includegraphics[width = \textwidth]{Figures/Deconvolution/moving_masses_m5_example.png}
 		\begin{tabular}{r l}
 			$\var \hat{F}_X$ & 0.7080\\
-			$T(\hat{F}_X)$ & 5.8358e-07
+			$T(\hat{F}_X)$ & 5.8358e-07\\
+			$P1$ & 7.0276e-03\\
+			$P2$ & 0
 		\end{tabular}
 		\caption{5 moving masses}
 		\label{fig:moving masses m5 example}
-
 	\end{minipage}
 \end{figure}
 
