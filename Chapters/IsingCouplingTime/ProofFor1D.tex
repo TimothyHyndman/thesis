@@ -342,138 +342,178 @@
 	Up until this point, we have chosen in our notation of several variables to omit references to their dependence on $n$. However, it will prove useful here to use a superscript $n$ on some variables to make this explicit. 
 
 	\begin{lemma}
-		The limit of $\lambda^n$ as $n \rightarrow \infty$ exists.
+		\begin{equation}
+			\prob(U_i^n \leq k | X_i^n = 1) - \prob(U_i^{n+m} \leq k | X_i^{n+m} = 1) \geq 
+		\end{equation}
 	\end{lemma}
 	\begin{proof}
-		From Lemmas \ref{lem: bound U by U bar} and \ref{lem: lim U bar exists}
-		we have that $U_i^n | X_i^n = 1$ converges in distribution. Via the Portmanteau Theorem \cite[Theorem 25.8]{Billingsley1995-en} we immediately obtain that
-		\begin{equation}
-			\lambda^n = \euler^{-z} \expect \left[\left.\frac{1}{1 + U_i^n}\right| X_i^n = 1\right]
-		\end{equation}
-		converges. 
+		On the length $n$ cycle, define the following events. Let $A_j$ be the event
+		\begin{align}
+			A_j = \{\hist_j^n \not \subseteq B(i, n/2 - 1) \times [0, t_*^n]\}
+		\end{align}
+		and define $A$ to be
+		\begin{align}
+			A = \bigcup_{j \in B_i^n \cup \{i\}} A_j.
+		\end{align}
+		Similarly, on the length $n+m$ cycle, let $\alpha_j$ be the event
+		\begin{align}
+			\alpha_j = \{\hist_j^{n+m} \cap V^{n+m} \times [t_*^{n+m} - t_*^n, t_*^{n+m}] \not \subseteq B(i, n/2 - 1) \times [t_*^{n+m} - t_*^n, t_*^{n+m}]\}
+		\end{align}
+		and define $\alpha$ to be
+		\begin{align}
+			\alpha = \bigcup_{j \in B_i^n \cup \{i\}} \alpha_j.
+		\end{align}
+
+		\begin{align}
+			blah &= \prob(U_i^n \leq k | X_i^n = 1) - \prob(U_i^{n+m} \leq k | X_i^{n+m} = 1) \\
+			&= \prob(U_i^n \leq k, A | X_i^n = 1) - \prob(U_i^{n+m} \leq k, \alpha | X_i^{n+m} = 1) \notag \\
+			&\phantom{=} + \prob(U_i^n \leq k, A^\mathrm{c} | X_i^n = 1) - \prob(U_i^{n+m} \leq k, \alpha^\mathrm{c} | X_i^{n+m} = 1) \\
+			&\geq -\prob(\alpha | X_i^{n+m} = 1) \notag \\
+			&\phantom{=} + \prob(U_i^n \leq k, A^\mathrm{c} | X_i^n = 1) - \prob(U_i^{n+m} \leq k, \alpha^\mathrm{c} | X_i^{n+m} = 1)
+		\end{align}
+
+		For a given vertex $i$, we may couple the histories on the length $n$ cycle and the length $n+m$ cycle in the following way. Recall that the update sequence on the cycle may be represented using the Poisson processes $K_t^i$, $L_t^i$, and $R_t^i$, as introduced in Section \ref{sec:update histories on the cycle}. Let $K_t^j$, $L_t^j$, and $R_t^j$, $j \in \{1,\dots, n+m\}$, be the Poisson processes which represent the update sequence on the length $n+m$ cycle. Let $\hat{K}_t^j$ be the Poisson processes resulting from taking the updates of $K_t^j$ in the interval $[t_*^{n+m} - t_*^n, t_*^{n+m}]$ and temporally shifting them onto the interval $[0, t_*^n]$. Likewise, define $\hat{L}_t^j$ and $\hat{R}_t^j$ in the same way. Then for 
+
 	\end{proof}
 
-	The statements and proofs of Lemmas \ref{lem: bound U by U bar} and \ref{lem: lim U bar exists} require the construction of some new random variables which we define now.
+	% \begin{lemma}
+	% 	The limit of $\lambda^n$ as $n \rightarrow \infty$ exists.
+	% \end{lemma}
+	% \begin{proof}
+	% 	From Lemmas \ref{lem: bound U by U bar} and \ref{lem: lim U bar exists}
+	% 	we have that $U_i^n | X_i^n = 1$ converges in distribution. Via the Portmanteau Theorem \cite[Theorem 25.8]{Billingsley1995-en} we immediately obtain that
+	% 	\begin{equation}
+	% 		\lambda^n = \euler^{-z} \expect \left[\left.\frac{1}{1 + U_i^n}\right| X_i^n = 1\right]
+	% 	\end{equation}
+	% 	converges. 
+	% \end{proof}
 
-	The update sequence on the cycle may be represented using the Poisson processes $K_t^i$, $L_t^i$, and $R_t^i$, as introduced in Section \ref{sec:update histories on the cycle}. In that section, we constructed these processes by counting the rings of a rate $n$ Poisson clock going forwards in time from $0$ to $t_*^n$. However, we may also choose to define similar processes going backwards in time. Let $N'_t$ and $(\mathcal{V}'_k, U'_k)_{k \geq 1}$ be i.i.d. copies of $N_t$ and $(\mathcal{V}_k, U_k)_{k \geq 1}$ (as in Section \ref{sec:update histories on the cycle}). Define
-	\begin{align}
-		\hat{K}^i_t &= \#\{k \leq N'_{t_*^n-t}: \mathcal{V}'_k = i, U'_k \in \left[0, \theta/2\right) \cup \left(1 - \theta/2, 1\right]\}\\
-		\hat{L}^i_t &= \#\{k \leq N'_{t_*^n-t}: \mathcal{V}'_k = i, U'_k \in \left[\theta/2, 1/2\right)\}\\
-		\hat{R}^i_t &= \#\{k \leq N'_{t_*^n-t}: \mathcal{V}'_k = i, U'_k \in \left[1/2, 1 - \theta/2\right)\}.
-	\end{align}
+	% The statements and proofs of Lemmas \ref{lem: bound U by U bar} and \ref{lem: lim U bar exists} require the construction of some new random variables which we define now.
 
-	Along $[0, t_*^n]$, these backwards processes have the same distribution as their corresponding forwards ones. So we may freely use them to make statements about the distributions of $U_i$ and $X_i$. However, we can also extend these processes along the interval $(-\infty, 0)$ by letting $N'_s$ continue to ring for $s > t_*^n$. This allows us to define the update support and update histories on the interval $(-\infty, t_*^n]$.
+	% The update sequence on the cycle may be represented using the Poisson processes $K_t^i$, $L_t^i$, and $R_t^i$, as introduced in Section \ref{sec:update histories on the cycle}. In that section, we constructed these processes by counting the rings of a rate $n$ Poisson clock going forwards in time from $0$ to $t_*^n$. However, we may also choose to define similar processes going backwards in time. Let $N'_t$ and $(\mathcal{V}'_k, U'_k)_{k \geq 1}$ be i.i.d. copies of $N_t$ and $(\mathcal{V}_k, U_k)_{k \geq 1}$ (as in Section \ref{sec:update histories on the cycle}). Define
+	% \begin{align}
+	% 	\hat{K}^i_t &= \#\{k \leq N'_{t_*^n-t}: \mathcal{V}'_k = i, U'_k \in \left[0, \theta/2\right) \cup \left(1 - \theta/2, 1\right]\}\\
+	% 	\hat{L}^i_t &= \#\{k \leq N'_{t_*^n-t}: \mathcal{V}'_k = i, U'_k \in \left[\theta/2, 1/2\right)\}\\
+	% 	\hat{R}^i_t &= \#\{k \leq N'_{t_*^n-t}: \mathcal{V}'_k = i, U'_k \in \left[1/2, 1 - \theta/2\right)\}.
+	% \end{align}
 
-	% We may extend the update sequence into the interval $t < 0$ by mirroring these processes backwards in time from $t=0$ [HOW DO I SAY THIS PROPERLY?]. We then can use this extended update sequence to define the update support and update histories on the interval $(-\infty, t_*^n]$. 
+	% Along $[0, t_*^n]$, these backwards processes have the same distribution as their corresponding forwards ones. So we may freely use them to make statements about the distributions of $U_i$ and $X_i$. However, we can also extend these processes along the interval $(-\infty, 0)$ by letting $N'_s$ continue to ring for $s > t_*^n$. This allows us to define the update support and update histories on the interval $(-\infty, t_*^n]$.
 
-	Using these extended histories, for each $i \in V$, define the indicators
-	\begin{equation}
-		\bar{X}_i^n = \begin{cases}
-			1 & \forall t \in (-\infty, t_*^n], \mathcal{H}_i^n(t) \neq \emptyset,\\
-			0 & \text{otherwise},
-		\end{cases}
-	\end{equation}
-	and the random variables
-	\begin{equation}
-		\bar{U}_i^n = \sum_{j \in B_i} \bar{X}_j^n.
-	\end{equation}
-	We define $X_i^n$ and $U_i^n$ as before, but using these extended histories.
-	\begin{equation}
-		X_i^n = \begin{cases}
-			1 & \forall t \in [0, t_*^n], \mathcal{H}_i^n(t) \neq \emptyset,\\
-			0 & \text{otherwise},
-		\end{cases}
-	\end{equation}
-	and
-	\begin{equation}
-		U_i^n = \sum_{j \in B_i^n} X_j^n.
-	\end{equation}
-	Note that these are not strictly identical to the $X_i$ and $U_i$ defined earlier, but they have the same distribution. Also note that with probability 1, $\bar{X}_i^n = 0$ and $\bar{U}_i^n = 0$ since the update histories eventually encounter an oblivious update with probability 1.
+	% % We may extend the update sequence into the interval $t < 0$ by mirroring these processes backwards in time from $t=0$ [HOW DO I SAY THIS PROPERLY?]. We then can use this extended update sequence to define the update support and update histories on the interval $(-\infty, t_*^n]$. 
 
-	The following lemma relates the distribution of $U_i^n$ with that of $\bar{U}_i^n$.
+	% Using these extended histories, for each $i \in V$, define the indicators
+	% \begin{equation}
+	% 	\bar{X}_i^n = \begin{cases}
+	% 		1 & \forall t \in (-\infty, t_*^n], \mathcal{H}_i^n(t) \neq \emptyset,\\
+	% 		0 & \text{otherwise},
+	% 	\end{cases}
+	% \end{equation}
+	% and the random variables
+	% \begin{equation}
+	% 	\bar{U}_i^n = \sum_{j \in B_i} \bar{X}_j^n.
+	% \end{equation}
+	% We define $X_i^n$ and $U_i^n$ as before, but using these extended histories.
+	% \begin{equation}
+	% 	X_i^n = \begin{cases}
+	% 		1 & \forall t \in [0, t_*^n], \mathcal{H}_i^n(t) \neq \emptyset,\\
+	% 		0 & \text{otherwise},
+	% 	\end{cases}
+	% \end{equation}
+	% and
+	% \begin{equation}
+	% 	U_i^n = \sum_{j \in B_i^n} X_j^n.
+	% \end{equation}
+	% Note that these are not strictly identical to the $X_i$ and $U_i$ defined earlier, but they have the same distribution. Also note that with probability 1, $\bar{X}_i^n = 0$ and $\bar{U}_i^n = 0$ since the update histories eventually encounter an oblivious update with probability 1.
 
-	\begin{lemma}
-	\label{lem: bound U by U bar}
-	Let $\bar{X}_i^n$ and $\bar{U}_i^n$ be as defined above. Then
-		\begin{equation}
-			\prob(\bar{U}_i^n \geq k | \bar{X}_i^n = 1) \leq \prob(U_i^n \geq k | X_i^n = 1) \leq \prob(\bar{U}_i^n \geq k | \bar{X}_i^n = 1) + \euler^{-z} \frac{|B_i^n|}{n}.
-		\end{equation}
-	\end{lemma}
-	\begin{proof}
-		We start with the lower bound. We first note that the event $\{U_i^n \geq k\}$ depends only on the update sequence along $[0, t_*^n]$. So we may freely condition on the updates in $(-\infty, 0)$ (which are independent of those in $[0, t_*^n]$) without affecting the probability of this event. Hence
-		% $\{X_i = 1\}$ coincides with the event $\{\hist_i \text{ encounters no oblivious updates along } [0, t_*^n]\}$. 
-		% and $\bar{X}_i = 1$ have the same result along $[0, t_*^n]$. [WRITE THIS PROPERLY]. So
-		\begin{align}
-			\prob(U_i^n \geq k | X_i^n = 1) &= \prob(U_i^n \geq k | \hist_i^n \text{ doesn't die along } [0, t_*^n]) \label{eq:condition along 0 to t*}\\
-			&= \prob(U_i^n \geq k | \hist_i^n \text{ doesn't die along } (-\infty, t_*^n]) \label{eq:condition along -inf to t*}\\
-			&= \prob(U_i^n \geq k | \bar{X}_i^n = 1).
-		\end{align}
+	% The following lemma relates the distribution of $U_i^n$ with that of $\bar{U}_i^n$.
 
-		Note that we are only able to go from \eqref{eq:condition along 0 to t*} to \eqref{eq:condition along -inf to t*} because the survival of $\mathcal{H}_i$ along an interval $(a, b)$, conditional on it being alive at time $b$, is independent of the behaviour of $\mathcal{H}_i$ along the interval $[b, t_*^n]$. This is because the update support is always a single vertex while the history survives, and because the updates along each vertex are independent and identically distributed. We would not be able to make this step if, for instance, the update support can contain more than one vertex (as we have in Chapter \ref{Ch:GeneralResults}).
+	% \begin{lemma}
+	% \label{lem: bound U by U bar}
+	% Let $\bar{X}_i^n$ and $\bar{U}_i^n$ be as defined above. Then
+	% 	\begin{equation}
+	% 		\prob(\bar{U}_i^n \geq k | \bar{X}_i^n = 1) \leq \prob(U_i^n \geq k | X_i^n = 1) \leq \prob(\bar{U}_i^n \geq k | \bar{X}_i^n = 1) + \euler^{-z} \frac{|B_i^n|}{n}.
+	% 	\end{equation}
+	% \end{lemma}
+	% \begin{proof}
+	% 	We start with the lower bound. We first note that the event $\{U_i^n \geq k\}$ depends only on the update sequence along $[0, t_*^n]$. So we may freely condition on the updates in $(-\infty, 0)$ (which are independent of those in $[0, t_*^n]$) without affecting the probability of this event. Hence
+	% 	% $\{X_i = 1\}$ coincides with the event $\{\hist_i \text{ encounters no oblivious updates along } [0, t_*^n]\}$. 
+	% 	% and $\bar{X}_i = 1$ have the same result along $[0, t_*^n]$. [WRITE THIS PROPERLY]. So
+	% 	\begin{align}
+	% 		\prob(U_i^n \geq k | X_i^n = 1) &= \prob(U_i^n \geq k | \hist_i^n \text{ doesn't die along } [0, t_*^n]) \label{eq:condition along 0 to t*}\\
+	% 		&= \prob(U_i^n \geq k | \hist_i^n \text{ doesn't die along } (-\infty, t_*^n]) \label{eq:condition along -inf to t*}\\
+	% 		&= \prob(U_i^n \geq k | \bar{X}_i^n = 1).
+	% 	\end{align}
 
-		Now, for every $j \in V$, if $\bar{X}_j^n = 1$, then $X_j^n = 1$. So $\bar{U}_i^n \leq U_i^n$ and
-		\begin{equation}
-			\prob(U_i^n \geq k | X_i^n = 1) \geq \prob(\bar{U}_i^n \geq k | \bar{X}_i^n = 1),
-		\end{equation}
-		which completes the lower bound.
+	% 	Note that we are only able to go from \eqref{eq:condition along 0 to t*} to \eqref{eq:condition along -inf to t*} because the survival of $\mathcal{H}_i$ along an interval $(a, b)$, conditional on it being alive at time $b$, is independent of the behaviour of $\mathcal{H}_i$ along the interval $[b, t_*^n]$. This is because the update support is always a single vertex while the history survives, and because the updates along each vertex are independent and identically distributed. We would not be able to make this step if, for instance, the update support can contain more than one vertex (as we have in Chapter \ref{Ch:GeneralResults}).
 
-		We now treat the upper bound. For each $j \in B_i^n$, define the event
-		\begin{equation}
-			A_j^n = \{ \mathcal{H}_j^n(0) \neq \emptyset, \mathcal{H}_j^n \cap \mathcal{H}_i^n = \emptyset\}, 
-		\end{equation}
-		and define the union of these events,
-		\begin{equation}
-			A^n = \bigcup_{j \in B_i^n} A_j^n.
-		\end{equation}
-		We note that on the event $({A^n})^\mathrm{c} \cap \{\bar{X}_i^n = 1\}$, we have that $U_i^n = \bar{U}_i^n$. So 
-		\begin{align}
-			\prob\left(U_i^n \geq k | X_i^n = 1 \right) &= \prob\left(U_i^n \geq k, A^n | X_i^n = 1 \right) + \prob\left(U_i^n \geq k, (A^n)^\mathrm{c} | X_i^n = 1 \right) \label{eq:condition non bar X}\\
-			&= \prob\left(U_i^n \geq k, A^n | X_i^n = 1 \right) + \prob\left(U_i^n \geq k, (A^n)^\mathrm{c} | \bar{X}_i^n = 1 \right) \label{eq:condition bar X}\\
-			&= \prob[X_i^n = 1] ^{-1} \prob\left(U_i^n \geq k, A^n, X_i^n = 1\right) \\
-			&\phantom{=} + \prob\left(\bar{U}_i^n \geq k, (A^n)^\mathrm{c}| \bar{X}_i^n = 1\right)\\ 
-			&\leq \prob[X_i^n = 1] ^{-1} \prob\left(A^n, X_i^n = 1\right) + \prob\left(\bar{U}_i^n \geq k| \bar{X}_i^n = 1\right).%\\
-			% &\leq \prob[X_i = 1] ^{-1} \sum_{j \in B_i} \prob[A_j, X_i = 1]
-		\end{align}
-		where we proceed from \eqref{eq:condition non bar X} to \eqref{eq:condition bar X} in the same way as we did going from \eqref{eq:condition along 0 to t*} to \eqref{eq:condition along -inf to t*}.
+	% 	Now, for every $j \in V$, if $\bar{X}_j^n = 1$, then $X_j^n = 1$. So $\bar{U}_i^n \leq U_i^n$ and
+	% 	\begin{equation}
+	% 		\prob(U_i^n \geq k | X_i^n = 1) \geq \prob(\bar{U}_i^n \geq k | \bar{X}_i^n = 1),
+	% 	\end{equation}
+	% 	which completes the lower bound.
 
-		Now by a union bound,
-		\begin{align}
-			\prob[A^n, X_i^n = 1] &\leq \sum_{j \in B_i^n} \prob[A_j^n, X_i^n = 1]\\
-				&= \sum_{j \in B_i^n} \prob[\hist_j^n(0) \neq \emptyset, \hist_i^n(0) \neq \emptyset, \hist_j^n \cap \hist_i^n \neq \emptyset]
-		\end{align}
-		and from Lemma \ref{lem:prob Xj Xi and no intersect} we get,
-		\begin{equation}
-			\prob[A^n, X_i^n = 1] \leq |B_i| \prob[X_i^n = 1]^2.
-		\end{equation}
-		Equation \eqref{eq:1D prob X_i} gives us the desired result.
-	\end{proof}
+	% 	We now treat the upper bound. For each $j \in B_i^n$, define the event
+	% 	\begin{equation}
+	% 		A_j^n = \{ \mathcal{H}_j^n(0) \neq \emptyset, \mathcal{H}_j^n \cap \mathcal{H}_i^n = \emptyset\}, 
+	% 	\end{equation}
+	% 	and define the union of these events,
+	% 	\begin{equation}
+	% 		A^n = \bigcup_{j \in B_i^n} A_j^n.
+	% 	\end{equation}
+	% 	We note that on the event $({A^n})^\mathrm{c} \cap \{\bar{X}_i^n = 1\}$, we have that $U_i^n = \bar{U}_i^n$. So 
+	% 	\begin{align}
+	% 		\prob\left(U_i^n \geq k | X_i^n = 1 \right) &= \prob\left(U_i^n \geq k, A^n | X_i^n = 1 \right) + \prob\left(U_i^n \geq k, (A^n)^\mathrm{c} | X_i^n = 1 \right) \label{eq:condition non bar X}\\
+	% 		&= \prob\left(U_i^n \geq k, A^n | X_i^n = 1 \right) + \prob\left(U_i^n \geq k, (A^n)^\mathrm{c} | \bar{X}_i^n = 1 \right) \label{eq:condition bar X}\\
+	% 		&= \prob[X_i^n = 1] ^{-1} \prob\left(U_i^n \geq k, A^n, X_i^n = 1\right) \\
+	% 		&\phantom{=} + \prob\left(\bar{U}_i^n \geq k, (A^n)^\mathrm{c}| \bar{X}_i^n = 1\right)\\ 
+	% 		&\leq \prob[X_i^n = 1] ^{-1} \prob\left(A^n, X_i^n = 1\right) + \prob\left(\bar{U}_i^n \geq k| \bar{X}_i^n = 1\right).%\\
+	% 		% &\leq \prob[X_i = 1] ^{-1} \sum_{j \in B_i} \prob[A_j, X_i = 1]
+	% 	\end{align}
+	% 	where we proceed from \eqref{eq:condition non bar X} to \eqref{eq:condition bar X} in the same way as we did going from \eqref{eq:condition along 0 to t*} to \eqref{eq:condition along -inf to t*}.
 
-	\begin{lemma}
-		\label{lem: lim U bar exists}
-		The limit of $\prob(\bar{U}_i^n \geq k | \bar{X}_i^n = 1)$ as $n \rightarrow \infty$ exists.
-	\end{lemma}
-	\begin{proof}
-		Obviously, 
-		\begin{equation}
-			\prob(\bar{U}_i^n \geq k | \bar{X}_i^n = 1) \leq 1.
-		\end{equation}
-		We will show that this probability is monotonically increasing as $n$ increases, and thus that it converges.
+	% 	Now by a union bound,
+	% 	\begin{align}
+	% 		\prob[A^n, X_i^n = 1] &\leq \sum_{j \in B_i^n} \prob[A_j^n, X_i^n = 1]\\
+	% 			&= \sum_{j \in B_i^n} \prob[\hist_j^n(0) \neq \emptyset, \hist_i^n(0) \neq \emptyset, \hist_j^n \cap \hist_i^n \neq \emptyset]
+	% 	\end{align}
+	% 	and from Lemma \ref{lem:prob Xj Xi and no intersect} we get,
+	% 	\begin{equation}
+	% 		\prob[A^n, X_i^n = 1] \leq |B_i| \prob[X_i^n = 1]^2.
+	% 	\end{equation}
+	% 	Equation \eqref{eq:1D prob X_i} gives us the desired result.
+	% \end{proof}
 
-		[IT ISN'T NECESSARILY :(]
+	% \begin{lemma}
+	% 	\label{lem: lim U bar exists}
+	% 	The limit of $\prob(\bar{U}_i^n \geq k | \bar{X}_i^n = 1)$ as $n \rightarrow \infty$ exists.
+	% \end{lemma}l
+	% \begin{proof}
+	% 	Obviously, 
+	% 	\begin{equation}
+	% 		\prob(\bar{U}_i^n \geq k | \bar{X}_i^n = 1) \leq 1.
+	% 	\end{equation}
+	% 	We will show that this probability is monotonically increasing as $n$ increases, and thus that it converges.
 
-		We may couple $\bar{U}_i^n$ to $\bar{U}_i^{n+1}$ in the following way. Let $\hat{K}_t^j, \hat{L}_t^j$, and $\hat{R}_t^j$ be the backwards filtered Poisson processes on the size $n+m$ cycle. On the size $n$ cycle, we can use the processes $\hat{K}_t^j, \hat{L}_t^j$, and $\hat{R}_t^j$ for $j \in [i- n/2 +1, i + n/2 - 1]$ by shifting them temporally so that they start at $t_*^n$ rather than $t_*^{n+m}$.
+	% 	[IT ISN'T NECESSARILY :(]
 
-		Under this coupling, we can only have that $\bar{U}_i^n > \bar{U}_i^{m+n}$ if there exists $j \in B_i^n$, $t < t_*^n$ such that $\hist_j(t) \not \subset B(i, n/2 -1)$ and $\hist_j$ does not merge with $\hist_i$ before time $t$. So 
+	% 	We may couple the histories on the length $n$ cycle and the length $n+m$ cycle in the following way. Let $\hat{K}_t^j, \hat{L}_t^j$, and $\hat{R}_t^j$ be the backwards filtered Poisson processes on the size $n+m$ cycle. On the size $n$ cycle, we can use the processes $\hat{K}_t^j, \hat{L}_t^j$, and $\hat{R}_t^j$ for $j \in [i- n/2 +1, i + n/2 - 1]$ by shifting them temporally so that they start at $t_*^n$ rather than $t_*^{n+m}$.
 
-		[SOMETHING LIKE THIS]
-		\begin{align}
-			\prob(\bar{U}_i^n \geq k | \bar{X}_i^n = 1) - \prob(\bar{U}_i^{n+m} \geq k | \bar{X}_i^{n+m} = 1) \leq \prob(BLAHBLAH | \bar{X}_i^n = 1)
-		\end{align}
+	% 	Define the time $S^n$ to be the first time that 
+	% 	\begin{align}
+	% 		A = \{\}
+	% 	\end{align}
 
-		[GOING THROUGH TIM'S COMMENTS UP TO HERE]
+	% 	Under this coupling, we can only have that $\bar{U}_i^n > \bar{U}_i^{m+n}$ if there exists $j \in B_i^n$, $t < t_*^n$ such that $\hist_j(t) \not \subset B(i, n/2 -1)$ and $\hist_j$ does not merge with $\hist_i$ before time $t$. So 
+
+	% 	[SOMETHING LIKE THIS]
+	% 	\begin{align}
+	% 		\prob(\bar{U}_i^n \geq k | \bar{X}_i^n = 1) - \prob(\bar{U}_i^{n+m} \geq k | \bar{X}_i^{n+m} = 1) \leq \prob(BLAHBLAH | \bar{X}_i^n = 1)
+	% 	\end{align}
 		
-		[FINISH]
-	\end{proof}
+	% 	[FINISH]
+	% \end{proof}
+
+	[GOING THROUGH TIM'S COMMENTS UP TO HERE]
 	
 	% To complete the proof, we need to show that the limit of 
 	% \begin{equation}
@@ -752,7 +792,7 @@
 	\label{lem:prob Xj Xi and no intersect}
 		Let $i$ and $j$ be the indices of two vertices in a graph. Then
 		\begin{equation}
-			\prob\left(\hist_j(0) \neq \emptyset, \hist_i(0) \neq \emptyset, \hist_j \cup \hist_i \neq \emptyset \right) \leq \prob[X_i = 1]^2.
+			\prob\left(\hist_j(0) \neq \emptyset, \hist_i(0) \neq \emptyset, \hist_j \cap \hist_i \neq \emptyset \right) \leq \prob[X_i = 1]^2.
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
