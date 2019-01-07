@@ -372,7 +372,43 @@
 			&\phantom{=} + \prob(U_i^n \leq k, A^\mathrm{c} | X_i^n = 1) - \prob(U_i^{n+m} \leq k, \alpha^\mathrm{c} | X_i^{n+m} = 1)
 		\end{align}
 
-		For a given vertex $i$, we may couple the histories on the length $n$ cycle and the length $n+m$ cycle in the following way. Recall that the update sequence on the cycle may be represented using the Poisson processes $K_t^i$, $L_t^i$, and $R_t^i$, as introduced in Section \ref{sec:update histories on the cycle}. Let $K_t^j$, $L_t^j$, and $R_t^j$, $j \in \{1,\dots, n+m\}$, be the Poisson processes which represent the update sequence on the length $n+m$ cycle. Let $\hat{K}_t^j$ be the Poisson processes resulting from taking the updates of $K_t^j$ in the interval $[t_*^{n+m} - t_*^n, t_*^{n+m}]$ and temporally shifting them onto the interval $[0, t_*^n]$. Likewise, define $\hat{L}_t^j$ and $\hat{R}_t^j$ in the same way. Then for 
+		For a given vertex $i$, we may couple the histories on the length $n$ cycle and the length $n+m$ cycle in the following way. Recall that the update sequence on the cycle may be represented using the Poisson processes $K_t^i$, $L_t^i$, and $R_t^i$, as introduced in Section \ref{sec:update histories on the cycle}. Let $K_t^j$, $L_t^j$, and $R_t^j$, $j \in \{1,\dots, n+m\}$, be the Poisson processes which represent the update sequence on the length $n+m$ cycle. Let $\hat{K}_t^j$ be the Poisson processes resulting from taking the updates of $K_t^j$ in the interval $[t_*^{n+m} - t_*^n, t_*^{n+m}]$ and temporally shifting them onto the interval $[0, t_*^n]$. Likewise, define $\hat{L}_t^j$ and $\hat{R}_t^j$ in the same way. On the size $n$ cycle, we use the processes $\hat{K}_t^j, \hat{L}_t^j$, and $\hat{R}_t^j$ for $j \in [i- \lceil n/2 - 1 \rceil, i + \lfloor n/2\rfloor]$. 
+
+		[EXPLAIN BETTER?]
+
+		Under this coupling, if $\alpha^\mathrm{c}$ holds, then we note that the histories of vertices in $B_i \cup \{i\}$ on the length $n$ cycle are equal to the histories along the interval $[t_*^{n+m} - t_*^n, t_*^{n+m}]$ of the same vertices on the length $n+m$ cycle. Hence, if $\alpha^\mathrm{c}$ holds, for $j \in B_i \cup \{i\}$, $X_j^n = 1$ if and only if $\hist_j^{n+m}(t_*^{n+m} - t_*^n) \neq 0$. We also have that if $\alpha^\mathrm{c}$ holds, then $A^\mathrm{c}$ holds. 
+
+		Define 
+		\begin{equation}
+			V_i^n = \sum_{j \in B_i^n} \indicator[\hist_i^n \cap \hist_j^n \neq \emptyset]
+		\end{equation}
+		and
+		\begin{equation}
+			Y_i^n = \sum_{j \in B_i^n} \indicator[\hist_i^n \cap \hist_j^n = \emptyset, \hist_j^n(0) \neq \emptyset].
+		\end{equation}
+		Clearly, if $X_i^n = 1$, we have
+		\begin{equation}
+			U_i^n = V_i^n + Y_i^n.
+		\end{equation}
+
+		Also note that under the coupling given above, if $\alpha^\mathrm{c}$ holds, then $V_i^n \leq V_i^{n+m}$. So, conditioned on $X_i = 1$, in order for $U_i^{n+m} < U_i^n$, we must have that $Y_i^n > Y_i^{n+m}$. That is
+		\begin{equation}
+			\prob(U_i^n \leq k, A^\mathrm{c} | X_i^n = 1) - \prob(U_i^{n+m} \leq k, \alpha^\mathrm{c} | X_i^{n+m} = 1) \geq -\prob(Y_i^n \neq 0 | X_i^n = 1).
+		\end{equation}
+
+		[MAKE THIS LINE BETTER/MORE RIGOUROUS/CHECK IF TRUE]
+
+		By Lemma \ref{lem:prob Xj Xi and no intersect} this is 1/n. 
+
+
+		BOUND THIS GUY
+		\begin{equation}
+			\prob(\alpha | X_i^{n+m} = 1) \leq \sum_{j \in B_i^n \cup \{i\}} \alpha_j
+		\end{equation}
+		I.e. in time $t_*^n$ a history travels further than n/2. By Lemma \ref{lem:1D prob history contained in ball} this is
+		\begin{equation}
+			2\exp(t_*^n - n\ln 2 / 2).
+		\end{equation}
 
 	\end{proof}
 
