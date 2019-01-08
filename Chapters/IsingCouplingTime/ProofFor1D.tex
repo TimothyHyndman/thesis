@@ -355,9 +355,9 @@
 		\begin{align}
 			A = \bigcup_{j \in B_i^n \cup \{i\}} A_j.
 		\end{align}
-		Similarly, on the length $n+m$ cycle, let $\alpha_j$ be the event
+		Similarly, on the length $n+m$ cycle, define the time $t_0 = t_*^{n+m} - t_*^n$ and let $\alpha_j$ be the event
 		\begin{align}
-			\alpha_j = \{\hist_j^{n+m} \cap V^{n+m} \times [t_*^{n+m} - t_*^n, t_*^{n+m}] \not \subseteq B(i, n/2 - 1) \times [t_*^{n+m} - t_*^n, t_*^{n+m}]\}
+			\alpha_j = \{\hist_j^{n+m} \cap V^{n+m} \times [t_0, t_*^{n+m}] \not \subseteq B(i, n/2 - 1) \times [t_0, t_*^{n+m}]\}
 		\end{align}
 		and define $\alpha$ to be
 		\begin{align}
@@ -372,33 +372,65 @@
 			&\phantom{=} + \prob(U_i^n \leq k, A^\mathrm{c} | X_i^n = 1) - \prob(U_i^{n+m} \leq k, \alpha^\mathrm{c} | X_i^{n+m} = 1)
 		\end{align}
 
-		For a given vertex $i$, we may couple the histories on the length $n$ cycle and the length $n+m$ cycle in the following way. Recall that the update sequence on the cycle may be represented using the Poisson processes $K_t^i$, $L_t^i$, and $R_t^i$, as introduced in Section \ref{sec:update histories on the cycle}. Let $K_t^j$, $L_t^j$, and $R_t^j$, $j \in \{1,\dots, n+m\}$, be the Poisson processes which represent the update sequence on the length $n+m$ cycle. Let $\hat{K}_t^j$ be the Poisson processes resulting from taking the updates of $K_t^j$ in the interval $[t_*^{n+m} - t_*^n, t_*^{n+m}]$ and temporally shifting them onto the interval $[0, t_*^n]$. Likewise, define $\hat{L}_t^j$ and $\hat{R}_t^j$ in the same way. On the size $n$ cycle, we use the processes $\hat{K}_t^j, \hat{L}_t^j$, and $\hat{R}_t^j$ for $j \in [i- \lceil n/2 - 1 \rceil, i + \lfloor n/2\rfloor]$. 
+		For a given vertex $i$, we may couple the histories on the length $n$ cycle and the length $n+m$ cycle in the following way. Recall that the update sequence on the cycle may be represented using the Poisson processes $K_t^i$, $L_t^i$, and $R_t^i$, as introduced in Section \ref{sec:update histories on the cycle}. Let $K_t^j$, $L_t^j$, and $R_t^j$, $j \in \{1,\dots, n+m\}$, be the Poisson processes which represent the update sequence on the length $n+m$ cycle. Let $\hat{K}_t^j$ be the Poisson processes resulting from taking the updates of $K_t^j$ in the interval $[t_0, t_*^{n+m}]$ and temporally shifting them onto the interval $[0, t_*^n]$. Likewise, define $\hat{L}_t^j$ and $\hat{R}_t^j$ in the same way. On the size $n$ cycle, we use the processes $\hat{K}_t^j, \hat{L}_t^j$, and $\hat{R}_t^j$ for $j \in [i- \lceil n/2 - 1 \rceil, i + \lfloor n/2\rfloor]$. 
 
 		[EXPLAIN BETTER?]
 
-		Under this coupling, if $\alpha^\mathrm{c}$ holds, then we note that the histories of vertices in $B_i \cup \{i\}$ on the length $n$ cycle are equal to the histories along the interval $[t_*^{n+m} - t_*^n, t_*^{n+m}]$ of the same vertices on the length $n+m$ cycle. Hence, if $\alpha^\mathrm{c}$ holds, for $j \in B_i \cup \{i\}$, $X_j^n = 1$ if and only if $\hist_j^{n+m}(t_*^{n+m} - t_*^n) \neq 0$. We also have that if $\alpha^\mathrm{c}$ holds, then $A^\mathrm{c}$ holds. 
+		Under this coupling, if $\alpha^\mathrm{c}$ holds, then we note that the histories of vertices in $B_i \cup \{i\}$ on the length $n$ cycle are equal to the histories along the interval $[t_0, t_*^{n+m}]$ of the same vertices on the length $n+m$ cycle. Hence, if $\alpha^\mathrm{c}$ holds, for $j \in B_i \cup \{i\}$, $X_j^n = 1$ if and only if $\hist_j^{n+m}(t_0) \neq 0$. We also have that $\alpha^\mathrm{c}$ holds if and only if $A^\mathrm{c}$ holds. Therefore,
+		\begin{align}
+			\prob(U_i^n \leq k, A^\mathrm{c} | X_i^n = 1) &= \prob\left(\left.\sum_{j \in B_i^n} \indicator(\hist_j^{n+m}(t_0) \neq \emptyset) \leq k, \alpha^\mathrm{c} \right| \hist_i^{n+m}(t_0) \neq \emptyset \right) \label{eq:condition at t0}\\
+			&= \prob\left(\left.\sum_{j \in B_i^n} \indicator(\hist_j^{n+m}(t_0) \neq \emptyset) \leq k, \alpha^\mathrm{c} \right| \hist_i^{n+m}(0) \neq \emptyset \right) \label{eq:condition at 0}\\
+			&= \prob\left(\left.\sum_{j \in B_i^n} \indicator(\hist_j^{n+m}(t_0) \neq \emptyset) \leq k, \alpha^\mathrm{c} \right| X_i^{n+m} = 1 \right).
+		\end{align}
+		Note that we are only able to go from \eqref{eq:condition at t0} to \eqref{eq:condition at 0} because the survival of $\mathcal{H}_i$ along an interval $(a, b)$, conditional on it being alive at time $b$, is independent of the behaviour of $\mathcal{H}_i$ along the interval $[b, t_*^n]$. This is because the update support is always a single vertex while the history survives, and because the updates along each vertex are independent and identically distributed. We would not be able to make this step if, for instance, the update support can contain more than one vertex (as we have in Chapter \ref{Ch:GeneralResults}).
 
-		Define 
+
+		Define
 		\begin{equation}
-			V_i^n = \sum_{j \in B_i^n} \indicator[\hist_i^n \cap \hist_j^n \neq \emptyset]
+			V_i = \sum_{j \in B_i^n} \indicator [\hist_i^{n+m} \cap \hist_j^{n+m} \cap \left(V \times [t_0, t_*^{n+m}] \right) \neq \emptyset]
 		\end{equation}
 		and
 		\begin{equation}
-			Y_i^n = \sum_{j \in B_i^n} \indicator[\hist_i^n \cap \hist_j^n = \emptyset, \hist_j^n(0) \neq \emptyset].
+			Y_i = \sum_{j \in B_i^n} \indicator[\hist_j^{n+m}(t_0) \neq \emptyset] \indicator [\hist_i^{n+m} \cap \hist_j^{n+m} \cap \left(V \times [t_0, t_*^{n+m}] \right) = \emptyset],
 		\end{equation}
-		Clearly, if $X_i^n = 1$, we have
+		as well as 
 		\begin{equation}
-			U_i^n = V_i^n + Y_i^n.
+			\bar{V}_i = \sum_{j \in B_i^n} \indicator [\hist_i^{n+m} \cap \hist_j^{n+m}  \neq \emptyset]
 		\end{equation}
-
-		Also note that under the coupling given above, if $\alpha^\mathrm{c}$ holds, then $V_i^n \leq V_i^{n+m}$. So, conditioned on $X_i = 1$, in order for $U_i^{n+m} < U_i^n$, we must have that $Y_i^n > Y_i^{n+m}$. That is
+		and
 		\begin{equation}
-			\prob(U_i^n \leq k, A^\mathrm{c} | X_i^n = 1) - \prob(U_i^{n+m} \leq k, \alpha^\mathrm{c} | X_i^{n+m} = 1) \geq -\prob(Y_i^n \neq 0 | X_i^n = 1).
+			\bar{Y}_i = \sum_{j \in B_i^n} X_j^{n+m}  \indicator [\hist_i^{n+m} \cap \hist_j^{n+m} = \emptyset]
 		\end{equation}
 
-		[MAKE THIS LINE BETTER/MORE RIGOUROUS/CHECK IF TRUE]
+		Clearly, if $X_i^{n+m} = 1$, we have
+		\begin{equation}
+			\sum_{j \in B_i^n} \indicator(\hist_j^{n+m}(t_0) \neq \emptyset) = V_i + Y_i
+		\end{equation}
+		and
+		\begin{equation}
+			U_i^{n+m} = \bar{V}_i + \bar{Y}_i.
+		\end{equation}
 
-		By Lemma \ref{lem:prob Xj Xi and no intersect} this is 1/n. 
+		Also note that under the coupling given above, if $\alpha^\mathrm{c}$ holds, then $V_i^n \leq V_i^{n+m}$. Now
+		\begin{align}
+			&\prob(U_i^n \leq k, A^\mathrm{c} | X_i^n = 1) - \prob(U_i^{n+m} \leq k, \alpha^\mathrm{c} | X_i^{n+m} = 1) \\
+			&= \prob\left(\left.\sum_{j \in B_i^n} \indicator(\hist_j^{n+m}(t_0) \neq \emptyset) \leq k, \alpha^\mathrm{c} \right| X_i^{n+m} = 1 \right) - \prob(U_i^{n+m} \leq k, \alpha^\mathrm{c} | X_i^{n+m} = 1)\\
+			&\geq -\prob\left( \left. U_i^{n+m} < \sum_{j \in B_i^n} \indicator(\hist_j^{n+m}(t_0) \neq \emptyset), \alpha \right| X_i^{n+m} = 1\right)\\
+			&\geq -\prob\left(Y_i > \bar{Y}_i | X_i^{n+m} = 1 \right)\\
+			&\geq -\prob\left(Y_i \neq 0 | X_i^{n+m} = 1 \right)
+		\end{align}
+		since conditioned on $X_i^{n+m} = 1$, in order for $U_i^{n+m} < \sum_{j \in B_i^n} \indicator(\hist_j^{n+m}(t_0) \neq \emptyset)$ and $\alpha^\mathrm{c}$ to hold, we must have that $Y_i^n > Y_i^{n+m}$. By similar reasoning to earlier, since $Y_i$ only depends on the update sequence along $[t_0, t_*^{n+m}]$, we may replace the conditioning above by
+		\begin{align}
+			-\prob\left(Y_i \neq 0 | X_i^{n+m} = 1 \right) = -\prob\left(Y_i \neq 0 | \hist_i^{n+m}(t_0) \neq \emptyset \right).
+		\end{align}
+
+		Now 
+		\begin{align}
+			&\prob\left(Y_i \neq 0 | \hist_i^{n+m}(t_0) \neq \emptyset \right) \\
+			&\leq \sum_{j \in B_i^n} \prob\left(\hist_j^{n+m}(t_0) \neq \emptyset, \hist_i^{n+m} \cap \hist_j^{n+m} \cap (V \times [t_0, t_*^{n+m}]) = \emptyset \left| \hist_i^{n+m}(t_0) \neq \emptyset \right.\right)
+		\end{align}
+
+		By Lemma \ref{lem:prob Xj Xi and no intersect} this is $|B_i^n|/n$. 
 
 
 		BOUND THIS GUY
