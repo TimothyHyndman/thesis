@@ -339,7 +339,7 @@
 	\end{proof}
 
 	Having bounded $\lambda$, we now turn to proving that it converges.
-	Up until this point, we have chosen in our notation of several variables to omit references to their dependence on $n$. However, it will prove useful here to use a superscript $n$ on some variables to make this explicit. 
+	Up until this point, we have chosen in our notation of several variables to omit references to their dependence on $n$. However, it will prove useful here, and in Lemma \ref{lem: U converges} in the next section, to use a superscript on some variables to make this dependence explicit. 
 
 	\begin{lemma}
 		The limit of $\lambda^n$ as $n \rightarrow \infty$ exists.
@@ -490,8 +490,6 @@
 		
 	% 	[FINISH]
 	% \end{proof}
-
-	[GOING THROUGH TIM'S COMMENTS UP TO HERE]
 	
 	% To complete the proof, we need to show that the limit of 
 	% \begin{equation}
@@ -523,14 +521,14 @@
 			\delta_1 &= %\sum_{i \in V}  \sum_{k \geq 0} \prob[X_i = 1, U_i = k] \expect \left|\frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|,\\
 			%&=
 			\sum_{i = 1}^n \sum_{k = 0}^{2 \lfloor b_n\rfloor} \prob[X_i = 1, U_i = k] \expect \left| \frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|,\\
-			&= n \sum_{k = 0}^{2 \lfloor b_n\rfloor} \expect \left|\prob[X_i = 1, U_i = k|W_i] - \prob[X_i = 1, U_i = k] \right|%\\
+			&= n \sum_{k = 0}^{2 \lfloor b_n\rfloor} \expect \left|\vphantom{\frac{1}{2}}\prob[X_i = 1, U_i = k|W_i] - \prob[X_i = 1, U_i = k] \right|%\\
 			\label{eq: delta1 line 2}
 			% &\leq n \sup_{W_i} \sum_{k = 0}^{2 b_n} \left| \prob[X_i = 1, U_i = k|W_i] - \prob[X_i = 1, U_i = k] \right|
 		\end{align}
 		by the transitivity of the cycle.
 		Let
 		\begin{equation}
-			C_i^c = \{j : |j - i| \leq (c_n + b_n)/2\}
+			C_i^c = \{j : d(i,j) \leq (c_n + b_n)/2\}
 		\end{equation}
 		be the set of vertices within distance $(b_n + c_n)/2$ of $i$ and define the events
 		\begin{equation}
@@ -560,6 +558,8 @@
 			&= 4 n (2\lfloor b_n\rfloor + 1) \prob[A].
 		\end{align}
 
+		[GOING THROUGH TIM'S COMMENTS UP TO HERE]
+		
 		% Let $A_{j,k}$ denote the event that the histories of vertices $j$ and $k$ merge. That is,
 		% \begin{equation}
 		% 	A_{j,k} = \{\mathcal{H}_j \cap \mathcal{H}_k \neq \emptyset\}.
