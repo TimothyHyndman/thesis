@@ -503,7 +503,7 @@
 	% 	[NEED TO SHOW THAT THING ACTUALLY CONVERGES]
 	% \end{proof}
 
-	The next two lemmas prove that $\delta_1$ and $\delta_4$ go to zero as $n \rightarrow \infty$. Since from Lemma \ref{lem:1Dlambda} we know that $\lambda$ is bounded above by a constant, this is enough for the right hand size of \eqref{eq:bound distance prob[w=0] and e^-lambda} to go to zero as $n \rightarrow \infty$.
+	The next two lemmas prove that $\delta_1$ and $\delta_4$ go to zero as $n \rightarrow \infty$. Since from Lemma \ref{lem:1Dlambda} we know that $\lambda$ is bounded above by a constant, this is enough for the right hand size of \eqref{eq:bound distance prob[w=0] and e^-lambda} to go to zero as $n \rightarrow \infty$. In the following proofs we use the notation $B(i, l)$ to mean the set of vertices at distance at most $l$ from vertex $i$.
 	% \begin{equation}
 	% 	\lim_{n \rightarrow \infty} \prob\left[T_n < \frac{z + \ln n}{\theta}\right] = \euler^{-\lambda}.
 	% \end{equation}
@@ -614,8 +614,6 @@
 		\end{equation}
 		which, recalling that $b_n = \ln(n)$ and $c_n = \ln(n)^2$, goes to $0$ as $n \rightarrow \infty$.
 	\end{proof}
-
-	[GOING THROUGH TIM'S COMMENTS UP TO HERE]
 	
 	\section{Additional lemmas}
 	\label{sec:additional lemmas 1D}
@@ -759,12 +757,14 @@
 		% which goes to zero as $n \rightarrow \infty$.
 
 	\end{proof}
+	
+	
 
 	\begin{lemma}
 	\label{lem:conditioning on A removes conditioning on W}
 		Let $i$ be a vertex in a graph and let
 		\begin{equation}
-			C_i^c = \{j : |j - i| \leq (b_n + c_n)/2\}
+			C_i^c = \{j : d(j, i) \leq (b_n + c_n)/2\}
 		\end{equation}
 		be the set of vertices within distance $(b_n + c_n)/2$ of $i$. Define the events
 		\begin{equation}
@@ -784,26 +784,27 @@
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
-		If $A_1^\complement$ holds, then the events $\{X_1 = 1\}$ and $\{U_i = j\}$ depend only on the values of the update sequence inside $C_i^c$. If $A_2^\complement$ holds then the events $\{W_i = k\}$, $k \geq 0$, depend only on the values of the update sequence outside of $C_i^c$. Since the update sequences of each vertex are independent of each other vertex, if $A_2^\complement$ holds, conditioning on $W_i$ does not affect the update sequences inside $C_i^c$ and so 
+		If $A_1^\complement$ holds, then the events $\{X_i = 1\}$ and $\{U_i = j\}$ depend only on the values of the update sequence inside $C_i^c$. If $A_2^\complement$ holds then the events $\{W_i = k\}$, $k \geq 0$, depend only on the values of the update sequence outside of $C_i^c$. Since the update sequences of each vertex are independent of each other vertex, if $A_2^\complement$ holds, conditioning on $W_i$ does not affect the update sequences inside $C_i^c$ and so 
 		\begin{equation}
 			\prob[X_i = 1, U_i = j | A^\complement, W_i] = \prob[X_i = 1, U_i = j | A^\complement].
 		\end{equation}
 	\end{proof}
 
-	The following Lemma bounds how fast updates can percolate through the cycle. The proof is a slight modification of a similar one in \cite{Lubetzky2016-wd}.
+	The following Lemma bounds how fast updates can percolate through the cycle. The proof is a slight modification of a similar result in \cite[Lemma 2.1]{Lubetzky2016-wd}.
 	\begin{lemma}
 	\label{lem:1D prob history contained in ball}
-		Consider the update histories on the cycle.	Let $B(i, l)$ indicate the set of vertices at integer distance $l$ or smaller from vertex $i$. The probability that the history of vertex $i$ escapes $B(i,l)$ in time $s$ is bounded by
+		% Consider the update histories on the cycle.	Let $B(i, l)$ indicate the set of vertices at integer distance at most $l$ from vertex $i$. 
+		Let $i$ be a vertex on the length $n$ cycle. The probability that the update history of vertex $i$ escapes $B(i,l)$ in time $s$ satisfies
 		\begin{equation}
 			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t_* - u) \nsubseteq B(i, l)\right] \leq 2\exp\left(s - l \ln 2 \right).
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
-		Let $\vect{w}^- = (i, i-1, \dots, i- l)$ and $\vect{w}^+ = (i, i+1, \dots, i+ l)$ denote the sequences of adjacent vertices starting at vertex $i$ and extending distance $l$ to the left and right respectively. For $\hist_i$ to contain any vertex outside $B(i, l)$ at a time $u \in [t_* - s, t_*]$ then either each $w_k^-$ was updated at some time $t_* > t_k \geq t_* - s$ with $t_{k-1} > t_k$ or each $w_k^+$ was updated at some time $t_* > t_k \geq t_* - s$ with $t_{k-1} > t_k$. Call the first event $M_-$ and the second $M_+$. We have
+		Let $\vect{w}^- = (i, i-1, \dots, i- l)$ and $\vect{w}^+ = (i, i+1, \dots, i+ l)$ denote the sequences of adjacent vertices starting at vertex $i$ and extending distance $l$ to the left and right respectively. For $\hist_i$ to contain any vertex outside $B(i, l)$ at a time $u \in [t_* - s, t_*]$ then either each $w_k^-$ was updated at some time $t_* > t_k \geq t_* - s$ with $t_{k-1} > t_k$ or each $w_k^+$ was updated at some time $t_* > t_k \geq t_* - s$ with $t_{k-1} > t_k$. Call the first event $M_-$ and the second $M_+$. For $M_-$ to occur, first $i$ must update, then $i-1$ must update, and so on. Each vertex updates at rate 1, and there are $l$ updates required within time $s$. So the probability of this event is the probability that a rate 1 Poisson clock goes off at least $l$ times in time $s$, or equivalently
 		\begin{equation}
-			\prob[M_-] = \prob[M_+] = \prob[\mathrm{Po}(s) \geq  l ]
+			\prob[M_-] = \prob[M_+] = \prob[Y \geq  l ]
 		\end{equation}
-		where $\mathrm{Po}(s)$ is Poisson with rate $s$. By a union bound,
+		where $Y \sim \mathrm{Po}(s)$ is Poisson with rate $s$. By a union bound,
 		\begin{equation}
 			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t_* - u) \nsubseteq B(i, l)\right] \leq 2 \prob[\mathrm{Po}(s) \geq  l].
 		\end{equation}
@@ -819,7 +820,7 @@
 		\begin{align}
 			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t_* - u) \nsubseteq B(i, l)\right] &\leq 2\exp\left(s\left(\euler^t - 1\right) - t l\right).
 		\end{align}
-		Choosing $t = \ln 2$,
+		Choosing $t = \ln 2$ then yields
 		\begin{align}
 			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t_* - u) \nsubseteq B(i, l)\right] &\leq 2\exp\left(s - l \ln 2 \right).%\\
 			% &\leq \exp\left(s \Delta^2 - l \ln \Delta \right).
@@ -873,7 +874,7 @@
 
 	\begin{lemma}
 		\label{lem:X_i+k given X_i}
-		Let $i$ and $j$ be the indices of two vertices on the cycle $(\mathbb{Z}/n\mathbb{Z})$ separated by distance $k$. Then
+		Let $i$ and $j$ be two vertices on the cycle $(\mathbb{Z}/n\mathbb{Z})$ separated by distance $k$. Then
 		\begin{equation}
 			\label{eq:prob X_i+k = 1|X_i = 1}
 			\prob[X_j = 1| X_i = 1] \leq \frac{e^{-z}}{n} + 2\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k.
@@ -888,6 +889,9 @@
 			&\leq \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j = \emptyset | X_i = 1] %\notag\\
 			+ \prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1].
 		\end{align}
+
+		[GOING THROUGH TIM'S COMMENTS UP TO HERE]
+
 		% If the histories of $i$ and $j$ do not intersect, then conditioning on $\mathcal{H}_i$ surviving does not affect the chance that $\mathcal{H}_j$ survives. However, conditioning on $\mathcal{H}_i$ surviving does make it more likely that the histories intersect. So
 		% % \begin{align}
 		% % 	\prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset | X_i = 1] &\leq \prob[X_{i+k} = 1| \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset, X_i = 1]\\
@@ -913,7 +917,13 @@
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
-		Define $S$ to be the first time that the histories of $i$ and $j$ intersect, or define $S = t_0$ if the histories do not intersect before time $t_0$. We construct a new history, $\hist_j'$, in the following way. Along the interval $[S, t_*)$, $\hist_j'$ is constructed from the update sequence in the exact same way as $\hist_j$. However, along the interval $[t_0, S)$, we replace the update sequence with an another i.i.d.\ copy of the update sequence. We have constructed $\hist_j'$ to be independent of $\hist_i$. This is obvious for $t < S$. For $t \geq S$ we note that no updates are a part of both histories. From the memoryless property of the exponential waiting times between updates, we get that each update is independent of the rest, and so the histories are independent too. Note that in the event $\{\hist_i \cap \hist_j \cap (V \times [t_0, t_*]) = \emptyset\}$, we have $\hist_j = \hist_j'$ along the interval $[t_0, t_*]$ and so
+		Define $S$ to be the time closest to $t_*$ that the histories of $i$ and $j$ intersect, or define $S = t_0$ if the histories do not intersect along $[t_0, t_*]$. We construct a new history, $\hist_j'$, in the following way. For all $t \in [S, t_*]$, $\hist_j'(t) = \hist_j(t)$. However, along the interval $[t_0, S)$, we replace the update sequence with an another i.i.d.\ copy of the update sequence along the interval $[t_0, S)$ and construct $\hist_j'$ using this new update sequence. 
+
+		Clearly, $\hist_j'$ and $\hist_j$ have the same distribution. Moreover, we now argue that $\hist_j'$ is independent of $\hist_i$. By construction, $\cup_{t = 0}^S \hist_j'(t)$ is independent of $\cup_{t=0}^S \hist_k(t)$ for all $k \in V$, and in particular, for $k = i$. 
+		For $t \geq S$ we note that no updates are a part of both histories. Since every update comes from independent Poisson processes, the updates in $\hist_j' \cap (V \times [S, t^*])$ are independent of those in $\hist_i \cap (V \times [S, t^*])$. Hence $\hist_j'$ and $\hist_i$ are independent.
+
+		% From the memoryless property of the exponential waiting times between updates, we get that each update is independent of the rest, and so the histories are independent too. 
+		Note that in the event $\{\hist_i \cap \hist_j \cap (V \times [t_0, t_*]) = \emptyset\}$, we have $\hist_j = \hist_j'$ along the interval $[t_0, t_*]$ and so
 		\begin{align}
 			\prob[&\hist_i(t_0) \neq \emptyset, \hist_j(t_0) \neq \emptyset, \hist_i \cap \hist_j \cap (V \times [t_0, t_*]) = \emptyset] \notag \\
 			&= \prob[\hist_i(t_0) \neq \emptyset, \hist_j'(t_0) \neq \emptyset, \hist_i \cap \hist_j \cap (V \times [t_0, t_*]) = \emptyset]\\
@@ -946,16 +956,16 @@
 
 \begin{lemma}
 	\label{lem:A_ij bound conditioned}
-		Let $i$ and $j$ be the indices of two vertices that are separated by distance $k$. Then
+		Let $i$ and $j$ be two vertices on the length $n$ cycle that are separated by distance $k$. Then
 		\begin{equation}
 			\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset|X_{j} = 1] \leq 2\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k.
 		\end{equation}
 		where $k = |i - j|$.
 	\end{lemma}
 	\begin{proof}
-		We first must deal with the effect that conditioning on $X_j = 1$ has on the probability that the two update histories merge. For the history of vertex $j$ to survive, all updates along the history must be non-oblivious updates. We also note that conditioning on the history of vertex $j$ surviving should not result in an increase in the overall rate of updates (since each update is a chance that the history will die). By this reasoning, 
+		We must first deal with the effect that conditioning on $X_j = 1$ has on the probability that the two update histories merge. For the history of vertex $j$ to survive, all updates along the history must be non-oblivious updates. We also note that conditioning on the history of vertex $j$ surviving should not result in an increase in the overall rate of updates (since each update is a chance that the history will die). By this reasoning, 
 		\begin{equation}
-			\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_j = 1] \leq \prob[\mathcal{H}_i \cap \bar{\mathcal{H}}_j]
+			\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_j = 1] \leq \prob[\mathcal{H}_i \cap \bar{\mathcal{H}}_j \neq \emptyset]
 		\end{equation}
 		where $\bar{\mathcal{H}}_j$ is an undying random walk that starts at $j$ and going backwards in time from $t_*$ moves right at rate 1/2 and left at rate 1/2.
 
