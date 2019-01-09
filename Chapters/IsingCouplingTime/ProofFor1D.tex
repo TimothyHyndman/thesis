@@ -345,7 +345,7 @@
 		The limit of $\lambda^n$ as $n \rightarrow \infty$ exists.
 	\end{lemma}
 	\begin{proof}
-		From Lemma \ref{lem: U converges} we have that $U_i^n | X_i^n = 1$ converges in distribution. Via the Portmanteau Theorem \cite[Theorem 25.8]{Billingsley1995-en} we immediately obtain that
+		From Lemma \ref{lem: U converges}, along with the fact that $0 \leq \prob(U_i^n \leq k | X_i^n = 1) \leq 1$, we have that $U_i^n | X_i^n = 1$ converges in distribution. Via the Portmanteau Theorem \cite[Theorem 25.8]{Billingsley1995-en} we immediately obtain that
 		\begin{equation}
 			\lambda^n = \euler^{-z} \expect \left[\left.\frac{1}{1 + U_i^n}\right| X_i^n = 1\right]
 		\end{equation}
@@ -624,12 +624,16 @@
 	\begin{lemma}
 	\label{lem: U converges}
 	For any positive integer $n$, and any integer $m > n$,
-		\begin{equation}
-			\prob(U_i^n \leq k | X_i^n = 1) - \prob(U_i^{n+m} \leq k | X_i^{n+m} = 1) \geq 
-		\end{equation}
+		\begin{align}
+			\prob(&U_i^n \leq k | X_i^n = 1) - \prob(U_i^{n+m} \leq k | X_i^{n+m} = 1) \notag \\
+			&\geq - 2 \euler^{z(1 + 1/\theta)} n^{1/\theta + \ln 2+ z}(2\ln n + 1) \left(\frac{1}{2}\right)^{n/2} - 2 \euler^{-z} \ln n / n.
+		\end{align}
+	% \begin{equation}
+	% 	\lim_{n\rightarrow \infty} \sup_{m > n} \left(\prob(U_i^n \leq k | X_i^n = 1) - \prob(U_i^{n+m} \leq k | X_i^{n+m} = 1)\right) = 0.
+	% \end{equation}
 	\end{lemma}
 	\begin{proof}
-		On the length $n$ cycle, define the following events. Let $A_j$ be the event
+		On the length $n$ cycle, let $A_j$ be the event
 		\begin{align}
 			A_j = \{\hist_j^n \not \subseteq B(i, n/2 - 1) \times [0, t_*^n]\}
 		\end{align}
@@ -646,18 +650,20 @@
 			\alpha = \bigcup_{j \in B_i^n \cup \{i\}} \alpha_j.
 		\end{align}
 
+		We have
 		\begin{align}
-			blah &= \prob(U_i^n \leq k | X_i^n = 1) - \prob(U_i^{n+m} \leq k | X_i^{n+m} = 1) \\
+			\prob(U_i^n &\leq k | X_i^n = 1) - \prob(U_i^{n+m} \leq k | X_i^{n+m} = 1) \notag \\ 
+			% &= \prob(U_i^n \leq k | X_i^n = 1) - \prob(U_i^{n+m} \leq k | X_i^{n+m} = 1) \\
 			&= \prob(U_i^n \leq k, A | X_i^n = 1) - \prob(U_i^{n+m} \leq k, \alpha | X_i^{n+m} = 1) \notag \\
 			&\phantom{=} + \prob(U_i^n \leq k, A^\mathrm{c} | X_i^n = 1) - \prob(U_i^{n+m} \leq k, \alpha^\mathrm{c} | X_i^{n+m} = 1) \\
 			&\geq -\prob(\alpha | X_i^{n+m} = 1) \notag \\
-			&\phantom{=} + \prob(U_i^n \leq k, A^\mathrm{c} | X_i^n = 1) - \prob(U_i^{n+m} \leq k, \alpha^\mathrm{c} | X_i^{n+m} = 1)
+			&\phantom{=} + \prob(U_i^n \leq k, A^\mathrm{c} | X_i^n = 1) - \prob(U_i^{n+m} \leq k, \alpha^\mathrm{c} | X_i^{n+m} = 1).
 			\label{eq:split probs in U converge lemma}
 		\end{align}
 
 		For a given vertex $i$, we may couple the histories on the length $n$ cycle and the length $n+m$ cycle in the following way. Recall that the update sequence on the cycle may be represented using the Poisson processes $K_t^i$, $L_t^i$, and $R_t^i$, as introduced in Section \ref{sec:update histories on the cycle}. Let $K_t^j$, $L_t^j$, and $R_t^j$, $j \in \{1,\dots, n+m\}$, be the Poisson processes which represent the update sequence on the length $n+m$ cycle. Let $\hat{K}_t^j$ be the Poisson processes resulting from taking the updates of $K_t^j$ in the interval $[t_0, t_*^{n+m}]$ and temporally shifting them onto the interval $[0, t_*^n]$. Likewise, define $\hat{L}_t^j$ and $\hat{R}_t^j$ in the same way. On the size $n$ cycle, we use the processes $\hat{K}_t^j, \hat{L}_t^j$, and $\hat{R}_t^j$ for $j \in [i- \lceil n/2 - 1 \rceil, i + \lfloor n/2\rfloor]$. 
 
-		[EXPLAIN BETTER?]
+		The picture here is that we take the update sequence on the length $n$ cycle from the top part of the update sequence on the length $n+m$ cycle. Of course, we must discard the update sequences of some vertices from the $n+m$ cycle and we choose to discard the update sequences of those vertices that are furthest away from $i$.
 
 		Under this coupling, if $\alpha^\mathrm{c}$ holds, then we note that the histories of vertices in $B_i \cup \{i\}$ on the length $n$ cycle are equal to the histories along the interval $[t_0, t_*^{n+m}]$ of the same vertices on the length $n+m$ cycle. Hence, if $\alpha^\mathrm{c}$ holds, for $j \in B_i \cup \{i\}$, $X_j^n = 1$ if and only if $\hist_j^{n+m}(t_0) \neq 0$. We also have that $\alpha^\mathrm{c}$ holds if and only if $A^\mathrm{c}$ holds. Therefore,
 		\begin{align}
@@ -743,7 +749,12 @@
 			\prob(&U_i^n \leq k | X_i^n = 1) - \prob(U_i^{n+m} \leq k | X_i^{n+m} = 1) \notag \\ 
 			&\geq - n \euler^{z} (|B_i| + 1) 2\exp(t_*^n - \ln 2 (n/2 - b_n)) - \euler^{-z} |B_i^n| / n,
 		\end{align}
-		which, recalling our choices of $b_n = \ln n$ and $t_*^n = (z + \ln n) / \theta$, 
+		which, recalling our choices of $b_n = \ln n$ and $t_*^n = (z + \ln n) / \theta$, becomes
+		\begin{align}
+			\prob(&U_i^n \leq k | X_i^n = 1) - \prob(U_i^{n+m} \leq k | X_i^{n+m} = 1) \notag \\ 
+			&\geq - 2 \euler^{z(1 + 1/\theta)} n^{1/\theta + \ln 2 + z}(2\ln n + 1) \left(\frac{1}{2}\right)^{n/2} - 2 \euler^{-z} \ln n / n.
+		\end{align}
+		% which goes to zero as $n \rightarrow \infty$.
 
 	\end{proof}
 
