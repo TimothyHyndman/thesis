@@ -557,8 +557,6 @@
 			&= 2 n (2\lfloor b_n\rfloor + 1) \left(\expect[\prob[A|W_i]] + \prob[A]\right)\\
 			&= 4 n (2\lfloor b_n\rfloor + 1) \prob[A].
 		\end{align}
-
-		[GOING THROUGH TIM'S COMMENTS UP TO HERE]
 		
 		% Let $A_{j,k}$ denote the event that the histories of vertices $j$ and $k$ merge. That is,
 		% \begin{equation}
@@ -570,10 +568,10 @@
 		% 	&\leq 8n^2(2b_n + 1)^2  \left(\frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}\right)^{c_n - b_n}
 		% \end{align}
 		% by Lemma \ref{lem: A_ij bound}. This goes to $0$ as $n \rightarrow \infty$.
-		For either $A_1$ or $A_2$ to hold, there must exists a history that spreads at least distance $(c_n - b_n) / 2$ away from its starting vertex. 
+		For $A_1$ to hold, we must have a history $\hist_j$ that extends from a distance of no more than $b_n$ from $i$ to a distance of at least $(b_n + c_n)/2$ from $i$. That is, it must extend a distance of at least $(c_n - b_n)/2$. For $A_2$ to hold, we must have a history $\hist_j'$ that extends from a distance of at least $c_n$ from $i$ to a distance of no more than $(b_n + c_n)/2$ from $i$. That is, it must extend a distance of at least $(c_n - b_n)/2$. So for either $A_1$ or $A_2$ to hold, there must exist a history that spreads at least distance $(c_n - b_n) / 2$ away from its starting vertex. 
 		By a union bound
 		\begin{align}
-			\prob[A] &\leq \sum_{j = 1}^n \prob[\mathcal{H}_i \nsubseteq B(i, (c_n - b_n)/2) \times [0, t_*]]\\
+			\prob[A] &\leq \sum_{i = 1}^n \prob[\mathcal{H}_i \nsubseteq B(i, (c_n - b_n)/2) \times [0, t_*]]\\
 				&= n \prob\left[\bigcup_{u \in [0, t_*]}\mathcal{H}_i(t_* - u) \nsubseteq B(i, (c_n - b_n)/2)\right]
 		\end{align}
 		Combining this with Lemma \ref{lem:1D prob history contained in ball}, and recalling our choices of $b_n = \ln(n)$ and $c_n = \ln(n)^2$ we get that
@@ -581,7 +579,7 @@
 			\delta_1 &\leq 8n^2(2\lfloor b_n\rfloor + 1) \exp\left((z + \ln n)/\theta - \ln 2(c_n - b_n) /2 \right)\\
 			&\leq 16 \exp(z/\theta) n^{3+ 1/\theta + \ln2/2 -\ln n \ln 2/ 2}
 		\end{align}
-		which goes to $0$ as $n \rightarrow \infty$.
+		where we have used that $2n > 2 \ln n + 1$ for all $n \geq 1$. It is now clear that $\delta_1$ goes to $0$ as $n \rightarrow \infty$.
 	\end{proof}
 
 	\begin{lemma}
@@ -617,6 +615,8 @@
 		which, recalling that $b_n = \ln(n)$ and $c_n = \ln(n)^2$, goes to $0$ as $n \rightarrow \infty$.
 	\end{proof}
 
+	[GOING THROUGH TIM'S COMMENTS UP TO HERE]
+	
 	\section{Additional lemmas}
 	\label{sec:additional lemmas 1D}
 	This section contains the proofs for a number of lemmas concerning properties of the update histories on the cycle.
