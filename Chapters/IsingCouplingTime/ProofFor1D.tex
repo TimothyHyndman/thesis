@@ -703,7 +703,8 @@
 		Also note that under the coupling given above, if $\alpha^\mathrm{c}$ holds, then $V_i^n \leq V_i^{n+m}$. Now
 		\begin{align}
 			&\prob(U_i^n \leq k, A^\mathrm{c} | X_i^n = 1) - \prob(U_i^{n+m} \leq k, \alpha^\mathrm{c} | X_i^{n+m} = 1) \\
-			&= \prob\left(\left.\sum_{j \in B_i^n} \indicator(\hist_j^{n+m}(t_0) \neq \emptyset) \leq k, \alpha^\mathrm{c} \right| X_i^{n+m} = 1 \right) - \prob(U_i^{n+m} \leq k, \alpha^\mathrm{c} | X_i^{n+m} = 1)\\
+			&= \prob\left(\left.\sum_{j \in B_i^n} \indicator(\hist_j^{n+m}(t_0) \neq \emptyset) \leq k, \alpha^\mathrm{c} \right| X_i^{n+m} = 1 \right) \notag \\ 
+			&\phantom{=}- \prob(U_i^{n+m} \leq k, \alpha^\mathrm{c} | X_i^{n+m} = 1)\\
 			&\geq -\prob\left( \left. U_i^{n+m} < \sum_{j \in B_i^n} \indicator(\hist_j^{n+m}(t_0) \neq \emptyset), \alpha \right| X_i^{n+m} = 1\right)\\
 			&\geq -\prob\left(Y_i > \bar{Y}_i | X_i^{n+m} = 1 \right)\\
 			&\geq -\prob\left(Y_i \neq 0 | X_i^{n+m} = 1 \right)
@@ -713,11 +714,12 @@
 			-\prob\left(Y_i \neq 0 | X_i^{n+m} = 1 \right) = -\prob\left(Y_i \neq 0 | \hist_i^{n+m}(t_0) \neq \emptyset \right).
 		\end{align}
 
-		Now 
+		Now,
 		\begin{align}
-			&\prob\left(Y_i \neq 0 | \hist_i^{n+m}(t_0) \neq \emptyset \right) \\
-			&\leq \sum_{j \in B_i^n} \prob\left(\hist_j^{n+m}(t_0) \neq \emptyset, \hist_i^{n+m} \cap \hist_j^{n+m} \cap (V \times [t_0, t_*^{n+m}]) = \emptyset \left| \hist_i^{n+m}(t_0) \neq \emptyset \right.\right),\\
-			&= \prob(\hist_i^{n+m}(t_0) \neq \emptyset)^{-1} \sum_{j \in B_i^n} \prob\left(\hist_j^{n+m}(t_0) \neq \emptyset, \hist_i^{n+m} \cap \hist_j^{n+m} \cap (V \times [t_0, t_*^{n+m}]) = \emptyset, \hist_i^{n+m}(t_0) \neq \emptyset \right)
+			&\prob\left(Y_i \neq 0 | \hist_i^{n+m}(t_0) \neq \emptyset \right) \leq \sum_{j \in B_i^n} \prob\left(\hist_j^{n+m}(t_0) \neq \emptyset, \dots \right. \notag \\
+			&\phantom{=====} \dots \left. \hist_i^{n+m} \cap \hist_j^{n+m} \cap (V \times [t_0, t_*^{n+m}]) = \emptyset \left| \hist_i^{n+m}(t_0) \neq \emptyset \right.\right)\\
+			&= \prob(\hist_i^{n+m}(t_0) \neq \emptyset)^{-1} \sum_{j \in B_i^n} \prob\left(\hist_j^{n+m}(t_0) \neq \emptyset, \dots \right. \notag \\
+			&\phantom{====}\dots \left. \hist_i^{n+m} \cap \hist_j^{n+m} \cap (V \times [t_0, t_*^{n+m}]) = \emptyset, \hist_i^{n+m}(t_0) \neq \emptyset \right)
 		\end{align}
 		and by Lemma \ref{lem:prob Xj Xi and no intersect} we get
 		\begin{equation}
