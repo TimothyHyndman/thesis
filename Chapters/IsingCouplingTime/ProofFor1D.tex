@@ -652,6 +652,7 @@
 			&\phantom{=} + \prob(U_i^n \leq k, A^\mathrm{c} | X_i^n = 1) - \prob(U_i^{n+m} \leq k, \alpha^\mathrm{c} | X_i^{n+m} = 1) \\
 			&\geq -\prob(\alpha | X_i^{n+m} = 1) \notag \\
 			&\phantom{=} + \prob(U_i^n \leq k, A^\mathrm{c} | X_i^n = 1) - \prob(U_i^{n+m} \leq k, \alpha^\mathrm{c} | X_i^{n+m} = 1)
+			\label{eq:split probs in U converge lemma}
 		\end{align}
 
 		For a given vertex $i$, we may couple the histories on the length $n$ cycle and the length $n+m$ cycle in the following way. Recall that the update sequence on the cycle may be represented using the Poisson processes $K_t^i$, $L_t^i$, and $R_t^i$, as introduced in Section \ref{sec:update histories on the cycle}. Let $K_t^j$, $L_t^j$, and $R_t^j$, $j \in \{1,\dots, n+m\}$, be the Poisson processes which represent the update sequence on the length $n+m$ cycle. Let $\hat{K}_t^j$ be the Poisson processes resulting from taking the updates of $K_t^j$ in the interval $[t_0, t_*^{n+m}]$ and temporally shifting them onto the interval $[0, t_*^n]$. Likewise, define $\hat{L}_t^j$ and $\hat{R}_t^j$ in the same way. On the size $n$ cycle, we use the processes $\hat{K}_t^j, \hat{L}_t^j$, and $\hat{R}_t^j$ for $j \in [i- \lceil n/2 - 1 \rceil, i + \lfloor n/2\rfloor]$. 
@@ -709,20 +710,40 @@
 		Now 
 		\begin{align}
 			&\prob\left(Y_i \neq 0 | \hist_i^{n+m}(t_0) \neq \emptyset \right) \\
-			&\leq \sum_{j \in B_i^n} \prob\left(\hist_j^{n+m}(t_0) \neq \emptyset, \hist_i^{n+m} \cap \hist_j^{n+m} \cap (V \times [t_0, t_*^{n+m}]) = \emptyset \left| \hist_i^{n+m}(t_0) \neq \emptyset \right.\right)
+			&\leq \sum_{j \in B_i^n} \prob\left(\hist_j^{n+m}(t_0) \neq \emptyset, \hist_i^{n+m} \cap \hist_j^{n+m} \cap (V \times [t_0, t_*^{n+m}]) = \emptyset \left| \hist_i^{n+m}(t_0) \neq \emptyset \right.\right),\\
+			&= \prob(\hist_i^{n+m}(t_0) \neq \emptyset)^{-1} \sum_{j \in B_i^n} \prob\left(\hist_j^{n+m}(t_0) \neq \emptyset, \hist_i^{n+m} \cap \hist_j^{n+m} \cap (V \times [t_0, t_*^{n+m}]) = \emptyset, \hist_i^{n+m}(t_0) \neq \emptyset \right)
+		\end{align}
+		and by Lemma \ref{lem:prob Xj Xi and no intersect} we get
+		\begin{equation}
+			\prob(Y_i \neq 0 | \hist_i^{n+m}(t_0) \neq \emptyset) \leq |B_i^n| \prob(\hist_i^{n+m}(t_0) \neq \emptyset)
+		\end{equation}
+		We also observe that the event $\{\hist_i^{n+m}(t_0) \neq \emptyset\}$ is simply the event that $\hist_i$ does not encounter an obvlivious update over an interval of length $t_*^n$. So
+		\begin{align}
+			\prob(Y_i \neq 0 | \hist_i^{n+m}(t_0) \neq \emptyset) &\leq |B_i^n| \euler^{-\theta t_*^n}\\
+			&= \euler^{-z} |B_i^n| / n.
 		\end{align}
 
-		By Lemma \ref{lem:prob Xj Xi and no intersect} this is $|B_i^n|/n$. 
-
-
-		BOUND THIS GUY
+		Turning to the other term of interest in \eqref{eq:split probs in U converge lemma} we have
+		\begin{align}
+			\prob(\alpha | X_i^{n+m} = 1) &\leq \sum_{j \in B_i^n \cup \{i\}} \prob(\alpha_j|X_i^{n+m} = 1) \\
+			&= \sum_{j \in B_i^n \cup \{i\}} \prob(\alpha_j|\hist_i^{n+m}(t_0) \neq \emptyset) \\
+			&\leq \prob(\hist_i^{n+m}(t_0) \neq \emptyset)^{-1} \sum_{j \in B_i^n \cup \{i\}} \prob(\alpha_j).
+		\end{align}
+		For $\alpha_j$ to occur, $j \in B_i^n \cup \{i\}$, the history of vertex $j$ must reach a vertex at distance at least $n/2 - b_n$ from $j$ in time $t_*^n$. By Lemma \ref{lem:1D prob history contained in ball} we have
 		\begin{equation}
-			\prob(\alpha | X_i^{n+m} = 1) \leq \sum_{j \in B_i^n \cup \{i\}} \alpha_j
+			\prob(\alpha_j) \leq 2\exp(t_*^n - \ln 2 (n/2 - b_n)).
 		\end{equation}
-		I.e. in time $t_*^n$ a history travels further than n/2. By Lemma \ref{lem:1D prob history contained in ball} this is
+		and so,
 		\begin{equation}
-			2\exp(t_*^n - n\ln 2 / 2).
+			\prob(\alpha | X_i^{n+m} = 1) \leq n \euler^{z} (|B_i| + 1) 2\exp(t_*^n - \ln 2 (n/2 - b_n)).
 		\end{equation}
+
+		So overall we have
+		\begin{align}
+			\prob(&U_i^n \leq k | X_i^n = 1) - \prob(U_i^{n+m} \leq k | X_i^{n+m} = 1) \notag \\ 
+			&\geq - n \euler^{z} (|B_i| + 1) 2\exp(t_*^n - \ln 2 (n/2 - b_n)) - \euler^{-z} |B_i^n| / n,
+		\end{align}
+		which, recalling our choices of $b_n = \ln n$ and $t_*^n = (z + \ln n) / \theta$, 
 
 	\end{proof}
 
@@ -873,20 +894,21 @@
 
 	\begin{lemma}
 	\label{lem:prob Xj Xi and no intersect}
-		Let $i$ and $j$ be the indices of two vertices in a graph. Then
+		Let $i$ and $j$ be two vertices in a transitive graph, $G = (V, E)$. Let $0 \leq t_0 < t_*$. Then
 		\begin{equation}
-			\prob\left(\hist_j(0) \neq \emptyset, \hist_i(0) \neq \emptyset, \hist_j \cap \hist_i \neq \emptyset \right) \leq \prob[X_i = 1]^2.
+			\prob\left(\hist_j(t_0) \neq \emptyset, \hist_i(t_0) \neq \emptyset, \hist_j \cap \hist_i \cap (V \times [t_0, t_*]) \neq \emptyset \right) \leq \prob[\hist_i(t_0) \neq \emptyset]^2.
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
-		Define $S$ to be the first time that the histories of $i$ and $j$ intersect, or define $S = 0$ if the histories do not intersect before time $0$. We construct a new history, $\hist_j'$, in the following way. Along the interval $[S, t_*)$, $\hist_j'$ is constructed from the update sequence in the exact same way as $\hist_j$. However, along the interval $[0, S)$, we replace the update sequence with an another i.i.d.\ copy of the update sequence. We have constructed $\hist_j'$ to be independent of $\hist_i$. This is obvious for $t < S$. For $t \geq S$ we note that no updates are a part of both histories. From the memoryless property of the exponential waiting times between updates, we get that each update is independent of the rest, and so the histories are independent too. Note that in the event $\{\hist_i \cap \hist_j = \emptyset\}$, we have $\hist_j = \hist_j'$ and so
+		Define $S$ to be the first time that the histories of $i$ and $j$ intersect, or define $S = t_0$ if the histories do not intersect before time $t_0$. We construct a new history, $\hist_j'$, in the following way. Along the interval $[S, t_*)$, $\hist_j'$ is constructed from the update sequence in the exact same way as $\hist_j$. However, along the interval $[t_0, S)$, we replace the update sequence with an another i.i.d.\ copy of the update sequence. We have constructed $\hist_j'$ to be independent of $\hist_i$. This is obvious for $t < S$. For $t \geq S$ we note that no updates are a part of both histories. From the memoryless property of the exponential waiting times between updates, we get that each update is independent of the rest, and so the histories are independent too. Note that in the event $\{\hist_i \cap \hist_j \cap (V \times [t_0, t_*]) = \emptyset\}$, we have $\hist_j = \hist_j'$ along the interval $[t_0, t_*]$ and so
 		\begin{align}
-			\prob[\hist_i(0) \neq \emptyset, \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset] &= \prob[\hist_i(0) \neq \emptyset, \hist_j'(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset]\\
-			&\leq \prob[\hist_i(0) \neq \emptyset, \hist_j'(0) \neq \emptyset]\\
-			&= \prob[\hist_i(0) \neq \emptyset] \prob[\hist_j'(0) \neq \emptyset]\\
-			&= \prob[\hist_i(0) \neq \emptyset]^2
+			\prob[&\hist_i(t_0) \neq \emptyset, \hist_j(t_0) \neq \emptyset, \hist_i \cap \hist_j \cap (V \times [t_0, t_*]) = \emptyset] \notag \\
+			&= \prob[\hist_i(t_0) \neq \emptyset, \hist_j'(t_0) \neq \emptyset, \hist_i \cap \hist_j \cap (V \times [t_0, t_*]) = \emptyset]\\
+			&\leq \prob[\hist_i(t_0) \neq \emptyset, \hist_j'(t_0) \neq \emptyset]\\
+			&= \prob[\hist_i(t_0) \neq \emptyset] \prob[\hist_j'(t_0) \neq \emptyset]\\
+			&= \prob[\hist_i(t_0) \neq \emptyset]^2
 		\end{align}
-		since $\hist_i$ and $\hist_j'$ are independent and $\prob[\hist_i(0) \neq \emptyset] = \prob[\hist_j'(0) \neq \emptyset]$.
+		since $\hist_i$ and $\hist_j'$ are independent and $\prob[\hist_i(t_0) \neq \emptyset] = \prob[\hist_j'(t_0) \neq \emptyset]$ by the transitivity of $G$.
 	\end{proof}
 	\begin{lemma}
 		\label{lem:prob Xj and no intersect given Xi}
