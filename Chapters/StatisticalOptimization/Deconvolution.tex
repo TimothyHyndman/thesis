@@ -8,19 +8,37 @@
 %	Chapter Text
 %-------------------------------------------------------------------------------
 
+% Quick summary of what Aurore said she expected the chapter to contain
+% Explain basic deconvolution, phiU known
+% PhiU est from replicates
+% With no replicates brief summary of lit
+% Delaigle Hall 2016
+% Say authors noted few points of support
+% Hard to come up with theoretical justification for why
+% Here's empirical examples
+% Looks like often need a lot less
+% Motivates code with fewer parameters. This is faster.
+% We do this in R-package.
+
 \section{Introduction}
-	In this final chapter, we look at another statistical problem in which we perform an optimization over discrete probability distributions and find that the number of points of support of the maximizing distribution is much smaller than expected. In contrast to Chapter \ref{Ch:Mixtures}, we will take a descriptive and practically minded point of view, rather than the more theory driven previous chapter. This is partly due to the additional complexity of the problem, which prevents many of the tools used on maximum likelihood mixtures from working here. However, this does not stop us from pointing out many similarities between the two problems, and numerical analysis allows us to benefit from the similar phenomenon that occurs.
+	In this final chapter, we look at another statistical problem in which we perform an optimization over discrete probability distributions and find that the number of points of support of the maximizing distribution is much smaller than expected. In contrast to Chapter \ref{Ch:Mixtures}, we will take a descriptive and practically minded point of view, rather than the more theory driven previous chapter. This is partly due to the additional complexity of the problem, which prevents many of the tools used on maximum likelihood mixtures from working here. However, this does not stop us from pointing out many similarities between the two problems, and an empirical exploration allows us to benefit from the similar phenomenon that occurs in a variety of scenarios.
 
 	The problem is one of \emph{deconvolution}, the recovery of the distribution, $F_X$, or density, $f_X$, of some random variable $X$, from measurements of
 	\begin{equation}
 		W = X + U
 	\end{equation}
-	where the measurement error $U$ is independent of $X$. In the case that we know the distribution of $U$, Carroll and Hall \cite{Carroll1988-aj} and Carroll and Stefanski \cite{Stefanski1990-uo} proposed a deconvolution kernel density estimator of $f_X$. If the distribution of $U$ is unknown, then we may hope to estimate it from replicate measurements, $W_{jk} = X_j + U_{jk}$, for $1 \leq k \leq N_j$ and $1 \leq j \leq n$. Delaigle, Hall, and Meister provide an estimator for $f_X$ in this scenario. However, up until Delaigle's and Hall's 2016 paper, ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' \cite{Delaigle2016-la}, there had been no method to estimate the distribution of $X$ when we had no data on the distribution of $U$.
+	where the measurement error $U$ is independent of $X$. 
+
+	In the case that we know the distribution of $U$, Carroll and Hall \cite{Carroll1988-aj} and Carroll and Stefanski \cite{Stefanski1990-uo} proposed a deconvolution kernel density estimator of $f_X$. If the distribution of $U$ is unknown, then we may hope to estimate it from replicate measurements, $W_{jk} = X_j + U_{jk}$, for $1 \leq k \leq N_j$ and $1 \leq j \leq n$. Delaigle, Hall, and Meister provide an estimator for $f_X$ in this scenario. However, up until Delaigle's and Hall's 2016 paper, ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' \cite{Delaigle2016-la}, there had been no method to estimate the distribution of $X$ when we had no data on the distribution of $U$.
 
 	% [BRIEF SUMMARY OF LITERATURE]
 
 	In this chapter, we focus on the methods introduced in this paper. We will start by summarizing the methods in Section \ref{sec:summary of delaigle hall}. In Section \ref{sec:deconvolution empirical results}, we will empirically demonstrate that these methods produce a similar phenomenon to the one encountered when using maximum likelihood location mixtures, and we will explore how this phenomenon manifests under various conditions. Finally, we point out how we can take advantage of this phenomenon in Section \ref{sec:deconvolution observations and results}.
 
+\section{Summary of basic deconvolution}
+
+\subsection{PhiU known}
+\subsection{PhiU est from replicates}
 
 \section{Summary of Delaigle Hall 2016}
 \label{sec:summary of delaigle hall}
