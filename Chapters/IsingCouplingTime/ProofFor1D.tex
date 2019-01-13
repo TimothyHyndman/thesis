@@ -963,13 +963,25 @@
 		where $k = |i - j|$.
 	\end{lemma}
 	\begin{proof}
-		We must first deal with the effect that conditioning on $X_j = 1$ has on the probability that the two update histories merge. For the history of vertex $j$ to survive, all updates along the history must be non-oblivious updates. We also note that conditioning on the history of vertex $j$ surviving should not result in an increase in the overall rate of updates (since each update is a chance that the history will die). By this reasoning, 
-		\begin{equation}
-			\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_j = 1] \leq \prob[\mathcal{H}_i \cap \bar{\mathcal{H}}_j \neq \emptyset]
-		\end{equation}
-		where $\bar{\mathcal{H}}_j$ is an undying random walk that starts at $j$ and going backwards in time from $t_*$ moves right at rate 1/2 and left at rate 1/2.
+		We must first deal with the effect that conditioning on $X_j = 1$ has on the probability that the two update histories merge. Recall from \ref{sec:update histories on the cycle} that we could interpret the update history as a collection of independent Poisson processes for each vertex. We may construct a different collection of filtered Poisson processes for each vertex by following the updates that occur along a single vertex's history. Let $\bar{\hist}_i$ be the update history that results from ignoring all oblivious updates (that is, the history does not die). Then $L_t^{\hist_i}$ is the Poisson process that places a point every time $\bar{\hist}_i$ encounters a left update, $R_t^{\hist_i}$ is the Poisson process that places a point every time $\bar{\hist}_i$ encounters a right update, and $K_t^{\hist_i}$ is the Poisson process that places a point every time $\bar{\hist}_i$ encounters an oblivious update. It is easy to see that these are Poisson processes with waiting times that are exponential with rate 1, and that $L_t^{\hist_i}$, $R_t^{\hist_i}$, and $K_t^{\hist_i}$ are all independent of each other. Furthermore, for two vertices $i$ and $j$, while $\hist_i$ and $\hist_j$ do not share any updates, $L_t^{\hist_i}$, $R_t^{\hist_i}$, and $K_t^{\hist_i}$ are all independent of each of $L_t^{\hist_j}$, $R_t^{\hist_j}$, and $K_t^{\hist_j}$.
 
-		We note that, while $\mathcal{H}_i$ survives, the distance between $\mathcal{H}_i$ and $\bar{\mathcal{H}}_j$ is a birth and death process that starts at $k = |i - j|$ and has birth and death rates, $\lambda = \mu = (2 - \theta)/2$. Let $P(t)$ be such a process and define $s_0  = \inf\{t : P(t) = 0\}$ to be the first time the process reaches zero (this corresponds to the update histories merging). Let $s_d$ be exponentially distributed with rate $\theta$ (this corresponds to the update history of vertex $i$ dying). Then
+		We now see that conditioning on $X_j = 1$ is equivalent to conditioning that $K_t^{\hist_j}$ has no updates along $[0, t_*]$. Since $L_t^{\hist_j}$ and $R_t^{\hist_j}$ are independent of $K_t^{\hist_j}$, conditioning on $X_j = 1$ does not affect the left and right updates and so we have that
+		\begin{equation}
+			\prob[\hist_i \cap \hist_j \neq \emptyset | X_j = 1] = \prob[\hist_i \cap \bar{\hist}_j \neq \emptyset].
+		\end{equation}
+
+
+
+		% For the history of vertex $j$ to survive, all updates along the history must be non-oblivious updates. We also note that conditioning on the history of vertex $j$ surviving should not result in an increase in the overall rate of updates (since each update is a chance that the history will die). By this reasoning, 
+		% \begin{equation}
+		% 	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_j = 1] \leq \prob[\mathcal{H}_i \cap \bar{\mathcal{H}}_j \neq \emptyset]
+		% \end{equation}
+		
+		The modified history, $\bar{\hist}_j$, is an undying random walk that starts at $j$ and going backwards in time from $t_*$ moves right at rate $(1 - \theta)/2$ and left at rate $(1 - \theta)/2$. Consider a process which measures the distance between the two histories, $p(t) = d(\hist_i(t), \bar{\hist}_j(t))$. For most configurations of $\hist_i(t)$ and $\bar{\hist}_j(t)$, $p(t)$ reduces by 1 at rate $1 - \theta$ and increases by 1 at rate $1 - \theta$. The only exception being when $\hist_i(t)$ and $\bar{\hist}_j$ are maximally separated on the cycle, in which case the distance between them cannot increase.
+
+
+
+		We note that, while $\mathcal{H}_i$ survives, the distance between $\mathcal{H}_i$ and $\bar{\mathcal{H}}_j$ is a birth and death process that starts at $k = |i - j|$ and has birth and death rates, $\lambda = \mu = 1 - \theta$. Let $P(t)$ be such a process and define $s_0  = \inf\{t : P(t) = 0\}$ to be the first time the process reaches zero (this corresponds to the update histories merging). Let $s_d$ be exponentially distributed with rate $\theta$ (this corresponds to the update history of vertex $i$ dying). Then
 		\begin{align}
 		 	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_j = 1] \leq \prob[\mathcal{H}_i \cap \bar{\mathcal{H}}_j] \leq 2 \prob_k(s_0 < s_d)
 		 \end{align} 
