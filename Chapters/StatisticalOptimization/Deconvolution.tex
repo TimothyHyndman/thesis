@@ -59,13 +59,50 @@
 	or equivalently,
 	\begin{equation}
 		\phi_X = \frac{\phi_W}{\phi_U}
+		\label{eq: phi_X is fraction phi_W phi_U}
 	\end{equation}
 	if $|\phi_U(t)| > 0$ for all real $t$. We assume this in the following estimator.
 
-	Let $f_K$ be a 
+	Let $f_K$ be a bounded, even, probability density function that satisfies
+	\begin{align}
+		\sup_t |\phi_K(t) / \phi_U(t / h) | < \infty, &&\int|\phi_K(t) / \phi_U(t / h)| \intd t < \infty,
+	\end{align}
+	for any fixed $h > 0$. We may estimate the density of $W$ via the usual kernel density estimator
+	\begin{equation}
+		\hat{f}_W(t) = \frac{1}{n h} \sum_{j = 1}^n K((W_j - x)/h),
+	\end{equation}
+	which has characteristic function
+	\begin{equation}
+		\hat{\phi}_W(t) = \phi_{W_\mathrm{EMP}}(t) \phi_K(h t)
+	\end{equation}
+	where $\phi_{W_\mathrm{EMP}}(t)$ denotes the empirical characteristic function of $\{W_j\}_{j = 1}^n$,
+	\begin{equation}
+		\phi_{W_\mathrm{EMP}}(t) = \frac{1}{n}\sum_{j = 1}^n \euler^{itW_j}.
+	\end{equation}
 
-	
+	Motivated by \eqref{eq: phi_X is fraction phi_W phi_U}, we may estimate the characteristic function of $X$ by 
+	\begin{equation}
+		\hat{\phi}_X = \hat{\phi}_W / \phi_U
+	\end{equation}
+	and the density of $X$ by inverting $\hat{\phi}_X$. Overall, the estimator for $f_X$ is given by
+	\begin{equation}
+		\hat{f}_X(x) = \frac{1}{2\pi} \int \euler^{-itx} \phi_K(ht) \phi_{W_\mathrm{EMP}}(t)  / \phi_U(t) \intd t.
+	\end{equation}
+
 \subsection{PhiU est from replicates}
+	If the distribution of $U$ is unknown, we may still be able to estimate it if replicate measurements are present. In this scenario, we measure
+	\begin{align}
+		W_{jk} = X_j + U_j && j = 1, \dots, n \text{ and } k = 1, \dots, N_j
+	\end{align}
+	where the $X_j$ and $U_{jk}$ are independent and are identically distributed as $X$ and $U$ respectively. Following the methods of Delaigle, Hall and Meister \cite{Delaigle2008-hl}, a consistent estimator of $\phi_U$ is
+	\begin{equation}
+		\hat{\phi}_U(t) = \left|\frac{1}{N} \sum_{j = 1}^n \sum_{(k1, k2) \in \mathscr{S}_j} \cos \left(t (W_{jk_1} - W_{jk_2}\right)\right|^{1/2}.
+	\end{equation}
+
+
+	\begin{equation}
+		\hat{f}_X(x) = \frac{1}{Mh} \frac{1}{2\pi} \int \euler^{-itu} \phi_K(t) / (\hat{\phi}_U(t/h) + \rho) \intd t
+	\end{equation}
 
 \section{Summary of Delaigle Hall 2016}
 \label{sec:summary of delaigle hall}
