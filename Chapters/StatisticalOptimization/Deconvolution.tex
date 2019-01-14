@@ -29,15 +29,42 @@
 	\end{equation}
 	where the measurement error $U$ is independent of $X$. 
 
-	In the case that we know the distribution of $U$, Carroll and Hall \cite{Carroll1988-aj} and Carroll and Stefanski \cite{Stefanski1990-uo} proposed a deconvolution kernel density estimator of $f_X$. If the distribution of $U$ is unknown, then we may hope to estimate it from replicate measurements, $W_{jk} = X_j + U_{jk}$, for $1 \leq k \leq N_j$ and $1 \leq j \leq n$. Delaigle, Hall, and Meister provide an estimator for $f_X$ in this scenario. However, up until Delaigle's and Hall's 2016 paper, ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' \cite{Delaigle2016-la}, there had been no method to estimate the distribution of $X$ when we had no data on the distribution of $U$.
+	In the case that we know the distribution of $U$, Carroll and Hall \cite{Carroll1988-aj} and Carroll and Stefanski \cite{Stefanski1990-uo} proposed a deconvolution kernel density estimator of $f_X$. If the distribution of $U$ is unknown, then we may hope to estimate it from replicate measurements, $W_{jk} = X_j + U_{jk}$, for $1 \leq k \leq N_j$ and $1 \leq j \leq n$. Delaigle, Hall, and Meister provide an estimator for $f_X$ in this scenario. However, up until Delaigle's and Hall's 2016 paper, ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' \cite{Delaigle2016-la}, there had been no nonparametric method to estimate the distribution of $X$ when we had no data on the distribution of $U$ (see the discussion in Section 1 of \cite{Delaigle2016-la}).
 
 	% [BRIEF SUMMARY OF LITERATURE]
 
-	In this chapter, we focus on the methods introduced in this paper. We will start by summarizing the methods in Section \ref{sec:summary of delaigle hall}. In Section \ref{sec:deconvolution empirical results}, we will empirically demonstrate that these methods produce a similar phenomenon to the one encountered when using maximum likelihood location mixtures, and we will explore how this phenomenon manifests under various conditions. Finally, we point out how we can take advantage of this phenomenon in Section \ref{sec:deconvolution observations and results}.
+	In this chapter, we focus on the methods introduced in this paper. We will start in Section \ref{sec:summary of basic deconvolution} by summarizing deconvolution methods for when the error distribution is known, or estimated from replicates. This will serve as a basis for a discussion on Delaigle's and Hall's ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' in Section \ref{sec:summary of delaigle hall}. In Section \ref{sec:deconvolution empirical results}, we will empirically demonstrate that these methods produce a similar phenomenon to the one encountered when using maximum likelihood location mixtures, and we will explore how this phenomenon manifests under various conditions. Finally, we point out how we can take advantage of this phenomenon in Section \ref{sec:deconvolution observations and results}.
 
 \section{Summary of basic deconvolution}
-
+\label{sec:summary of basic deconvolution}
 \subsection{PhiU known}
+	We start with the estimator of Stefanski and Carroll in \cite{Stefanski1990-uo}. In this scenario, we let $X$ and $U$ be independent random variables with probability density functions $f_X$ and $f_U$ respectively. We observe a set of n independent observations, $\{W_j\}_{j = 1}^n$, where each $W_j$ is an observation of 
+	\begin{equation}
+		W = X + U.
+	\end{equation}
+	Furthermore, we assume that $f_U$ is known. Given this information, the goal is to estimate $f_X$.
+
+	The estimator makes use of characteristic functions. A random variable $X$ with density $f_X$ has characteristic function
+	\begin{equation}
+		\phi_X(t) = \int \euler^{i t x} f_X(x) \intd x
+	\end{equation}
+	which can be inverted via
+	\begin{equation}
+		f_X(x) = \frac{1}{2\pi} \int \euler^{-itx} \phi_X(t) \intd t
+	\end{equation}
+	if $\phi_X$ is integrable. One property of characteristic functions that is convenient for this deconvolution problem is that since $X$ and $U$ are independent, we know that the characteristic function of $W = X+ U$ is
+	\begin{equation}
+		\phi_W = \phi_X \phi_U,
+	\end{equation}
+	or equivalently,
+	\begin{equation}
+		\phi_X = \frac{\phi_W}{\phi_U}
+	\end{equation}
+	if $|\phi_U(t)| > 0$ for all real $t$. We assume this in the following estimator.
+
+	Let $f_K$ be a 
+
+	
 \subsection{PhiU est from replicates}
 
 \section{Summary of Delaigle Hall 2016}
