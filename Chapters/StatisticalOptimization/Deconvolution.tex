@@ -63,7 +63,7 @@
 	\end{equation}
 	if $|\phi_U(t)| > 0$ for all real $t$. We assume this in the following estimator.
 
-	Let $f_K$ be a bounded, even, probability density function that satisfies
+	Let $f_K$ be a bounded, even, probability density function whose characteristic function, $\phi_K$, satisfies
 	\begin{align}
 		\sup_t |\phi_K(t) / \phi_U(t / h) | < \infty, &&\int|\phi_K(t) / \phi_U(t / h)| \intd t < \infty,
 	\end{align}
@@ -90,19 +90,43 @@
 	\end{equation}
 
 \subsection{PhiU est from replicates}
-	If the distribution of $U$ is unknown, we may still be able to estimate it if replicate measurements are present. In this scenario, we measure
+	If the distribution of $U$ is unknown, we may still be able to estimate it if replicate measurements are present. This scenario is addressed by [CITATIONS]. Here we look at the estimator of Delaigle, Hall, and Meister \cite{Delaigle2008-hl}. 
+
+	In this setting, we measure
 	\begin{align}
 		W_{jk} = X_j + U_j && j = 1, \dots, n \text{ and } k = 1, \dots, N_j
 	\end{align}
-	where the $X_j$ and $U_{jk}$ are independent and are identically distributed as $X$ and $U$ respectively. Following the methods of Delaigle, Hall and Meister \cite{Delaigle2008-hl}, a consistent estimator of $\phi_U$ is
+	where the $X_j$ and $U_{jk}$ are independent and are identically distributed as $X$ and $U$ respectively. A consistent estimator of $\phi_U$ is
 	\begin{equation}
 		\hat{\phi}_U(t) = \left|\frac{1}{N} \sum_{j = 1}^n \sum_{(k1, k2) \in \mathscr{S}_j} \cos \left(t (W_{jk_1} - W_{jk_2}\right)\right|^{1/2}.
 	\end{equation}
-
-
+	This suggests an estimator of $f_X$ given by 
 	\begin{equation}
-		\hat{f}_X(x) = \frac{1}{Mh} \frac{1}{2\pi} \int \euler^{-itu} \phi_K(t) / (\hat{\phi}_U(t/h) + \rho) \intd t
+	\label{eq:replicates estimator}
+		\hat{f}_X(x) = \frac{1}{2\pi} \int \euler^{-itx} \phi_K(ht) \phi_{W_\mathrm{EMP}}(t)  / (\hat{\phi}_U(t) + \rho )\intd t
 	\end{equation}
+	with
+	\begin{equation}
+		\phi_{W_\mathrm{EMP}}(t) = \frac{1}{M} \sum_{j = 1}^n \sum_{k= 1}^{N_j} \euler^{i t W_{jk}}
+	\end{equation}
+	where
+	% \begin{equation}
+	% 	\hat{f}_X(x) = \frac{1}{Mh} \sum_{j = 1}^n \sum_{k = 1}^{N_j} \hat{L}\left(\frac{x - W_{jk}}{h}\right)
+	% \end{equation}
+	% where
+	% \begin{equation}
+	% 	\hat{L}\left(u\right) = \frac{1}{2\pi} \int \euler^{-itu} \phi_K(t) / (\hat{\phi}_U(t/h) + \rho) \intd t,
+	% \end{equation}
+	$h > 0$ is a bandwidth, $\rho \geq 0$ is a ridge parameter, and $K$ is a symmetric kernel density with compact support, whose characteristic function, $\phi_K$, has compact support.
+
+	[WHY COMPACT SUPPORT?]
+
+	The presence of the ridge parameter is to account for potential fluctuations in $\hat{\phi}_U$ that could cause the denominator in \eqref{eq:replicates estimator} to become very small. We may alternatively use another method to prevent $\hat{\phi}_U$ from getting too close to zero such as replacing $\hat{\phi}_U(t)$ with some other function for $|t|$ large.
+
+	A similar approach can be used in scenarios where we are able to sample directly from the distribution of $U$ [CITE].
+
+	\subsection{U unknown}
+	In the case where we do not know the distribution of $U$, nor have access to replicate measurements or direct measurements from $U$, 
 
 \section{Summary of Delaigle Hall 2016}
 \label{sec:summary of delaigle hall}
@@ -345,10 +369,22 @@
 		%Choice of bandwidth
 		%Integral considerations (stuff I did about how to integrate this thing)
 
-\FloatBarrier
+% \FloatBarrier
 \section{Empirical Results}
 \label{sec:deconvolution empirical results}
 % \section{Examples and Relation to Mixture Phenomenon}
+	Following the methods outlined above, the authors noted that $F_{\vect{\theta}, \vect{p}}$ was usually supported on a small number of points. That is, only a few of the $p_j$ were non-zero. A typical example of this is given in Figure \ref{fig:fixed masses example alone}.
+
+	\begin{figure}
+		\centering
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example.png}
+		\caption[A typical example of $F_{\vect{\theta}, \vect{p}}$ being supported on only a few points]{A typical example of $F_{\vect{\theta}, \vect{p}}$ being supported on only a few points. The probability masses $(\theta_j, p_j)$ are represented by grey points, and the resulting estimating density is in dark blue. The true density is a chi-squared density with 3 degrees of freedom, and the errors were normal with variance $\sigma_U = \sigma_X / 5$. There were $n = 500$ samples taken from $W$. The naive density is a kernel density estimator of the $W_j$.}
+		\label{fig:fixed masses example alone}
+	\end{figure}
+
+	A theoretical justification for this behaviour is hard to obtain. We have made some observations which could be thought of as being in favour of this phenomenon, but mostly we are just pointing out similarities between this problem, and the maximum likelihood mixtures problem of the last chapter. These observations are left until Section \ref{sec:deconvolution observations and results}.
+
+	In this section, we instead explore the phenomenon empirically, and suggest that we might benefit by allowing both the $\theta_j$ and $p_j$ to be the variables of our optimization, rather than fixing the $\theta_j$ as suggested in \cite{Delaigle2016-la}.
 
 \begin{figure}
 	\begin{minipage}{0.5\textwidth}
