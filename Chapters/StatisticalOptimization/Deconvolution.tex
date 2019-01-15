@@ -127,19 +127,23 @@
 	A similar approach could be used in scenarios where we are able to sample directly from the distribution of $U$. See also \cite{Diggle1993-jy} and \cite{Neumann1997-cr} for further discussion of cases where samples of the errors are available.
 
 	% \subsection{U unknown}
-	In the case where we do not know the distribution of $U$, nor have access to replicate measurements or direct measurements from $U$, 
-
-\section{Summary of Delaigle Hall 2016}
+	In the case where we do not know the distribution of $U$, nor have access to replicate measurements or direct measurements from $U$, methods for deconvolution generally require $F_U$ to have a parameteric or semi-parametric form. Such methods can be found in \cite{Butucea2005-be}, \cite{Meister2006-nu}, \cite{Butucea2008-wm}, and \cite{Kneip2012-aa}.
+ 
+\section{Method for deconvolution when the error is unknown}
 \label{sec:summary of delaigle hall}
+	Delaigle's and Hall's 2016 paper, ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' \cite{Delaigle2016-la}, presents a non-parametric deconvolution estimator for when the error distribution is unknown, and we do not have access to replicates or samples from the error distribution. This is unusual in deconvolution problems. As in the methods described above, deconvolution methods usually require assumptions about the shape or scale of the error distribution, or rely on additional samples to estimate it. 
+
+	In this section we summarise the estimator of \cite{Delaigle2016-la}, and discuss some practicalities that arise in the implementation. 
+
+	\subsection{Problem Setup}
 	Suppose that we have $n$ observations of
 	\begin{align}
 		W_j &= X_j + U_j &&j = 1, \dots, n
 	\end{align}
 	where $X_j$ and $U_j$ are independent and identically distributed as $X$ and $U$ respectively, and $X$ and $U$ are independent. We use $\phi_X$ and $\phi_U$ to denote the characteristics functions of $X$ and $U$, and $F_X$ and $F_U$ for the distributions. We use $f_X$ and $f_U$ for the densities if they exist.
 
-	Suppose also that we do not know any information concerning the distribution of $U$. This is unusual in deconvolution problems; we usually assume that we either know the distribution of $U$, at least up to a scaling factor, or that replicate measurements of the $W_j$s are available for the same $X_j$. 
+	% Suppose also that we do not know any information concerning the distribution of $U$. This is unusual in deconvolution problems; we usually assume that we either know the distribution of $U$, at least up to a scaling factor, or that replicate measurements of the $W_j$s are available for the same $X_j$. 
 
-	\subsection{Assumptions}
 	We still make some assumptions about $U$ and its characteristic function, $\phi_U$. These are 
 	\begin{assumption}
 	\label{assump:phiU real}
