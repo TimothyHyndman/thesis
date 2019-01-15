@@ -21,7 +21,7 @@
 % We do this in R-package.
 
 \section{Introduction}
-	In this final chapter, we look at another statistical problem in which we perform an optimization over discrete probability distributions and find that the number of points of support of the maximizing distribution is much smaller than expected. In contrast to Chapter \ref{Ch:Mixtures}, we will take a descriptive and practically minded point of view, rather than the more theory driven previous chapter. This is partly due to the additional complexity of the problem, which prevents many of the tools used on maximum likelihood mixtures from working here. However, this does not stop us from pointing out many similarities between the two problems, and an empirical exploration allows us to benefit from the similar phenomenon that occurs in a variety of scenarios.
+	In this final chapter, we look at another statistical problem in which we perform an optimization over discrete probability distributions and find that the number of points of support of the optimal distribution is much smaller than expected. In contrast to Chapter \ref{Ch:Mixtures}, we will take a descriptive and practically minded point of view, rather than the more theory driven previous chapter. This is partly due to the additional complexity of the problem, which prevents many of the tools used on maximum likelihood mixtures from working here. However, this does not stop us from pointing out many similarities between the two problems, and an empirical exploration allows us to benefit from the similar phenomenon that occurs in a variety of scenarios.
 
 	The problem is one of \emph{deconvolution}, the recovery of the distribution, $F_X$, or density, $f_X$, of some random variable $X$, from measurements of
 	\begin{equation}
@@ -35,9 +35,9 @@
 
 	In this chapter, we focus on the methods introduced in this paper. We will start in Section \ref{sec:summary of basic deconvolution} by summarizing deconvolution methods for when the error distribution is known, or estimated from replicates. This will serve as a basis for a discussion on Delaigle's and Hall's ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' in Section \ref{sec:summary of delaigle hall}. In Section \ref{sec:deconvolution empirical results}, we will empirically demonstrate that these methods produce a similar phenomenon to the one encountered when using maximum likelihood location mixtures, and we will explore how this phenomenon manifests under various conditions. Finally, we point out how we can take advantage of this phenomenon in Section \ref{sec:deconvolution observations and results}.
 
-\section{Summary of basic deconvolution}
+\subsection{Prior deconvolution methods}
 \label{sec:summary of basic deconvolution}
-\subsection{PhiU known}
+% \subsection{PhiU known}
 	We start with the estimator of Stefanski and Carroll in \cite{Stefanski1990-uo}. In this scenario, we let $X$ and $U$ be independent random variables with probability density functions $f_X$ and $f_U$ respectively. We observe a set of n independent observations, $\{W_j\}_{j = 1}^n$, where each $W_j$ is an observation of 
 	\begin{equation}
 		W = X + U.
@@ -67,7 +67,7 @@
 	\begin{align}
 		\sup_t |\phi_K(t) / \phi_U(t / h) | < \infty, &&\int|\phi_K(t) / \phi_U(t / h)| \intd t < \infty,
 	\end{align}
-	for any fixed $h > 0$. We may estimate the density of $W$ via the usual kernel density estimator
+	for any fixed $h > 0$ (we impose these conditions make various functions integrable). We may estimate the density of $W$ via the usual kernel density estimator
 	\begin{equation}
 		\hat{f}_W(t) = \frac{1}{n h} \sum_{j = 1}^n K((W_j - x)/h),
 	\end{equation}
@@ -86,11 +86,12 @@
 	\end{equation}
 	and the density of $X$ by inverting $\hat{\phi}_X$. Overall, the estimator for $f_X$ is given by
 	\begin{equation}
+	\label{eq:standard deconvolution estimator}
 		\hat{f}_X(x) = \frac{1}{2\pi} \int \euler^{-itx} \phi_K(ht) \phi_{W_\mathrm{EMP}}(t)  / \phi_U(t) \intd t.
 	\end{equation}
 
-\subsection{PhiU est from replicates}
-	If the distribution of $U$ is unknown, we may still be able to estimate it if replicate measurements are present. This scenario is addressed by [CITATIONS]. Here we look at the estimator of Delaigle, Hall, and Meister \cite{Delaigle2008-hl}. 
+% \subsection{PhiU est from replicates}
+	If the distribution of $U$ is unknown, we may still be able to estimate it if replicate measurements are present. Methods for deconvolution with the presence of replicates are presented in \cite{Li1998-mj}, \cite{Lin2006-mm}, \cite{Delaigle2008-hl}, and also \cite{McIntyre2011-fg} in the case of heteroscedastic errors. Here we look at the estimator of Delaigle, Hall, and Meister \cite{Delaigle2008-hl} as it has the most similarities with the estimator of interest in this chapter.
 
 	In this setting, we measure
 	\begin{align}
@@ -100,7 +101,7 @@
 	\begin{equation}
 		\hat{\phi}_U(t) = \left|\frac{1}{N} \sum_{j = 1}^n \sum_{(k1, k2) \in \mathscr{S}_j} \cos \left(t (W_{jk_1} - W_{jk_2}\right)\right|^{1/2}.
 	\end{equation}
-	This suggests an estimator of $f_X$ given by 
+	In light of \eqref{eq:standard deconvolution estimator}, this suggests an estimator of $f_X$ given by 
 	\begin{equation}
 	\label{eq:replicates estimator}
 		\hat{f}_X(x) = \frac{1}{2\pi} \int \euler^{-itx} \phi_K(ht) \phi_{W_\mathrm{EMP}}(t)  / (\hat{\phi}_U(t) + \rho )\intd t
@@ -121,11 +122,11 @@
 
 	[WHY COMPACT SUPPORT?]
 
-	The presence of the ridge parameter is to account for potential fluctuations in $\hat{\phi}_U$ that could cause the denominator in \eqref{eq:replicates estimator} to become very small. We may alternatively use another method to prevent $\hat{\phi}_U$ from getting too close to zero such as replacing $\hat{\phi}_U(t)$ with some other function for $|t|$ large.
+	The presence of the ridge parameter is to account for potential fluctuations in $\hat{\phi}_U$ that could cause the denominator in \eqref{eq:replicates estimator} to be zero, or too close to zero. We may alternatively use another method to prevent $\hat{\phi}_U$ from getting too close to zero such as replacing $\hat{\phi}_U(t)$ with some other function for $|t|$ larger than some threshold $t^*$.
 
-	A similar approach can be used in scenarios where we are able to sample directly from the distribution of $U$ [CITE].
+	A similar approach could be used in scenarios where we are able to sample directly from the distribution of $U$. See also \cite{Diggle1993-jy} and \cite{Neumann1997-cr} for further discussion of cases where samples of the errors are available.
 
-	\subsection{U unknown}
+	% \subsection{U unknown}
 	In the case where we do not know the distribution of $U$, nor have access to replicate measurements or direct measurements from $U$, 
 
 \section{Summary of Delaigle Hall 2016}
