@@ -345,11 +345,30 @@
 		The limit of $\lambda^n$ as $n \rightarrow \infty$ exists.
 	\end{lemma}
 	\begin{proof}
-		From Lemma \ref{lem: U converges}, along with the fact that $0 \leq \prob(U_i^n \leq k | X_i^n = 1) \leq 1$, we have that $U_i^n | X_i^n = 1$ converges in distribution. Via the Portmanteau Theorem \cite[Theorem 25.8]{Billingsley1995-en} we immediately obtain that
+		From Lemma \ref{lem: U converges} and \ref{lem: convergence of sequence monotone in limit}, along with the fact that $0 \leq \prob(U_i^n \leq k | X_i^n = 1) \leq 1$, we have that $U_i^n | X_i^n = 1$ converges in distribution. Via the Portmanteau Theorem \cite[Theorem 25.8]{Billingsley1995-en} we immediately obtain that
 		\begin{equation}
 			\lambda^n = \euler^{-z} \expect \left[\left.\frac{1}{1 + U_i^n}\right| X_i^n = 1\right]
 		\end{equation}
 		converges. 
+	\end{proof}
+
+	\begin{lemma}
+	\label{lem: convergence of sequence monotone in limit}
+		Let $(c_n)_n$ be a sequence of real numbers, with $c_n \geq 0$ for all $n$ and $\lim_{n\rightarrow \infty} c_n = 0$. Let $(a_n)_n$ be a sequence of real numbers such that for all $m \in \mathbb{N}$, we have $a_n - a_{n+m} \geq -c_n$. 
+
+		If $|a_n|$ is uniformly bounded, then $\lim_{n\rightarrow \infty} a_n$ exists and is finite.
+	\end{lemma}
+	\begin{proof}
+		Since $|a_n|$ is uniformly bounded, $\liminf_n a_n$ and $\limsup_n a_n$ both exist and are finite.
+		Let $(n_k)_k$ and $(l_k)_k$ be two increasing sequences of natural numbers such that $\lim_{k \rightarrow \infty} = \liminf_n a_n$, $\lim_{k \rightarrow \infty} a_{l_k} = \limsup_n a_n$, and $n_k < l_k$ for all $k$. We have that 
+		\begin{equation}
+			a_{n_k} - a_{n_k + (l_k - n_k)} \geq -c_{n_k}
+		\end{equation}
+		for all $k$. Hence 
+		\begin{equation}
+			\liminf_n a_n - \limsup_n a_n \geq 0
+		\end{equation}
+		and so the limit exists.
 	\end{proof}
 
 
