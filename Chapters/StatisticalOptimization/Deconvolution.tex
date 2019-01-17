@@ -395,15 +395,12 @@
 
 	\begin{itemize}
 		\item The true distribution, $F_X$, is chi-squared with 3 degrees of freedom, rescaled to have variance $\sigma_X = 1$.
-		\item The error distribution, $F_U$, 
-		\item NSR
-		\item n
-		\item ?
+		\item The error distribution, $F_U$, is normal.
+		\item The noise to signal ratio (NSR) is 1/5. That is, $\sigma_U^2 = \sigma_X^2 / 5$.
+		\item We sample $n = 500$ points of $W = X+U$.
 	\end{itemize}
-	
 
-	[UP TO HERE]
-
+	As recommended in the paper, we use $m = 5\sqrt{n}$ point masses in our approximating distibution $\hat{F}_X$. In each of Figures \ref{fig:fixed masses example NSR1}, \ref{fig:fixed masses example Ucauchy}, \ref{fig:fixed masses example n10000}, and \ref{fig:fixed masses example Xgamma}, we change one of these properties and plot the result. Of particular interest is $\hat{F}_X$ which we represents by placing a grey point at each probability mass. In each of these figures, as well as in the base example in Figure \ref{fig:fixed masses example alone}, we observe that the majority of the probability masses of $\hat{F}_X$ take values very close to, or equal to zero.
 
 	% \begin{figure}
 	% 	\centering
@@ -416,22 +413,30 @@
 	\begin{minipage}{0.5\textwidth}
 		\centering
 		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example_NSR1.png}
-		\caption{Blah}
+		\caption{Using a NSR of 1}
 		\label{fig:fixed masses example NSR1}
 	\end{minipage}
 	\begin{minipage}{0.5\textwidth}
 		\centering
 		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example_Ucauchy.png}
-		\caption{Blah}
+		\caption{Using a cauchy error distribution}
 		\label{fig:fixed masses example Ucauchy}
 	\end{minipage}
 	\begin{minipage}{0.5\textwidth}
-
+		\centering
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example_n10000.png}
+		\caption{Using $n = 10000$ points}
+		\label{fig:fixed masses example n10000}
 	\end{minipage}
 	\begin{minipage}{0.5\textwidth}
-
+		\centering
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example_Xgamma.png}
+		\caption{Using a gamma(5,2) true distribution}
+		\label{fig:fixed masses example Xgamma}
 	\end{minipage}
 \end{figure}
+
+[UP TO HERE]
 
 \begin{figure}
 	\begin{minipage}{0.5\textwidth}
