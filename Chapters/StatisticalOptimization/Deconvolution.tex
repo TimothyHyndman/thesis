@@ -400,7 +400,7 @@
 		\item We sample $n = 500$ points of $W = X+U$.
 	\end{itemize}
 
-	As recommended in the paper, we use $m = 5\sqrt{n}$ point masses in our approximating distibution $\hat{F}_X$. In each of Figures \ref{fig:fixed masses example NSR1}, \ref{fig:fixed masses example Ucauchy}, \ref{fig:fixed masses example n10000}, and \ref{fig:fixed masses example Xgamma}, we change one of these properties and plot the result. Of particular interest is $\hat{F}_X$ which we represents by placing a grey point at each probability mass. In each of these figures, as well as in the base example in Figure \ref{fig:fixed masses example alone}, we observe that the majority of the probability masses of $\hat{F}_X$ take values very close to, or equal to zero.
+	As recommended in the paper, we use $m = 5\sqrt{n}$ point masses in our approximating distribution $\hat{F}_X$. In each of Figures \ref{fig:fixed masses example NSR1}, \ref{fig:fixed masses example Ucauchy}, \ref{fig:fixed masses example n10000}, and \ref{fig:fixed masses example Xgamma}, we change one of these properties and plot the result. Of particular interest is $\hat{F}_X$ which we represent by placing a grey point at each probability mass. In each of these figures, as well as in the base example in Figure \ref{fig:fixed masses example alone}, we observe that the majority of the probability masses of $\hat{F}_X$ take values very close to, or equal to zero.
 
 	% \begin{figure}
 	% 	\centering
@@ -435,6 +435,8 @@
 		\label{fig:fixed masses example Xgamma}
 	\end{minipage}
 \end{figure}
+
+Given that most of the probability masses of $\hat{F}_X$ do not contribute to the final density, we might hope to reduce the complexity of our optimization problem by using a more appropriate number of masses. Of course, we do not know a priori where these masses should be located along the x axis, and so should make their locations variables in our optimization. This essentially doubles the dimension of our optimization and so to achieve any computational speed up we should aim to use fewer than half the original number of points. In the figures above, we observe that roughly 10 to 20 points out of $m = 112$ or $m = 500$ masses have weights that are visibly greater than 0. Furthermore, it is feasible that two points located close to each other might coalesce into a single point in such a way as to improve the objective if their locations are allowed to vary. This encourages us to proceed using roughly 10 to 20 probability masses with variable weights and locations for $\hat{F}_X$.
 
 [UP TO HERE]
 
