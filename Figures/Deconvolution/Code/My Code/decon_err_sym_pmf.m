@@ -115,10 +115,17 @@ function [Q, tt, normhatphiW, optim_values] = decon_err_sym_pmf(W, m, n_tp_iter,
     counter = 0;
     
     diagnostic("Minimizing Variance")
+    first_try = true;
     while counter < n_var_iter
-        pj_0 = unifrnd(0,1,[1,m]);
-        pj_0 = pj_0 / sum(pj_0);
-        xj_0 = sort(unifrnd(min(W), max(W), [1,m]));
+        if first_try
+            pj_0 = pj;
+            xj_0 = xj;
+            first_try = false;
+        else
+            pj_0 = unifrnd(0,1,[1,m]);
+            pj_0 = pj_0 / sum(pj_0);
+            xj_0 = sort(unifrnd(min(W), max(W), [1,m]));
+        end
 
         x0 = [pj_0(1:end-1), xj_0]';
         [x, fval, exitflag] = fmincon(func, x0, A, B, [], [], [], [], nonlcon, options);

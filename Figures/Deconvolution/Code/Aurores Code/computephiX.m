@@ -11,11 +11,20 @@
 function [rephip,imphip,normphip]=computephiX(tt,xgrid,psol,n);
 
 
-OO=outerop(tt,xgrid,'*');
-pmat=repmat(psol,length(tt),1);
-cosO=cos(OO).*pmat;
-sinO=sin(OO).*pmat;
+% % AURORE'S METHOD
+% OO=outerop(tt,xgrid,'*');
+% pmat=repmat(psol,length(tt),1);
+% cosO=cos(OO).*pmat;
+% sinO=sin(OO).*pmat;
+% 
+% old_rephip=sum(cosO,2);
+% old_imphip=sum(sinO,2);
 
-rephip=sum(cosO,2);
-imphip=sum(sinO,2);
+% TIM'S METHOD
+OO = reshape(tt, [], 1) * reshape(xgrid, 1, []);
+rephip = cos(OO) * psol(:);
+imphip = sin(OO) * psol(:);
+
+
+
 normphip=sqrt(rephip.^2+imphip.^2);

@@ -26,11 +26,7 @@ h=bwsjpiSM(W');
 
 xx_moving = linspace(min(W), max(W), 100);
 
-tic
-
 [yy_moving, Q_moving, tt_moving, optim_values_moving] = moving_mass_deconvolve(W, xx_moving, 5);
-
-toc
 
 
 options.save = false;
