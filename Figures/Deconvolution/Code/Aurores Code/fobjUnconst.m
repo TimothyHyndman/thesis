@@ -49,7 +49,10 @@ global fctargs Termequality;
 	
 	%impose a penalty if |phi_U| is greater than 1:
 	hatphiU=normhatphiW./(normphip);
-	penalite=sum(hatphiU(hatphiU>1));
+% 	penalite=sum(hatphiU(hatphiU>1));
+    
+    % Suggested change to aurore's code
+    penalite=sum(hatphiU(hatphiU>1) - 1);
 
 
 	%Integral (objective function of the main optimisation problem) + penatly terms to make sure some constraints are satisfied

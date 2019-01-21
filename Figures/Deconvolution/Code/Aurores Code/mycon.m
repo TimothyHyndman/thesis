@@ -12,7 +12,7 @@
 
 function [c,ceq]=mycon(pval)
 
-global fmax Term1boot Termequality;
+global fmax Term1boot Termequality Termequalitymax penalite_g penalite_g_max;
 	
 	%Termboot1 is a global variable computed within fobjBoot
 	%Termequality is a global variable computed within fobjBoot
@@ -22,6 +22,6 @@ global fmax Term1boot Termequality;
 	%Termequality<=0 (this=0 since it is an absolute value)
 	
 	ceq=[];
-	c=[Term1boot-fmax,Termequality];
+	c=[Term1boot-fmax, Termequality - Termequalitymax, penalite_g - penalite_g_max];
 
 end

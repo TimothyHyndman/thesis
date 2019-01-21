@@ -1,6 +1,6 @@
 function [yy, Q, tt, optim_values, misc_variables] = fixed_mass_deconvolve(W, xx)
     
-    global fmax Term1boot fctargs  penalite Termequality;
+    global fmax Term1boot fctargs  penalite Termequality Termequalitymax penalite_g penalite_g_max;
     
     n = length(W);
     varW = var(W);
@@ -59,6 +59,8 @@ function [yy, Q, tt, optim_values, misc_variables] = fixed_mass_deconvolve(W, xx
     %Compute the corresponding value of the objective function (fvalA does NOT provide this as it contains some penalties we do not want to take into account here)
     fmax=fobjUnconstB(psolA(1:(m-1)));
     %display(['fmax = ',fmax])
+    Termequalitymax = Termequality;
+    penalite_g_max = penalite_g;
 
     %Now recompute the estimator but impose a minimum variance constraint. 
     %That is, find p_j's that minimise the variance of X under the constraint that the integral (main objective function) is no larger than fmax computed above
@@ -72,6 +74,7 @@ function [yy, Q, tt, optim_values, misc_variables] = fixed_mass_deconvolve(W, xx
     
     optim_values.tp_thinned_optim = fmax;
     optim_values.penalty1_thinned_optim = Termequality;
+    optim_values.penalty2_thinned_optim = penalite_g;
     optim_values.objective_func_thinned_optim = fvalA;
     optim_values.var_thinned_optim = fvalB;
 
@@ -110,9 +113,12 @@ function [yy, Q, tt, optim_values, misc_variables] = fixed_mass_deconvolve(W, xx
     [psolA,fvalA]=findpsolWithStart(pstart,m,'fobjUnconst');
     %Compute the corresponding value of the objective function (fvalA does NOT provide this as it contains some penalties we do not want to take into account here)
     fmax=fobjUnconstB(psolA(1:(m-1)));
+    Termequalitymax = Termequality;
+    penalite_g_max = penalite_g;
     
     optim_values.tp_first_optim = fmax;
     optim_values.penalty1_first_optim = Termequality;
+    optim_values.penalty2_first_optim = penalite_g;
     optim_values.objective_func_first_optim = fvalA;
     
     %Calculate variance for diagnostics
@@ -196,6 +202,7 @@ function [yy, Q, tt, optim_values, misc_variables] = fixed_mass_deconvolve(W, xx
     optim_values.tp_final = fobjUnconstB(psol(1:(m-1)));
     optim_values.var_final = fobjBoot(psol(1:(m-1)));
     optim_values.penalty1_final = Termequality;
+    optim_values.penalty2_final = penalite_g;
     
     optim_values = orderfields(optim_values);
     

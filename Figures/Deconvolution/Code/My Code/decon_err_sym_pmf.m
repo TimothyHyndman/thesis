@@ -234,7 +234,7 @@ function [penalty1, penalty2, penalty3] = penalties(pj, xj, t, hat_phi_W)
 
     %impose a penalty if |phi_U| is greater than 1:
     hat_phi_U = norm_hat_phi_W(:) ./ norm_phi_p(:);
-    penalty2 = sum(hat_phi_U(hat_phi_U > 1));
+    penalty2 = sum(hat_phi_U(hat_phi_U > 1) - 1);
     
     penalty3 = 0;   %Removed this penalty
 end

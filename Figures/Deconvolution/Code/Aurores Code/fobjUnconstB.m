@@ -10,7 +10,7 @@
 %---------------------------------------------------------------
 
 function y=fobjUnconstB(pvec)
-global Termequality fctargs;
+global Termequality fctargs penalite_g;
 
     xgrid=fctargs.xgrid;
     n=fctargs.n;
@@ -45,6 +45,10 @@ global Termequality fctargs;
     normphip=sqrt(rephip.^2+imphip.^2);
     Realterm=rehatphiW.*normphip-sqabshatpsi.*rephip;
     Imterm=imhatphiW.*normphip-sqabshatpsi.*imphip;
+    
+     %impose a penalty if |phi_U| is greater than 1:
+	hatphiU=normhatphiW./(normphip);
+    penalite_g = sum(hatphiU(hatphiU>1) - 1);
     
 
     %Integral (objective function of the main optimisation problem) + penatly terms to make sure some constraints are satisfied

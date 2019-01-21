@@ -10,7 +10,7 @@
 
 
 function y=fobjBoot(pvec)
-global fmax Term1boot fctargs Termequality;
+global fmax Term1boot fctargs Termequality penalite_g;
 
 	fctarg=fctargs;
 	xgrid=fctarg.xgrid;
@@ -46,6 +46,10 @@ global fmax Term1boot fctargs Termequality;
 	normphip=sqrt(rephip.^2+imphip.^2);
 	Realterm=rehatphiW.*normphip-sqabshatpsi.*rephip;
 	Imterm=imhatphiW.*normphip-sqabshatpsi.*imphip;
+    
+    %impose a penalty if |phi_U| is greater than 1:
+	hatphiU=normhatphiW./(normphip);
+    penalite_g = sum(hatphiU(hatphiU>1) - 1);
 	
 	%Compute the variance of the discrete distribution
 	EX=sum(xgrid.*pvec);
