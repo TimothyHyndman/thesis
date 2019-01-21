@@ -126,6 +126,7 @@ function [Q, tt, normhatphiW, optim_values] = decon_err_sym_pmf(W, m, n_tp_iter,
 
         if ~is_feasible(pj_new, xj_new, A, B, nonlcon)
             exitflag = -99;
+%             exitflag = 1;
         end
 
         diagnostic(num2str(exitflag))
@@ -216,8 +217,8 @@ function [c,ceq] = phaseconstraint(x, tp_max, penalty1_max, penalty2_max, t, hat
     tp = calculate_tp(t,pj,xj,hat_phi_W,sqrt_psi_hat_W,weight);
     [penalty1, penalty2, ~] = penalties(pj,xj,t,hat_phi_W);
 
-%     c = [tp - tp_max, penalty1 - penalty1_max, penalty2 - penalty2_max];
-    c = [tp - tp_max, penalty1 - penalty1_max];    %This line matches Aurore's code (except she just has penalty1 - 0)
+    c = [tp - tp_max, penalty1 - penalty1_max, penalty2 - penalty2_max];
+%     c = [tp - tp_max, penalty1 - penalty1_max];    %This line matches Aurore's original code (except she just has penalty1 - 0)
     ceq=[];
 end
 
