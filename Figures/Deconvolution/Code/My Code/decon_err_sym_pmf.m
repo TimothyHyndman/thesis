@@ -209,6 +209,11 @@ function [fval, penalty1, penalty2, tp] = tp_objective(x, m, tt, hat_phi_W, sqrt
 
     %Add penalty terms
     [penalty1, penalty2, ~] = penalties(pj,xj,tt,hat_phi_W);
+    %TESTING REMOVE
+%     penalty1 = 0;
+%     penalty2 = 0;
+    %------------
+    
     penalty_scale = 500;
     fval = tp + penalty_scale * (penalty1 + penalty2);
 end
@@ -223,6 +228,10 @@ function [c,ceq] = phaseconstraint(x, tp_max, penalty1_max, penalty2_max, t, hat
     [pj, xj] = x_to_pmf(x);
     tp = calculate_tp(t,pj,xj,hat_phi_W,sqrt_psi_hat_W,weight);
     [penalty1, penalty2, ~] = penalties(pj,xj,t,hat_phi_W);
+    %TESTING REMOVE
+%     penalty1 = 0;
+%     penalty2 = 0;
+    %------------
 
     c = [tp - tp_max, penalty1 - penalty1_max, penalty2 - penalty2_max];
 %     c = [tp - tp_max, penalty1 - penalty1_max];    %This line matches Aurore's original code (except she just has penalty1 - 0)
