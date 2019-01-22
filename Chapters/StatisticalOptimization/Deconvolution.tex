@@ -235,7 +235,7 @@
 	\begin{equation}
 		T(F) = \int_{-\infty}^\infty \left| \hat{\phi}_W(t) |\phi_F(t)| - \left|\hat{\psi}_W(t)\right|^{1/2} \phi_F(t) \right|^2 w_1(t) \intd t,
 	\end{equation}
-	where $w_1(t)$ is some non-negative weight function that assigns greater weight when $|t|$ is small. We also expect that $\hat{\phi}_U = \hat{\phi}_W / \phi_F$ should be symmetric, and have magnitude less than or equal to 1. We try to satisfy this by constructing penalties 
+	where $w_1(t)$ is some non-negative weight function that assigns greater weight when $|t|$ is small. We also expect that $\hat{\phi}_U = \hat{\phi}_W / \phi_F$ should be symmetric, and have magnitude less than or equal to 1. We try to satisfy this by constructing penalties which we desire to be small,
 	\begin{align}
 		P1(F) = \int \Im \left(\hat{\phi}_W \bar{\phi}_F\right) w_2(t)\intd t
 	\end{align}
@@ -244,18 +244,33 @@
 		P2(F) = \int \left(\hat{\phi}_U(t) - 1\right) \indicator_{\hat{\phi}_U(t) > 1}  w_2(t) \intd t
 	\end{align} 
 	where $\bar{a}$ represents the complex conjugate of $a$ and $w_2(t)$ is some non-negative weight function with bounded support.
-	
-	[UP TO HERE ]
 
-	In practise, we perform this minimization over some set of distributions $F$ (for example, discrete distributions with no more than $m$ points of support). Call this set $\mathscr{F}$. Having found
+	Overall, the method is as follows. Let $\mathscr{F}$ be the set of distributions over which we search for our estimator (for example, discrete distributions with no more than $m$ points of support). Find
 	\begin{equation}
-		T_\mathrm{min} = \min_{F \in \mathscr{F}} T(F) + \lambda_1 P1(F) + \lambda_2 P2(F),
+		F_0 = \argmin_{F \in \mathscr{F}} T(F) + \lambda_1 P1(F) + \lambda_2 P2(F),
 	\end{equation}
-	we then choose our estimator to be the distribution $F \in \mathscr{F}$ that has smallest variance, under the constraint that $T(F) = T_\mathrm{min}$.
+	and set
+	\begin{align}
+		T_\mathrm{min} &= T(F_0)\\
+		P1_\mathrm{min} &= P1(F_0)\\
+		P2_\mathrm{min} &= P2(F_0).
+	\end{align}
+	Then our estimator for $F_X$ is
+	\begin{equation}
+		\hat{F}_X = \argmin_{F \in \mathscr{F}} \var{F}
+	\end{equation}
+	subject to the constraints $T(F) \leq T_\mathrm{min}$, $P1(F) \leq P1_\mathrm{min}$, and $P2(F) \leq P2_\mathrm{min}$.
+	
+	
+	% [UP TO HERE ]
+
+	% In practise, we perform this minimization over some set of distributions $F$ (for example, discrete distributions with no more than $m$ points of support). Call this set $\mathscr{F}$. Having found
+	
+	% we then choose our estimator to be the distribution $F \in \mathscr{F}$ that has smallest variance, under the constraint that $T(F) = T_\mathrm{min}$.
 
 	\subsection{Numerical Implementation}
 
-	Delaigle and Hall suggest performing this optimization problem by approximating $F_X$ with a discrete distribution on $m$ points. They suggest choosing the location of the probability masses, $\vect{\theta} = (\theta_1, \dots, \theta_m)$, to be fixed and distributed uniformly but randomly along $[\min(W_i), \max(W_i)]$ and letting the probability weights $\vect{p} = (p_1, \dots p_m)$ be the variables over which we find the solution. Denote by $F_{\vect{\theta}, \vect{p}}$ the distribution that places mass $p_j$ at $\theta_j$ for $j = 1,\dots, m$. Its characteristic function is given by
+	Delaigle and Hall suggest performing this optimization problem by approximating $F_X$ with a discrete distribution on $m$ points. They suggest choosing the location of the probability masses, $\vect{\theta} = (\theta_1, \dots, \theta_m)$, to be fixed and distributed uniformly but randomly along $[\min(W_i), \max(W_i)]$ and letting the probability weights $\vect{p} = (p_1, \dots p_m)$ be the variables over which we find the solution. We will denote by $F_{\vect{\theta}, \vect{p}}$ the distribution that places mass $p_j$ at $\theta_j$ for $j = 1,\dots, m$. Its characteristic function is given by
 	\begin{equation}
 		\phi_{\vect{\theta}, \vect{p}} = \sum_{j = 1}^m p_j \exp(it\theta_j)
 	\end{equation}
@@ -268,59 +283,60 @@
 		\var(F_{\vect{\theta}, \vect{p}}) = \sum_{j = 1}^m p_j \theta_j^2 - \left( \sum_{j=1}^m p_j \theta_j \right)^2.
 	\end{equation}
 
-	For the weight function, $w(t)$, Delaigle and Hall use the Epanechnikov kernel, rescaled to an interval $[-t^*, t^*]$ where $t^*$ is the smallest $t > 0$ such that 
+	For the weight function, $w_1(t)$, Delaigle and Hall use the Epanechnikov kernel, rescaled to an interval $[-t^*, t^*]$ where $t^*$ is the smallest $t > 0$ such that 
 	\begin{equation}
 	\label{eq:define t star}
 		\left|\hat{\phi}_W(t)\right| \leq n^{-1/4}.
 	\end{equation}
-	There is some freedom of choice in the number of points in the approximating discrete distribution but $m = 5\sqrt{n}$ is suggested as reasonable.
+	For the weight function in the penalty terms, they use $w_2(t) = \indicator_{|t| \leq t^*}$.
+	There is some freedom of choice in the number of points in the approximating discrete distribution but the authors suggest that in their experience, $m = 5\sqrt{n}$ is a reasonable choice.
 
-	Delaigle and Hall also impose some additional constraints. We desire that 
-	\begin{equation}
-		\hat{\phi}_U = \frac{\hat{\phi}_W}{\phi_{\vect{\theta}, \hat{\vect{p}}}}
-	\end{equation}
-	is both symmetric (to be consistent with Assumption \ref{assump:phiU real}) and satisfies $\hat{\phi}_U(t) \leq 1$ (as all characteristic functions must satisfy this). In \cite{Delaigle2016-la}, these are stated as hard constraints, however in practise [CITE CODE OR CORREPONDENCE], these are added via penalty terms to $T(F)$.
+	% Delaigle and Hall also impose some additional constraints. We desire that 
+	% \begin{equation}
+	% 	\hat{\phi}_U = \frac{\hat{\phi}_W}{\phi_{\vect{\theta}, \hat{\vect{p}}}}
+	% \end{equation}
+	% is both symmetric (to be consistent with Assumption \ref{assump:phiU real}) and satisfies $\hat{\phi}_U(t) \leq 1$ (as all characteristic functions must satisfy this). In \cite{Delaigle2016-la}, these are stated as hard constraints, however in practise [CITE CODE OR CORREPONDENCE], these are added via penalty terms to $T(F)$.
 
-	Overall, the final method is as follows.
+	% Overall, the final method is as follows.
 
-	\begin{enumerate}
-		\item Set $m = 5\sqrt{n}$ and fix $\vect{\theta} = (\theta_1, \dots, \theta_m)$ to be distributed uniformly at random along $[\min(W_i), \max(W_i)]$.
-		% \item 
-		\item Define $\hat{\phi}_W$ and $\hat{\psi}_W$ as in \eqref{eq:define hat phi W} and \eqref{eq:define hat psi W}.
-		\item Define $t^*$ as in \eqref{eq:define t star}.
-		\item Define
-		\begin{equation}
-			T(F_{\vect{\theta}, \vect{p}}) = \int_{-t^*}^{t^*} \left| \hat{\phi}_W(t) - \left|\hat{\psi}_W(t)\right|^{1/2} \frac{ \sum_{j = 1}^m p_j \exp(it\theta_j)}{\left| \sum_{j = 1}^m p_j \exp(it\theta_j)\right|} \right|^2 w(t) \intd t.
-		\end{equation}
-		where $w(t)$ is the Epanechnikov kernel rescaled to $[-t^*, t^*]$.
-		\item
-		Calculate
-		\begin{equation}
-			 \vect{p}' = \argmin_{\vect{p}} \left\{T(F_{\vect{\theta}, \vect{p}}) + \mathrm{penalties}(\vect{p})\right\}
-		\end{equation}
-		and set
-		\begin{align}
-			T_\mathrm{min} &= T(F_{\vect{\theta}, \vect{p}'})\\
-			\mathrm{penalties}_\mathrm{min} &= \mathrm{penalties}(\vect{p}')
-		\end{align}
-		\item Calculate
-		\begin{equation}
-			\hat{\vect{p}} = \argmin \left\{ \sum_{j = 1}^m p_j \theta_j^2 - \left( \sum_{j=1}^m p_j \theta_j \right)^2 \right\}
-		\end{equation}
-		subject to
-		\begin{equation}
-			T(F_{\vect{\theta}, \vect{p}}) \leq T_\mathrm{min}
-		\end{equation}
-		and 
-		\begin{equation}
-			\mathrm{penalties} \leq \mathrm{penalties}_\mathrm{min}
-		\end{equation}
-		\item The final estimator for $F_X$ is $\hat{F}_X = F_{\vect{\theta}, \hat{\vect{p}}}$.
-	\end{enumerate}
-	[BE MORE PRECISE ABOUT PENALTIES?]
+	% \begin{enumerate}
+	% 	\item Set $m = 5\sqrt{n}$ and fix $\vect{\theta} = (\theta_1, \dots, \theta_m)$ to be distributed uniformly at random along $[\min(W_i), \max(W_i)]$.
+	% 	% \item 
+	% 	\item Define $\hat{\phi}_W$ and $\hat{\psi}_W$ as in \eqref{eq:define hat phi W} and \eqref{eq:define hat psi W}.
+	% 	\item Define $t^*$ as in \eqref{eq:define t star}.
+	% 	\item Define
+	% 	\begin{equation}
+	% 		T(F_{\vect{\theta}, \vect{p}}) = \int_{-t^*}^{t^*} \left| \hat{\phi}_W(t) - \left|\hat{\psi}_W(t)\right|^{1/2} \frac{ \sum_{j = 1}^m p_j \exp(it\theta_j)}{\left| \sum_{j = 1}^m p_j \exp(it\theta_j)\right|} \right|^2 w(t) \intd t.
+	% 	\end{equation}
+	% 	where $w(t)$ is the Epanechnikov kernel rescaled to $[-t^*, t^*]$.
+	% 	\item
+	% 	Calculate
+	% 	\begin{equation}
+	% 		 \vect{p}' = \argmin_{\vect{p}} \left\{T(F_{\vect{\theta}, \vect{p}}) + \mathrm{penalties}(\vect{p})\right\}
+	% 	\end{equation}
+	% 	and set
+	% 	\begin{align}
+	% 		T_\mathrm{min} &= T(F_{\vect{\theta}, \vect{p}'})\\
+	% 		\mathrm{penalties}_\mathrm{min} &= \mathrm{penalties}(\vect{p}')
+	% 	\end{align}
+	% 	\item Calculate
+	% 	\begin{equation}
+	% 		\hat{\vect{p}} = \argmin \left\{ \sum_{j = 1}^m p_j \theta_j^2 - \left( \sum_{j=1}^m p_j \theta_j \right)^2 \right\}
+	% 	\end{equation}
+	% 	subject to
+	% 	\begin{equation}
+	% 		T(F_{\vect{\theta}, \vect{p}}) \leq T_\mathrm{min}
+	% 	\end{equation}
+	% 	and 
+	% 	\begin{equation}
+	% 		\mathrm{penalties} \leq \mathrm{penalties}_\mathrm{min}
+	% 	\end{equation}
+	% 	\item The final estimator for $F_X$ is $\hat{F}_X = F_{\vect{\theta}, \hat{\vect{p}}}$.
+	% \end{enumerate}
+	% [BE MORE PRECISE ABOUT PENALTIES?]
 
 
-	[DIFFERENT DEFINITION FOR T(P) THAT AURORE USES (AND NOW ME TOO)]
+	% [DIFFERENT DEFINITION FOR T(P) THAT AURORE USES (AND NOW ME TOO)]
 
 	\subsection{Converting to continuous distribution}
 
@@ -402,7 +418,7 @@
 	\begin{figure}
 		\centering
 		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example.png}
-		\caption[A typical example of $F_{\vect{\theta}, \vect{p}}$ being supported on only a few points]{A typical example of $F_{\vect{\theta}, \vect{p}}$ being supported on only a few points. The probability masses $(\theta_j, p_j)$ are represented by grey points, and the resulting estimating density is in dark blue. The true density is a chi-squared density with 3 degrees of freedom, and the errors were normal with variance $\sigma_U = \sigma_X / 5$. There were $n = 500$ samples taken from $W$. The naive density is a kernel density estimator of the $W_j$.}
+		\caption[A typical example of $F_{\vect{\theta}, \vect{p}}$ being supported on only a few points]{A typical example of $F_{\vect{\theta}, \vect{p}}$ being supported on only a few points. The probability masses $(\theta_j, p_j)$ are represented by grey points, and the resulting estimating density is in dark blue. The true density is a chi-squared density with 3 degrees of freedom, and the errors were normal with variance $\sigma_U^2 = \sigma_X^2 / 5$. There were $n = 500$ samples taken from $W$. The naive density is a kernel density estimator of the $W_j$.}
 		\label{fig:fixed masses example alone}
 	\end{figure}
 
@@ -458,39 +474,44 @@
 
 Given that most of the probability masses of $\hat{F}_X$ do not contribute to the final density, we might hope to reduce the complexity of our optimization problem by using a more appropriate number of masses. Of course, we do not know a priori where these masses should be located along the x axis, and so should make their locations variables in our optimization. This essentially doubles the dimension of our optimization and so to achieve any computational speed up we should aim to use fewer than half the original number of points. In the figures above, we observe that roughly 10 to 20 points out of $m = 112$ or $m = 500$ masses have weights that are visibly greater than 0. Furthermore, it is feasible that two points located close to each other might coalesce into a single point in such a way as to improve the objective if their locations are allowed to vary. This encourages us to proceed using roughly 10 to 20 probability masses with variable weights and locations for $\hat{F}_X$.
 
+We start with Figure \ref{fig:compare fixed moving masses} in which we compare the result we obtain using the fixed masses method of Delaigle and Hall, and the results we obtain when we allow the location of the probability masses in $F_{\vect{\theta}, \vect{p}}$ to vary. As well as plotting $\hat{F}_X$ and $\hat{f}_X$, we also provide a table with the various objective values attained in the final result, as well as the time taken to run the code on a i5-4670K CPU running at 4.3 GHz, running MATLAB 2018a.
+
 [UP TO HERE]
 
-\begin{figure}
-	\centering
-	\includegraphics[width = \textwidth]{Figures/Deconvolution/moving_masses_m10_example.png}
-	\begin{tabular}{r l}
-		$\var \hat{F}_X$ & 0.9011\\
-		$T(\hat{F}_X)$ & 3.5540e-07\\
-		$P1$ & 7.0136e-05\\
-		$P2$ & 0\\
-		$t$ & 492
-	\end{tabular}
-	\caption{blah}
-	\label{fig:moving masses m10 example}
-\end{figure}
+% \begin{figure}
+% 	\centering
+% 	\includegraphics[width = \textwidth]{Figures/Deconvolution/moving_masses_m10_example.png}
+% 	\begin{tabular}{r l}
+% 		$\var \hat{F}_X$ & 0.9011\\
+% 		$T(\hat{F}_X)$ & 3.5540e-07\\
+% 		$P1$ & 7.0136e-05\\
+% 		$P2$ & 0\\
+% 		$t$ & 492
+% 	\end{tabular}
+% 	\caption{blah}
+% 	\label{fig:moving masses m10 example}
+% \end{figure}
 
 [REGENERATE THESE FIGURES USING UPDATED CODE]
-\begin{figure}
-	\begin{minipage}{0.5\textwidth}
 
-		\centering
-		\includegraphics[width = \textwidth]{Figures/Deconvolution/emp_masses_example.png}
-		\begin{tabular}{r l}
-			$\var \hat{F}_X$ & 1.0370\\
-			$T(\hat{F}_X)$ & 2.7810e-07\\
-			$P1$ & 1.4878e-14\\
-			$P2$ & 34
-		\end{tabular}
-		\caption{The empirical distribution of W}
-		\label{fig:emp masses example}
-	\end{minipage}
-	\begin{minipage}{0.5\textwidth}
+\begin{figure}
 	\centering
+	\begin{subfigure}[b]{0.49\textwidth}
+		\centering
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example.png}
+		\begin{tabular}{r l}
+			$\var \hat{F}_X$ & 0.7736\\
+			$T(\hat{F}_X)$ & 4.8561e-07\\
+			$P1$ & 3.4404e-04\\
+			$P2$ & 0\\
+			$t$ & 203s
+		\end{tabular}
+		\caption{112 fixed masses}
+		\label{fig:fixed masses example}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.49\textwidth}
+		\centering
 		\includegraphics[width = \textwidth]{Figures/Deconvolution/moving_masses_m20_example.png}
 		\begin{tabular}{r l}
 			$\var \hat{F}_X$ & 0.8651\\
@@ -501,22 +522,9 @@ Given that most of the probability masses of $\hat{F}_X$ do not contribute to th
 		\end{tabular}
 		\caption{20 moving masses}
 		\label{fig:moving masses m20 example}
-	\end{minipage}
-	\begin{minipage}{0.5\textwidth}
-	\centering
-		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example.png}
-		\begin{tabular}{r l}
-			$\var \hat{F}_X$ & 0.7736\\
-			$T(\hat{F}_X)$ & 4.8561e-07\\
-			$P1$ & 3.4404e-04\\
-			$P2$ & 0\\
-			$t$ & 284
-		\end{tabular}
-		\caption{112 fixed masses}
-		\label{fig:fixed masses example}
-	\end{minipage}
-	\begin{minipage}{0.5\textwidth}
-	\centering
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\textwidth}
+		\centering
 		\includegraphics[width = \textwidth]{Figures/Deconvolution/moving_masses_m5_example.png}
 		\begin{tabular}{r l}
 			$\var \hat{F}_X$ & 0.8861\\
@@ -527,7 +535,24 @@ Given that most of the probability masses of $\hat{F}_X$ do not contribute to th
 		\end{tabular}
 		\caption{5 moving masses}
 		\label{fig:moving masses m5 example}
-	\end{minipage}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.49\textwidth}
+		\centering
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/emp_masses_example.png}
+		\begin{tabular}{r l}
+			$\var \hat{F}_X$ & 1.0350\\
+			$T(\hat{F}_X)$ & 2.7810e-07\\
+			$P1$ & 1.0079e-14\\
+			$P2$ & 1.7097e-14\\
+			$t$ & NA
+		\end{tabular}
+		\caption{The empirical distribution of W}
+		\label{fig:emp masses example}
+	\end{subfigure}
+	
+	\caption{Comparison of results between fixed and variable probability mass locations.}
+	\label{fig:compare fixed moving masses}
 \end{figure}
 
 	
