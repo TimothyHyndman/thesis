@@ -474,7 +474,7 @@
 
 Given that most of the probability masses of $\hat{F}_X$ do not contribute to the final density, we might hope to reduce the complexity of our optimization problem by using a more appropriate number of masses. Of course, we do not know a priori where these masses should be located along the x axis, and so should make their locations variables in our optimization. This essentially doubles the dimension of our optimization and so to achieve any computational speed up we should aim to use fewer than half the original number of points. In the figures above, we observe that roughly 10 to 20 points out of $m = 112$ or $m = 500$ masses have weights that are visibly greater than 0. Furthermore, it is feasible that two points located close to each other might coalesce into a single point in such a way as to improve the objective if their locations are allowed to vary. This encourages us to proceed using roughly 10 to 20 probability masses with variable weights and locations for $\hat{F}_X$.
 
-We start with Figure \ref{fig:compare fixed moving masses} in which we compare the result we obtain using the fixed masses method of Delaigle and Hall, and the results we obtain when we allow the location of the probability masses in $F_{\vect{\theta}, \vect{p}}$ to vary. As well as plotting $\hat{F}_X$ and $\hat{f}_X$, we also provide a table with the various objective values attained in the final result, as well as the time taken to run the code on a i5-4670K CPU running at 4.3 GHz, running MATLAB 2018a.
+We start with Figure \ref{fig:compare fixed moving masses} in which we compare the result we obtain using the fixed masses method of Delaigle and Hall, and the results we obtain when we allow the location of the probability masses in $F_{\vect{\theta}, \vect{p}}$ to vary. As well as plotting $\hat{F}_X$ and $\hat{f}_X$, we also provide a table with the various objective values attained in the final result, as well as the time taken to run the code on a i5-4670K CPU running at 4.3 GHz, running MATLAB R2018a.
 
 [UP TO HERE]
 
@@ -492,7 +492,7 @@ We start with Figure \ref{fig:compare fixed moving masses} in which we compare t
 % 	\label{fig:moving masses m10 example}
 % \end{figure}
 
-[REGENERATE THESE FIGURES USING UPDATED CODE]
+[USE lambda*P1 instead of just P1??]
 
 \begin{figure}
 	\centering
@@ -500,11 +500,11 @@ We start with Figure \ref{fig:compare fixed moving masses} in which we compare t
 		\centering
 		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example.png}
 		\begin{tabular}{r l}
-			$\var \hat{F}_X$ & 0.7736\\
-			$T(\hat{F}_X)$ & 4.8561e-07\\
-			$P1$ & 3.4404e-04\\
+			$\var \hat{F}_X$ & 0.8613\\
+			$T(\hat{F}_X)$ & 3.8697e-07\\
+			$P1$ & 4.5679e-04\\
 			$P2$ & 0\\
-			$t$ & 203s
+			$t$ & 195s
 		\end{tabular}
 		\caption{112 fixed masses}
 		\label{fig:fixed masses example}
@@ -514,11 +514,11 @@ We start with Figure \ref{fig:compare fixed moving masses} in which we compare t
 		\centering
 		\includegraphics[width = \textwidth]{Figures/Deconvolution/moving_masses_m20_example.png}
 		\begin{tabular}{r l}
-			$\var \hat{F}_X$ & 0.8651\\
-			$T(\hat{F}_X)$ & 3.8757e-07\\
-			$P1$ & 9.2085e-05\\
+			$\var \hat{F}_X$ & 0.8042\\
+			$T(\hat{F}_X)$ & 4.4981e-07\\
+			$P1$ & 7.9209e-05\\
 			$P2$ & 0\\
-			$t$ & ???
+			$t$ & 37s
 		\end{tabular}
 		\caption{20 moving masses}
 		\label{fig:moving masses m20 example}
@@ -527,11 +527,11 @@ We start with Figure \ref{fig:compare fixed moving masses} in which we compare t
 		\centering
 		\includegraphics[width = \textwidth]{Figures/Deconvolution/moving_masses_m5_example.png}
 		\begin{tabular}{r l}
-			$\var \hat{F}_X$ & 0.8861\\
-			$T(\hat{F}_X)$ & 3.6177e-07\\
-			$P1$ & 7.9321e-04\\
+			$\var \hat{F}_X$ & 0.8888\\
+			$T(\hat{F}_X)$ & 3.6213e-07\\
+			$P1$ & 7.8093e-04\\
 			$P2$ & 0\\
-			$t$ & 54
+			$t$ & 4s
 		\end{tabular}
 		\caption{5 moving masses}
 		\label{fig:moving masses m5 example}
