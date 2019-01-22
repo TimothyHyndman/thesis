@@ -12,10 +12,12 @@ h=bwsjpiSM(W');
 
 xx_fixed = linspace(min(W), max(W), 100);
 
+tic
 [yy_fixed, Q_fixed, tt_fixed, optim_values_fixed, misc_variables_fixed] = fixed_mass_deconvolve(W, xx_fixed);
+toc
 
 options.save = false;
-options.filename = 'fixed_masses_example_n10000.png';
+options.filename = 'fixed_masses_example_n10000_updated.png';
 options.plot_histogram = false;
 options.plot_density = true;
 options.plot_masses = true;
