@@ -26,11 +26,11 @@ h=bwsjpiSM(W');
 
 xx_moving = linspace(min(W), max(W), 100);
 
-decon_options.penalties = true;
-[yy_moving, Q_moving, tt_moving, optim_values_moving] = moving_mass_deconvolve(W, xx_moving, 112, decon_options);
+decon_options.penalties = false;
+[yy_moving, Q_moving, tt_moving, optim_values_moving] = moving_mass_deconvolve(W, xx_moving, 20, decon_options);
 
 options.save = false;
-options.filename = 'moving_masses_m112_example.png';
+options.filename = 'moving_masses_m20_noPenalties_example.png';
 options.plot_histogram = false;
 options.plot_density = true;
 options.plot_masses = true;

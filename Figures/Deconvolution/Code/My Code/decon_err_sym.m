@@ -1,4 +1,4 @@
-function [fXdeconvoluted, Q, tt, optim_values] = decon_err_sym(W, xx, m, pmf, bw, show_diagnostics)
+function [fXdeconvoluted, Q, tt, optim_values] = decon_err_sym(W, xx, m, decon_options, pmf, bw, show_diagnostics)
 
     if (~exist('xx','var') | isempty(xx))
         xx = linspace(min(W), max(W), 100);
@@ -23,6 +23,10 @@ function [fXdeconvoluted, Q, tt, optim_values] = decon_err_sym(W, xx, m, pmf, bw
     if (~exist('bw', 'var') | isempty(bw))
       bw = [];
     end
+    
+    if (~exist('decon_options', 'var') | isempty(decon_options))
+        decon_options = [];
+    end
 
 
     % Deconvolve to pmf --------------------------------------------------------
@@ -32,7 +36,8 @@ function [fXdeconvoluted, Q, tt, optim_values] = decon_err_sym(W, xx, m, pmf, bw
                                              m, ...
                                              n_tp_iter, ...
                                              n_var_iter,...
-                                             show_diagnostics);
+                                             show_diagnostics, ...
+                                             decon_options);
 
     % Convert pmf to pdf -------------------------------------------------------   
     if pmf

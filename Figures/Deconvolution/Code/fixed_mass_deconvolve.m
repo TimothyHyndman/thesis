@@ -203,6 +203,7 @@ function [yy, Q, tt, optim_values, misc_variables] = fixed_mass_deconvolve(W, xx
     optim_values.var_final = fobjBoot(psol(1:(m-1)));
     optim_values.penalty1_final = Termequality;
     optim_values.penalty2_final = penalite_g;
+    optim_values.objective1_final = fobjUnconstB(psol(1:(m-1))) + 500*(Termequality + penalite_g);
     
     optim_values = orderfields(optim_values);
     

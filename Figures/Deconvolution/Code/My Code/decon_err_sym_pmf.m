@@ -1,7 +1,10 @@
 %% Deconvolution of data X
 
-function [Q, tt, normhatphiW, optim_values] = decon_err_sym_pmf(W, m, n_tp_iter, n_var_iter, show_diagnostics)
+function [Q, tt, normhatphiW, optim_values] = decon_err_sym_pmf(W, m, n_tp_iter, n_var_iter, show_diagnostics, decon_options)
     n = length(W);
+    
+    decon_options = fill_default_options(decon_options);
+    
 
     diagnostic = @(message) print_diagnostic(message, show_diagnostics);
     
@@ -52,7 +55,7 @@ function [Q, tt, normhatphiW, optim_values] = decon_err_sym_pmf(W, m, n_tp_iter,
     % ------------------
     diagnostic("Minimizing T(p)")
 
-    func = @(x) tp_objective(x, m, tt, hat_phi_W, sqrt_psi_hat_W, weight);
+    func = @(x) tp_objective(x, m, tt, hat_phi_W, sqrt_psi_hat_W, weight, decon_options);
 
     fmax = Inf;
     counter = 0;
@@ -110,7 +113,7 @@ function [Q, tt, normhatphiW, optim_values] = decon_err_sym_pmf(W, m, n_tp_iter,
     varmin_init = varmin;
 
     func = @(x) var_objective(x);
-    nonlcon = @(x)phaseconstraint(x, tp_max,penalty1_max, penalty2_max,tt,hat_phi_W,sqrt_psi_hat_W,weight);
+    nonlcon = @(x)phaseconstraint(x, tp_max,penalty1_max, penalty2_max,tt,hat_phi_W,sqrt_psi_hat_W,weight, decon_options);
 
     counter = 0;
     
@@ -172,6 +175,7 @@ function [Q, tt, normhatphiW, optim_values] = decon_err_sym_pmf(W, m, n_tp_iter,
     optim_values.var_final = var_final;
     optim_values.penalty1_final = penalty1_final;
     optim_values.penalty2_final = penalty2_final;
+    optim_values.objective1_final = tp_final + 500*(penalty1_final + penalty2_final);
 end
 
 %-------------------------------------------------------------------------------
@@ -200,7 +204,7 @@ function flag = is_feasible(pj, xj, A, B, nonlcon)
     end
 end
 
-function [fval, penalty1, penalty2, tp] = tp_objective(x, m, tt, hat_phi_W, sqrt_psi_hat_W, weight)
+function [fval, penalty1, penalty2, tp] = tp_objective(x, m, tt, hat_phi_W, sqrt_psi_hat_W, weight, decon_options)
     %Extract weights and roots
     [pj, xj] = x_to_pmf(x);
 
@@ -208,11 +212,12 @@ function [fval, penalty1, penalty2, tp] = tp_objective(x, m, tt, hat_phi_W, sqrt
     tp = calculate_tp(tt,pj,xj,hat_phi_W,sqrt_psi_hat_W,weight);
 
     %Add penalty terms
-    [penalty1, penalty2, ~] = penalties(pj,xj,tt,hat_phi_W);
-    %TESTING REMOVE
-%     penalty1 = 0;
-%     penalty2 = 0;
-    %------------
+    if decon_options.penalties
+        [penalty1, penalty2, ~] = penalties(pj,xj,tt,hat_phi_W);
+    else
+        penalty1 = 0;
+        penalty2 = 0;
+    end
     
     penalty_scale = 500;
     fval = tp + penalty_scale * (penalty1 + penalty2);
@@ -224,14 +229,16 @@ function var1 = var_objective(x)
     var1 = sum(pj * (xj - mean1)'.^2);
 end
 
-function [c,ceq] = phaseconstraint(x, tp_max, penalty1_max, penalty2_max, t, hat_phi_W, sqrt_psi_hat_W, weight)
+function [c,ceq] = phaseconstraint(x, tp_max, penalty1_max, penalty2_max, t, hat_phi_W, sqrt_psi_hat_W, weight, decon_options)
     [pj, xj] = x_to_pmf(x);
     tp = calculate_tp(t,pj,xj,hat_phi_W,sqrt_psi_hat_W,weight);
-    [penalty1, penalty2, ~] = penalties(pj,xj,t,hat_phi_W);
-    %TESTING REMOVE
-%     penalty1 = 0;
-%     penalty2 = 0;
-    %------------
+    
+    if decon_options.penalties
+        [penalty1, penalty2, ~] = penalties(pj,xj,t,hat_phi_W);
+    else
+        penalty1 = 0;
+        penalty2 = 0;
+    end
 
     c = [tp - tp_max, penalty1 - penalty1_max, penalty2 - penalty2_max];
 %     c = [tp - tp_max, penalty1 - penalty1_max];    %This line matches Aurore's original code (except she just has penalty1 - 0)
@@ -334,5 +341,11 @@ function print_diagnostic(message, show_diagnostics)
     if show_diagnostics
         disp(message)
         drawnow
+    end
+end
+
+function options = fill_default_options(options)
+    if ~isfield(options, 'penalties')
+        options.penalties = true;
     end
 end
