@@ -1015,6 +1015,16 @@
 			\prob[\hist_i \cap \hist_j \neq \emptyset | X_j = 1] = \prob[\hist_i \cap \bar{\hist}_j \neq \emptyset].
 		\end{equation}
 
+		Consider a process which measure the distance between the two modified histories $\bar{\hist}_i$ and $\bar{\hist}_j$, 
+		\begin{align}
+			P(t) &= d(\bar{\hist}_i(t_* - t), \bar{\hist}_j(t_* - t)), & 0 \leq t\leq t_*.
+		\end{align}
+		Define the time $S_0$ via $S_0 = \inf\{t : P(t) = 0\}$ or $S_0 = \infty$ if $P(t) > 0$ for all $t \in [0, t_*]$. Define the time $S_d$ via $S_d = \inf\{t : \hist_i(t_* - t) = \emptyset\}$ or $S_d = t_*$ if $\hist_i(t) \neq \emptyset$ for all $t \in [0, t_*]$. Then
+		\begin{equation}
+			\prob[\hist_i \cap \bar{\hist}_j \neq \emptyset] = \prob[S_0 \leq S_d].
+		\end{equation}
+
+
 
 
 		% For the history of vertex $j$ to survive, all updates along the history must be non-oblivious updates. We also note that conditioning on the history of vertex $j$ surviving should not result in an increase in the overall rate of updates (since each update is a chance that the history will die). By this reasoning, 
@@ -1022,7 +1032,21 @@
 		% 	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_j = 1] \leq \prob[\mathcal{H}_i \cap \bar{\mathcal{H}}_j \neq \emptyset]
 		% \end{equation}
 		
-		The modified history, $\bar{\hist}_j$, is an undying random walk that starts at $j$ and going backwards in time from $t_*$ moves right at rate $(1 - \theta)/2$ and left at rate $(1 - \theta)/2$. Consider a process which measures the distance between the two histories, $p(t) = d(\hist_i(t), \bar{\hist}_j(t))$. For most configurations of $\hist_i(t)$ and $\bar{\hist}_j(t)$, $p(t)$ reduces by 1 at rate $1 - \theta$ and increases by 1 at rate $1 - \theta$. The only exception being when $\hist_i(t)$ and $\bar{\hist}_j$ are maximally separated on the cycle, in which case the distance between them cannot increase.
+		% The modified histories, $\bar{\hist}_i$, and $\bar{\hist}_j$, are undying random walks that start at $i$ and $j$ respectively and going backwards in time from $t_*$ move right at rate $(1 - \theta)/2$ and left at rate $(1 - \theta)/2$. 
+		% Consider a process which measures the distance between the two histories, $P(t) = d(\hist_i(t_* - t), \bar{\hist}_j(t_* - t))$. 
+		For most configurations of $\bar{\hist}_i(t)$ and $\bar{\hist}_j(t)$, $P(t)$ reduces by 1 at rate $1 - \theta$ and increases by 1 at rate $1 - \theta$. The only exception being when $\bar{\hist}_i(t_* - t)$ and $\bar{\hist}_j(t_* - t)$ are maximally separated on the cycle, in which case the distance between them cannot increase. 
+
+		% Define the times $S_d$ and $S_0$ via $S_0 = \inf\{t: P(t)  = 0 \}$ or $-\inf$ and $S_d = \inf\{t : \hist_i(t_* - t) = \emptyset\}$
+
+		To account for this, we construct two related birth and death processes. We assume that $i$ is to the left of $j$. The first, $P_1(t)$, starts at $k = d(i,j)$ and increases by one every time $\bar{\hist}_i$ moves left or $\bar{\hist}_j$ moves right and decreases by one every time $\bar{\hist}_i$ moves right or $\bar{\hist}_j$ moves left. The second, $P_2(t)$, starts at $n - k$ and decreases by one every time $P_1(t)$ increases by one, and increases by one every time $P_1(t)$ decreases by one. We may also construct times $S^{P1}_0$ and $S^{P2}_0$ as above to be the first times that $P_1$ and $P_2$ reach 0 (or $\infty$ if they do not reach 0). The events $\{P(t)  = 0\}$ and $\{P1(t) = 0\} \cup \{P2(t) = 0\}$ coincide and so
+		\begin{align}
+			\prob[\hist_i \cap \bar{\hist}_j \neq \emptyset] &= \prob[\min(S^{P1}_0, S^{P2}_0) \leq S_d]\\
+			 &\leq \prob[S^{P1}_0 \leq S_d] + \prob[S^{P2}_0 \leq S_d]\\
+			 &\leq 2\prob[S^{P1}_0 \leq S_d]
+		\end{align}
+		since $P_1(t)$ starts closer to 0 than $P_2(t)$ does.
+
+
 
 		[UP TO HERE]
 
