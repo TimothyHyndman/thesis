@@ -206,7 +206,7 @@
 	\end{assumption}
 
 	\subsection{Estimator}
-
+	\label{sec:deconvolution estimator}
 	From the discussion above, we might think to take our estimator for $F_X$ to be the distribution that has smallest variance out of all distributions with phase function equal to some estimator of $\rho_W$ constructed from $W_1, \dots, W_n$.
 
 	% The discussion above suggests the following estimator for $F_X$. 
@@ -478,9 +478,9 @@
 
 Given that most of the probability masses of $\hat{F}_X$ do not contribute to the final density, we might hope to reduce the complexity of our optimization problem by using a more appropriate number of masses. Of course, we do not know a priori where these masses should be located along the x axis, and so should make their locations variables in our optimization. This essentially doubles the dimension of our optimization and so to achieve any computational speed up we should aim to use fewer than half the original number of points. In the figures above, we observe that roughly 10 to 20 points out of $m = 112$ or $m = 500$ masses have weights that are visibly greater than 0. Furthermore, it is feasible that two points located close to each other might coalesce into a single point in such a way as to improve the objective if their locations are allowed to vary. This encourages us to proceed using roughly 10 to 20 probability masses with variable weights and locations for $\hat{F}_X$.
 
-We start with Figure \ref{fig:compare fixed moving masses} in which we compare the result we obtain using the fixed masses method of Delaigle and Hall, and the results we obtain when we allow the location of the probability masses in $F_{\vect{\theta}, \vect{p}}$ to vary. As well as plotting $\hat{F}_X$ and $\hat{f}_X$, we also provide a table with the various objective values attained in the final result, as well as the time taken to run the code on a i5-4670K CPU running at 4.3 GHz, running MATLAB R2018a. For comparison, we also give the various objective values obtained by using the empirical distribution of $W$ as $\hat{F}_X$.
+We start with Figure \ref{fig:compare fixed moving masses} in which we compare the result we obtain using the fixed masses method of Delaigle and Hall, and the results we obtain when we allow the location of the probability masses in $F_{\vect{\theta}, \vect{p}}$ to vary. As well as plotting $\hat{F}_X$ and $\hat{f}_X$, we also provide a table with the various objective values attained in the final result, as well as the time taken to run the code on a i5-4670K CPU running at 4.3 GHz, running MATLAB R2018a. For comparison, we also give the various objective values obtained by using the empirical distribution of $W$ as $\hat{F}_X$. The values $T$, $P1$, $P2$ are as defined in Section \ref{sec:deconvolution estimator}, we use $OBJ1$ to denote the objective of our first minimization, $T(F) + \lambda_1 P1(F) + \lambda_2 P2(F)$, and $\var$ to denote the variance of $\hat{F}_X$ (our second objective).
 
-It is hard to compare the 
+For this particular example, we note that we need only 10 masses to obtain smaller values for both of our objectives when compared to the original fixed masses, and that this results in a significant speed up, as expected.
 
 [UP TO HERE]
 
@@ -506,11 +506,11 @@ It is hard to compare the
 		\centering
 		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example.png}
 		\begin{tabular}{r l}
+			$OBJ_1$ & 0.2284\\
 			$\var \hat{F}_X$ & 0.8613\\
 			$T(\hat{F}_X)$ & 3.8697e-07\\
 			$P1$ & 4.5679e-04\\
 			$P2$ & 0\\
-			$OBJ_1$ & 0.2284\\
 			$t$ & 195s
 		\end{tabular}
 		\caption{112 fixed masses}
@@ -519,27 +519,56 @@ It is hard to compare the
 	\hfill
 	\begin{subfigure}[b]{0.49\textwidth}
 		\centering
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/moving_masses_m40_example.png}
+		\begin{tabular}{r l}
+			$OBJ_1$ & 54.3622\\
+			$\var \hat{F}_X$ & 0.6554\\
+			$T(\hat{F}_X)$ & 1.7882e-06\\
+			$P1$ & 0.1087\\
+			$P2$ & 0\\
+			$t$ & 76s
+		\end{tabular}
+		\caption{40 moving masses}
+		\label{fig:moving masses m40 example}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\textwidth}
+		\centering
 		\includegraphics[width = \textwidth]{Figures/Deconvolution/moving_masses_m20_example.png}
 		\begin{tabular}{r l}
+			$OBJ_1$ & 0.0396\\
 			$\var \hat{F}_X$ & 0.8042\\
 			$T(\hat{F}_X)$ & 4.4981e-07\\
 			$P1$ & 7.9209e-05\\
 			$P2$ & 0\\
-			$OBJ_1$ & 0.0396\\
 			$t$ & 37s
 		\end{tabular}
 		\caption{20 moving masses}
 		\label{fig:moving masses m20 example}
 	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.49\textwidth}
+		\centering
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/moving_masses_m10_example.png}
+		\begin{tabular}{r l}
+			$OBJ_1$ & 0.1374\\
+			$\var \hat{F}_X$ & 0.8269\\
+			$T(\hat{F}_X)$ & 4.2464e-07\\
+			$P1$ & 2.7478e-04\\
+			$P2$ & 0\\
+			$t$ & 15s
+		\end{tabular}
+		\caption{10 moving masses}
+		\label{fig:moving masses m10 example}
+	\end{subfigure}
 	\begin{subfigure}[b]{0.49\textwidth}
 		\centering
 		\includegraphics[width = \textwidth]{Figures/Deconvolution/moving_masses_m5_example.png}
 		\begin{tabular}{r l}
+			$OBJ_1$ & 0.3905\\
 			$\var \hat{F}_X$ & 0.8888\\
 			$T(\hat{F}_X)$ & 3.6213e-07\\
 			$P1$ & 7.8093e-04\\
 			$P2$ & 0\\
-			$OBJ_1$ & 0.3905\\
 			$t$ & 4s
 		\end{tabular}
 		\caption{5 moving masses}
@@ -550,11 +579,11 @@ It is hard to compare the
 		\centering
 		\includegraphics[width = \textwidth]{Figures/Deconvolution/emp_masses_example.png}
 		\begin{tabular}{r l}
+			$OBJ_1$ & 2.7811e-07\\
 			$\var \hat{F}_X$ & 1.0350\\
 			$T(\hat{F}_X)$ & 2.7810e-07\\
 			$P1$ & 1.0079e-14\\
 			$P2$ & 1.7097e-14\\
-			$OBJ_1$ & 2.7811e-07\\
 			$t$ & NA
 		\end{tabular}
 		\caption{The empirical distribution of W}
@@ -566,6 +595,7 @@ It is hard to compare the
 \end{figure}
 
 \subsection{No penalties seems to make behaviour stronger}
+\subsection{Discrete X?}
 	
 
 \section{General Observations and Results}

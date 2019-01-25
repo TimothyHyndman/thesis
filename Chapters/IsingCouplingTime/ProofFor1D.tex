@@ -1024,7 +1024,7 @@
 		
 		The modified history, $\bar{\hist}_j$, is an undying random walk that starts at $j$ and going backwards in time from $t_*$ moves right at rate $(1 - \theta)/2$ and left at rate $(1 - \theta)/2$. Consider a process which measures the distance between the two histories, $p(t) = d(\hist_i(t), \bar{\hist}_j(t))$. For most configurations of $\hist_i(t)$ and $\bar{\hist}_j(t)$, $p(t)$ reduces by 1 at rate $1 - \theta$ and increases by 1 at rate $1 - \theta$. The only exception being when $\hist_i(t)$ and $\bar{\hist}_j$ are maximally separated on the cycle, in which case the distance between them cannot increase.
 
-
+		[UP TO HERE]
 
 		We note that, while $\mathcal{H}_i$ survives, the distance between $\mathcal{H}_i$ and $\bar{\mathcal{H}}_j$ is a birth and death process that starts at $k = |i - j|$ and has birth and death rates, $\lambda = \mu = 1 - \theta$. Let $P(t)$ be such a process and define $s_0  = \inf\{t : P(t) = 0\}$ to be the first time the process reaches zero (this corresponds to the update histories merging). Let $s_d$ be exponentially distributed with rate $\theta$ (this corresponds to the update history of vertex $i$ dying). Then
 		\begin{align}
