@@ -135,9 +135,8 @@
 
 	The collection of $K_i^t$, $L_t^i$ and $R_t^i$ for every $i \in V$ forms an encoding of the update sequence and may be represented graphically as follows. Place an $\times$ at every $(i, K_t^i) \in V \times [0, t_*]$. Draw a directed edge $(i, L_t^i) \rightarrow (v - 1, L_t^i)$ for every $L_t^i$ and draw a directed edge $(i, R_t^i) \rightarrow (v + 1, R_t^i)$ for every $R_t^i$. To construct the update histories, trace back in time from $t_*$ from each vertex, making turns along directed horizontal edges, and killing the process at any $\times$. An example of this graphical representation along with the update histories is shown in Figure \ref{fig:example histories 1D thinned poisson}.
 
-	["SHOULD PROBABLY COMMENT ON WHY, IE WHY THEY HAVE THE RIGHT DISTRIBUTION"]
+	% ["SHOULD PROBABLY COMMENT ON WHY, IE WHY THEY HAVE THE RIGHT DISTRIBUTION"]
 
-	[POINT OUT THIS IS SAME AS GRAPHICAL REPRESENTATION OF NOISY VOTER MODEL]
 	% An example history using these new rules is shown in Figure \ref{fig:example percolation construction rightleft}. In a similar vein to Figures \ref{fig:example percolation construction oblivious} and \ref{fig:nonoblivious shrink} we represent each update $(\mathcal{V}, U, t)$ in the update sequence by placing at $(\mathcal{V}, t)$ one of the symbols $+$, $r$, $l$, or $-$ chosen according to $U$. We then trace back from time $t_*$, moving left or right when we encounter a $l$ or $r$ respectively, and terminating whenever we encounter a $+$ or $-$.
 
 	% \begin{figure}
@@ -170,6 +169,10 @@
 		\euler^{-\theta t_*}.
 		\label{eq:1D bernoulli prob}
 	\end{equation}
+
+	\begin{remark}
+		The graphical representation described here follows the standard graphical representation for interacting particle systems. See \cite[Chapter 3, Section 6]{Liggett1985-ke} for an overview of these representations. In particular, our graphical representation for the Ising heat-bath dynamics on the cycle (and therefore the dynamics themselves) is exactly equivalent to that of the noisy voter model, studied in \cite{Granovsky1995-ds}. This equivalence does not hold for the Ising heat-bath dynamics on higher dimensional tori.
+ 	\end{remark}
 
 	\section{Problem set-up}
 	\label{sec:1D problem setup}
