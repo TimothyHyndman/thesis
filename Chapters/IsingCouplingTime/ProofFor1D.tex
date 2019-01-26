@@ -1003,9 +1003,8 @@
 	\label{lem:A_ij bound conditioned}
 		Let $i$ and $j$ be two vertices on the length $n$ cycle that are separated by distance $k$. Then
 		\begin{equation}
-			\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset|X_{j} = 1] \leq 2\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k.
+			\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset|X_{j} = 1] \leq 2\left(\frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\right)^k.
 		\end{equation}
-		where $k = |i - j|$.
 	\end{lemma}
 	\begin{proof}
 		We must first deal with the effect that conditioning on $X_j = 1$ has on the probability that the two update histories merge. Recall from \ref{sec:update histories on the cycle} that we could interpret the update history as a collection of independent Poisson processes for each vertex. We may construct a different collection of filtered Poisson processes for each vertex by following the updates that occur along a single vertex's history. Let $\bar{\hist}_i$ be the update history that results from ignoring all oblivious updates (that is, the history does not die). Then $L_t^{\hist_i}$ is the Poisson process that places a point every time $\bar{\hist}_i$ encounters a left update, $R_t^{\hist_i}$ is the Poisson process that places a point every time $\bar{\hist}_i$ encounters a right update, and $K_t^{\hist_i}$ is the Poisson process that places a point every time $\bar{\hist}_i$ encounters an oblivious update. It is easy to see that these are Poisson processes with waiting times that are exponential with rate 1, and that $L_t^{\hist_i}$, $R_t^{\hist_i}$, and $K_t^{\hist_i}$ are all independent of each other. Furthermore, for two vertices $i$ and $j$, while $\hist_i$ and $\hist_j$ do not share any updates, $L_t^{\hist_i}$, $R_t^{\hist_i}$, and $K_t^{\hist_i}$ are all independent of each of $L_t^{\hist_j}$, $R_t^{\hist_j}$, and $K_t^{\hist_j}$.
@@ -1034,34 +1033,39 @@
 		
 		% The modified histories, $\bar{\hist}_i$, and $\bar{\hist}_j$, are undying random walks that start at $i$ and $j$ respectively and going backwards in time from $t_*$ move right at rate $(1 - \theta)/2$ and left at rate $(1 - \theta)/2$. 
 		% Consider a process which measures the distance between the two histories, $P(t) = d(\hist_i(t_* - t), \bar{\hist}_j(t_* - t))$. 
-		For most configurations of $\bar{\hist}_i(t)$ and $\bar{\hist}_j(t)$, $P(t)$ reduces by 1 at rate $1 - \theta$ and increases by 1 at rate $1 - \theta$. The only exception being when $\bar{\hist}_i(t_* - t)$ and $\bar{\hist}_j(t_* - t)$ are maximally separated on the cycle, in which case the distance between them cannot increase. 
+		For most configurations of $\bar{\hist}_i(t)$ and $\bar{\hist}_j(t)$, while $P(t) > 0$, $P(t)$ reduces by 1 at rate $1 - \theta$ and increases by 1 at rate $1 - \theta$. The only exception being when $\bar{\hist}_i(t_* - t)$ and $\bar{\hist}_j(t_* - t)$ are maximally separated on the cycle, in which case the distance between them cannot increase. 
 
 		% Define the times $S_d$ and $S_0$ via $S_0 = \inf\{t: P(t)  = 0 \}$ or $-\inf$ and $S_d = \inf\{t : \hist_i(t_* - t) = \emptyset\}$
 
-		To account for this, we construct two related birth and death processes. We assume that $i$ is to the left of $j$. The first, $P_1(t)$, starts at $k = d(i,j)$ and increases by one every time $\bar{\hist}_i$ moves left or $\bar{\hist}_j$ moves right and decreases by one every time $\bar{\hist}_i$ moves right or $\bar{\hist}_j$ moves left. The second, $P_2(t)$, starts at $n - k$ and decreases by one every time $P_1(t)$ increases by one, and increases by one every time $P_1(t)$ decreases by one. We may also construct times $S^{P1}_0$ and $S^{P2}_0$ as above to be the first times that $P_1$ and $P_2$ reach 0 (or $\infty$ if they do not reach 0). The events $\{P(t)  = 0\}$ and $\{P1(t) = 0\} \cup \{P2(t) = 0\}$ coincide and so
+		To account for this, we construct two related birth and death processes. We assume that $i$ is to the left of $j$ (if it is to the right, we may simply swap `left' and `right' in what follows). The first, $P_1(t)$, starts at $k = d(i,j)$ and increases by one every time $\bar{\hist}_i$ moves left or $\bar{\hist}_j$ moves right and decreases by one every time $\bar{\hist}_i$ moves right or $\bar{\hist}_j$ moves left. The second, $P_2(t)$, starts at $n - k$ and decreases by one every time $P_1(t)$ increases by one, and increases by one every time $P_1(t)$ decreases by one. We may also construct times $S^{P_1}_0$ and $S^{P_2}_0$ as above to be the first times that $P_1$ and $P_2$ reach 0 (or $\infty$ if they do not reach 0). The events $\{P(t)  = 0\}$ and $\{P_1(t) = 0\} \cup \{P_2(t) = 0\}$ coincide and so
 		\begin{align}
-			\prob[\hist_i \cap \bar{\hist}_j \neq \emptyset] &= \prob[\min(S^{P1}_0, S^{P2}_0) \leq S_d]\\
-			 &\leq \prob[S^{P1}_0 \leq S_d] + \prob[S^{P2}_0 \leq S_d]\\
-			 &\leq 2\prob[S^{P1}_0 \leq S_d]
+			\prob[\hist_i \cap \bar{\hist}_j \neq \emptyset] &= \prob[\min(S^{P_1}_0, S^{P_2}_0) \leq S_d]\\
+			 &\leq \prob[S^{P_1}_0 \leq S_d] + \prob[S^{P_2}_0 \leq S_d]\\
+			 &\leq 2\prob[S^{P_1}_0 \leq S_d]
 		\end{align}
-		since $P_1(t)$ starts closer to 0 than $P_2(t)$ does.
-
-
-
-		[UP TO HERE]
-
-		We note that, while $\mathcal{H}_i$ survives, the distance between $\mathcal{H}_i$ and $\bar{\mathcal{H}}_j$ is a birth and death process that starts at $k = |i - j|$ and has birth and death rates, $\lambda = \mu = 1 - \theta$. Let $P(t)$ be such a process and define $s_0  = \inf\{t : P(t) = 0\}$ to be the first time the process reaches zero (this corresponds to the update histories merging). Let $s_d$ be exponentially distributed with rate $\theta$ (this corresponds to the update history of vertex $i$ dying). Then
+		since $P_1(t)$ starts closer to 0 than $P_2(t)$ does. Let $S_\theta$ be exponentially distributed with rate $\theta$, and independent of $S_0^{P_1}$. We have that $S_d \eqdist \min(S_\theta, t_*)$, and since both $S_\theta$ and $S_d$ are independent of $S_0^{P_1}$, we have
 		\begin{align}
-		 	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_j = 1] \leq \prob[\mathcal{H}_i \cap \bar{\mathcal{H}}_j] \leq 2 \prob_k(s_0 < s_d)
-		 \end{align} 
-		 where $\prob_k$ indicates that $P(0) = k$. 
-		 The factor of two comes from the fact that the update histories may meet by going the other direction around the cycle. We also note that we allow $P(t)$ to continue beyond $t = t_*$, unlike our update histories which stop at time $0$. This does not present a problem as the effect of allowing this is to increase the size of our upper bound.
+			\prob[\hist_i \cap \bar{\hist}_j \neq \emptyset] &\leq 2\prob[S^{P_1}_0 \leq \min(S_\theta, t_*)] \\
+			&\leq 2\prob[S^{P_1}_0 \leq S_\theta].
+		\end{align}
+		% On the interval $[0, \min(t_*, S_0^{P_1})]$, the process $P_1(t)$ is a birth and death process that starts at $k$ and has birth and death rates $\lambda = \mu = 1 - \theta$. 
+		In the case that $P_1(t) > 0$ for all $t \in [0, t_*]$, instead of defining $S_0^{P_1}$ to be infinite, we may instead choose to extend $P_1(t)$ into the interval $(t_*, \infty)$ by continuing the birth and death transitions with rates $\lambda = \mu = 1 - \theta$, independent of $S_\theta$. Call this extended process $P_1'(t)$. We can then define $S_0^{P_1'} = \inf\{t : P_1'(t) = 0\}$ which is constructed such that $S_0^{P_1'} \leq S_0^{P_1}$. We therefore have
+		\begin{align}
+			\prob[\hist_i \cap \bar{\hist}_j \neq \emptyset] \leq 2\prob[S^{P_1'}_0 \leq S_\theta].
+		\end{align}
+
+		% We note that, while $\mathcal{H}_i$ survives, the distance between $\mathcal{H}_i$ and $\bar{\mathcal{H}}_j$ is a birth and death process that starts at $k = |i - j|$ and has birth and death rates, $\lambda = \mu = 1 - \theta$. Let $P(t)$ be such a process and define $s_0  = \inf\{t : P(t) = 0\}$ to be the first time the process reaches zero (this corresponds to the update histories merging). Let $s_d$ be exponentially distributed with rate $\theta$ (this corresponds to the update history of vertex $i$ dying). Then
+		% \begin{align}
+		%  	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_j = 1] \leq \prob[\mathcal{H}_i \cap \bar{\mathcal{H}}_j] \leq 2 \prob_k(s_0 < s_d)
+		%  \end{align} 
+		%  where $\prob_k$ indicates that $P(0) = k$. 
+		%  The factor of two comes from the fact that the update histories may meet by going the other direction around the cycle. We also note that we allow $P(t)$ to continue beyond $t = t_*$, unlike our update histories which stop at time $0$. This does not present a problem as the effect of allowing this is to increase the size of our upper bound.
 
 		 % As in the proof of Lemma \ref{lem: A_ij bound}, the factor of two comes from the fact that the update histories may meet by going in either direction around the cycle and we note that we are allowing $P(t)$ to continue beyond $t = t_*$.
 
-		 At any time before $s_d$ there are three possibilities for what can happen to $P$ next. Either the next event is a birth with probability $(2 - \theta)/4$, the next event is a death with the same probability or we reach time $s_d$ with probability $\theta/2$. Writing $\zeta_k = \prob_k(s_0 < s_d)$ this gives us the recurrence relation
+		 While $t < S_\theta$ and $P_1'(t) > 0$, there are three possibilities for what can happen to $P_1'$ next. Either the next event is a birth with probability $(1 - \theta)/(2 - \theta)$, the next event is a death with the same probability or we reach time $S_\theta$ with probability $\theta/(2 - \theta)$. Writing $\zeta_k = \prob_k(S_0^{P_1'} < S_\theta)$, where $\prob_k$ denotes that $P_1(t)$ starts at $k$, this gives us the recurrence relation
 		 \begin{align}
-		 	\zeta_k = \frac{2 - \theta}{4} \zeta_{k-1} + \frac{2 - \theta}{4} \zeta_{k+1}
+		 	\zeta_k = \frac{1 - \theta}{2 - \theta} \zeta_{k-1} + \frac{1 - \theta}{2 - \theta} \zeta_{k+1}
 		 \end{align}
 		 which is subject to the conditions 
 		 \begin{align}
@@ -1072,12 +1076,12 @@
 		 \end{align} 
 		 This recurrence has characteristic equation
 		 \begin{align}
-		 	x^2 - \frac{4}{2 - \theta} x + 1 = 0
+		 	x^2 - \frac{2 -\theta}{1 - \theta} x + 1 = 0
 		 \end{align}
 		 which has roots
 		 \begin{align}
-		 	r_1 &= \frac{2 + \sqrt{\theta(4 - \theta)}}{2 - \theta}\\
-		 	r_2 &= \frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}
+		 	r_1 &= \frac{2 - \theta + \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\\
+		 	r_2 &= \frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}
 		 \end{align}
 		 and so
 		 \begin{align}
@@ -1085,6 +1089,10 @@
 		 \end{align}
 		 where $a$ and $b$ are constants to be determined from \eqref{eq:zetacondition1_cond} and \eqref{eq:zetacondition2_cond}. We note that $r_1 \geq 1, \forall \theta \in [0,1]$ and so from \eqref{eq:zetacondition2_cond} we have that $a = 0$. Finally from \eqref{eq:zetacondition1_cond}, $b = 1$ and so
 		 \begin{equation}
-		 	\zeta_k = \left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k.
+		 	\zeta_k = \left(\frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\right)^k.
 		 \end{equation}
+		 Overall,
+		 \begin{equation}
+			\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset|X_{j} = 1] \leq 2\left(\frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\right)^k.
+		\end{equation}
 	\end{proof}
