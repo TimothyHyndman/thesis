@@ -22,7 +22,7 @@
 		\end{equation}
 		where $\theta = 1 - \tanh(2\beta)$ and $C_\theta$ is a positive constant satisfying
 		\begin{equation}
-			\frac{1}{2\sqrt{\frac{4}{\theta} - 1} - 1} \leq C_\theta \leq 1.
+			\frac{1}{2\sqrt{\frac{4}{\theta} - 3} - 1} \leq C_\theta \leq 1.
 		\end{equation}
 	\end{theorem}
 
@@ -294,7 +294,7 @@
 		\end{equation}
 		for some
 		\begin{equation}
-			C_\theta \in \left[\frac{1}{2\sqrt{\frac{4}{\theta} - 1} - 1}, 1\right].
+			C_\theta \in \left[\frac{1}{2\sqrt{\frac{4}{\theta} - 3} - 1}, 1\right].
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
@@ -328,13 +328,13 @@
 		\end{align}
 		where we have used the symmetry of $X_{i+k}$ and $X_{i -k}$ in the last step. From Lemma \ref{lem:X_i+k given X_i}, 
 		\begin{align}
-			\expect[U_i | X_i = 1] &\leq 2 \sum_{k = 1}^{\lfloor b_n\rfloor} \left(\frac{e^{-z}}{n} + 2 \left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k\right)\\
-				&< 2 \sum_{k = 1}^{\lfloor b_n\rfloor} \frac{e^{-z}}{n} + 4\sum_{k = 1}^\infty \left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k\\
-				&= \frac{2 \lfloor b_n\rfloor}{n}e^{-z} + 2\left(\sqrt{\frac{4}{\theta} - 1} - 1\right).
+			\expect[U_i | X_i = 1] &\leq 2 \sum_{k = 1}^{\lfloor b_n\rfloor} \left(\frac{e^{-z}}{n} + 2 \left(\frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\right)^k\right)\\
+				&< 2 \sum_{k = 1}^{\lfloor b_n\rfloor} \frac{e^{-z}}{n} + 4\sum_{k = 1}^\infty \left(\frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\right)^k\\
+				&= \frac{2 \lfloor b_n\rfloor}{n}e^{-z} + 2\left(\sqrt{\frac{4}{\theta} - 3} - 1\right).
 		\end{align}
 		Finally, as $n \rightarrow \infty$ the first term vanishes and
 		\begin{align}
-			\liminf_{n \rightarrow \infty} \expect \left[\left.\frac{1}{1 + U_i}\right| X_i = 1\right] \geq \frac{1}{2\sqrt{\frac{4}{\theta} - 1} - 1}.
+			\liminf_{n \rightarrow \infty} \expect \left[\left.\frac{1}{1 + U_i}\right| X_i = 1\right] \geq \frac{1}{2\sqrt{\frac{4}{\theta} - 3} - 1}.
 		\end{align}
 	\end{proof}
 
@@ -624,13 +624,15 @@
 		\end{align}
 		From Lemma \ref{lem:X_i+k given X_i},
 		\begin{align}
-			\expect[Z_i | X_i = 1] &\leq 2 \sum_{k = \lfloor b_n\rfloor + 1}^{\lfloor c_n\rfloor} \left(\frac{e^{-z}}{n} + 2\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k\right),\\
-				&\leq \frac{2(c_n - b_n + 1)\euler^{-z}}{n} + 4(c_n - b_n + 1)\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^{b_n + 1}.
+			\expect[Z_i | X_i = 1] &\leq 2 \sum_{k = \lfloor b_n\rfloor + 1}^{\lfloor c_n\rfloor} \left(\frac{e^{-z}}{n} + 2\left(\frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\right)^k\right),\\
+				&\leq \frac{2(c_n - b_n + 1)\euler^{-z}}{n} \notag \\
+				&\phantom{=} + 4(c_n - b_n + 1)\left(\frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\right)^{b_n + 1}.
 		\end{align}
 		Altogether,
-		\begin{equation}
-			\delta_4 \leq \frac{2(c_n - b_n + 1)\euler^{-z}}{n} + 4(c_n - b_n + 1)\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^{b_n + 1} + \frac{(2c_n + 1)\euler^{-2z}}{n}
-		\end{equation}
+		\begin{align}
+			\delta_4 &\leq \frac{2(c_n - b_n + 1)\euler^{-z}}{n} + 4(c_n - b_n + 1)\left(\frac{2 - \theta -\sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\right)^{b_n + 1} \notag \\
+			&\phantom{=} + \frac{(2c_n + 1)\euler^{-2z}}{n}
+		\end{align}
 		which, recalling that $b_n = \ln(n)$ and $c_n = \ln(n)^2$, goes to $0$ as $n \rightarrow \infty$.
 	\end{proof}
 	
@@ -922,7 +924,7 @@
 		Let $i$ and $j$ be two vertices on the cycle $(\mathbb{Z}/n\mathbb{Z})$ separated by distance $k$. Then
 		\begin{equation}
 			\label{eq:prob X_i+k = 1|X_i = 1}
-			\prob[X_j = 1| X_i = 1] \leq \frac{e^{-z}}{n} + 2\left(\frac{2 - \sqrt{\theta(4 - \theta)}}{2 - \theta}\right)^k.
+			\prob[X_j = 1| X_i = 1] \leq \frac{e^{-z}}{n} + 2\left(\frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\right)^k.
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
@@ -934,8 +936,6 @@
 			&\leq \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j = \emptyset | X_i = 1] %\notag\\
 			+ \prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1].
 		\end{align}
-
-		[GOING THROUGH TIM'S COMMENTS UP TO HERE]
 
 		% If the histories of $i$ and $j$ do not intersect, then conditioning on $\mathcal{H}_i$ surviving does not affect the chance that $\mathcal{H}_j$ survives. However, conditioning on $\mathcal{H}_i$ surviving does make it more likely that the histories intersect. So
 		% % \begin{align}
