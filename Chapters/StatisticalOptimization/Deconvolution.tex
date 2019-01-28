@@ -575,11 +575,11 @@ Given that most of the probability masses of $\hat{F}_X$ do not contribute to th
 	\label{fig:compare fixed moving masses}
 \end{figure}
 
-We start with Figure \ref{fig:compare fixed moving masses} in which we compare the result we obtain using the fixed masses method of Delaigle and Hall, and the results we obtain when we allow the location of the probability masses in $F_{\vect{\theta}, \vect{p}}$ to vary. As well as plotting $\hat{F}_X$ and $\hat{f}_X$, we also provide a table with the various objective values attained in the final result, as well as the time taken to run the code on a i5-4670K CPU running at 4.3 GHz, running MATLAB R2018a. For comparison, we also give the various objective values obtained by using the empirical distribution of $W$ as $\hat{F}_X$. The values $T$, $P1$, $P2$ are as defined in Section \ref{sec:deconvolution estimator}, we use $OBJ1$ to denote the objective of our first minimization, $T(F) + \lambda_1 P1(F) + \lambda_2 P2(F)$, and $\var$ to denote the variance of $\hat{F}_X$ (our second objective).
+We start with Figure \ref{fig:compare fixed moving masses} in which we compare the result we obtain using the fixed masses method of Delaigle and Hall, and the results we obtain when we allow the location of the probability masses in $F_{\vect{\theta}, \vect{p}}$ to vary. As well as plotting $\hat{F}_X$ and $\hat{f}_X$, we also provide a table with the various objective values obtained in the final result, as well as the time taken to run the code on a i5-4670K CPU running at 4.3 GHz, running MATLAB R2018a. For comparison, we also give the various objective values obtained by using the empirical distribution of $W$ as $\hat{F}_X$. The values $T$, $P1$, $P2$ are as defined in Section \ref{sec:deconvolution estimator}, we use $OBJ1$ to denote the objective of our first minimization, $T(F) + \lambda_1 P1(F) + \lambda_2 P2(F)$, and $\var$ to denote the variance of $\hat{F}_X$ (our second objective).
 
 For this particular example, we note that we need only 10 masses to obtain smaller values for both of our objectives when compared to the original fixed masses, and that this results in a significant speed up, as expected. We get even further improvement going from 10 to 20 masses. However, when we use 40 masses, we note that $OBJ_1$ is significantly larger than in any of the cases where we use fewer masses, and that $\var\hat{F}_X$ is smaller than in any other case. One potential explanation here is that the parameter space becomes too complex for our optimization routine to find good solutions if we allow too many moving masses and so $OBJ_1$ is much larger than the global minimum. This means that when we come to our second objective of minimizing $\var \hat{F}_X$, the constraints $T(F) \leq T_\mathrm{min}$, $P1(F) \leq P1_\mathrm{min}$, and $P2(F) \leq P2_\mathrm{min}$ are lax, and so we have more room to search for feasible distributions with small variance.
 
-[UP TO HERE]
+It also appears as if the 40 mass case is a closer fit for the true curve than any of the other estimates, despite acheiving worse results in the first objective. Although this is purely conjecture, we suggest that this could be because the constraints $T(F) \leq T_\mathrm{min}$, $P1(F) \leq P1_\mathrm{min}$, and $P2(F) \leq P2_\mathrm{min}$ are often too strict to acheive the variance we desire in the second optimization. One could try using as constraints, $T(F) \leq (1 + \delta) T_\mathrm{min}$, $P1(F) \leq (1 + \delta) P1_\mathrm{min}$, and $P2(F) \leq (1 + \delta) P2_\mathrm{min}$, to counter this, but we cannot see any obvious way to determine good values for $\delta$.
 
 % \begin{figure}
 % 	\centering
@@ -598,14 +598,22 @@ For this particular example, we note that we need only 10 masses to obtain small
 
 
 \subsection{No penalties seems to make behaviour stronger}
+
+[UP TO HERE]
+
 \subsection{Discrete X?}
+
 	
 
 \section{General Observations and Results}
 \label{sec:deconvolution observations and results}
-	
-	\subsection{Results concerning phase functions}
+
+We end this section with two simple observations about our deconvolution problem. We do not claim that either of these theorems are new, but we think that they are still worth stating.
+We start with the observation that the set of distributions with equal phase function is a convex set.
+
+	% \subsection{Results concerning phase functions}
 	\begin{theorem}
+	\label{thm:equal phase functions convex set}
 		Let $F_X$ and $F_Y$ be two distributions, and let
 		\begin{align}
 			F_Z &= (1 - \lambda) F_X + \lambda F_Y && \lambda \in [0,1]
@@ -643,6 +651,7 @@ For this particular example, we note that we need only 10 masses to obtain small
 		\end{equation}
 	\end{proof}
 
+Recall that ideally, we would like to search the set of all distributions with phase function equal to that of $W$ to find the distribution with smallest variance. Theorem \ref{thm:equal phase functions convex set} tells us that this set is convex. Furthermore, 
 
 	% TESTING
 	% \begin{proof}
@@ -658,7 +667,7 @@ For this particular example, we note that we need only 10 masses to obtain small
 	% 	\end{align}
 	% \end{proof}
 
-\subsection{A particular class of optimization problem}
+% \subsection{A particular class of optimization problem}
 		"The results follow from this general theorem which seems obvious."
 
 		\begin{theorem}
