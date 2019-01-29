@@ -1,11 +1,13 @@
 %% n = size of sample, NSR = noise signal ratio
 
-function [W,truedens,X,U] = generatedata(n,NSR,dist_type,error_type,seed)
+function [W,truedens,X,U, truepmf] = generatedata(n,NSR,dist_type,error_type,seed)
 
 %Initiate random seeds to be able to replicate the results
 if nargin == 5
     rng(seed);
 end
+
+truepmf = [];
 
 %Generate sample of size n from X
 switch dist_type
@@ -85,7 +87,7 @@ switch dist_type
         scale = sqrt(var(X));
 %         X = X/scale;
         varX = 1;
-        truedens = @(xx) abs(xx - 1/scale) < 0.05 || abs(xx - 2/scale) < 0.05 || abs(xx - 3/scale) < 0.05;
+        truedens = @(xx) abs(xx - 1/scale) < 0.05 | abs(xx - 2/scale) < 0.05 | abs(xx - 3/scale) < 0.05;
     case 'discrete2'
         X = zeros(1,n);
         for i = 1:n
@@ -103,9 +105,12 @@ switch dist_type
             end
         end
         scale = sqrt(var(X));
-%         X = X/scale;
+        scale = 1;
+        X = X/scale;
         varX = 1;
-        truedens = @(xx) abs(xx - 1/scale) < 0.05 || abs(xx - 2/scale) < 0.05 || abs(xx - 3/scale) < 0.05;
+        truedens = @(xx) abs(xx - 1/scale) < 0.05 | abs(xx - 2.01/scale) < 0.05 | abs(xx - 3.1416/scale) < 0.05 | abs(xx - 4/scale) < 0.05;
+        truepmf.Support = [1, 2.01, 3.1416, 4] / scale;
+        truepmf.ProbWeights = [0.3, 0.5244-0.3, 0.6-0.5244, 1- 0.6];
 end
 
 %Choose error type (lap or norm) and compute true phi_U and var(U) for this error

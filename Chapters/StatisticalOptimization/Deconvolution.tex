@@ -581,13 +581,12 @@ For this particular example, we note that we need only 10 masses to obtain small
 
 It also appears as if the 40 mass case is a closer fit for the true curve than any of the other estimates, despite acheiving worse results in the first objective. Although this is purely conjecture, we suggest that this could be because the constraints $T(F) \leq T_\mathrm{min}$, $P1(F) \leq P1_\mathrm{min}$, and $P2(F) \leq P2_\mathrm{min}$ are often too strict to acheive the variance we desire in the second optimization. The first optimization found a solution which just happened to be far enough away from the global minimum to allow for enough freedom in minimizing the variance that we obtained a result that acheived closer to the true variance. One could try using as constraints, $T(F) \leq (1 + \delta) T_\mathrm{min}$, $P1(F) \leq (1 + \delta) P1_\mathrm{min}$, and $P2(F) \leq (1 + \delta) P2_\mathrm{min}$, to allow for this behaviour when the first minimization attains a result closer to the global optimum, but we cannot see any obvious way to determine good values for $\delta$.
 
-The results in Figure \ref{fig:compare fixed moving masses} are encouraging, and in our experience are consistent in a wide variety of scenarios. We present some more examples in Figure [MAKE FIGURE]. Of course, it is possible that there is a wide class of deconvolution problems in which a large number of point masses are required to acheive a good solution, and that we have just happened to avoid examples of these. However, we do not think that this is a large concern. One can simply repeat the deconvolution with an increasing number of point masses in $\hat{F}_X$ until it does not result in an improvement in our objectives.
+The results in Figure \ref{fig:compare fixed moving masses} are encouraging, and in our experience are consistent in a wide variety of scenarios. We present some more examples in Figure [MAKE FIGURE WITH VARIETY OF SITUATIONS]. Of course, it is possible that there is a wide class of deconvolution problems in which a large number of point masses are required to acheive a good solution, and that we have just happened to avoid examples of these. However, we do not think that this is a large concern. One can simply repeat the deconvolution with an increasing number of point masses in $\hat{F}_X$ until it does not result in an improvement in our objectives.
+
+\subsection{R Package}
+Given all the discussion above, we see no reason not to use masses with variable locations. We have used this new method in the R Package `deconvolve'
 
 [UP TO HERE]
-
-[OTHER EXAMPLES, VARIETY OF DISTRIBUTIONS ETC]
-
-[SEE NO REASON NOT TO USE VARIABLE LOCATION, USED NEW METHOD IN R PACKAGE]
 
 % \begin{figure}
 % 	\centering

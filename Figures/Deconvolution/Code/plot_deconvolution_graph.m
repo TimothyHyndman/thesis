@@ -23,6 +23,10 @@ function fig = plot_deconvolution_graph(Q, xx, yy, W, options)
         fig_true_dens = plot(xx, options.true_dens(xx), 'Color', primarylight,'LineWidth', options.line_width, 'DisplayName', 'True f_X');
     end
     
+    if options.plot_true_pmf
+        fig_true_pmf = scatter(options.true_pmf.Support, options.true_pmf.ProbWeights, 'filled','MarkerFaceColor', primarylight, 'DisplayName', 'True f_X');
+    end
+    
     if options.plot_naive
         n = length(W);
         h = options.naivebw;
@@ -87,6 +91,12 @@ function options = fill_default_options(options)
     end
     if ~isfield(options, 'plot_true_dens')
         options.plot_true_dens = false;
+    end
+    if ~isfield(options, 'true_pmf')
+        options.true_pmf = [];
+    end
+    if ~isfield(options, 'plot_true_pmf')
+        options.plot_true_pmf = false;
     end
     if ~isfield(options, 'plot_naive')
         options.plot_naive = false;
