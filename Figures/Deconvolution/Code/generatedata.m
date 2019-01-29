@@ -131,10 +131,10 @@ switch error_type
             fred = unifrnd(0,1);
             if fred < 0.6
                 U(i) = 0;
-            else if fred < 0.8
-                    U(i) = -varU/0.4;
-                else U(i) = varU/0.4;
-                end
+            elseif fred < 0.8
+                U(i) = -varU/0.4;
+            else
+                U(i) = varU/0.4;
             end
         end
     case 'degenerate'
