@@ -3,9 +3,9 @@
 %Initiate random seeds to be able to replicate the results
 seed = 5000;
 NSR = 0.2;
-n = 100;
-dist_type = 'gamma';
-error_type = 'discrete';
+n = 500;
+dist_type = 'gumbel';
+error_type = 'lap';
 
 [W, truedens, X, U, truepmf] = generatedata(n,NSR,dist_type,error_type,seed);
 h=bwsjpiSM(W');
@@ -17,7 +17,7 @@ decon_options.penalties = true;
 [yy_moving, Q_moving, tt_moving, optim_values_moving] = moving_mass_deconvolve(W, xx_moving, 20, decon_options);
 
 options.save = false;
-options.filename = 'moving_masses_m20_noPenalties_example.png';
+options.filename = 'moving_masses_gumbel_lap_example.png';
 options.plot_histogram = false;
 options.plot_density = true;
 options.plot_masses = true;

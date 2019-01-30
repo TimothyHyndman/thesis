@@ -581,7 +581,100 @@ For this particular example, we note that we need only 10 masses to obtain small
 
 It also appears as if the 40 mass case is a closer fit for the true curve than any of the other estimates, despite acheiving worse results in the first objective. Although this is purely conjecture, we suggest that this could be because the constraints $T(F) \leq T_\mathrm{min}$, $P1(F) \leq P1_\mathrm{min}$, and $P2(F) \leq P2_\mathrm{min}$ are often too strict to acheive the variance we desire in the second optimization. The first optimization found a solution which just happened to be far enough away from the global minimum to allow for enough freedom in minimizing the variance that we obtained a result that acheived closer to the true variance. One could try using as constraints, $T(F) \leq (1 + \delta) T_\mathrm{min}$, $P1(F) \leq (1 + \delta) P1_\mathrm{min}$, and $P2(F) \leq (1 + \delta) P2_\mathrm{min}$, to allow for this behaviour when the first minimization attains a result closer to the global optimum, but we cannot see any obvious way to determine good values for $\delta$.
 
-The results in Figure \ref{fig:compare fixed moving masses} are encouraging, and in our experience are consistent in a wide variety of scenarios. We present some more examples in Figure [MAKE FIGURE WITH VARIETY OF SITUATIONS]. Of course, it is possible that there is a wide class of deconvolution problems in which a large number of point masses are required to acheive a good solution, and that we have just happened to avoid examples of these. However, we do not think that this is a large concern. One can simply repeat the deconvolution with an increasing number of point masses in $\hat{F}_X$ until it does not result in an improvement in our objectives.
+The results in Figure \ref{fig:compare fixed moving masses} are encouraging, and in our experience are consistent in a wide variety of scenarios. We present some more examples in Figure \ref{fig:more deconvolution examples}. Of course, it is possible that there is a wide class of deconvolution problems in which a large number of point masses are required to acheive a good solution, and that we have just happened to avoid examples of these. However, we do not think that this is a large concern. One can simply repeat the deconvolution with an increasing number of point masses in $\hat{F}_X$ until it does not result in an improvement in our objectives.
+
+\begin{figure}
+	\centering
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/moving_masses_discrete_n5000_example.png}
+		\begin{tabular}{r l}
+			$OBJ_1$ & 0.8786\\
+			$\var \hat{F}_X$ & 1.6542\\
+			$T(\hat{F}_X)$ & 1.1094e-08\\
+			$P1$ & 0.0018\\
+			$P2$ & 0\\
+			$t$ & 62s
+		\end{tabular}
+		\caption{True distribution discrete (represented by blue points) with normal errors, $n = 5000$, moving masses.}
+		\label{fig:moving masses discrete}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_discrete_n5000_example.png}
+		\begin{tabular}{r l}
+			$OBJ_1$ & 106.6533\\
+			$\var \hat{F}_X$ & 1.5731\\
+			$T(\hat{F}_X)$ & 0.0192\\
+			$P1$ & 0.2133\\
+			$P2$ & 0\\
+			$t$ & 1354s
+		\end{tabular}
+		\caption{True distribution discrete (represented by blue points) with normal errors, $n = 5000$, fixed masses.}
+		\label{fig:fixed masses discrete}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/moving_masses_gumbel_lap_example.png}
+		\begin{tabular}{r l}
+			$OBJ_1$ & 0.3742\\
+			$\var \hat{F}_X$ & 1.0063\\
+			$T(\hat{F}_X)$ & 3.5329e-07\\
+			$P1$ & 7.4839e-04\\
+			$P2$ & 0\\
+			$t$ & 64s
+		\end{tabular}
+		\caption{True distribution gumbel with laplace errors, $n = 500$, moving masses.}
+		\label{fig:moving masses gumbel lap}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_gumbel_lap_example.png}
+		\begin{tabular}{r l}
+			$OBJ_1$ & 0.2603\\
+			$\var \hat{F}_X$ & 0.9413\\
+			$T(\hat{F}_X)$ & 4.9281e-07\\
+			$P1$ & 5.2056e-04\\
+			$P2$ & 0\\
+			$t$ & 195s
+		\end{tabular}
+		\caption{True distribution gumbel with laplace errors, $n = 500$, fixed masses.}
+		\label{fig:fixed masses gumbel lap}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/moving_masses_gamma_discrete_n100_example.png}
+		\begin{tabular}{r l}
+			$OBJ_1$ & 0.1506\\
+			$\var \hat{F}_X$ & 0.6176\\
+			$T(\hat{F}_X)$ & 1.2286e-05\\
+			$P1$ & 3.0108e-04\\
+			$P2$ & 0\\
+			$t$ & 47s
+		\end{tabular}
+		\caption{True distribution Gamma(5,2), with errors discrete (-1,0,1) with probabilities (0.2,0.6,0.2), $n = 100$, moving masses.}
+		\label{fig:moving masses gamma discrete}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_gamma_discrete_n100_example.png}
+		\begin{tabular}{r l}
+			$OBJ_1$ & 0.1681\\
+			$\var \hat{F}_X$ & 0.5953\\
+			$T(\hat{F}_X)$ & 1.2921e-05\\
+			$P1$ & 3.3615e-04\\
+			$P2$ & 0\\
+			$t$ & 62s
+		\end{tabular}
+		\caption{True distribution Gamma(5,2), with errors discrete (-1,0,1) with probabilities (0.2,0.6,0.2), $n = 100$, fixed masses.}
+		\label{fig:fixed masses gamma discrete}
+	\end{subfigure}
+	\caption{Three more comparisons between moving masses and fixed masses.}
+	\label{fig:more deconvolution examples}
+	\end{figure}
 
 \subsection{R Package}
 Given all the discussion above, we see no reason not to use masses with variable locations. We have used this new method in the R Package `deconvolve'
