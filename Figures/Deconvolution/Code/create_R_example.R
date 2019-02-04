@@ -1,5 +1,9 @@
 
 
+library(deconvolve)
+library(ggplot2)
+library(tictoc)
+
 set.seed(5000)
 n <- 500
 NSR <- 0.2
@@ -23,8 +27,9 @@ U <- rnorm(n, mean = 0, sd = sigU)
 # W
 W <- X + U
 
-
-decon_object <- deconvolve(W, show_diagnostics = TRUE, m = 10)
+tic()
+decon_object <- deconvolve(W, show_diagnostics = TRUE, m = 20)
+toc()
 
 xx <- decon_object$x
 yy <- truedens(xx)
@@ -34,6 +39,12 @@ df2 <- data.frame(x = decon_object$support, y = decon_object$probweights)
 truedenscol <- rgb(102, 177, 255, maxColorValue = 255)
 pointcol <- rgb(150, 150, 150, maxColorValue = 255)
 
-plot(decon_object) + 
-	geom_line(data = df1, aes(x, y), colour = truedenscol, size = 1) + 
+plot(decon_object) +
+	geom_line(data = df1, aes(x, y), colour = truedenscol, size = 1) +
 	geom_point(data = df2, aes(x, y), colour = pointcol)
+
+save_image = FALSE
+
+if (save_image){
+	ggsave("../thesis/Figures/Deconvolution/R_example.png")
+}

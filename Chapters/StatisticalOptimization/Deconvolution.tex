@@ -679,6 +679,20 @@ The results in Figure \ref{fig:compare fixed moving masses} are encouraging, and
 \subsection{R Package}
 Given all the discussion above, we see no reason not to use masses with variable locations. We have used this new method in the R Package `deconvolve'. This package is a collection of tools for performing non-parametric deconvolution on measurement error problems. It contains functions for finding bandwidths, deconvolved densities, and non-parametric regression estimates. The methods discussed in this Chapter for when the error distribution is unknown form just one part of the package. We give a brief overview of the performance of our implementation of it in R.
 
+\begin{figure}
+	\centering
+	\includegraphics[width = \textwidth]{Figures/Deconvolution/R_example.png}
+	\begin{tabular}{r l}
+			$OBJ_1$ & 0.1681\\
+			$\var \hat{F}_X$ & 0.7467\\
+			$T(\hat{F}_X)$ & 1.3585e-06\\
+			$P1$ & 0.0056\\
+			$P2$ & 0\\
+			$t$ & 9.2s
+		\end{tabular}
+	\caption{hello}
+	\label{fig:R example}
+\end{figure}
 [UP TO HERE]
 
 [PUT IN TIME COMPARISONS HERE]
