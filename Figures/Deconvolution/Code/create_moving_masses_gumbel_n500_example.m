@@ -3,9 +3,9 @@
 %Initiate random seeds to be able to replicate the results
 seed = 5000;
 NSR = 0.2;
-n = 100;
-dist_type = 'gamma';
-error_type = 'discrete';
+n = 500;
+dist_type = 'gumbel';
+error_type = 'norm';
 
 [W, truedens, X, U, truepmf] = generatedata(n,NSR,dist_type,error_type,seed);
 h=bwsjpiSM(W');

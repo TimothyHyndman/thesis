@@ -32,25 +32,25 @@ switch dist_type
         truedens=@(xx) cvar*gampdf(xx*cvar,shape_par,scale_par);
     case 'pareto'
         k=-0.5;
-        sigma=1;
+        varX=1;
         theta=2;
-        X = gprnd(k,sigma,theta,[1,n]);
-        varX = sigma^2/((1-k)^2*(1-2*k));
+        X = gprnd(k,varX,theta,[1,n]);
+        varX = varX^2/((1-k)^2*(1-2*k));
         X=X/sqrt(varX);
         varX=1;
-        varXlong = sigma^2/((1-k)^2*(1-2*k));
+        varXlong = varX^2/((1-k)^2*(1-2*k));
         cvar=sqrt(varXlong);
-        truedens=@(xx) cvar*gppdf(xx*cvar,k,sigma,theta);
+        truedens=@(xx) cvar*gppdf(xx*cvar,k,varX,theta);
     case 'normal'   %This is symmmetric so should stuff things up
         mu = 2;
-        sigma = 1;
-        X=normrnd(mu,sigma,[1,n]);
-        varX=sigma^2;
+        varX = 1;
+        X=normrnd(mu,varX,[1,n]);
+        varX=varX^2;
         X=X/sqrt(varX);
         varX=1;
-        varXlong = sigma^2;
+        varXlong = varX^2;
         cvar=sqrt(varXlong);
-        truedens=@(xx) cvar*normpdf(xx*cvar,mu,sigma);
+        truedens=@(xx) cvar*normpdf(xx*cvar,mu,varX);
     case 'degenerate'
         a = 2;
         X = zeros(1,n);
@@ -111,6 +111,12 @@ switch dist_type
         truedens = @(xx) abs(xx - 1/scale) < 0.05 | abs(xx - 2.01/scale) < 0.05 | abs(xx - 3.1416/scale) < 0.05 | abs(xx - 4/scale) < 0.05;
         truepmf.Support = [1, 2.01, 3.1416, 4] / scale;
         truepmf.ProbWeights = [0.3, 0.5244-0.3, 0.6-0.5244, 1- 0.6];
+    case 'gumbel'
+        mu = -1;
+        varX = 1;
+        sigma = sqrt(6*varX/pi^2);
+        X = -evrnd(mu, sigma, [1,n]);
+        truedens = @(xx) evpdf(-xx, mu, sigma);
 end
 
 %Choose error type (lap or norm) and compute true phi_U and var(U) for this error
