@@ -43,7 +43,7 @@ plot(decon_object) +
 	geom_line(data = df1, aes(x, y), colour = truedenscol, size = 1) +
 	geom_point(data = df2, aes(x, y), colour = pointcol)
 
-save_image = FALSE
+save_image <- FALSE
 
 if (save_image){
 	ggsave("../thesis/Figures/Deconvolution/R_example.png")
