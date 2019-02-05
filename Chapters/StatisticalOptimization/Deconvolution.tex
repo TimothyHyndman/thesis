@@ -677,32 +677,34 @@ The results in Figure \ref{fig:compare fixed moving masses} are encouraging, and
 	\end{figure}
 
 \subsection{R Package}
-Given all the discussion above, we see no reason not to use masses with variable locations. We have used this new method in the R Package `deconvolve'. This package is a collection of tools for performing non-parametric deconvolution on measurement error problems. It contains functions for finding bandwidths, deconvolved densities, and non-parametric regression estimates. The methods discussed in this Chapter for when the error distribution is unknown form just one part of the package. We give a brief overview of the performance of our implementation of it in R.
+Given all the discussion above, we see no reason not to use masses with variable locations. We have used this new method in the R \cite{R_Core_Team2018-bs} Package `deconvolve' \cite{Delaigle2019-hj}. This package is a collection of tools for performing non-parametric deconvolution on measurement error problems. It contains functions for finding bandwidths, deconvolved densities, and non-parametric regression estimates. The methods discussed in this Chapter for when the error distribution is unknown form just one part of the package. We give a brief overview of the performance of our implementation of it in R.
 
 \begin{figure}
 	\centering
 	\includegraphics[width = \textwidth]{Figures/Deconvolution/R_example.png}
 	\begin{tabular}{r l}
-			$OBJ_1$ & 13.55\\
-			$\var \hat{F}_X$ & 0.6915\\
-			$T(\hat{F}_X)$ & 1.9656e-06\\
-			$P1$ & 0.0271\\
+			$OBJ_1$ & 2.277\\
+			$\var \hat{F}_X$ & 0.8684\\
+			$T(\hat{F}_X)$ & 1.1672e-06\\
+			$P1$ & 4.554e-03\\
 			$P2$ & 0\\
-			$t$ & 24s CHANGE TO DESKTOP TIME
+			$t$ & 50s
 		\end{tabular}
-	\caption{$m=20$ moving masses in R}
+	\caption{The output of the `deconvolve' package with data as in Figure \ref{fig:fixed masses example alone} and using $m=20$ moving masses.}
 	\label{fig:R example}
 \end{figure}
 
-In Figure \ref{fig:R example}, we show the output of our package when the inputs are as described in Figure \ref{fig:fixed masses example alone}. As in Figure \ref{fig:compare fixed moving masses}, we provide the values obtained of each of our objectives, as well as the time taken to run. 
+In Figure \ref{fig:R example}, we show the output of our package when the contaminated data is identical to that used in producing Figure \ref{fig:fixed masses example alone}. As in Figure \ref{fig:compare fixed moving masses}, we provide the values obtained of each of our objectives, as well as the time taken to run.
 
-[UP TO HERE]
+To perform the two non-linear optimizations we use the package Nlcoptim \cite{Chen2017-mn}. In the example in Figure \ref{fig:R example}, we used 20 moving masses in our estimate $\hat{F}_X$. This make it directly comparable to \ref{fig:moving masses m20 example}, since we are using identical data and parameters. While the objective values obtained are worse than those in the equivalent MATLAB implementation, the resulting density is still reasonable and we still benefit from a significant speed up over the original fixed mass implementation. In practise, we found this to be fairly typical of our implementation in `deconvolve'. 
 
-[R NOT AS GOOD RESULTS]
+% [UP TO HERE]
 
-[STILL FAST THOUGH]
+% [R NOT AS GOOD RESULTS]
 
-[PUT IN TIME COMPARISONS HERE]
+% [STILL FAST THOUGH]
+
+% [PUT IN TIME COMPARISONS HERE]
 
 % \begin{figure}
 % 	\centering
@@ -720,7 +722,7 @@ In Figure \ref{fig:R example}, we show the output of our package when the inputs
 
 
 
-\subsection{No penalties seems to make behaviour stronger}
+% \subsection{No penalties seems to make behaviour stronger}
 
 % \subsection{Discrete X?}
 
