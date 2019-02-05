@@ -48,7 +48,13 @@ It is worth verifying that the set $\mathscr{G}$ contains some graph sequences t
 
 Another class of graphs contained in $\mathscr{G}$ are the $m$th powers of $G_L = (\mathbb{Z}/\mathbb{Z} L)^d$.	The $m$th power of a graph $G$ is a graph, $G^m$, with the same vertices as $G$, but in which we make adjacent all vertices whose distance in $G$ is no more than $m$. Clearly, $Q_n^{G^m}(k) \leq Q_n^G(mk)$, and $G^m$ inherits the transitivity of $G$. Hence sequences of powers of $G_L = (\mathbb{Z}/\mathbb{Z}L)^d$ are also in $\mathscr{G}$. This is of practical interest since the Ising model on $G^m$ corresponds to the Ising model with $m$ nearest neighbours on $G$.
 
-We now define a couple of quantities. Firstly, the \emph{magnetization at vertex $i$ at time $t$} is
+[FIX THIS UP RE TIMS COMMENTS]
+
+We now define a couple of quantities. Recall from \eqref{eq:magnetization on volume definition} that given a fixed configuration, the magnetization on a volume $\Lambda$ is the sum of the spins on $\Lambda$. We can consider an analogous random variable, $M_t$, that is the sum of the spins of the top process, $\mathcal{T}_t$, at any fixed time $t$. 
+
+analogous random variable $M_t$ which measure
+
+Firstly, the \emph{magnetization at vertex $i$ at time $t$} is
 \begin{equation}
 	 	m_t(i) = \expect[\mathcal{T}_t[i]]
 \end{equation} 
@@ -60,6 +66,8 @@ We can now define the time
 	t_c(n) = \inf\left\{ t > 0 : m_t = \frac{1}{n}\right\}.
 \end{equation}
 which is around the time it takes for the top and bottom chains to couple.
+
+[SHOW EXISTS t S.T. $m_t = 1/n$, SEE TIM'S COMMENT]
 
 \begin{theorem}
 \label{thm:Coupling Distribution on transitive graph}
@@ -84,9 +92,11 @@ The proof of Theorem \ref{thm:Coupling Distribution on transitive graph} will be
 \label{sec:information percolation in higher dimensions}
 In the previous chapter, we showed that on the cycle, there was a coupling that made the update history of a single vertex to be a continuous-time random walk that died at rate $\theta$. On lattices of dimension $d > 2$, we can no longer use this coupling and so the updates histories are significantly more complex. 
 
-Recall from Section \ref{sec: definition update support function} that given a target time $t_*$, the update history of a vertex set $A$ at time $t$, $\mathcal{H}_A(t)$, is the set of vertices whose spins at time $t$ determine the spins of $A$ at time $t_*$. Developing this history backwards in time from $t = t_*$ produces a subgraph of $\Omega \times [0, t_*]$ which we write as $\mathcal{H}_A$ and call the update history of vertex set $A$. This history can be constructed using the update sequence along $(t, t_*]$. 
+Recall from Section \ref{sec: definition update support function} that given a target time $t_*$, the update history of a vertex set $A$ at time $t$, $\mathcal{H}_A(t)$, is the set of vertices whose spins at time $t$ determine the spins of $A$ at time $t_*$. Developing this history backwards in time from $t = t_*$ produces a subgraph of $V \times [0, t_*]$ which we write as $\mathcal{H}_A$ and call the update history of vertex set $A$. This history can be constructed using the update sequence along $(t, t_*]$. 
 
-In practise, we may choose to construct this history as follows: For each $i \in A$, create a temporal edge between $(i, t_*)$ and $(i, t_i)$ where $t_i$ is the time of the latest update to $i$ (or $0$ if $i$ is never updated). Then for each update $(i, u, t_i)$, we either terminate the edge if $u$ is such that the update is oblivious, or we add spatial branches to each of the neighbours of $i$. We repeat this process recursively for the neighbours of $i$ until every branch has been terminated due to an oblivious update or has reached time $0$.
+[UP TO HERE WITH TIM'S COMMENTS] 
+
+In practice, we may choose to construct this history as follows: For each $i \in A$, create a temporal edge between $(i, t_*)$ and $(i, t_i)$ where $t_i$ is the time of the latest update to $i$ (or $0$ if $i$ is never updated). Then for each update $(i, u, t_i)$, we either terminate the edge if $u$ is such that the update is oblivious, or we add spatial branches to each of the neighbours of $i$. We repeat this process recursively for the neighbours of $i$ until every branch has been terminated due to an oblivious update or has reached time $0$.
 
 However, it is possible for vertices to be removed from $\mathcal{H}_A(t)$ from updates that are not oblivious (see Figure \ref{fig:nonoblivious shrink}). Since our method above for constructing the history does not take this into account, the history it produces will possibly be larger than $\mathcal{H}_A$. To ensure a distinction between the two, the history that results from the above construction we will denote $\hat{\mathcal{H}}_A$, and likewise $\hat{\mathcal{H}}_A(t)$ for the history at time $t$ that results from the above construction. We have that
 \begin{equation}
