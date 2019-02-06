@@ -48,26 +48,33 @@ It is worth verifying that the set $\mathscr{G}$ contains some graph sequences t
 
 Another class of graphs contained in $\mathscr{G}$ are the $m$th powers of $G_L = (\mathbb{Z}/\mathbb{Z} L)^d$.	The $m$th power of a graph $G$ is a graph, $G^m$, with the same vertices as $G$, but in which we make adjacent all vertices whose distance in $G$ is no more than $m$. Clearly, $Q_n^{G^m}(k) \leq Q_n^G(mk)$, and $G^m$ inherits the transitivity of $G$. Hence sequences of powers of $G_L = (\mathbb{Z}/\mathbb{Z}L)^d$ are also in $\mathscr{G}$. This is of practical interest since the Ising model on $G^m$ corresponds to the Ising model with $m$ nearest neighbours on $G$.
 
-[FIX THIS UP RE TIMS COMMENTS]
-
-We now define a couple of quantities. Recall from \eqref{eq:magnetization on volume definition} that given a fixed configuration, the magnetization on a volume $\Lambda$ is the sum of the spins on $\Lambda$. We can consider an analogous random variable, $M_t$, that is the sum of the spins of the top process, $\mathcal{T}_t$, at any fixed time $t$. 
-
-analogous random variable $M_t$ which measure
-
-Firstly, the \emph{magnetization at vertex $i$ at time $t$} is
+We now define a couple of quantities. 
+% Recall from \eqref{eq:magnetization on volume definition} that given a fixed configuration, the magnetization on a volume $\Lambda$ is the sum of the spins on $\Lambda$. We can consider an analogous random variable, $M_t$, that is the sum of the spins of the top process, $\mathcal{T}_t$, at any fixed time $t$. 
+%
+% analogous random variable $M_t$ which measure
+%
+Firstly, the \emph{expected magnetization at vertex $i$ at time $t$} is
 \begin{equation}
 	 	m_t(i) = \expect[\mathcal{T}_t[i]]
 \end{equation} 
-where $(\mathcal{T}_t)_{t \geq 0}$ is the dynamics starting from the all-plus configuration. Note that on transitive graphs, with which this chapter is concerned, we can drop the dependence on $i$ and simply write $m_t$ for the magnetization at any vertex at time $t$. This quantity is not to be confused with the magnetization on a volume (as mentioned in Section \ref{sec:the phase transition}) which has nothing to do with dynamics. The magnetization on a volume is a random variable given by the sum of all the spins on a given volume where the spins are distributed according to the Gibbs measure. In contrast, the magnetization at a vertex, as defined here, is a deterministic function of time that is a property of the Glauber dynamics.
+where $(\mathcal{T}_t)_{t \geq 0}$ is the dynamics starting from the all-plus configuration. Note that on transitive graphs, with which this chapter is concerned, we can drop the dependence on $i$ and simply write $m_t$ for the expected magnetization at any vertex at time $t$. 
+
+This quantity is not to be confused with the total magnetization of a stationary Ising configuration, as defined in Section \ref{sec:the phase transition}. Recall from \eqref{eq:magnetization on volume definition} that given a fixed configuration, the magnetization on a volume $\Lambda$ is the sum of the spins on $\Lambda$. We could consider an analogous random variable, $M_t$, that is the sum of the spins of the top process, $\mathcal{T}_t$, at any fixed time $t$. Then we have
+\begin{equation}
+	\frac{\expect[M_t]}{n} = m_t.
+\end{equation}
+As we do not need to refer to the total magnetization of a stationary Ising configuration in this chapter, we will refer to the expected magnetization as simply the magnetization.
+
+% This quantity is not to be confused with the magnetization on a volume (as mentioned in Section \ref{sec:the phase transition}) which has nothing to do with dynamics. The magnetization on a volume is a random variable given by the sum of all the spins on a given volume where the spins are distributed according to the Gibbs measure. In contrast, the magnetization at a vertex, as defined here, is a deterministic function of time that is a property of the Glauber dynamics.
 
 We can now define the time
 \begin{equation}
 	\label{eq:definition t_c(n)}
-	t_c(n) = \inf\left\{ t > 0 : m_t = \frac{1}{n}\right\}.
+	t_c(n) = \inf\left\{ t > 0 : m_t \leq \frac{1}{n}\right\}.
 \end{equation}
-which is around the time it takes for the top and bottom chains to couple.
+which is around the time it takes for the top and bottom chains to couple. One way of interpreting this is that at time $t_c(n)$, $\expect[M_{t_c(n)}] = \mathcal{O}(1)$. By way of comparison, at the inital state, $\expect[M_0] = n$, and at stationarity, $\expect[M] = 0$.
 
-[SHOW EXISTS t S.T. $m_t = 1/n$, SEE TIM'S COMMENT]
+% [SHOW EXISTS t S.T. $m_t = 1/n$, SEE TIM'S COMMENT]
 
 \begin{theorem}
 \label{thm:Coupling Distribution on transitive graph}
@@ -162,18 +169,33 @@ The following corollaries are then straightforward.
 		\euler^{-s} m_t \leq m_{t+s} \leq m_t \euler^{-(1 - \beta \Delta)s}.
 	\end{equation}
 \end{corollary}
+% \begin{corollary}
+% \label{cor:magnetization of t star}
+% 	On any vertex transitive graph with degree $\Delta$, $m_{t_*}$ can be bounded as follows:
+
+% 	For $z \geq 0$,
+% 	\begin{equation}
+% 		\frac{\euler^{-z}}{n} \leq m_{t_*} \leq \frac{\euler^{-(1 - \beta \Delta)z}}{n}.
+% 	\end{equation}
+
+% 	For $z \leq 0$,
+% 	\begin{equation}
+% 		\frac{\euler^{-(1 - \beta \Delta)z}}{n} \leq m_{t_*} \leq \frac{\euler^{-z}}{n}.
+% 	\end{equation}
+% \end{corollary}
+%NEW VERSION THAT TAKES INTO ACCOUNT <= instead of = in definition of t_c
 \begin{corollary}
 \label{cor:magnetization of t star}
 	On any vertex transitive graph with degree $\Delta$, $m_{t_*}$ can be bounded as follows:
 
 	For $z \geq 0$,
 	\begin{equation}
-		\frac{\euler^{-z}}{n} \leq m_{t_*} \leq \frac{\euler^{-(1 - \beta \Delta)z}}{n}.
+		m_{t_*} \leq \frac{\euler^{-(1 - \beta \Delta)z}}{n}.
 	\end{equation}
 
 	For $z \leq 0$,
 	\begin{equation}
-		\frac{\euler^{-(1 - \beta \Delta)z}}{n} \leq m_{t_*} \leq \frac{\euler^{-z}}{n}.
+		m_{t_*} \leq \frac{\euler^{-z}}{n}.
 	\end{equation}
 \end{corollary}
 Bearing in mind that $m_0 = 1$, we also obtain a bound on $t_c(n)$.
@@ -183,6 +205,12 @@ Bearing in mind that $m_0 = 1$, we also obtain a bound on $t_c(n)$.
 		\ln(n) \leq t_c(n) \leq \frac{\ln(n)}{1 - \beta \Delta}.
 	\end{equation}
 \end{corollary}
+% \begin{corollary}
+% 	On any vertex transitive graph with degree $\Delta$, for $\beta < 1/\Delta$
+% 	\begin{equation}
+% 		\ln(n) \leq t_c(n) \leq 
+% 	\end{equation}
+% \end{corollary}
 
 \section{Problem set-up}
 \label{sec:nd problem setup}
