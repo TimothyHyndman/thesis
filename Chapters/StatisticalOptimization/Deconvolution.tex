@@ -33,7 +33,10 @@
 
 	% [BRIEF SUMMARY OF LITERATURE]
 
-	In this chapter, we focus on the methods introduced in this paper. We will start in Section \ref{sec:summary of basic deconvolution} by summarizing deconvolution methods for when the error distribution is known, or estimated from replicates. This will serve as a basis for a discussion on Delaigle's and Hall's ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' in Section \ref{sec:summary of delaigle hall}. In Section \ref{sec:deconvolution empirical results}, we will empirically demonstrate that these methods produce a similar phenomenon to the one encountered when using maximum likelihood location mixtures, and we will explore how this phenomenon manifests under various conditions. We will also point out how we can take advantage of this phenomenon. Finally, in Section \ref{sec:deconvolution observations and results}, we will make some general observations about some similarities between our deconvolution problem, and that of maximum likelihood mixtures. 
+	In this chapter, we focus on the methods introduced in this paper. We will start in Section \ref{sec:summary of basic deconvolution} by summarizing deconvolution methods for when the error distribution is known, or estimated from replicates. This will serve as a basis for a discussion on Delaigle's and Hall's ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' in Section \ref{sec:summary of delaigle hall}. In Section \ref{sec:deconvolution empirical results}, we will empirically demonstrate that these methods produce a similar phenomenon to the one encountered when using maximum likelihood location mixtures, and we will explore how this phenomenon manifests under various conditions. We will also point out how we can take advantage of this phenomenon. 
+	% Finally, in Section \ref{sec:deconvolution observations and results}, we will make some general observations about some similarities between our deconvolution problem, and that of maximum likelihood mixtures. 
+	Finally, in Section \ref{sec:deconvolution observations and results}, we will make a general observation about the deconvolution problem, and suggest that its behaviour might not be totally unexpected.
+
 
 \subsection{Prior deconvolution methods}
 \label{sec:summary of basic deconvolution}
@@ -425,7 +428,9 @@
 		\label{fig:fixed masses example alone}
 	\end{figure}
 
-	A theoretical justification for this behaviour is hard to obtain. We have made some observations which could be thought of as being in favour of this phenomenon, but mostly we are just pointing out similarities between this problem, and the maximum likelihood mixtures problem of the last chapter. These observations are left until Section \ref{sec:deconvolution observations and results}.
+	% A theoretical justification for this behaviour is hard to obtain. We have made some observations which could be thought of as being in favour of this phenomenon, but mostly we are just pointing out similarities between this problem, and the maximum likelihood mixtures problem of the last chapter. These observations are left until Section \ref{sec:deconvolution observations and results}.
+
+	A theoretical justification for this behaviour is hard to obtain. In Section \ref{sec:deconvolution observations and results} we make an observation about the problem which could be thought of as being in favour of this phenomenon, but for the most part, we have no explanation for why it occurs.
 
 	In this section, we instead explore the phenomenon empirically, and suggest that we might benefit by allowing both the $\theta_j$ and $p_j$ to be the variables of our optimization, rather than fixing the $\theta_j$ as suggested in \cite{Delaigle2016-la}.
 
@@ -731,8 +736,7 @@ To perform the two non-linear optimizations we use the package Nlcoptim \cite{Ch
 \section{General Observations and Results}
 \label{sec:deconvolution observations and results}
 
-We end this chapter with two simple observations about our deconvolution problem. We do not claim that either of these theorems are new, but we think that they are still worth stating. 
-We start with the observation that the set of distributions with equal phase function is a convex set.
+We end this chapter with a simple observations about our deconvolution problem. We do not claim that it is new, but we think that it is still worth stating. 
 
 	% \subsection{Results concerning phase functions}
 	\begin{theorem}
@@ -780,7 +784,7 @@ Furthermore, given any two distributions $F_X$ and $F_Y$ with variances $\sigma_
 
 Of course, in reality we do not search over distributions with phase function exactly equal to $W$, but rather over distributions with phase function in some sense `close' to an empirical estimate of the phase function of $W$. However the intuition gained above could potentially still be relevant.
 
-[UP TO HERE]
+% [UP TO HERE]
 
 
 
@@ -799,31 +803,6 @@ Of course, in reality we do not search over distributions with phase function ex
 	% \end{proof}
 
 % \subsection{A particular class of optimization problem}
-		"The results follow from this general theorem which seems obvious."
-
-		\begin{theorem}
-			\label{thm:solution in interior}
-			Let $(E_m)_{m=1}^\infty$ be a sequence of appropriately defined sets and let
-			$(g_m)_{m=1}^\infty, g_m: E_m \mapsto \mathbb{R}$ be a sequence of
-			functions that satisfy the following properties
-			\begin{enumerate}
-				\item $\forall \vect{x} \in \partial E_m, \exists n < m, \vect{y} \in E_n$ such that
-				$g_m(\vect{x}) \leq g_n(\vect{y})$.
-				\label{prop:one}
-				\item $\exists m_0, \vect{x}_0 \in E_{m_0}$ such that $\forall m, \vect{x} \in 
-				E_m$, $g_m(\vect{x}) \leq g_{m_0}(\vect{x}_0)$.
-			\end{enumerate}
-			Then $\exists m_*, \vect{x}_* \in E_{m_*} \setminus \partial E_{m_*}$ such
-			that $\forall m, \vect{x} \in E_m$, $g_m(\vect{x}) \leq g_{m_*}(\vect{x}_*)$.
-		\end{theorem}
-		\begin{proof}
-			The proof is simple. If $\vect{x}_0 \notin \partial E_{m_0}$ then we are done.
-			Otherwise, by property \ref{prop:one} we can find a $n$ and $\vect{y} \in 
-			E_n$ such that $g_n(y) = g_{m_0}(\vect{x}_0)$. If $\vect{y} \notin \partial 
-			E_n$ then we are done, otherwise we repeat the process until we find a $m, 
-			\vect{x}$ pair with $\vect{x} \notin \partial E_m$. %Note that property 
-			% \ref{prop:one} implies that $\partial E_1 = \emptyset$ and so this process
-			% must end.
-		\end{proof}
+	
 
 % \section{R Package}

@@ -1034,3 +1034,31 @@
 
 	% \subsection{Discussion about what we hope to acheive}
 	% 	The few original results above (Theorems \ref{thm:n=2 inflection result} and \ref{thm:general n constraints result}) seem to be special cases of what looks to be a much more general rule. Theorem \ref{thm:general n constraints result} seems to be too large by a factor of $m$ when you compare to numerics, and the distance between inflection points in Theorem \ref{thm:n=2 inflection result} seems to come up again when when you look at images like Figure \ref{fig:normal_flag_graph} (eg the thickness of the `bands' is this distance). It is therefore our hope that we can either generalize or add significantly to the Theorems stated so far.
+	[EXTRA STUFF]
+	
+		"The results follow from this general theorem which seems obvious."
+
+		\begin{theorem}
+			\label{thm:solution in interior}
+			Let $(E_m)_{m=1}^\infty$ be a sequence of appropriately defined sets and let
+			$(g_m)_{m=1}^\infty, g_m: E_m \mapsto \mathbb{R}$ be a sequence of
+			functions that satisfy the following properties
+			\begin{enumerate}
+				\item $\forall \vect{x} \in \partial E_m, \exists n < m, \vect{y} \in E_n$ such that
+				$g_m(\vect{x}) \leq g_n(\vect{y})$.
+				\label{prop:one}
+				\item $\exists m_0, \vect{x}_0 \in E_{m_0}$ such that $\forall m, \vect{x} \in 
+				E_m$, $g_m(\vect{x}) \leq g_{m_0}(\vect{x}_0)$.
+			\end{enumerate}
+			Then $\exists m_*, \vect{x}_* \in E_{m_*} \setminus \partial E_{m_*}$ such
+			that $\forall m, \vect{x} \in E_m$, $g_m(\vect{x}) \leq g_{m_*}(\vect{x}_*)$.
+		\end{theorem}
+		\begin{proof}
+			The proof is simple. If $\vect{x}_0 \notin \partial E_{m_0}$ then we are done.
+			Otherwise, by property \ref{prop:one} we can find a $n$ and $\vect{y} \in 
+			E_n$ such that $g_n(y) = g_{m_0}(\vect{x}_0)$. If $\vect{y} \notin \partial 
+			E_n$ then we are done, otherwise we repeat the process until we find a $m, 
+			\vect{x}$ pair with $\vect{x} \notin \partial E_m$. %Note that property 
+			% \ref{prop:one} implies that $\partial E_1 = \emptyset$ and so this process
+			% must end.
+		\end{proof}
