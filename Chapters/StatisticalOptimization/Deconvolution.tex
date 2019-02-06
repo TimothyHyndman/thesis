@@ -447,7 +447,7 @@
 	% 	\label{fig:fixed masses example NSR1}
 	% \end{figure}
 
-[REGENERATE THESE FIGURE USING DESKTOP]
+% [REGENERATE THESE FIGURE USING DESKTOP]
 \begin{figure}
 	\begin{subfigure}[b]{0.49\textwidth}
 		\centering
@@ -731,7 +731,7 @@ To perform the two non-linear optimizations we use the package Nlcoptim \cite{Ch
 \section{General Observations and Results}
 \label{sec:deconvolution observations and results}
 
-We end this section with two simple observations about our deconvolution problem. We do not claim that either of these theorems are new, but we think that they are still worth stating.
+We end this chapter with two simple observations about our deconvolution problem. We do not claim that either of these theorems are new, but we think that they are still worth stating. 
 We start with the observation that the set of distributions with equal phase function is a convex set.
 
 	% \subsection{Results concerning phase functions}
@@ -774,11 +774,15 @@ We start with the observation that the set of distributions with equal phase fun
 		\end{equation}
 	\end{proof}
 
-Recall that ideally, we would like to search the set of all distributions with phase function equal to that of $W$ to find the distribution with smallest variance. Theorem \ref{thm:equal phase functions convex set} tells us that this set is convex. Furthermore, given any two distributions $F_X$ and $F_Y$ with variances $\sigma_X^2$ and $\sigma_Y^2$ respectively, a convex combination of them, $F_Z = (1 - \lambda)F_X + \lambda F_Y$, will have variance $\sigma_Z^2 \geq (1 - \lambda) \sigma_X^2 + \lambda \sigma_Y^2$.
+Recall that ideally, we would like to search the set of all distributions with phase function equal to that of $W$ to find the distribution with smallest variance. Theorem \ref{thm:equal phase functions convex set} tells us that this set is convex. 
+% [VARIANCE IS CONCAVE]
+Furthermore, given any two distributions $F_X$ and $F_Y$ with variances $\sigma_X^2$ and $\sigma_Y^2$ respectively, a convex combination of them, $F_Z = (1 - \lambda)F_X + \lambda F_Y$, will have variance $\sigma_Z^2 \geq (1 - \lambda) \sigma_X^2 + \lambda \sigma_Y^2$. Hence, the minimum variance distribution with phase function exactly equal to $\rho_W$ will be on the boundary of this set, and will not be a non-trivial convex combination of two distributions with phase functions equal to $\rho_W$. Any convex combination of two discrete distributions, $F_X$ and $F_Y$, has at least as many points of support as either $F_X$ or $F_Y$, and so it is perhaps not totally surprising that minimizing the variance in our problem results in distributions with few points of support.
 
-[UP TO HERE AS WELL]
+Of course, in reality we do not search over distributions with phase function exactly equal to $W$, but rather over distributions with phase function in some sense `close' to an empirical estimate of the phase function of $W$. However the intuition gained above could potentially still be relevant.
 
-[VARIANCE IS CONCAVE]
+[UP TO HERE]
+
+
 
 	% TESTING
 	% \begin{proof}
