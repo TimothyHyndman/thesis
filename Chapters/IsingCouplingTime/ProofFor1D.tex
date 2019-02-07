@@ -548,18 +548,35 @@
 			% &\leq n \sup_{W_i} \sum_{k = 0}^{2 b_n} \left| \prob[X_i = 1, U_i = k|W_i] - \prob[X_i = 1, U_i = k] \right|
 		\end{align}
 		by the transitivity of the cycle.
-		Let
+		Denote using
 		\begin{equation}
-			C_i^c = \{j : d(i,j) \leq (c_n + b_n)/2\}
+			B(i, l) = \{j \in V : d(i, j) \leq l\}
 		\end{equation}
-		be the set of vertices within distance $(b_n + c_n)/2$ of $i$ and define the events
+		the set of points within distance $l$ of $i$ and
+		% \begin{equation}
+		% 	C_i^c = \{j : d(i,j) \leq (c_n + b_n)/2\}
+		% \end{equation}
+		% be the set of vertices within distance $(b_n + c_n)/2$ of $i$ and 
+		define the events
 		\begin{equation}
-			A_1 = \{\exists j \in B_i \cup \{i\}, \exists t \in [0, t_*] : \mathcal{H}_j(t) \nsubseteq  C_i^c\}
+			A_1 = \{\exists j \in B_i \cup \{i\}, \exists t \in [0, t_*] : \mathcal{H}_j(t) \nsubseteq  B(i, (c_n + b_n)/2)\}
 		\end{equation}
 		and
 		\begin{equation}
-			A_2 = \{\exists j \in D_i, \exists t \in [0, t_*] : \mathcal{H}_j(t) \cap C_i^c \neq \emptyset\}
+			A_2 = \{\exists j \in D_i, \exists t \in [0, t_*] : \mathcal{H}_j(t) \cap B(i, (c_n + b_n)/2) \neq \emptyset\}
 		\end{equation}
+		% Let
+		% \begin{equation}
+		% 	C_i^c = \{j : d(i,j) \leq (c_n + b_n)/2\}
+		% \end{equation}
+		% be the set of vertices within distance $(b_n + c_n)/2$ of $i$ and define the events
+		% \begin{equation}
+		% 	A_1 = \{\exists j \in B_i \cup \{i\}, \exists t \in [0, t_*] : \mathcal{H}_j(t) \nsubseteq  C_i^c\}
+		% \end{equation}
+		% and
+		% \begin{equation}
+		% 	A_2 = \{\exists j \in D_i, \exists t \in [0, t_*] : \mathcal{H}_j(t) \cap C_i^c \neq \emptyset\}
+		% \end{equation}
 		as well as their intersection
 		\begin{equation}
 			A = A_1 \cap A_2.
@@ -809,7 +826,8 @@
 	\end{proof}
 	
 	
-
+	[CHANGE TO BALL NOTATION???]
+	
 	\begin{lemma}
 	\label{lem:conditioning on A removes conditioning on W}
 		Let $i$ be a vertex in a graph and let

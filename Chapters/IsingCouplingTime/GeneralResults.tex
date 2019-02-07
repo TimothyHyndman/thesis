@@ -107,8 +107,6 @@ Construct $\hat{\hist}_A$ as follows: For each $i \in A$, create a temporal edge
 
 Note that it is possible for vertices to be removed from $\mathcal{H}_A(t)$ by updates that are not oblivious (see Figure \ref{fig:nonoblivious shrink} for an example on the cycle). Since our method for constructing $\hat{\hist}_A$ does not take this into account, in general we expect that $\hist_A$ and $\hat{\hist}_A$ are not equal.
 
-[UP TO HERE WITH TIM'S COMMENTS] 
-
 % To ensure a distinction between the two, the history that results from the above construction we will denote $\hat{\mathcal{H}}_A$, and likewise $\hat{\mathcal{H}}_A(t)$ for the history at time $t$ that results from the above construction. We have that
 % \begin{equation}
 % 	\mathcal{H}_A(t) \subseteq \hat{\mathcal{H}}_A(t)
@@ -304,7 +302,7 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 		\begin{equation}
 			\limsup_{n \rightarrow \infty} \lambda \leq \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})
 		\end{equation}
-		and there exists a constant $C \in (0,1)$ such that
+		and for small enough $\beta$ there exists a constant $C \in (0,1)$ such that
 		\begin{equation}
 			\liminf_{n \rightarrow \infty} \lambda \geq C \min(\euler^{-z}, \euler^{-(1 - \beta\Delta)z}).
 		\end{equation}
@@ -354,10 +352,9 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 	% \begin{proof}
 		
 	% \end{proof}
-
 	\begin{lemma}
 	\label{lem:delta1 goes to 0 general}
-		Let $\delta_1$ be as defined in \eqref{eq:delta_1 definition}. Then for any $\beta \geq 0$,
+		Let $\delta_1$ be as defined in \eqref{eq:delta_1 definition}. Then at any inverserse temperature $\beta \geq 0$,
 		\begin{equation}
 			\lim_{n\rightarrow\infty} \delta_1 = 0.
 		\end{equation}
@@ -371,17 +368,22 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 			% &\leq n \sup_{W_i} \sum_{k = 0}^{2 b_n} \left| \prob[X_i = 1, U_i = k|W_i] - \prob[X_i = 1, U_i = k] \right|
 		\end{align}
 		by the transitivity of the graph.
-		Let
+		Denote using
 		\begin{equation}
-			C_i^c = \{j : d(i,j) \leq (c_n + b_n)/2\}
+			B(i, l) = \{j \in V : d(i, j) \leq l\}
 		\end{equation}
-		be the set of vertices within distance $(b_n + c_n)/2$ of $i$ and define the events
+		the set of points within distance $l$ of $i$ and
+		% \begin{equation}
+		% 	C_i^c = \{j : d(i,j) \leq (c_n + b_n)/2\}
+		% \end{equation}
+		% be the set of vertices within distance $(b_n + c_n)/2$ of $i$ and 
+		define the events
 		\begin{equation}
-			A_1 = \{\exists j \in B_i \cup \{i\}, \exists t \in [0, t_*] : \mathcal{H}_j(t) \nsubseteq  C_i^c\}
+			A_1 = \{\exists j \in B_i \cup \{i\}, \exists t \in [0, t_*] : \mathcal{H}_j(t) \nsubseteq  B(i, (c_n + b_n)/2)\}
 		\end{equation}
 		and
 		\begin{equation}
-			A_2 = \{\exists j \in D_i, \exists t \in [0, t_*] : \mathcal{H}_j(t) \cap C_i^c \neq \emptyset\}
+			A_2 = \{\exists j \in D_i, \exists t \in [0, t_*] : \mathcal{H}_j(t) \cap B(i, (c_n + b_n)/2) \neq \emptyset\}
 		\end{equation}
 		as well as their intersection
 		\begin{equation}
@@ -406,15 +408,22 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 		For either $A_1$ or $A_2$ to hold, there must exists a history that spreads at least distance $(c_n - b_n) / 2$ away from its starting vertex. 
 		By a union bound
 		\begin{align}
-			\prob[A] &\leq \sum_{j = 1}^n \prob[\mathcal{H}_i \nsubseteq B(i, (c_n - b_n)/2) \times [0, t_*]]\\
-				&= n \prob\left[\bigcup_{u \in [0, t_*]}\mathcal{H}_i(t_* - u) \nsubseteq B(i, (c_n - b_n)/2)\right]
+			\prob[A] &\leq \prob[A_1 \cup A_2]\\
+				&\leq \prob\left[\bigcup_{j \in V} \left\{\hist_j \nsubseteq B(j, (c_n - b_n)/2) \times [0, t_*] \right\} \right]\\
+				&\leq \sum_{j \in V} \prob[\mathcal{H}_j \nsubseteq B(j, (c_n - b_n)/2) \times [0, t_*]]\\
+				&= n \prob\left[\bigcup_{u \in [0, t_*]}\mathcal{H}_j(t_* - u) \nsubseteq B(j, (c_n - b_n)/2)\right]
 		\end{align}
-		Combining this with Lemma \ref{lem:prob history contained in ball}, and recalling our choices of $b_n = \ln(n)$ and $c_n = \ln(n)^2$ we get that
+		Combining this with Lemma \ref{lem:prob history contained in ball} we get that
 		\begin{align}
-			\delta_1 &\leq 4 n^2 (|B_i| + 1) \exp(t_* \Delta - \ln\Delta(c_n - b_n)/2)\\
-			&\leq 4n^{2 + \Delta/(1 - \beta \Delta)}(|B_i| + 1)\exp(\Delta z) \exp(-\ln \Delta (c_n - b_n)/2)
+			\delta_1 &\leq 4 n^2 (|B_i| + 1) \exp(t_* \Delta^2 - \ln(\Delta)(c_n - b_n)/2)\\
+			&\leq 4 \exp(\Delta^2 z) n^{2 + \Delta^2/(1 - \beta \Delta)}(|B_i| + 1) \exp(-\ln (\Delta) (c_n - b_n)/2)
 		\end{align}
-		which goes to $0$ as $n \rightarrow \infty$.
+		using Corollary \ref{cor:bound t_c(n)}. Recalling our choices of $b_n = \ln(n)$ and $c_n = \ln(n)^2$, we have
+		\begin{align}
+			\delta_1 &\leq 4 \euler^{\Delta^2 z} n^{2 + \Delta^2/(1 - \beta \Delta)} Q_n(b_n) \euler^{-\frac{\ln(\Delta)}{2} c_n} \euler^{\frac{\ln(\Delta)}{2} b_n}\\
+			&= 4 \euler^{\Delta^2 z} n^{2 + \Delta^2/(1 - \beta \Delta) + \log(\Delta)/2} Q_n(b_n) \euler^{-\frac{\ln(\Delta)}{2} \ln^2(n)}
+		\end{align}
+		which by \eqref{eq:set valid graphs} goes to $0$ as $n \rightarrow \infty$.
 
 		% By a union bound,
 		% \begin{align}
@@ -452,7 +461,7 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 				% &= n m_{t_*} \left(\sum_{j \in C_i} \prob[X_j = 1 | X_i = 1] + m_{t_*} \left(1 + |B_i| + |C_i|\right) \right)%\\
 				% &\leq n m_{t_*} \left(\sum_{j \in C_i} \left(m_{t_*} + \prob[\mathcal{H}_{j} \cap \mathcal{H}_i \neq \emptyset | X_i = 1\right) + m_{t_*} \left(1 + |B_i| + |C_i|\right) \right)
 		\end{align}
-		where 
+		where using Corollary \ref{cor:magnetization of t star}
 		\begin{equation}
 			C_z = \max(\euler^{-z}, \euler^{-(1 - \beta \Delta)z}).
 		\end{equation}
@@ -460,84 +469,20 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 		\begin{align}
 			\expect[Z_i | X_i = 1] &= \sum_{j \in C_i} \prob[X_j = 1 | X_i = 1]\\
 				% &= \sum_{k = \lfloor b_n \rfloor + 1}^{\lfloor c_n \rfloor} \sum_{j: |i - j| = k} \prob[X_j = 1 | X_i = 1]\\
-				&\leq |C_i| \left(m_{t_*} + C \euler^{-b_n}\right)\\
-				&\leq |C_i| \left(\frac{C_z}{n} + \frac{C}{n}\right)
+				&\leq \sum_{j \in C_i} \left[m_{t_*} + C \euler^{-d(i,j)}\right]\\
+				&\leq \sum_{j \in C_i} \left[\frac{C_z}{n} + C \euler^{-b_n}\right]\\
+				% &\leq |C_i| \left(m_{t_*} + C \euler^{-b_n}\right)\\
+				&= |C_i| \left(\frac{C_z}{n} + \frac{C}{n}\right)
 		\end{align}
-		which goes to zero as $n \rightarrow \infty$.
+		where we have again used Corollary \ref{cor:magnetization of t star}. Altogether, we see that $\delta_4$ goes to zero as $n \rightarrow \infty$.
 		% NEED TO PROVE LEMMA \ref{lem:intersecting histories bound given X_j = 1}
 	\end{proof}
 
 \section{Additional lemmas}
 \label{sec:additional lemmas nd}
-	The first of our additional lemmas comes from \cite[Lemma 3.1]{Lubetzky2015-po}. We have made our statement of the lemma slightly more precise and so we have rewritten both the lemma and proof out here along with our modifications. In particular, we have specified precisely how small $\beta$ must be for the statement to hold.
+[UP TO HERE WITH TIM'S COMMENTS] 
 
-	The lemma concerns two quantities, $\chi(\hist_A)$ and $\mathcal{L}(\hist_A)$ which in some sense measure the horizontal and vertical size of $\hist_A$ respectively. 
-	Define
-	\begin{equation}
-		\chi(\mathcal{H}_i) = \#\left\{ \left( (u,t), (v,t) \right) \in \mathcal{H}_i \right\}
-	\end{equation}
-	which counts the total number of spatial edges in $\mathcal{H}_i$ and define
-	\begin{equation}
-		\mathcal{L}(\mathcal{H}_i) = \sum_{i \in V} \int_{0}^{t_*} \indicator_{(i, t) \in \mathcal{H}_i} \intd t
-	\end{equation}
-	which is the sum of the lengths of all the temporal edges in $\hist_i$. 
-
-	\begin{lemma}[\cite{Lubetzky2015-po}]
-		\label{lem:full submartingale thing}
-		For any $0 \leq \eta < 1$, $\lambda \in \mathbb{R}$, $\alpha > -\ln(1 - \eta)$, if
-		\begin{equation}
-			\tanh(\beta\Delta) \leq \frac{1 - \eta - \euler^{-\alpha}}{\euler^{(\alpha+\lambda)\Delta} - \euler^{-\alpha}},
-		\end{equation}
-		then for any $A \subseteq V$,
-		\begin{equation}
-			\expect[\exp(\lambda \chi(\mathcal{H}_A) + \eta \mathcal{L}(\mathcal{H}_A))] \leq \exp(\alpha |A|).
-		\end{equation}
-	\end{lemma}
-	\begin{proof}
-		We first relax our histories to our alternative construction by observing that
-		\begin{align}
-			&\chi(\mathcal{H}_i) \leq \chi(\hat{\mathcal{H}}_i), &\mathcal{L}(\mathcal{H}_i) \leq \mathcal{L}(\hat{\mathcal{H}}_i).
-		\end{align}
-
-
-		Let $W_s = |\hat{\mathcal{H}}_i (t_* - s)|$, let $Y_s = \chi(\hat{\mathcal{H}}_i \cap V \times [t_* - s, t_*])$ count the total number of spatial edges observed in the history by time $t_* - s$ and let $Z_s = \mathcal{L}(\hat{\mathcal{H}}_i \cap V \times [t_* - s, t_*])$. 
-
-		Initially, $W_0 = 1$, $Y_0 = 0$, and $Z_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. The length, $Z_s$, grows as $\intd Z_s = W_s \intd s$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s)$ such that $\bar{W}_s \geq W_s$, $\bar{Y}_s \geq Y_s$, and $\bar{Z}_s \geq Z_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s) = (|A|, 0, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$; at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$; and $\bar{Z}_s$ grows as $\intd \bar{Z}_s = \bar{W}_s \intd s$.
-
-		Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s + \eta \bar{Z}_s\right)$ where $\alpha$, $\lambda$, and $\eta$ are some fixed constants yet to be determined, and $\alpha > -\ln(1 - \eta)$. 
-		% We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then [FIX THIS]
-		% \begin{align}
-		% 	\expect\left[Q_{s_0 + h} - Q_{s_0}| Q_{s_0}\right] &= h \theta \bar{W}_{s_0} \left(\exp(\alpha (\bar{W}_{s_0} - 1) + \lambda \bar{Y}_{s_0}) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0})\right) + \\
-		% 	&\hphantom{= .} h (1 - \theta) \bar{W}_{s_0} \left( \exp(\alpha (\bar{W}_{s_0} + \Delta) + \lambda (\bar{Y}_{s_0} + \Delta)) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0}) \right) + \notag\\
-		% 	&\hphantom{= .} \mathcal{O}(h^2) \notag\\
-		% 	&= \left(\eta + \theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)h \bar{W}_{s_0} Q_{s_0} + \mathcal{O}(h^2).
-		% \end{align}
-		% Dividing through by $h$ and taking $h$ to $0$, we have
-		We have
-		\begin{equation}
-			\label{eq:martingalederivative}
-			\left.\frac{d}{ds} \expect\left[Q_{s} | Q_{s_0}\right] \right|_{s = s_0} = \left(\eta + \theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)\bar{W}_{s_0} Q_{s_0}
-		\end{equation}
-		which is non-positive when
-		\begin{equation}
-			\theta \geq \frac{\eta + \euler^{(\alpha + \lambda)\Delta} - 1}{\euler^{(\alpha + \lambda)\Delta} - \euler^{-\alpha}}
-		\end{equation}
-		or in terms of the inverse temperature, $\beta$, 
-		\begin{equation}
-			\label{eq:boundbeta for supermartingale}
-			\tanh(\beta\Delta) \leq \frac{1 - \eta - \euler^{-\alpha}}{\euler^{(\alpha+\lambda)\Delta} - \euler^{-\alpha}}.
-		\end{equation}
-		Hence $Q_s$ is a supermartingale when \eqref{eq:boundbeta for supermartingale} holds.
-		Define the stopping time 
-		\begin{equation}
-			\tau = \inf\{s: \bar{W}_s = 0\}.
-		\end{equation}
-		At this time, the histories have completely died out and $\bar{Y}_s$ and $\bar{Z}_s$ cannot grow any more. That is, $\bar{Y}_\tau \geq \chi(\hist_A)$ and $\bar{Z}_\tau \geq \mathcal{L}(\hist_A)$. From optional stopping,
-		\begin{align}
-			\expect[\exp(\lambda \bar{Y}_\tau  + \eta \bar{Z}_\tau)] &\leq \expect[Q_{0}]\\
-			&= \exp(\alpha |A|).
-		\end{align}
-	\end{proof}
+	
 	% \begin{lemma}
 	% 	\label{lem:intersecting histories bound}
 	% 	\begin{equation}
@@ -1113,4 +1058,74 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 			\expect[\euler^{\chi(\hist_i\cup \hist_j) + L(\hist_i\cup \hist_j)/2} ] &\leq \euler^{2\alpha}
 		\end{align}
 		and we get the desired result by choosing $C = \exp(1 + 2\alpha)$.
+	\end{proof}
+
+	The last of our additional lemmas comes from \cite[Lemma 3.1]{Lubetzky2015-po}. We have made our statement of the lemma slightly more precise and so we have rewritten both the lemma and proof out here along with our modifications. In particular, we have specified precisely how small $\beta$ must be for the statement to hold.
+
+	The lemma concerns two quantities, $\chi(\hist_A)$ and $\mathcal{L}(\hist_A)$ which in some sense measure the horizontal and vertical size of $\hist_A$ respectively. 
+	Define
+	\begin{equation}
+		\chi(\mathcal{H}_i) = \#\left\{ \left( (u,t), (v,t) \right) \in \mathcal{H}_i \right\}
+	\end{equation}
+	which counts the total number of spatial edges in $\mathcal{H}_i$ and define
+	\begin{equation}
+		\mathcal{L}(\mathcal{H}_i) = \sum_{i \in V} \int_{0}^{t_*} \indicator_{(i, t) \in \mathcal{H}_i} \intd t
+	\end{equation}
+	which is the sum of the lengths of all the temporal edges in $\hist_i$. 
+
+	\begin{lemma}[\cite{Lubetzky2015-po}]
+		\label{lem:full submartingale thing}
+		For any $0 \leq \eta < 1$, $\lambda \in \mathbb{R}$, $\alpha > -\ln(1 - \eta)$, if
+		\begin{equation}
+			\tanh(\beta\Delta) \leq \frac{1 - \eta - \euler^{-\alpha}}{\euler^{(\alpha+\lambda)\Delta} - \euler^{-\alpha}},
+		\end{equation}
+		then for any $A \subseteq V$,
+		\begin{equation}
+			\expect[\exp(\lambda \chi(\mathcal{H}_A) + \eta \mathcal{L}(\mathcal{H}_A))] \leq \exp(\alpha |A|).
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		We first relax our histories to our alternative construction by observing that
+		\begin{align}
+			&\chi(\mathcal{H}_i) \leq \chi(\hat{\mathcal{H}}_i), &\mathcal{L}(\mathcal{H}_i) \leq \mathcal{L}(\hat{\mathcal{H}}_i).
+		\end{align}
+
+
+		Let $W_s = |\hat{\mathcal{H}}_i (t_* - s)|$, let $Y_s = \chi(\hat{\mathcal{H}}_i \cap V \times [t_* - s, t_*])$ count the total number of spatial edges observed in the history by time $t_* - s$ and let $Z_s = \mathcal{L}(\hat{\mathcal{H}}_i \cap V \times [t_* - s, t_*])$. 
+
+		Initially, $W_0 = 1$, $Y_0 = 0$, and $Z_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. The length, $Z_s$, grows as $\intd Z_s = W_s \intd s$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s)$ such that $\bar{W}_s \geq W_s$, $\bar{Y}_s \geq Y_s$, and $\bar{Z}_s \geq Z_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s) = (|A|, 0, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$; at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$; and $\bar{Z}_s$ grows as $\intd \bar{Z}_s = \bar{W}_s \intd s$.
+
+		Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s + \eta \bar{Z}_s\right)$ where $\alpha$, $\lambda$, and $\eta$ are some fixed constants yet to be determined, and $\alpha > -\ln(1 - \eta)$. 
+		% We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then [FIX THIS]
+		% \begin{align}
+		% 	\expect\left[Q_{s_0 + h} - Q_{s_0}| Q_{s_0}\right] &= h \theta \bar{W}_{s_0} \left(\exp(\alpha (\bar{W}_{s_0} - 1) + \lambda \bar{Y}_{s_0}) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0})\right) + \\
+		% 	&\hphantom{= .} h (1 - \theta) \bar{W}_{s_0} \left( \exp(\alpha (\bar{W}_{s_0} + \Delta) + \lambda (\bar{Y}_{s_0} + \Delta)) - \exp(\alpha \bar{W}_{s_0} + \lambda \bar{Y}_{s_0}) \right) + \notag\\
+		% 	&\hphantom{= .} \mathcal{O}(h^2) \notag\\
+		% 	&= \left(\eta + \theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)h \bar{W}_{s_0} Q_{s_0} + \mathcal{O}(h^2).
+		% \end{align}
+		% Dividing through by $h$ and taking $h$ to $0$, we have
+		We have
+		\begin{equation}
+			\label{eq:martingalederivative}
+			\left.\frac{d}{ds} \expect\left[Q_{s} | Q_{s_0}\right] \right|_{s = s_0} = \left(\eta + \theta (\euler^{-\alpha} - 1) + (1 - \theta)(\euler^{(\alpha + \lambda)\Delta} - 1)\right)\bar{W}_{s_0} Q_{s_0}
+		\end{equation}
+		which is non-positive when
+		\begin{equation}
+			\theta \geq \frac{\eta + \euler^{(\alpha + \lambda)\Delta} - 1}{\euler^{(\alpha + \lambda)\Delta} - \euler^{-\alpha}}
+		\end{equation}
+		or in terms of the inverse temperature, $\beta$, 
+		\begin{equation}
+			\label{eq:boundbeta for supermartingale}
+			\tanh(\beta\Delta) \leq \frac{1 - \eta - \euler^{-\alpha}}{\euler^{(\alpha+\lambda)\Delta} - \euler^{-\alpha}}.
+		\end{equation}
+		Hence $Q_s$ is a supermartingale when \eqref{eq:boundbeta for supermartingale} holds.
+		Define the stopping time 
+		\begin{equation}
+			\tau = \inf\{s: \bar{W}_s = 0\}.
+		\end{equation}
+		At this time, the histories have completely died out and $\bar{Y}_s$ and $\bar{Z}_s$ cannot grow any more. That is, $\bar{Y}_\tau \geq \chi(\hist_A)$ and $\bar{Z}_\tau \geq \mathcal{L}(\hist_A)$. From optional stopping,
+		\begin{align}
+			\expect[\exp(\lambda \bar{Y}_\tau  + \eta \bar{Z}_\tau)] &\leq \expect[Q_{0}]\\
+			&= \exp(\alpha |A|).
+		\end{align}
 	\end{proof}
