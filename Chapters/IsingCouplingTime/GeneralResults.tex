@@ -101,15 +101,19 @@ In the previous chapter, we showed that on the cycle, there was a coupling that 
 
 Recall from Section \ref{sec: definition update support function} that given a target time $t_*$, the update history of a vertex set $A$ at time $t$, $\mathcal{H}_A(t)$, is the set of vertices whose spins at time $t$ determine the spins of $A$ at time $t_*$. Developing this history backwards in time from $t = t_*$ produces a subgraph of $V \times [0, t_*]$ which we write as $\mathcal{H}_A$ and call the update history of vertex set $A$. This history can be constructed using the update sequence along $(t, t_*]$. 
 
+It is not immediately obvious what these histories look like. To gain some intuition, and to simplify some upcoming proofs, we will construct a different subgraph, $\hat{\hist}_A$ which contains $\hist_A$. In doing so we also define an analogous update support $\hat{\hist}_A(t)$ for every $t \in [0, t_*]$. 
+
+Construct $\hat{\hist}_A$ as follows: For each $i \in A$, create a temporal edge between $(i, t_*)$ and $(i, t_i)$ where $t_i$ is the time of the latest update to $i$ (or $0$ if $i$ is never updated). Then for each update $(i, u, t_i)$, we either terminate the edge if $u$ is such that the update is oblivious, or we add spatial branches to each of the neighbours of $i$. We repeat this process recursively for the neighbours of $i$ until every branch has been terminated due to an oblivious update or has reached time $0$. Since oblivious updates do not depend on any other vertices, and since a non-oblivious update to $i$ depends on at most the neighbours of $i$, we have that $\hist_A(t) \subseteq \hat{\hist}_A(t)$, and that $\hist_A$ is a subgraph of $\hat{\hist}_A$.
+
+Note that it is possible for vertices to be removed from $\mathcal{H}_A(t)$ by updates that are not oblivious (see Figure \ref{fig:nonoblivious shrink} for an example on the cycle). Since our method for constructing $\hat{\hist}_A$ does not take this into account, in general we expect that $\hist_A$ and $\hat{\hist}_A$ are not equal.
+
 [UP TO HERE WITH TIM'S COMMENTS] 
 
-In practice, we may choose to construct this history as follows: For each $i \in A$, create a temporal edge between $(i, t_*)$ and $(i, t_i)$ where $t_i$ is the time of the latest update to $i$ (or $0$ if $i$ is never updated). Then for each update $(i, u, t_i)$, we either terminate the edge if $u$ is such that the update is oblivious, or we add spatial branches to each of the neighbours of $i$. We repeat this process recursively for the neighbours of $i$ until every branch has been terminated due to an oblivious update or has reached time $0$.
-
-However, it is possible for vertices to be removed from $\mathcal{H}_A(t)$ from updates that are not oblivious (see Figure \ref{fig:nonoblivious shrink}). Since our method above for constructing the history does not take this into account, the history it produces will possibly be larger than $\mathcal{H}_A$. To ensure a distinction between the two, the history that results from the above construction we will denote $\hat{\mathcal{H}}_A$, and likewise $\hat{\mathcal{H}}_A(t)$ for the history at time $t$ that results from the above construction. We have that
-\begin{equation}
-	\mathcal{H}_A(t) \subseteq \hat{\mathcal{H}}_A(t)
-\end{equation}
-and also that $\mathcal{H}_A$ is a subgraph of $\hat{\mathcal{H}}_A$.
+% To ensure a distinction between the two, the history that results from the above construction we will denote $\hat{\mathcal{H}}_A$, and likewise $\hat{\mathcal{H}}_A(t)$ for the history at time $t$ that results from the above construction. We have that
+% \begin{equation}
+% 	\mathcal{H}_A(t) \subseteq \hat{\mathcal{H}}_A(t)
+% \end{equation}
+% and also that $\mathcal{H}_A$ is a subgraph of $\hat{\mathcal{H}}_A$.
 
 \subsection{The magnetization}
 One quantity which we used multiple times in Chapter \ref{Ch:1D} was $\prob[X_i = 1]$. Although it was not required earlier, we would now like to make clear that this is in fact the magnetization at time $t_*$. 
@@ -121,9 +125,9 @@ Recall that the magnetization at vertex $i \in V$ at time $t > 0$ is defined to 
 where $(\mathcal{T}_t)_{t \geq 0}$ is the dynamics starting from the all-plus configuration. %On vertex-transitive graphs, we can drop the vertex specific notation and simply write $m_t$. 
 Given a monotonically coupled chain $(\mathcal{B}_t)_{t\geq0}$, starting in the all minus configuration and such that $\mathcal{T}_t[i] \geq \mathcal{B}_t[i]$ for all $t\geq 0$ and $i \in V$, we can split up this expectation by conditioning on the event $A_t = \{\mathcal{T}_t[i] \neq \mathcal{B}_t[i]\}$. We obtain that
 \begin{align}
-	m_t(i) &= \expect[Y_t^+[i]]\\
-	&= \prob\left[A_t\right] \left(\prob\left[Y_t^+[i] = 1 | A_t\right] - \prob\left[Y_t^+[i] = -1|A_t\right]\right)  \\
-	&\phantom{= } + \prob\left[A_t^\complement\right] \left( \prob\left[Y_t^+[i] = 1 |A_t^\complement\right] - \prob\left[Y_t^+[i] = -1|A_t^\complement\right] \right). \notag
+	m_t(i) &= \expect[\mathcal{T}_t[i]]\\
+	&= \prob\left[A_t\right] \left(\prob\left[\mathcal{T}_t[i] = 1 | A_t\right] - \prob\left[\mathcal{T}_t[i] = -1|A_t\right]\right)  \\
+	&\phantom{= } + \prob\left[A_t^\complement\right] \left( \prob\left[\mathcal{T}_t[i] = 1 |A_t^\complement\right] - \prob\left[\mathcal{T}_t[i] = -1|A_t^\complement\right] \right). \notag
 \end{align}
 
 Now if event $A_t^\complement$ holds, $\mathcal{T}_t[i] = \mathcal{B}_t[i]$, and so by symmetry vertex $i$ must take values $-1$ and $+1$ uniformly. Furthermore, by the monotonicity of our coupling, if $A_t$ holds, we must have that $\mathcal{T}_t[i] = +1$ and $\mathcal{B}_t[i] = -1$.
@@ -152,6 +156,7 @@ Finally, given a target time $t_*$, $X_i$ is defined such that $\{X_i = 1\} = A_
 
 We end this section with some results concerning the magnetization, and in particular, the magnetization at time
 \begin{equation}
+\label{eq: define t star general graphs}
 	t_* = t_c(n) + z.
 \end{equation}
 The following comes from \cite{Lubetzky2017-nc} and is valid on any graph, not just transitive ones.
@@ -184,6 +189,8 @@ The following corollaries are then straightforward.
 % 	\end{equation}
 % \end{corollary}
 %NEW VERSION THAT TAKES INTO ACCOUNT <= instead of = in definition of t_c
+
+[FOLLOWING NEEDS LOWER BOUNDS FOR LAMBDA!!!!!]
 \begin{corollary}
 \label{cor:magnetization of t star}
 	On any vertex transitive graph with degree $\Delta$, $m_{t_*}$ can be bounded as follows:
@@ -200,6 +207,7 @@ The following corollaries are then straightforward.
 \end{corollary}
 Bearing in mind that $m_0 = 1$, we also obtain a bound on $t_c(n)$.
 \begin{corollary}
+\label{cor:bound t_c(n)}
 	On any vertex transitive graph with degree $\Delta$, for $\beta < 1/\Delta$
 	\begin{equation}
 		\ln(n) \leq t_c(n) \leq \frac{\ln(n)}{1 - \beta \Delta}.
@@ -214,67 +222,75 @@ Bearing in mind that $m_0 = 1$, we also obtain a bound on $t_c(n)$.
 
 \section{Problem set-up}
 \label{sec:nd problem setup}
-As in Chapter \ref{Ch:1D}, we prove Theorem \ref{thm:Coupling Distribution on transitive graph} through the use of a stronger statement in Theorem \ref{thm: nd compound poisson approximation}. The overall approach is almost exactly as described in Section \ref{sec:1D problem setup}; at a time $t_*$ we count the number of vertices at which the bottom and top chains differ and show that the distribution of this random variable, which we call $W$, is close to an appropriately chosen compound Poisson distribution. The main difference in the construction is that we use a different $t_*$ here.
+As in Chapter \ref{Ch:1D}, to prove Theorem \ref{thm:Coupling Distribution on transitive graph} we will use the method sketched out in Section \ref{sec:compound poisson overview}. The various quantities left unspecified there are defined almost identically to Chapter \ref{Ch:1D}; the main difference in construction being that here we are interested in graph sequences $(G_n) \in \mathscr{G}$ and we define $t_*$ as in \eqref{eq: define t star general graphs}.
 
-Recalling the definition of $t_c(n)$ in \eqref{eq:definition t_c(n)}, fix $z$ and a time of interest $t_* = t_c(n) + z$. From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and $\mu$ exactly as in Chapter \ref{Ch:1D} but using our new definition for $t_*$. For convenience, we repeat the definitions here.
+% The overall approach is almost exactly as described in Section \ref{sec:1D problem setup}; at a time $t_*$ we count the number of vertices at which the bottom and top chains differ and show that the distribution of this random variable, which we call $W$, is close to an appropriately chosen compound Poisson distribution. The main difference in the construction is that we use a different $t_*$ here.
 
-For each vertex $i \in V$, define indicators
-	\begin{equation}
-		X_i = 
-		\begin{cases}
-			1 & \mathscr{B}_{t_*}[i] \neq \mathscr{T}_{t_*}[i],\\
-			0 & \mathscr{B}_{t_*}[i] = \mathscr{T}_{t_*}[i]
-		\end{cases}
-	\end{equation}
-	and set $W = \sum_{i \in V} X_i$.
-	For each $i \in V$, decompose $W$ into $W = X_i + U_i + Z_i + W_i$ where
-	\begin{align}
-		U_i &= \sum_{j \in B_i} X_j, &
-		Z_i &= \sum_{j \in C_i} X_j, &
-		W_i &= \sum_{j \in D_i} X_j.
-	\end{align}
-	and $B_i, C_i$, and $D_i$ are the vertex sets
-	\begin{align}
-		B_i &= \{j\neq i : |j - i| \leq b_n \},\\
-		C_i &= \{j\notin B_i\cup \{i\}: |j - i| \leq c_n \},\\
-		D_i &= V \setminus (B_i \cup C_i \cup \{i\}).
-	\end{align}
-	As in Chapter \ref{Ch:1D}, we have some freedom in choosing $b_n$ and $c_n$ but we will again choose $b_n = \ln(n)$ and $c_n = \ln(n)^2$.
+Recalling the definition of $t_c(n)$ in \eqref{eq:definition t_c(n)}, fix $z \in \mathbb{R}$ and set
+\begin{equation}
+	t_* = t_c(n) + z.
+\end{equation}
+By Corollary \ref{cor:bound t_c(n)}, for any fixed $z \in \mathbb{R}$, $t_* > 0$ for all sufficiently large $n$ and we only consider such $n$ in what follows. As in Chapter \ref{Ch:1D}, we define the vertex sets
+\begin{align}
+	B_i &= \{j\neq i : d(i,j) \leq b_n \},\\
+	C_i &= \{j\notin B_i\cup \{i\}: d(i,j) \leq c_n \},\\
+	D_i &= V \setminus (B_i \cup C_i \cup \{i\}),
+\end{align}
+where $b_n = \ln(n)$ and $c_n = \ln^2(n)$.
+From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and $\mu$ exactly as in Section \ref{sec:compound poisson overview} using our new definition for $t_*$. From \eqref{eq:bound distribution T}, we get the following Corollary of Theorem \ref{thm: compound poisson approximation}.
 
-	We now define the quantities
-	\begin{align}
-		\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \indicator[ X_i + U_i \geq 1] \right],\\
-		\mu_l &= \frac{1}{l \lambda} \sum_{i \in V} \expect\left[ X_i \indicator[X_i + U_i = l] \right], && l\geq 1,
-		% \label{eq:mu definition}
-	\end{align}
-	which will be the parameters of the approximating compound Poisson distribution to $W$. We also define
-	\begin{align}
-		\delta_1 &= \sum_{i \in V}  \sum_{k \geq 0} \prob[X_i = 1, U_i = k] \expect \left|\frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|, \label{eq:delta1 nD}\\ 
-		% \delta_2 &= \\
-		% \delta_3 &= \\
-		\delta_4 &= \sum_{i \in V} \left( \expect[X_i Z_i] + \expect[X_i] \expect[X_i + U_i + Z_i] \right), \label{eq:delta4 nD}
-	\end{align}
-	% which we will require to vanish as $n \rightarrow \infty$.
-	which we desire to be small for the compound Poisson approximation to be good.
+% For each vertex $i \in V$, define indicators
+% 	\begin{equation}
+% 		X_i = 
+% 		\begin{cases}
+% 			1 & \mathscr{B}_{t_*}[i] \neq \mathscr{T}_{t_*}[i],\\
+% 			0 & \mathscr{B}_{t_*}[i] = \mathscr{T}_{t_*}[i]
+% 		\end{cases}
+% 	\end{equation}
+% 	and set $W = \sum_{i \in V} X_i$.
+% 	For each $i \in V$, decompose $W$ into $W = X_i + U_i + Z_i + W_i$ where
+% 	\begin{align}
+% 		U_i &= \sum_{j \in B_i} X_j, &
+% 		Z_i &= \sum_{j \in C_i} X_j, &
+% 		W_i &= \sum_{j \in D_i} X_j.
+% 	\end{align}
+	% and $B_i, C_i$, and $D_i$ are the vertex sets
 
-	The following theorem (reworked from \cite{Barbour2001-nh}) bounds the distance between the distributions of $W$ and the approximating compound Poisson.
 
-	\begin{theorem}[\cite{Barbour2001-nh}]
-	\label{thm: nd compound poisson approximation}
-		Let $W$, $\lambda$, $\vect{\mu}$, $\delta_1$ and $\delta_4$ be as defined above. Then
-		\begin{equation}
-			d_{\mathrm{TV}}(\mathscr{L}(W), \mathrm{CP}(\lambda, \vect{\mu})) \leq (\delta_1 + \delta_4)\euler^\lambda.
-		\end{equation}
-	\end{theorem}
-	As per the discussion proceeding Theorem \ref{thm: compound poisson approximation}, we obtain the following as a corollary to Theorem \ref{thm: nd compound poisson approximation}.
+
+	% We now define the quantities
+	% \begin{align}
+	% 	\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \indicator[ X_i + U_i \geq 1] \right],\\
+	% 	\mu_l &= \frac{1}{l \lambda} \sum_{i \in V} \expect\left[ X_i \indicator[X_i + U_i = l] \right], && l\geq 1,
+	% 	% \label{eq:mu definition}
+	% \end{align}
+	% which will be the parameters of the approximating compound Poisson distribution to $W$. We also define
+	% \begin{align}
+	% 	\delta_1 &= \sum_{i \in V}  \sum_{k \geq 0} \prob[X_i = 1, U_i = k] \expect \left|\frac{\prob[X_i = 1, U_i = k|W_i]}{\prob[X_i = 1, U_i = k]} - 1 \right|, \label{eq:delta1 nD}\\ 
+	% 	% \delta_2 &= \\
+	% 	% \delta_3 &= \\
+	% 	\delta_4 &= \sum_{i \in V} \left( \expect[X_i Z_i] + \expect[X_i] \expect[X_i + U_i + Z_i] \right), \label{eq:delta4 nD}
+	% \end{align}
+	% % which we will require to vanish as $n \rightarrow \infty$.
+	% which we desire to be small for the compound Poisson approximation to be good.
+
+	% The following theorem (reworked from \cite{Barbour2001-nh}) bounds the distance between the distributions of $W$ and the approximating compound Poisson.
+
+	% \begin{theorem}[\cite{Barbour2001-nh}]
+	% \label{thm: nd compound poisson approximation}
+	% 	Let $W$, $\lambda$, $\vect{\mu}$, $\delta_1$ and $\delta_4$ be as defined above. Then
+	% 	\begin{equation}
+	% 		d_{\mathrm{TV}}(\mathscr{L}(W), \mathrm{CP}(\lambda, \vect{\mu})) \leq (\delta_1 + \delta_4)\euler^\lambda.
+	% 	\end{equation}
+	% \end{theorem}
+	% As per the discussion proceeding Theorem \ref{thm: compound poisson approximation}, we obtain the following as a corollary to Theorem \ref{thm: nd compound poisson approximation}.
 	\begin{corollary}
 		\label{cor:nd bound distance prob[w=0] and e^-lambda}
 		Let $T_n$ be the coupling time of the continuous-time heat-bath Glauber dynamics for the zero-field Ising model at inverse-temperature $\beta$ on the graph $G_n$ and let $\delta_1$, $\delta_4$ and $\lambda$ be as defined above. Then
 		\begin{equation}
-			\left|\prob\left[T_n \leq z + t_c(n)\right] - \euler^{-\lambda}\right| \leq (\delta_1 + \delta_4)\euler^\lambda,
+			\left|\prob\left[T_n \leq z + t_c(n)\right] - \euler^{-\lambda}\right| \leq (\delta_1 + \delta_4)\euler^\lambda.
 			\label{eq:nd bound distance prob[w=0] and e^-lambda}
 		\end{equation}
-		where $\theta = 1 - \tanh(2\beta)$.
 	\end{corollary}
 
 \section{Proof of Theorem \ref{thm:Coupling Distribution on transitive graph}}
@@ -297,15 +313,15 @@ For each vertex $i \in V$, define indicators
 		Starting with the definition of $\lambda$, we have
 		\begin{align}
 			\lambda &= \sum_{i \in V} \expect\left[\frac{X_i}{X_i + U_i} \indicator[ X_i + U_i \geq 1] \right]\\
-				&= \sum_{i = 1}^n \prob(X_i = 1) \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]\\
-				&= n m_{t_*} \expect \left[\frac{1}{1 + U_i}| X_i = 1\right]
+				&= \sum_{i = 1}^n \prob(X_i = 1) \expect \left[\left.\frac{1}{1 + U_i}\right| X_i = 1\right]\\
+				&= n \, m_{t_*} \, \expect \left[\left.\frac{1}{1 + U_i}\right| X_i = 1\right]
 		\end{align}
 		where we have used that $X_i$ is zero-one, \eqref{eq:prob X_i = 1 is m_t*}, and the transitivity of the graph.
 		Clearly 
 		\begin{align}
 			\expect \left[\frac{1}{1 + U_i}| X_i = 1\right] \leq 1
 		\end{align}
-		and so $\lambda \leq n m_{t_*} \leq \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})$.
+		and so by Corollary \ref{cor:magnetization of t star}, $\lambda \leq n m_{t_*} \leq \max(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})$.
 
 		By Jensen's inequality
 		\begin{align}
@@ -316,7 +332,7 @@ For each vertex $i \in V$, define indicators
 		\begin{align}
 			\expect[U_i | X_i = 1] &= \sum_{j \in B_i} \prob[X_j = 1| X_i = 1]\\
 				% &= \sum_{k=1}^{\lfloor b_n \rfloor} \sum_{|j - i| = k} \prob[X_j = 1| X_i = 1]\\
-				& \leq |B_i| m_{t_*} + C_1\sum_{k=1}^{\lfloor b_n \rfloor} \sum_{|j - i| = k} \euler^{-k}.
+				& \leq |B_i| m_{t_*} + C_1\sum_{k=1}^{\lfloor b_n \rfloor} \sum_{j: d(i,j) = k} \euler^{-k}.
 		\end{align}
 		From \eqref{eq:set valid graphs},
 		\begin{align}
@@ -341,7 +357,7 @@ For each vertex $i \in V$, define indicators
 
 	\begin{lemma}
 	\label{lem:delta1 goes to 0 general}
-		Let $\delta_1$ be as defined above in \eqref{eq:delta1 nD}. Then
+		Let $\delta_1$ be as defined in \eqref{eq:delta_1 definition}. Then for any $\beta \geq 0$,
 		\begin{equation}
 			\lim_{n\rightarrow\infty} \delta_1 = 0.
 		\end{equation}
@@ -357,7 +373,7 @@ For each vertex $i \in V$, define indicators
 		by the transitivity of the graph.
 		Let
 		\begin{equation}
-			C_i^c = \{j : |j - i| \leq (c_n + b_n)/2\}
+			C_i^c = \{j : d(i,j) \leq (c_n + b_n)/2\}
 		\end{equation}
 		be the set of vertices within distance $(b_n + c_n)/2$ of $i$ and define the events
 		\begin{equation}
@@ -421,7 +437,7 @@ For each vertex $i \in V$, define indicators
 
 	\begin{lemma}
 	\label{lem:delta4 goes to 0 general}
-		Let $\delta_4$ be as defined above in \eqref{eq:delta4 nD}. Then
+		Let $\delta_4$ be as defined in \eqref{eq:delta_4 definition}. Then for small enough $\beta$,
 		\begin{equation}
 			\lim_{n\rightarrow\infty} \delta_4 = 0.
 		\end{equation}
@@ -929,7 +945,7 @@ For each vertex $i \in V$, define indicators
 		\begin{equation}
 			\prob[X_j = 1| X_i = 1] \leq m_{t_*} + C \euler^{-k}.
 		\end{equation}
-		where $k = |i - j|$ is the distance between vertices $i$ and $j$.
+		where $k = d(i,j)$ is the distance between vertices $i$ and $j$.
 	\end{lemma}
 	\begin{proof}
 		There are two ways in which the update history of vertex $j$ can survive until time $0$. The update history can survive without intersecting with the update history of vertex $i$ or the update history of vertex $j$ can merge with the update history of vertex $i$ (whose survival we are conditioning on). %(Note that these events are not mutually exclusive as the update history of vertex $i+k$ could merge with the update history of vertex $i$ after it reaches time $0$.) 
@@ -1010,7 +1026,7 @@ For each vertex $i \in V$, define indicators
 	
 	\begin{lemma}
 		\label{lem: prob intersect given X_i = 1}
-		Let $i$ and $j$ be the indices of two vertices separated by distance $k$. Then there exists a $C$ such that for sufficiently small $\beta$,
+		Let $i$ and $j$ be two vertices separated by distance $k$. Then there exists a $C$ such that for sufficiently small $\beta$,
 		\begin{equation}
 			\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] \leq C\euler^{-k}.
 		\end{equation}
