@@ -825,22 +825,22 @@
 
 	\end{proof}
 	
-	
-	[CHANGE TO BALL NOTATION???]
-	
+
 	\begin{lemma}
 	\label{lem:conditioning on A removes conditioning on W}
-		Let $i$ be a vertex in a graph and let
+		Let $i$ be a vertex in a graph and 
+		% let
+		% \begin{equation}
+		% 	C_i^c = \{j : d(j, i) \leq (b_n + c_n)/2\}
+		% \end{equation}
+		% be the set of vertices within distance $(b_n + c_n)/2$ of $i$. Define the events
+		define the events
 		\begin{equation}
-			C_i^c = \{j : d(j, i) \leq (b_n + c_n)/2\}
-		\end{equation}
-		be the set of vertices within distance $(b_n + c_n)/2$ of $i$. Define the events
-		\begin{equation}
-			A_1 = \{\exists j \in B_i \cup \{i\}, \exists t \in [0, t_*] : \mathcal{H}_j(t) \nsubseteq  C_i^c\}
+			A_1 = \{\exists j \in B_i \cup \{i\}, \exists t \in [0, t_*] : \mathcal{H}_j(t) \nsubseteq  B(i, (b_n + c_n)/2)\}
 		\end{equation}
 		and
 		\begin{equation}
-			A_2 = \{\exists j \in D_i, \exists t \in [0, t_*] : \mathcal{H}_j(t) \cap C_i^c \neq \emptyset\}
+			A_2 = \{\exists j \in D_i, \exists t \in [0, t_*] : \mathcal{H}_j(t) \cap B(i, (b_n + c_n)/2) \neq \emptyset\}
 		\end{equation}
 		as well as their union
 		\begin{equation}
@@ -852,7 +852,7 @@
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
-		If $A_1^\complement$ holds, then the events $\{X_i = 1\}$ and $\{U_i = j\}$ depend only on the values of the update sequence inside $C_i^c$. If $A_2^\complement$ holds then the events $\{W_i = k\}$, $k \geq 0$, depend only on the values of the update sequence outside of $C_i^c$. Since the update sequences of each vertex are independent of each other vertex, if $A_2^\complement$ holds, conditioning on $W_i$ does not affect the update sequences inside $C_i^c$ and so 
+		If $A_1^\complement$ holds, then the events $\{X_i = 1\}$ and $\{U_i = j\}$ depend only on the values of the update sequence inside $B(i, (b_n + c_n)/2)$. If $A_2^\complement$ holds then the events $\{W_i = k\}$, $k \geq 0$, depend only on the values of the update sequence outside of $B(i, (b_n + c_n)/2)$. Since the update sequences of each vertex are independent of each other vertex, if $A_2^\complement$ holds, conditioning on $W_i$ does not affect the update sequences inside $B(i, (b_n + c_n)/2)$ and so 
 		\begin{equation}
 			\prob[X_i = 1, U_i = j | A^\complement, W_i] = \prob[X_i = 1, U_i = j | A^\complement].
 		\end{equation}
