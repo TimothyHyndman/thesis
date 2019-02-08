@@ -480,8 +480,6 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 
 \section{Additional lemmas}
 \label{sec:additional lemmas nd}
-[UP TO HERE WITH TIM'S COMMENTS] 
-
 	
 	% \begin{lemma}
 	% 	\label{lem:intersecting histories bound}
@@ -703,42 +701,44 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 
 	% \end{proof}
 
-	This next Lemma is based on \cite[Lemma 2.1]{Lubetzky2016-wd} and bounds the speed at which the histories can spread through the graph.
-		\begin{lemma}
-		\label{lem:prob history contained in ball}
-			Let $B(i, l)$ indicate the set of vertices at distance $l$ or smaller from vertex $i$. The probability that the history of vertex $i$ escapes $B(i,l)$ in time $s$ is bounded by
-			\begin{equation}
-				\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t_* - u) \nsubseteq B(i, l)\right] \leq \exp\left(s \Delta^2 - l \ln \Delta \right).
-			\end{equation}
-		\end{lemma}
-		\begin{proof}
-			Let $\mathcal{W} = \{\vect{w} = (w_1, w_2, \dots, w_l) : w_1 = i, ||w_{k-1} - w_k|| = 1\}$ be the set of length $l$ sequences of adjacent vertices starting at vertex $i$. If $\mathcal{H}_i$ contains any vertex outside $B(i, l)$ at a time $u \in [t_* - s, t_*]$ then there must be some sequence $w \in \mathcal{W}$ such that each $w_i$ was updated at some time $t_* > t_i > t_* - s$ and $t_{k-1} > t_k$. Call this event $M_w$. For any particular sequence $w$,
-			\begin{equation}
-				\prob[M_w] = \prob[\mathrm{Po}(s) \geq l]
-			\end{equation}
-			where $\mathrm{Po}(s)$ is Poisson with rate $s$. By a union bound over $\mathcal{W}$,
-			\begin{equation}
-				\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t_* - u) \nsubseteq B(i, l)\right] \leq \Delta^{l-1} \prob[\mathrm{Po}(s) \geq l].
-			\end{equation}
-			The moment generating function of a Poisson random variable with rate $s$ is
-			\begin{equation}
-				M(t) = \exp\left(s\left(\euler^t - 1\right)\right).
-			\end{equation}
-			Using a Chernoff bound we have for every $t > 0$,
-			\begin{equation}
-				\prob[\mathrm{Po}(s) \geq l] \leq \exp\left(s\left(\euler^t - 1\right) - t l\right).
-			\end{equation}
-			Overall we have
-			\begin{align}
-				\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t_* - u) \nsubseteq B(i, l)\right] &\leq \Delta^{l-1} \exp\left(s\left(\euler^t - 1\right) - t l\right)\\
-				&\leq \exp\left(s\left(\euler^t - 1\right) + l (\ln \Delta - t) \right).
-			\end{align}
-			Choosing $t = 2 \ln \Delta$,
-			\begin{align}
-				\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t_* - u) \nsubseteq B(i, l)\right] &\leq \exp\left(s\left(\Delta^2 - 1\right) - l \ln \Delta \right)\\
-				&\leq \exp\left(s \Delta^2 - l \ln \Delta \right).
-			\end{align}
-		\end{proof}
+	Our first Lemma is based on \cite[Lemma 2.1]{Lubetzky2016-wd} and bounds the speed at which the histories can spread through the graph.
+	\begin{lemma}
+	\label{lem:prob history contained in ball}
+		The probability that the history of vertex $i$ escapes a ball of radius $l$ in time $s$ is bounded by
+		\begin{equation}
+			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t_* - u) \nsubseteq B(i, l)\right] \leq \exp\left(s \Delta^2 - l \ln \Delta \right).
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		Let $\mathcal{W} = \{\vect{w} = (w_1, w_2, \dots, w_l) : w_1 = i, w_{k-1} \sim w_k\}$ be the set of length $l$ sequences of adjacent vertices starting at vertex $i$. That is, $\mathcal{W}$ is the set of all walks of length $l-1$ on $G_n$ that start at $i$. If $\mathcal{H}_i$ contains any vertex outside $B(i, l)$ at a time $u \in [t_* - s, t_*]$ then there must be some sequence $w \in \mathcal{W}$ such that each $w_k$ was updated in order along the interval $[t_* - s, t_*]$. For any particular sequence $w$, let $M_w$ be the event that each $w_k$ was updated at some time $t_k$ such that $t_* > t_k > t_* - s$ and $t_{k-1} > t_k$. 
+
+		For $M_w$ to occur, we require that the $l$ independent rate 1 Poisson clocks associated with each $w_k$ rings in a particular order along $[t_* - s, t_*]$. The probability of this is equal to the probability that a single rate 1 Poisson clock rings at least $l$ times in $[0, s]$, or equivalently, a rate $s$ Poisson clock rings at least $l$ times in $[0, 1]$. So we have
+		\begin{equation}
+			\prob[M_w] = \prob[\mathrm{Po}(s) \geq l]
+		\end{equation}
+		where $\mathrm{Po}(s)$ is Poisson with rate $s$. By a union bound over $\mathcal{W}$,
+		\begin{equation}
+			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t_* - u) \nsubseteq B(i, l)\right] \leq \Delta^{l-1} \prob[\mathrm{Po}(s) \geq l].
+		\end{equation}
+		The moment generating function of a Poisson random variable with rate $s$ is
+		\begin{equation}
+			M(t) = \exp\left(s\left(\euler^t - 1\right)\right).
+		\end{equation}
+		Using a Chernoff bound we have for every $t > 0$,
+		\begin{equation}
+			\prob[\mathrm{Po}(s) \geq l] \leq \exp\left(s\left(\euler^t - 1\right) - t l\right).
+		\end{equation}
+		Overall we have
+		\begin{align}
+			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t_* - u) \nsubseteq B(i, l)\right] &\leq \Delta^{l-1} \exp\left(s\left(\euler^t - 1\right) - t l\right)\\
+			&\leq \exp\left(s\left(\euler^t - 1\right) + l (\ln \Delta - t) \right).
+		\end{align}
+		Choosing $t = 2 \ln \Delta$,
+		\begin{align}
+			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t_* - u) \nsubseteq B(i, l)\right] &\leq \exp\left(s\left(\Delta^2 - 1\right) - l \ln \Delta \right)\\
+			&\leq \exp\left(s \Delta^2 - l \ln \Delta \right).
+		\end{align}
+	\end{proof}
 
 	% \begin{corollary}
 	% \label{cor:prob update function time 0 in B(i, l)}
@@ -884,6 +884,7 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 	% 		&\leq C_z \euler^{-l} BLAH
 	% 	\end{align}
 	% \end{proof}
+
 	\begin{lemma}
 		There exists a constant $C > 0$ such that for sufficiently small $\beta$,
 		\label{lem:nd X_j given X_i}
@@ -906,7 +907,7 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 
 	\begin{lemma}
 		\label{lem: prob X_j and no intersect given X_i = 1}
-		Let $i$ and $j$ be the indices of two vertices on a vertex transitive graph. Then
+		Let $i$ and $j$ be two vertices on a vertex transitive graph. Then
 		\begin{equation}
 			\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] \leq m_{t_*}
 		\end{equation}
@@ -915,15 +916,17 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 		To begin
 		\begin{align}
 			\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] &= \prob[X_i = 1]^{-1}\prob[X_i = 1, X_j = 1, \hist_i \cap\hist_j = \emptyset]\\
-			&= \frac{\prob[\hist_i(0) \cup \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset]}{\prob[\hist_i(0) \neq \emptyset]}.
+			&= \frac{\prob[\hist_i(0) \neq \emptyset, \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset]}{\prob[\hist_i(0) \neq \emptyset]}.
 		\end{align}
-		Define $S$ to be the first time that the histories intersect, or define $S = 0$ if the histories do not intersect before time $0$. We construct a new history, $\hist_j'$, in the following way. Along the interval $[S, t_*)$, $\hist_j'$ is constructed from the update sequence in the exact same way as $\hist_j$. However, along the interval $[0, S)$, we replace the update sequence with an another i.i.d.\ copy of the update sequence. We have constructed $\hist_j'$ to be independent of $\hist_i$. This is obvious for $t < S$. For $t \geq S$ we note that no updates are a part of both histories. From the memoryless property of the exponential waiting times between updates, we get that each update is independent of the rest, and so the histories are independent too. Note that in the event $\{\hist_i \cap \hist_j = \emptyset\}$, we have $\hist_j = \hist_j'$ and so
+		By Lemma \ref{lem:prob Xj Xi and no intersect}, 
+		\begin{equation}
+			\prob[\hist_i(0) \neq \emptyset, \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset] \leq \prob[\hist_i(0) \neq \emptyset]^2.
+		\end{equation}
+		and so
 		\begin{align}
-			\prob[\hist_i(0) \cup \hist_j(0) \neq \emptyset, \hist_i \cap \hist_j = \emptyset] &= \prob[\hist_i(0) \cup \hist_j'(0) \neq \emptyset, \hist_i \cap \hist_j' = \emptyset]\\
-			&\leq \prob[\hist_i(0) \cup \hist_j'(0) \neq \emptyset]\\
-			&= \prob[\hist_i(0) \neq \emptyset] \prob[\hist_j'(0) \neq \emptyset]
+			\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] &\leq \prob[\hist_i(0) \neq \emptyset]\\
+			&= m_{t_*}.
 		\end{align}
-		since $\hist_i$ and $\hist_j'$ are independent. Since $\prob[\hist_j'(0) \neq \emptyset] = \prob[\hist_j(0) \neq \emptyset] = m_{t_*}$ we get the desired result.
 	\end{proof}
 
 	% \begin{lemma}
@@ -958,8 +961,18 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 	% 		\prob[X_j = 1, \hist_i \cap \hist_j = \emptyset| X_i = 1] \leq C_{z, \epsilon} \exp(2 \alpha) n^{-\epsilon}.
 	% 	\end{equation}
 	% \end{proof}
+	The final two Lemmas use two quantities, $\chi(\hist_A)$ and $\mathcal{L}(\hist_A)$, which in some sense measure the horizontal and vertical size of $\hist_A$ respectively. 
+	Define
+	\begin{equation}
+		\chi(\mathcal{H}_i) = \#\left\{ \left( (u,t), (v,t) \right) \in \mathcal{H}_i \right\}
+	\end{equation}
+	which counts the total number of spatial edges in $\mathcal{H}_i$ and define
+	\begin{equation}
+		\mathcal{L}(\mathcal{H}_i) = \sum_{i \in V} \int_{0}^{t_*} \indicator_{(i, t) \in \mathcal{H}_i} \intd t
+	\end{equation}
+	which is the sum of the lengths of all the temporal edges in $\hist_i$. 
 
-	Lemma \ref{lem: prob intersect given X_i = 1} contains some similarities to the proof contained in \cite[Lemma 2.1]{Lubetzky2015-po}. Indeed, the quantity 
+	The following Lemma contains some similarities to the proof of \cite[Lemma 2.1]{Lubetzky2015-po}. Indeed, the quantity 
 	\begin{equation}
 		\prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}]
 	\end{equation}
@@ -969,6 +982,8 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 	\end{equation}
 	when $A = \{i, j\}$ using the notation of that paper. We use their method to bound this probability, but add some extra steps for clarity.
 	
+	[UP TO HERE WITH TIM'S COMMENTS] 
+
 	\begin{lemma}
 		\label{lem: prob intersect given X_i = 1}
 		Let $i$ and $j$ be two vertices separated by distance $k$. Then there exists a $C$ such that for sufficiently small $\beta$,
@@ -999,7 +1014,7 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 		% 	&\leq n C_z\prob\left[\left\{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset \right\} \cap \left(\left\{X_i = 1\right\} \cup \left\{X_i = 1\right\}\right)\right].
 		% \end{align}
 		% Now since each update in our histories can never remove more than one vertex at a time, if $\hat{\mathcal{H}}_i(0) \cup \hat{\mathcal{H}}_j(0) = \emptyset$, then there must be some time $t > 0$ at which $\hat{\mathcal{H}}_i(t) \cup \hat{\mathcal{H}}_j(t) = \{w\}$ for a single vertex $w$. Proceeding backwards from $t_*$, define $S$ to be the first such time this happens, or put $S = 0$ if the histories always contain at least two vertices.
-		Proceeding backwards from $t_*$, define $S$ to be the random time at which $\mathcal{H}_i(t) \cup \mathcal{H}_j(t)$ first reduced to less than two vertices, or define $S = 0$ if the combined histories contain at least two vertices all the way to time $0$. 
+		Proceeding backwards from $t_*$, define $S$ to be the random time at which $\mathcal{H}_i(t) \cup \mathcal{H}_j(t)$ first reduced to less than two vertices, or define $S = 0$ if the combined histories contain at least two vertices all the way to time $0$. (We cannot say that $S$ is the random time at which $\hist_i(t) \cup \hist_j(t)$ first reduces to a single vertex since a single update may remove more than one vertex. See Figure \ref{fig:nonoblivious shrink} for an example.)
 		Note that
 		\begin{equation}
 			\label{eq:prob union subset of}
@@ -1009,18 +1024,18 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 		We also note that
 		\begin{equation}
 			\label{eq:prob intersect subset of}
-			\{\hist_i \cap \hist_j \neq \emptyset\} \subseteq \{\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t_*]\right) \geq k - 1\}
+			\{\hist_i \cap \hist_j \neq \emptyset\} \subseteq \{\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t_*]\right) \geq k \}
 		\end{equation}
-		since there must be at least $k - 1$ branching edges for the histories to meet. The event on the right hand side of \eqref{eq:prob intersect subset of} depends only on the update sequence in $[S, t_*]$. The event on the right hand side of \eqref{eq:prob union subset of} depends only on the update sequence in $[0, S)$. Therefore, given $S$, these events are independent and
+		since there must be at least $k$ spatial edges for the histories to meet. The event on the right hand side of \eqref{eq:prob intersect subset of} depends only on the update sequence in $[S, t_*]$. The event on the right hand side of \eqref{eq:prob union subset of} depends only on the update sequence in $[0, S)$. Therefore, given $S$, these events are independent and
 		\begin{align}
 			&\prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}| S = t_s] \notag \\
-			&\phantom{=}\leq \prob[\mathscr{F}(v, 0, S) \neq \emptyset | S = t_s] \prob[\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t_*]\right) \geq k - 1 | S = t_s]\\
-			&\phantom{=}= m_{t_s}  \prob[\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t_*]\right) \geq k - 1 | S = t_s]
+			&\phantom{=}\leq \prob[\mathscr{F}(v, 0, S) \neq \emptyset | S = t_s] \prob[\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t_*]\right) \geq k | S = t_s]\\
+			&\phantom{=}= m_{t_s}  \prob[\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t_*]\right) \geq k  | S = t_s]
 		\end{align}
 		and so
 		\begin{align}
-			\prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}] &\leq \expect[\indicator_{\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t_*]\right) \geq k - 1 }m_S]\\
-			&\leq \expect[\indicator_{\chi(\hist_i \cup \hist_j) \geq k - 1} m_S].
+			\prob[\left\{\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset\right\} \cap \left\{\mathcal{H}_i(0) \cup \mathcal{H}_j(0) \neq \emptyset\right\}] &\leq \expect[\indicator_{\chi\left((\hist_i \cup \hist_j)\cap V \times [S, t_*]\right) \geq k  }m_S]\\
+			&\leq \expect[\indicator_{\chi(\hist_i \cup \hist_j) \geq k } m_S].
 		\end{align}
 		% If $\mathcal{H}_i(S) \cup \mathcal{H}_j(S)$ contains exactly one vertex then the probability of survival from time $S$ to time $0$ is simply the magnetisation $m_S$. Otherwise, either $S = 0$ or $|\mathcal{H}_i(S) \cup \mathcal{H}_j(S)| = 0$. In the latter case the histories cannot reach time $0$ and in the former, 
 		% \begin{equation}
@@ -1042,11 +1057,11 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 		\begin{align}
 			\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1] %&\leq m_{t_*}^{-1} \expect[\indicator_{\hat{\mathcal{H}}_i \cap \hat{\mathcal{H}}_j \neq \emptyset} m_S] \\
 			% &\leq m_{t_*}^{-1} \expect[\indicator_{\chi(\mathcal{H}_{ij}) \geq k-1} m_S]\\
-			&\leq m_{t_*}^{-1} m_{t_*} \expect[\indicator_{\chi(\hist_i \cup \hist_j) \geq k-1} \euler^{\mathcal{L}(\hist_i\cup \hist_j)/2}]\\
+			&\leq m_{t_*}^{-1} m_{t_*} \expect[\indicator_{\chi(\hist_i \cup \hist_j) \geq k} \euler^{\mathcal{L}(\hist_i\cup \hist_j)/2}]\\
 			% &= \expect[\indicator_{\chi(\mathcal{H}_{ij}) \geq k-1} \euler^{\mathcal{L}(\hist_i\cup \hist_j)/2}]\\
-			&\leq \expect[\euler^{\chi(\hist_i\cup \hist_j) - (k-1)} \euler^{\mathcal{L}(\hist_i\cup \hist_j)/2}]\\
+			&\leq \expect[\euler^{\chi(\hist_i\cup \hist_j) - k} \euler^{\mathcal{L}(\hist_i\cup \hist_j)/2}]\\
 			% &\leq \euler^{-(k-1)} \expect[\euler^{\chi(\mathcal{H}_{ij}) + (1/2)L(\mathcal{H}_{ij}) + 1} ]\\
-			&= \euler^{-k + 1} \expect[\euler^{\chi(\hist_i\cup \hist_j) + L(\hist_i\cup \hist_j)/2} ]
+			&= \euler^{-k} \expect[\euler^{\chi(\hist_i\cup \hist_j) + \mathcal{L}(\hist_i\cup \hist_j)/2} ]
 		\end{align}
 
 		From Lemma \ref{lem:full submartingale thing}, for any $\alpha > \ln(2)$ if
@@ -1055,23 +1070,12 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 		\end{equation}
 		then
 		\begin{align}
-			\expect[\euler^{\chi(\hist_i\cup \hist_j) + L(\hist_i\cup \hist_j)/2} ] &\leq \euler^{2\alpha}
+			\expect[\euler^{\chi(\hist_i\cup \hist_j) + \mathcal{L}(\hist_i\cup \hist_j)/2} ] &\leq \euler^{2\alpha}
 		\end{align}
-		and we get the desired result by choosing $C = \exp(1 + 2\alpha)$.
+		and we get the desired result by choosing $C = \exp(2\alpha)$.
 	\end{proof}
 
 	The last of our additional lemmas comes from \cite[Lemma 3.1]{Lubetzky2015-po}. We have made our statement of the lemma slightly more precise and so we have rewritten both the lemma and proof out here along with our modifications. In particular, we have specified precisely how small $\beta$ must be for the statement to hold.
-
-	The lemma concerns two quantities, $\chi(\hist_A)$ and $\mathcal{L}(\hist_A)$ which in some sense measure the horizontal and vertical size of $\hist_A$ respectively. 
-	Define
-	\begin{equation}
-		\chi(\mathcal{H}_i) = \#\left\{ \left( (u,t), (v,t) \right) \in \mathcal{H}_i \right\}
-	\end{equation}
-	which counts the total number of spatial edges in $\mathcal{H}_i$ and define
-	\begin{equation}
-		\mathcal{L}(\mathcal{H}_i) = \sum_{i \in V} \int_{0}^{t_*} \indicator_{(i, t) \in \mathcal{H}_i} \intd t
-	\end{equation}
-	which is the sum of the lengths of all the temporal edges in $\hist_i$. 
 
 	\begin{lemma}[\cite{Lubetzky2015-po}]
 		\label{lem:full submartingale thing}
@@ -1087,13 +1091,13 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 	\begin{proof}
 		We first relax our histories to our alternative construction by observing that
 		\begin{align}
-			&\chi(\mathcal{H}_i) \leq \chi(\hat{\mathcal{H}}_i), &\mathcal{L}(\mathcal{H}_i) \leq \mathcal{L}(\hat{\mathcal{H}}_i).
+			&\chi(\mathcal{H}_A) \leq \chi(\hat{\mathcal{H}}_A), &\mathcal{L}(\mathcal{H}_A) \leq \mathcal{L}(\hat{\mathcal{H}}_A).
 		\end{align}
 
 
-		Let $W_s = |\hat{\mathcal{H}}_i (t_* - s)|$, let $Y_s = \chi(\hat{\mathcal{H}}_i \cap V \times [t_* - s, t_*])$ count the total number of spatial edges observed in the history by time $t_* - s$ and let $Z_s = \mathcal{L}(\hat{\mathcal{H}}_i \cap V \times [t_* - s, t_*])$. 
+		Let $W_s = |\hat{\mathcal{H}}_A (t_* - s)|$, let $Y_s = \chi(\hat{\mathcal{H}}_A \cap V \times [t_* - s, t_*])$ count the total number of spatial edges observed in the history by time $t_* - s$ and let $Z_s = \mathcal{L}(\hat{\mathcal{H}}_A \cap V \times [t_* - s, t_*])$. 
 
-		Initially, $W_0 = 1$, $Y_0 = 0$, and $Z_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. The length, $Z_s$, grows as $\intd Z_s = W_s \intd s$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s)$ such that $\bar{W}_s \geq W_s$, $\bar{Y}_s \geq Y_s$, and $\bar{Z}_s \geq Z_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s) = (|A|, 0, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$; at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$; and $\bar{Z}_s$ grows as $\intd \bar{Z}_s = \bar{W}_s \intd s$.
+		Initially, $W_0 = |A|$, $Y_0 = 0$, and $Z_0 = 0$. Recall that an oblivious update of a vertex causes it to be removed from the history and that a non-oblivious update causes the history to branch out to its $\Delta$ neighbours. Oblivious updates occur at rate $\theta W_s$ and cause $W_s$ to decrease by $1$. Non-oblivious updates occur at rate $(1 - \theta)W_s$ and cause both $W_s$ and $Y_s$ to increase by no more than $\Delta$. The length, $Z_s$, grows as $\intd Z_s = W_s \intd s$. Therefore we can create a coupled process $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s)$ such that $\bar{W}_s \geq W_s$, $\bar{Y}_s \geq Y_s$, and $\bar{Z}_s \geq Z_s$ in the following way. We start with $(\bar{W}_s, \bar{Y}_s, \bar{Z}_s) = (|A|, 0, 0)$ and at rate $\theta \bar{W}_s$, $\bar{W}_s$ decreases by $1$; at rate $(1 - \theta)\bar{W}_s$, both $\bar{W}_s$ and $\bar{Y}_s$ increase by $\Delta$; and $\bar{Z}_s$ grows as $\intd \bar{Z}_s = \bar{W}_s \intd s$.
 
 		Let $Q_s = \exp \left(\alpha \bar{W}_s + \lambda \bar{Y}_s + \eta \bar{Z}_s\right)$ where $\alpha$, $\lambda$, and $\eta$ are some fixed constants yet to be determined, and $\alpha > -\ln(1 - \eta)$. 
 		% We will show that $Q_s$ is a supermartingale. Let $h$ be some small time-step. Then [FIX THIS]
@@ -1123,9 +1127,9 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 		\begin{equation}
 			\tau = \inf\{s: \bar{W}_s = 0\}.
 		\end{equation}
-		At this time, the histories have completely died out and $\bar{Y}_s$ and $\bar{Z}_s$ cannot grow any more. That is, $\bar{Y}_\tau \geq \chi(\hist_A)$ and $\bar{Z}_\tau \geq \mathcal{L}(\hist_A)$. From optional stopping,
+		At this time, the histories have completely died out and $\bar{Y}_s$ and $\bar{Z}_s$ cannot grow any more. That is, $\bar{Y}_\tau \geq \chi(\hist_A)$ and $\bar{Z}_\tau \geq \mathcal{L}(\hist_A)$, and so $\expect\exp(\lambda \chi(\hist_A) + \eta \mathcal{L}(\hist_A)) \leq \expect Q_\tau$. From optional stopping,
 		\begin{align}
-			\expect[\exp(\lambda \bar{Y}_\tau  + \eta \bar{Z}_\tau)] &\leq \expect[Q_{0}]\\
+			\expect[Q_\tau] &\leq \expect[Q_{0}]\\
 			&= \exp(\alpha |A|).
 		\end{align}
 	\end{proof}
