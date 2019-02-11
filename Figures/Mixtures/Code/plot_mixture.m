@@ -4,7 +4,7 @@ function fig = plot_mixture(phi, Q, Y, options, Q_unsimplified)
 
     %Colours
     % highlight = [255 189 76]/255;
-    highlight = [0 51 104]/255;
+    highlight = options.main_colour;
     primary = [38 82 127]/255;
     primarylight = [102,177,255]/255;
     white = [255,255,255]/255;
@@ -13,14 +13,14 @@ function fig = plot_mixture(phi, Q, Y, options, Q_unsimplified)
 
 
     % Mixture Density
-    xx = linspace(min(Y)-3,max(Y)+3,1000);
+    xx = linspace(min(Y)-options.xx_padding,max(Y)+options.xx_padding,1000);
     yy = 0*xx;
     for i = 1:length(Q.ProbWeights)
         yy = yy + Q.ProbWeights(i)*phi(xx',Q.Support(i))';
     end
 
-    fig = figure('pos',[200 200 800 450]);
-    legend();
+    fig = figure('pos',options.pos);
+    
 
     if options.plot_hist
         hold on
@@ -29,7 +29,7 @@ function fig = plot_mixture(phi, Q, Y, options, Q_unsimplified)
 
     if options.plot_data_points
         hold on
-        h_datapoints = scatter(Y,0*Y,'*')
+        h_datapoints = scatter(Y,0*Y,'*');
     end
 
     if options.plot_mixture_density
@@ -53,7 +53,8 @@ function fig = plot_mixture(phi, Q, Y, options, Q_unsimplified)
     % set(gca,'Color',backgroundblue);
 
     xlabel('x','FontSize',20)
-
+    legend('-DynamicLegend')
+    legend;
     fig = gca;
 
     if options.save
@@ -97,4 +98,19 @@ function options = fill_default_options(options)
     if ~isfield(options, 'filename')
         options.filename = '';
     end
+    
+    if ~isfield(options, 'xx_padding')
+        options.xx_padding = 3;
+    end
+    
+    if ~isfield(options, 'main_colour')
+        options.main_colour = [0 51 104]/255;
+    end
+    
+    if ~isfield(options, 'pos')
+        options.pos = [200 200 800 450];
+    end
+    
+    
+    
 end

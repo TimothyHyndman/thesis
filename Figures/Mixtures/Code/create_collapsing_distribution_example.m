@@ -9,7 +9,7 @@ X = unifrnd(-2,2,[50,1]);
 
 options.plot_Q = true;
 options.plot_Q_unsimplified = true;
-options.save = true;
+options.save = false;
 options.filename = 'collapsing_distribution.png';
 
 plot_mixture(phi, Q, X, options, Q_unsimplified);
