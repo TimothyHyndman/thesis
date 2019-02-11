@@ -226,40 +226,39 @@
 		\label{sec:mixturelikelihoods:example}
 		In simple cases, we can plot the likelihood curve, $\Gamma_{\vect{x}, f}$, and objective function, $\mathcal{L}$, along with the maximizing point, $\hat{\vect{\gamma}}$. In particular, when $n = 2$, $\Gamma_{\vect{x}, f} \subset \mathbb{R}^2$ and if the component density is smoothly parametrized by a single parameter, then we can plot $\Gamma_{\vect{x}, f}$ by tracing out $\vect{\gamma}(\theta; \vect{x}, f)$ as we vary $\theta$.
 
-		For example, suppose our sample is made up of two points, $\vect{x} = (x_1, x_2) = (1,2)$, and suppose our component density is normal with variance $\sigma_2 = 0.45^2$ and parametrized by $\theta$, that is,
+		For example, suppose our sample is made up of two points, $\vect{x} = (x_1, x_2) = (1,2)$, and suppose our component density is normal with variance $\sigma_2 = 0.4^2$ and parametrized by $\theta$, that is,
 		\begin{equation}
-		f(x;\theta) = \frac{1}{0.45 \sqrt{2 \pi}} \exp\left(-\frac{(x-\theta)^2}{2\cdot 0.45^2}\right).
+		f(x;\theta) = \frac{1}{0.4 \sqrt{2 \pi}} \exp\left(-\frac{(x-\theta)^2}{2\cdot 0.4^2}\right).
 		\label{eq:example component density for likelihood curve}
 		\end{equation}
 		Then the corresponding likelihood curve can be traced out as we increase $\theta$ from $-\infty$ to $\infty$ as shown in Figure \ref{fig:TracingGamma}. 
 
 		\begin{figure}[ht]
 			\centering
-			\begin{minipage}[b]{0.3\linewidth}
+			\begin{minipage}[b]{0.32\linewidth}
 				\includegraphics[width=\textwidth]{GammaTrace01}
 			\end{minipage}
-			\begin{minipage}[b]{0.3\linewidth}
+			\begin{minipage}[b]{0.32\linewidth}
 				\includegraphics[width=\textwidth]{GammaTrace02}
 			\end{minipage}
-			\begin{minipage}[b]{0.3\linewidth}
+			\begin{minipage}[b]{0.32\linewidth}
 				\includegraphics[width=\textwidth]{GammaTrace03}
 			\end{minipage}
-			\begin{minipage}[b]{0.3\linewidth}
+			\begin{minipage}[b]{0.32\linewidth}
 				\includegraphics[width=\textwidth]{GammaTraceDensity01}
 				\subcaption{$\theta = 1$}
 			\end{minipage}
-			\begin{minipage}[b]{0.3\linewidth}
+			\begin{minipage}[b]{0.32\linewidth}
 				\includegraphics[width=\textwidth]{GammaTraceDensity02}
 				\subcaption{$\theta = 2$}
 			\end{minipage}
-			\begin{minipage}[b]{0.3\linewidth}
+			\begin{minipage}[b]{0.32\linewidth}
 				\includegraphics[width=\textwidth]{GammaTraceDensity03}
 				\subcaption{$\theta = 3$}
 			\end{minipage}
-			\caption[A simple example of a likelihood curve.]{A simple example of a likelihood curve. The component density, $f(x;\theta)$, as defined in \eqref{eq:example component density for likelihood curve}, is shown in blue for $\theta = 1,2,$ and $3$. Each value of $\theta$ contributes a point to $\Gamma_{\vect{x}, f}$ whose coordinates are given by $(f(1;\theta),f(2;\theta))$ (represented by the red circles). As we increase $\theta$ from $-\infty$ to $\infty$ we trace out more of $\Gamma_{\vect{x}, f}$.}\label{fig:TracingGamma}
+			\caption[A simple example of a likelihood curve.]{A simple example of a likelihood curve. The component density, $f(x;\theta)$, as defined in \eqref{eq:example component density for likelihood curve}, is shown in blue for $\theta = 1,2,$ and $3$. Each value of $\theta$ contributes a point to $\Gamma_{\vect{x}, f}$ whose coordinates are given by $(f(1;\theta),f(2;\theta))$ (represented by the heights of the red circles). As we increase $\theta$ from $-\infty$ to $\infty$ we trace out more of $\Gamma_{\vect{x}, f}$.}\label{fig:TracingGamma}
 		\end{figure}
 
-		[MAKE THIS FIGURE REPRODUCIBLE + FIX (sigma 0.4 to match others or vice-versa)]
 		
 		The set of possible values of the likelihood vector, $\mathcal{M}$, is given by the convex hull of $\Gamma_{\vect{x}, f}$, the boundary of which is marked along with $\Gamma_{\vect{x}, f}$ in Figure \ref{fig:GammaSol:subfig:Gamma} and overlaid on a heat map of $\mathcal{L}(\vect{\gamma})$. The maximizing point, $\hat{\vect{\gamma}}$, is marked with a yellow dot and lies on the boundary of $\conv(\Gamma_{\vect{x}, f})$ as predicted by Theorem \ref{thm: lindsay maximizing likelihood vector point}. This point may be written as the convex combination of two points in $\Gamma_{\vect{x}, f}$,
 		\begin{equation}
