@@ -161,10 +161,10 @@
 	This is the main object of interest for our analysis. Note that the coupling time is not just a property of the Ising heat-bath process, but also of the coupling we have chosen. In Section \ref{sec:information percolation on the cycle} we will make a change to the coupling we use to make the analysis easier. Some care will need to be taken to verify that the coupling time is not affected by this change.
 
 	\subsection{Equivalence of discrete and continuous coupling time}
-	So far we have stated that the running time of CFTP has the same distribution as the coupling time. In fact, we have glossed over one important detail. Namely, CFTP is exclusively run in discrete time, and our coupling time is defined by the continuous time dynamics. Therefore, for our motivation to be reasonable, we would like to show some sort of equivalence between the distributions of the discrete and continuous coupling times. We do this via Proposition \ref{claim:discrete vs continuous distributions}. 
+	So far we have stated that the running time of CFTP has the same distribution as the coupling time. In fact, we have glossed over one important detail. Namely, CFTP is exclusively run in discrete time, and our coupling time is defined by the continuous time dynamics. Therefore, for our motivation to be reasonable, we would like to show some sort of equivalence between the distributions of the discrete and continuous coupling times. We do this via Proposition \ref{prop:discrete vs continuous distributions}. 
 
 	\begin{proposition}
-	\label{claim:discrete vs continuous distributions}
+	\label{prop:discrete vs continuous distributions}
 		Let $(N_n)_{n \in \mathbb{N}}$ be a sequence of positive integer-valued random variables, and $(m_n)_{n \in \mathbb{N}}$ be a non-decreasing sequence of integers such that $N_n \geq m_n$ for all $n$ and $\lim_{n \rightarrow \infty} m_n = \infty$. Let $T(n)$ be the random time it takes for a rate $\lambda$ Poisson clock to go off $n$ times. That is, $T(n) \sim \mathrm{Erlang}(n, \lambda)$.
 
 		Let $a_n$ and $b_n$ be positive deterministic sequences such that $b_n / a_n \rightarrow \infty$ and
@@ -206,7 +206,7 @@
 		% \end{equation}
 	\end{proposition}
 
-	To prove Proposition \ref{claim:discrete vs continuous distributions} we first require the following Lemma.
+	To prove Proposition \ref{prop:discrete vs continuous distributions} we first require the following Lemma.
 	\begin{lemma}
 		\label{lem:T(k) bound}
 		Let $T(k)$ be the sum of $k$ i.i.d. rate $\lambda$ exponentials. For all $\epsilon > 0$,
@@ -263,7 +263,7 @@
 	\end{proof}
 
 	We now prove the main proposition.
-	\begin{proof}[Proof of Proposition \ref{claim:discrete vs continuous distributions}]
+	\begin{proof}[Proof of Proposition \ref{prop:discrete vs continuous distributions}]
 		In order to prove either direction, it is sufficient to show (see \cite[Theorem 25.4]{Billingsley1995-en}) that for any $\epsilon > 0$,
 		\begin{equation}
 			\lim_{n\rightarrow \infty} \prob(|Y_n - Z_n| > \epsilon) = 0.
@@ -327,14 +327,14 @@
 		for sufficiently large $n$.
 	\end{proof}
 
-	% Often the sequence $w_n$ of Claim \ref{claim:discrete vs continuous distributions} is of the form $w_n = w_n(z) = a_n z + b_n$ and we have that 
+	% Often the sequence $w_n$ of Claim \ref{prop:discrete vs continuous distributions} is of the form $w_n = w_n(z) = a_n z + b_n$ and we have that 
 	% \begin{equation}
 	% 	\lim_{n\rightarrow \infty} \prob(T_n \leq w_n(z)) = G(z)
 	% \end{equation}
 	% for some distribution $G(z)$. The following Lemma shows that if this is the case, in order for either \eqref{eq:Y_n goes to zero} or \eqref{eq:Z_n goes to zero} to hold, it is enough that $b_n$ dominates $a_n$.
 
 	\begin{remark}
-		We apply Proposition \ref{claim:discrete vs continuous distributions} to the coupling time of the Glauber heat-bath dynamics in the following way. Take $N_n$ to be the discrete coupling time on a graph of size $n$. The continuous time coupling time is given by $T(N_n)$. Note that $N_n \geq m_n = n$ since each vertex must be updated at least once for coupling to occur. Finally Theorems \ref{thm:Coupling Distribution on Cycle} and \ref{thm:Coupling Distribution on transitive graph} establish the limiting distribution of the continuous-time coupling time using scaling and shifting sequences $a_n$ and $b_n$ whose ratio is 
+		We apply Proposition \ref{prop:discrete vs continuous distributions} to the coupling time of the Glauber heat-bath dynamics in the following way. Take $N_n$ to be the discrete coupling time on a graph of size $n$. The continuous time coupling time is given by $T(N_n)$. Note that $N_n \geq m_n = n$ since each vertex must be updated at least once for coupling to occur. Finally Theorems \ref{thm:Coupling Distribution on Cycle} and \ref{thm:Coupling Distribution on transitive graph} establish the limiting distribution of the continuous-time coupling time using scaling and shifting sequences $a_n$ and $b_n$ whose ratio is 
 		\begin{equation}
 			\frac{b_n}{a_n} = \log n
 		\end{equation}
