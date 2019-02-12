@@ -365,7 +365,64 @@
 	[FIGURE?]
 
 	\subsection{KKT Conditions}
-	We will now point out that the gradient function conditions in \eqref{eq:Deq1} and \eqref{eq:Deq2} can be obtained using the Karush-Kuhn-Tucker (KKT) conditions \cite{Kuhn1951-ih} \cite{Karush2014-vk}. To do this we will start with the following general theorem which may seem obvious.
+	We will now point out that the gradient function conditions in \eqref{eq:Deq1} and \eqref{eq:Deq2} can be obtained using the Karush-Kuhn-Tucker (KKT) conditions \cite{Kuhn1951-ih} \cite{Karush2014-vk}. Suppose that we restrict our mixture to have no more than $m$ components. Then given a component density $f$, and data $\vect{x}$, the problem of finding the maximum likelihood location mixture can be written in the following form.
+
+	Find $\vect{\theta}$ and $\vect{p}$ that maximize
+	\begin{equation}
+		l_m(\vect{\theta},\vect{p};\vect{x}) = \sum_{i=1}^n \log \left[\sum_{j=1}^m p_j f(x_i - \theta_j) \right]
+		\label{eq:l_m}
+	\end{equation}
+	subject to 
+	\begin{align}
+		&\theta_j -\theta_{j+1} \leq 0, &&j=1,\dots,m-1
+		\label{eq:constraintheta}\\
+		&-p_j \leq 0, &&j=1,\dots,m
+		\label{eq:constrainpj}\\
+		&\sum_{j=1}^m p_j = 1.
+		\label{eq:constrainpjequal}
+	\end{align}
+
+	Constraints \eqref{eq:constrainpj} and \eqref{eq:constrainpjequal} ensure that the mixture is valid. We also include \eqref{eq:constraintheta} so that any mixture which can be written with fewer than $m$ components appears on the boundary of the feasible space (we will either have some $p_j = 0$ or some $\theta_j = \theta_{j+1}$). Conversely, any point at which we have equality in any of the constraints in \eqref{eq:constraintheta} or \eqref{eq:constrainpj}, can be written with fewer than $m$ components. Hence, a necessary condition for $K_\vect{x} = m$ is that any maximizing point of \eqref{eq:l_m} must also satisfy strict inequalities in \eqref{eq:constraintheta} and \eqref{eq:constrainpj}.
+
+	Introduce KKT multipliers $\lambda$, $\vect{\mu}$, $\vect{\nu}$ and form the lagrangian
+	\begin{equation}
+		\mathcal{L}(\vect{\theta},\vect{p},\lambda,\vect{\mu},\vect{\nu}) = L_m(\vect{\theta},\vect{p};\vect{x}) - \lambda\left(1 - \sum_{j=1}^m p_j\right) - \sum_{j=1}^m \mu_j p_j + \sum_{j=1}^{m-1} \nu_j \left(\theta_j - \theta_{j+1}\right).
+	\end{equation}
+	The KKT conditions tell us that at a local maximum the following equations must be satisfied:
+	\begin{align}
+		&\frac{\partial}{\partial \theta_1} L_m(\vect{\theta},\vect{p};\vect{x}) = \nu_1 \label{eq:KKTtheta1}\\ 
+		&\frac{\partial}{\partial \theta_j} L_m(\vect{\theta},\vect{p};\vect{x}) = \nu_j - \nu_{j-1}, &&j=2,\dots,m-1 \label{eq:KKTtheta}\\ 
+		&\frac{\partial}{\partial \theta_m} L_m(\vect{\theta},\vect{p};\vect{x}) = -\nu_{m-1} \label{eq:KKTthetam}\\ 
+		&\frac{\partial}{\partial p_j} L_m(\vect{\theta},\vect{p};\vect{x}) = \lambda - \mu_j && j = 1,\dots,m. \label{eq:KKTlambda}
+	\end{align}
+	along with the constraints in \eqref{eq:constraintheta}, \eqref{eq:constrainpj}, \eqref{eq:constrainpjequal}, and the additional constraints
+	\begin{align}
+		&\vect{\mu},\vect{\nu} \geq 0,\\
+		&\mu_j p_j = 0, &&j=1,\dots,m \label{eq:mujpjconstraint}\\
+		&\nu_j (\theta_j - \theta_{j+1}) = 0, &&j=1,\dots,m-1.
+	\end{align}
+
+	Multiplying both sides of \eqref{eq:KKTlambda} by $p_j$ (recall \eqref{eq:mujpjconstraint}) and summing we get that
+	\begin{equation}
+		\lambda = \sum_{j = 1}^m p_j \frac{\partial}{\partial p_j} L_m(\vect{\theta},\vect{p};\vect{x}).
+	\end{equation}
+	From \eqref{eq:l_m},
+	\begin{align}
+		\lambda &= \sum_{j = 1}^m p_j \frac{\partial}{\partial p_j} \left( \sum_{i=1}^n \log \left[\sum_{k=1}^m p_k f(x_i - \theta_k) \right] \right)\\
+			&= \sum_{j = 1}^m p_j \sum_{i=1}^n \frac{f(x_i - \theta_j)}{\sum_{k=1}^m p_k f(x_i - \theta_k)}\\
+			&= \sum_{i=1}^n \sum_{j=1}^m  \frac{p_j f(x_i - \theta_j)}{\sum_{k=1}^m p_k f(x_i - \theta_k)}\\
+			&= n.
+	\end{align}
+
+	If 
+
+
+	[SHOW THAT KKT CONDITIONS ARE RELATED TO DIRECTIONAL DERIVATIVE CONSTRAINTS]
+
+
+	\subsubsection{General Observation}
+
+	To do this we will start with the following general theorem which may seem obvious.
 
 	\begin{theorem}
 		\label{thm:solution in interior}
@@ -381,23 +438,9 @@
 		The proof is simple. If $\vect{x}_0 \notin \partial E_{m_0}$ then we are done. Otherwise, by property \ref{prop:one} we can find a $n$ and $\vect{y} \in E_n$ such that $g_n(y) = g_{m_0}(\vect{x}_0)$. If $\vect{y} \notin \partial E_n$ then we are done, otherwise we repeat the process until we find a $m, \vect{x}$ pair with $\vect{x} \notin \partial E_m$. %Note that property \ref{prop:one} implies that $\partial E_1 = \emptyset$ and so this process must end.
 	\end{proof}
 
-	The application to the maximum likelihood mixture problem is simple. Suppose that we restrict our mixture to have no more than $m$ components. Then given a component density $f$, and data $\vect{x}$, the problem of finding the maximum likelihood location mixture can be written in the following form.
-
-	Maximize
-	\begin{equation}
-		l_m(\vect{\theta},\vect{p};\vect{x}) = \sum_{i=1}^n \log \left[\sum_{j=1}^m p_j f(x_i - \theta_j) \right]
-		\label{eq:L_m}
-	\end{equation}
-	subject to 
-	\begin{align}
-		&\theta_j -\theta_{j+1} \leq 0, &&j=1,\dots,m-1
-		\label{eq:constraintheta}\\
-		&-p_j \leq 0, &&j=1,\dots,m\\
-		&\sum_{j=1}^m p_j = 1.
-	\end{align}
+	The application to the maximum likelihood mixture problem is simple. 
 
 
-	[SHOW THAT KKT CONDITIONS ARE RELATED TO DIRECTIONAL DERIVATIVE CONSTRAINTS]
 
 	\subsection{Additional results on \texorpdfstring{$K_\vect{x}$}{Kx}}
 
