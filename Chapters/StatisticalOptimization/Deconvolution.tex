@@ -809,4 +809,12 @@ Of course, in reality we do not search over distributions with phase function ex
 
 \section{Conclusion}
 
+In this chapter we looked at the method for deconvolution when the error distribution is unknown that was proposed by Delaigle and Hall in \cite{Delaigle2016-la}. As in Chapter \ref{Ch:Mixtures}, this involved searching for a discrete probability distribution as the solution to an optimization problem. We found that even though we allowed for many probability masses when finding this distribution, our optimization produced solutions in which most of these points had zero weight and so did not contribute to the distribution. Motivated by this, we suggested that instead of letting the point masses have fixed location and optimizing over their weights, we instead use a smaller number of points and let both their weights and locations be variable. The resulting optimization problem was significantly faster to run and on the examples we tested was capable of finding solutions that were comparable or better than those found using the previous method.
+
+We used this new method in the R package `deconvolve', which contains not only methods for deconvolution when the error distribution is unknown, but also a variety of other tools for performing non-parametric deconvolution, finding bandwidths, and non-parametric regression estimates.
+
+We ended the chapter with a brief discussion on the set of distributions with equal phase function and made a suggestion as to why the phenomenon of interest in this chapter might not be totally unexpected.
+
 [WRITE THIS]
+
+[NON-ZERO REAL CHARACTERISTIC FUNCTION  => UNIMODAL SYMMETRIC DISTRIBUTION?]
