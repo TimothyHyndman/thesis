@@ -55,7 +55,7 @@
 
 \pagestyle{fancy} % Finally, use the "fancy" page style to implement the FancyHdr headers
 
-\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % New command to make the lines in the title page
+% \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % New command to make the lines in the title page
 
 % PDF meta-data
 \hypersetup{pdftitle={\ttitle}}
@@ -70,34 +70,51 @@
 \begin{titlepage}
 \begin{center}
 
-\textsc{\LARGE \univname}\\[1.5cm] % University name
-\textsc{\Large Doctoral Thesis}\\[0.5cm] % Thesis type
+% \textsc{\Large Doctoral Thesis}\\[0.5cm] % Thesis type
 
-\HRule \\[0.4cm]
-{\huge \bfseries \ttitle}\\[0.4cm] % Thesis title
-\HRule \\[1.5cm]
+\rule{\linewidth}{0.5mm}\\[0.4cm]
+% \vspace*{0.4cm}
+% \hrule \\[0.4cm]
+% \rule{\textwidth}{0.4pt}\\
+{\huge \bfseries \ttitle} %\\[0.4cm] % Thesis title
+% \hrule\\[1.5cm]
+\vspace*{0.4cm}
+\rule{\linewidth}{0.5mm}
  
-\begin{minipage}{0.4\textwidth}
-\begin{flushleft} \large
-\emph{Author:}\\
-\href{http://www.ms.unimelb.edu.au/Personnel/profile.php?PC_id=1763}{\authornames} % Author name - remove the \href bracket to remove the link
-\end{flushleft}
-\end{minipage}
-\begin{minipage}{0.4\textwidth}
-\begin{flushright} \large
-\emph{Supervisors:} \\% Supervisors names - remove the \href bracket to remove the link  
-\href{http://www.ms.unimelb.edu.au/Personnel/profile.php?PC_id=147}{\supnameone} \\ 
-\href{http://www.ms.unimelb.edu.au/~aurored/}{\supnametwo}
-\\
-\href{https://research.monash.edu/en/persons/tim-garoni}{\supnamethree}
-\end{flushright}
-\end{minipage}\\[3cm]
+% \begin{minipage}{0.4\textwidth}
+% \begin{flushleft} \large
+% \emph{Author:}\\
+\LARGE
+\textbf{Timothy Luke Hyndman}\\
+\large
+ORCID Identifier: 0000-0002-7047-5023
+
+\vspace{100pt}
+% \end{flushleft}
+% \end{minipage}
+% \begin{minipage}{0.4\textwidth}
+% \begin{flushright} 
+
+% \large
+% \emph{Supervisors:} \\% Supervisors names - remove the \href bracket to remove the link  
+% \href{http://www.ms.unimelb.edu.au/Personnel/profile.php?PC_id=147}{\supnameone} \\ 
+% \href{http://www.ms.unimelb.edu.au/~aurored/}{\supnametwo}
+% \\
+% \href{https://research.monash.edu/en/persons/tim-garoni}{\supnamethree}
+% % \end{flushright}
+% % \end{minipage}
+% \\[3cm]
  
-\large \textit{Submitted in total fulfilment of the requirements\\ of the degree of \degreename}\\[0.3cm] % University requirement text
-%\textit{in the}\\[0.4cm]
-\groupname\\\deptname\\[2cm] % Research group name and department name
- 
+\LARGE Submitted in total fulfilment of the requirements of the degree of \degreename\\[0.3cm] % University requirement text
 {\large \monthyear}\\[4cm] % Date
+
+\vspace*{\fill}
+%\textit{in the}\\[0.4cm]
+% \groupname\\
+\textsc{\LARGE \deptname}\\ % Research group name and department name
+\textsc{\LARGE \univname}\\[1.5cm] % University name
+ 
+
 %\includegraphics{Logo} % University/department logo - uncomment to place it
  
 \vfill
