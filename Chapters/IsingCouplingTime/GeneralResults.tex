@@ -70,9 +70,11 @@ As we do not need to refer to the total magnetization of a stationary Ising conf
 We can now define the time
 \begin{equation}
 	\label{eq:definition t_c(n)}
-	t_c(n) = \inf\left\{ t > 0 : m_t \leq \frac{1}{n}\right\}.
+	t_c(n) = \inf\left\{ t > 0 : m_t = \frac{1}{n}\right\}.
 \end{equation}
-which is around the time it takes for the top and bottom chains to couple. One way of interpreting this is that at time $t_c(n)$, $\expect[M_{t_c(n)}] = \mathcal{O}(1)$. By way of comparison, at the inital state, $\expect[M_0] = n$, and at stationarity, $\expect[M] = 0$.
+which is around the time it takes for the top and bottom chains to couple. Note that this is well defined since by definition $m_0 = 1$ and by Lemma \ref{lemma: exponential decay magnetization}, $m_t$ is continuous and assymptotically decays to zero, and hence must take value $1/n$ at some time.
+
+One way of interpreting this time is that at time $t_c(n)$, $\expect[M_{t_c(n)}] = \mathcal{O}(1)$. By way of comparison, at the inital state, $\expect[M_0] = n$, and at stationarity, $\expect[M] = 0$.
 
 % [SHOW EXISTS t S.T. $m_t = 1/n$, SEE TIM'S COMMENT]
 
@@ -159,6 +161,7 @@ We end this section with some results concerning the magnetization, and in parti
 \end{equation}
 The following comes from \cite{Lubetzky2017-nc} and is valid on any graph, not just transitive ones.
 \begin{lemma}[\cite{Lubetzky2017-nc}, Claim 3.3]
+\label{lemma: exponential decay magnetization}
 	On any graph with maximum degree $\Delta$, for any $t, s > 0$ we have
 	\begin{equation}
 		\euler^{-2s} \leq \frac{\sum_i m_{t+s}[i]^2}{\sum_i m_t[i]^2} \leq \euler^{-2(1 - \beta \Delta)s}.
@@ -188,19 +191,19 @@ The following corollaries are then straightforward.
 % \end{corollary}
 %NEW VERSION THAT TAKES INTO ACCOUNT <= instead of = in definition of t_c
 
-[FOLLOWING NEEDS LOWER BOUNDS FOR LAMBDA!!!!!]
+% [FOLLOWING NEEDS LOWER BOUNDS FOR LAMBDA!!!!!]
 \begin{corollary}
 \label{cor:magnetization of t star}
 	On any vertex transitive graph with degree $\Delta$, $m_{t_*}$ can be bounded as follows:
 
 	For $z \geq 0$,
 	\begin{equation}
-		m_{t_*} \leq \frac{\euler^{-(1 - \beta \Delta)z}}{n}.
+		\frac{\euler^{-z}}{n} \leq m_{t_*} \leq \frac{\euler^{-(1 - \beta \Delta)z}}{n}.
 	\end{equation}
 
 	For $z \leq 0$,
 	\begin{equation}
-		m_{t_*} \leq \frac{\euler^{-z}}{n}.
+		 \frac{\euler^{-(1 - \beta \Delta)z}}{n} \leq m_{t_*} \leq \frac{\euler^{-z}}{n}.
 	\end{equation}
 \end{corollary}
 Bearing in mind that $m_0 = 1$, we also obtain a bound on $t_c(n)$.
@@ -343,7 +346,7 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 			\liminf_{n \rightarrow \infty} \lambda &\geq \frac{1}{1 + C_2} n m_{t_*}\\
 				&\geq C \min(\euler^{-z}, \euler^{-(1 - \beta\Delta)z}) 
 		\end{align}
-		for some $C \in (0, 1)$.
+		for some $C \in (0, 1)$, since $m_{t_*} \geq \frac{1}{n}\min(\euler^{-z}, \euler^{-(1 - \beta\Delta)z})$ by Corollary \ref{cor:magnetization of t star}.
 	\end{proof}
 
 	% \begin{lemma}
