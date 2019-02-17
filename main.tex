@@ -126,9 +126,11 @@ ORCID Identifier: 0000-0002-7047-5023
 %------------------------------------------------------------------------------
 \chapter*{Abstract}
 \addtotoc{Abstract}
-\addtocontents{toc}{\vspace{1em}}
+% \addtocontents{toc}{\vspace{1em}}
 
-The title page must be followed by an abstract of 300–500 words in English. The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too.
+In this thesis we consider two separate topics of study. The first topic concerns the Ising heat-bath Glaubers dynamics. These dynamics describe a continuous time Markov chain, whose states are assignments of spins to each vertex in a given graph. We define a coupling of two such Markov chains, as well as the coupling time which is the time it takes for these chains to have the same spin configuration. We prove that on certain graphs, at certain temperatures, the distribution of the coupling time converges to a Gumbel distribution. We begin by proving this for the 1 dimensional cycle at all temperatures. We then extend our proof to apply to a certain class of transitive graphs at sufficiently high temperatures. Fundamental to our proofs are the promising new framework of information percolation, used by \citeauthor{Lubetzky2016-wd} to prove the existence of cutoff for the Ising model, and compound Poisson approximation. We also prove a general result which relates the coupling times of the discrete and continuous dynamics.
+
+The second topic of this thesis concerns two optimization problems that arise in statistical inference. The first of these is that of maximum likelihood mixtures, and the second is a deconvolution technique. In both of these problems, we try to solve an optimization problem to find a discrete probability distribution. We often find that the solution we obtain has surprisingly few points of support. We explore this phenomenon empirically for each of these problems. For the case of maximum likelihood mixtures, we spend some time discussing the results of \citeauthor{Lindsay1983-tf} concerning the number of points of support in the maximizing distribution. We then prove some new results which extend Lindsay's results. For the deconvolution problem, we propose using a new method to take advantage of this phenomenon, based on our empirical exploration. We use this method in our new R package `deconvolve'.
 
 
 \clearpage 
@@ -139,7 +141,7 @@ The title page must be followed by an abstract of 300–500 words in English. Th
 
 \Declaration{
 
-\addtocontents{toc}{\vspace{1em}}
+% \addtocontents{toc}{\vspace{1em}}
 
 This is to certify that:
 
@@ -165,23 +167,23 @@ Date: \today\\
 %	PREFACE
 %------------------------------------------------------------------------------
 
-\btypeout{Preface}	%What does this line do??
-\addtotoc{Preface}
-\addtocontents{toc}{\vspace{1em}}
-\thispagestyle{plain}
-\null\vfil
-%\vskip 60\p@
-\begin{center}{\huge\bf Preface \par}\end{center}
+% \btypeout{Preface}	%What does this line do??
+% \addtotoc{Preface}
+% % \addtocontents{toc}{\vspace{1em}}
+% \thispagestyle{plain}
+% \null\vfil
+% %\vskip 60\p@
+% \begin{center}{\huge\bf Preface \par}\end{center}
 
-If applicable, a Preface page includes a statement of:
-\begin{itemize}
-	\item Work carried out in collaboration indicating the nature and proportion of the contribution of others and in general terms the portions of the work which the candidate claims as original
-	\item Work submitted for other qualifications
-	\item Work carried out prior to PhD candidature enrolment
-	\item any third party editorial assistance, either paid or voluntary (as limited to the Editing of Research Theses by Professional Editors guidelines) and/or
-	\item Where a substantially unchanged multi-author paper is included in the thesis a statement prepared by the candidate explaining the contributions of all involved. A signed copy by all authors must be included with the submission form.
-\end{itemize}
-\clearpage
+% If applicable, a Preface page includes a statement of:
+% \begin{itemize}
+% 	\item Work carried out in collaboration indicating the nature and proportion of the contribution of others and in general terms the portions of the work which the candidate claims as original
+% 	\item Work submitted for other qualifications
+% 	\item Work carried out prior to PhD candidature enrolment
+% 	\item any third party editorial assistance, either paid or voluntary (as limited to the Editing of Research Theses by Professional Editors guidelines) and/or
+% 	\item Where a substantially unchanged multi-author paper is included in the thesis a statement prepared by the candidate explaining the contributions of all involved. A signed copy by all authors must be included with the submission form.
+% \end{itemize}
+% \clearpage
 
 %------------------------------------------------------------------------------
 %	QUOTATION PAGE
@@ -207,7 +209,8 @@ If applicable, a Preface page includes a statement of:
 
 \setstretch{1.3} % Reset the line-spacing to 1.3 for body text (if it has changed)
 
-\acknowledgements{\addtocontents{toc}{\vspace{1em}}
+\acknowledgements{
+% \addtocontents{toc}{\vspace{1em}}
 
 Firstly, I would like to thank my supervisors Professor Peter Taylor, Professor Aurore Delaigle, and Associate Professor Tim Garoni. You have each been very supportive of me throughout my candidature for which I am most grateful. Your willingness to lend your expertise has been fundamental to the completion of this work. I would also like to thank my fellow office-mates with whom I have enjoyed plenty of laughs over the last four years.
 
@@ -228,6 +231,7 @@ Finally, and most importantly, I would like to give a most sincere and heartfelt
 \pagestyle{fancy} % The page style headers have been "empty" all this time, now use the "fancy" headers as defined before to bring them back
 
 \lhead{\emph{Contents}} % Set the left side page header to "Contents"
+\setcounter{tocdepth}{2}
 \tableofcontents
 
 \lhead{\emph{List of Figures}} % Set the left side page header to "List of Figures"
