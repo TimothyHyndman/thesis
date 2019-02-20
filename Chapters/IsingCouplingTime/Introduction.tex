@@ -68,7 +68,7 @@
 
 	Prior to this thesis, not much has been written about the coupling time for the heat-bath dynamics. In \cite[Conjecture 7.1]{Collevecchio2018-nq}, the authors conjecture that on the $d$-dimensional lattice with side length $L$, $\mathbb{Z}^d_L$, the coupling time of the Ising heat-bath process converges to a Gumbel distribution as $L \rightarrow \infty$ at all temperatures above the critical temperature. This is supplemented by numerical evidence supporting their conjecture. Less directly, we also have the results by Propp and Wilson in \cite[Section 5]{Propp1996-cf} which we can use to relate the \emph{mixing time} of the heat-bath Glauber dynamics with tail bounds of the coupling time. 
 
-	Given a parameter $\epsilon$, a Markov Chain $Y_t$ has mixing time
+	Given a parameter $\epsilon$, a Markov Chain $Y_t$ with stationary distribution $\pi$ has mixing time
 	\begin{equation}
 	\label{eq:mixing time definition}
 		t_\mathrm{MIX}(\epsilon) = \inf\left\{t: d(t) \leq \epsilon \right\}
@@ -77,9 +77,9 @@
 	\begin{equation}
 		d(t) = \max_{y_0 \in \Omega} ||\prob(Y_t \in \cdot | Y_0 = y_0) - \pi ||_\mathrm{TV}
 	\end{equation}
-	and where the total variation distance between two distributions $\nu_1$ and $\nu_2$ is defined as 
+	and where the total variation distance between two probability distributions $\nu_1$ and $\nu_2$ on $\Omega$ is defined by 
 	\begin{equation}
-		||\nu_1 - \nu_2||_\mathrm{TV} = \max_{A \in \Omega}|\nu_1(A) - \nu_2(A)| = \frac{1}{2}\sum_{\sigma \in \Omega} |\nu_1(\sigma) - \nu_2(\sigma)|.
+		||\nu_1 - \nu_2||_\mathrm{TV} = \max_{A \subseteq \Omega}|\nu_1(A) - \nu_2(A)| = \frac{1}{2}\sum_{\sigma \in \Omega} |\nu_1(\sigma) - \nu_2(\sigma)|.
 	\end{equation}
 
 	The results of \cite[Theorem 5]{Propp1996-cf}, within the setting of the discrete time Ising heat-bath process, state that the coupling time, $T$, satisfies
@@ -92,7 +92,7 @@
 	\end{equation}
 	$n = |V|$, and $\mu^k$ is the distribution of the Markov chain at time $k$ when started from a random state from distribution $\mu$. The relationship between $\bar{d}$ and the mixing time is given by the result $d(t) \leq \bar{d}(t) \leq 2d(t)$ \cite[Lemma 4.10]{Levin2009-fo}.
 	
-	On the complete graph, a complete characterisation of the mixing time as a function of temperature is obtained in \cite{Ding2009-du}. On other graphs, the mixing time is treated in \cite{Martinelli1994-bv} for sufficiently high temperature. More recently, a series of papers by Lubetzky and Sly (\cite{Lubetzky2013-yv}, \cite{Lubetzky2015-po}, \cite{Lubetzky2016-wd}, and \cite{Lubetzky2017-nc}) have established much sharper results concerning the mixing time on a wide class of graphs. Their methods form a key part of our proof and will be discussed further in Section \ref{sec:information percolation}.
+	For the Ising heat-bath Glauber dynamics on the complete graph, a complete characterisation of the mixing time as a function of temperature is obtained in \cite{Ding2009-du}. On other graphs, the mixing time is treated in \cite{Martinelli1994-bv} for sufficiently high temperature. More recently, a series of papers by Lubetzky and Sly (\cite{Lubetzky2013-yv}, \cite{Lubetzky2015-po}, \cite{Lubetzky2016-wd}, and \cite{Lubetzky2017-nc}) have established much sharper results concerning the mixing time on a wide class of graphs. Their methods form a key part of our proof and will be discussed further in Section \ref{sec:information percolation}.
 
 	\subsection{Ising heat-bath Glauber dynamics}
 	\label{sec:heat-bath glauber dynamics definition}
@@ -129,7 +129,7 @@
 
 	We note that $f$ is monotonic, in the following sense. We define a partial ordering on $\Omega$ by writing that $\sigma \preceq \omega$ if $\sigma, \omega \in \Omega$ are such that $\sigma[i] \leq \omega[i]$ for all $i \in V$ (and similarly for $\sigma \succeq \omega$). Then for any fixed $i \in V$ and $u \in [0,1]$, if $\sigma \preceq \omega$ then $f(\sigma, i, u) \preceq f(\omega, i, u)$.
 	
-	Let $(\mathscr{V}_k, U_k)_{k \geq 1}$ be an i.i.d. sequence of copies of $(\mathscr{V}, U)$. Define top and bottom discrete time chains, $(\mathscr{T}_t)_{t\in \mathbb{N}}^\mathrm{DIS}$ and $(\mathscr{B}_t)_{t\in \mathbb{N}}^\mathrm{DIS}$, with initial states
+	Let $\mathscr{V}$ and $U$ be independent random variables, with $\mathscr{V}$ uniform on $V$ and $U$ uniform on $[0,1]$. Let $(\mathscr{V}_k, U_k)_{k \geq 1}$ be an i.i.d. sequence of copies of $(\mathscr{V}, U)$. Define top and bottom discrete time chains, $(\mathscr{T}_t)_{t\in \mathbb{N}}^\mathrm{DIS}$ and $(\mathscr{B}_t)_{t\in \mathbb{N}}^\mathrm{DIS}$, with initial states
 	\begin{align}
 		\mathscr{T}_0^\mathrm{DIS} &= (1, 1, \dots, 1)\\
 		\mathscr{B}_0^\mathrm{DIS} &= (-1, -1, \dots, -1)
@@ -138,17 +138,11 @@
 
 	We call the coupled process, $(\mathscr{B}_t^\mathrm{DIS}, \mathscr{F}_t^\mathrm{DIS})_{t\in \mathbb{N}}$, \emph{the discrete Ising heat-bath coupling}. From the monotonicity of $f$, $\mathscr{T}_t^\mathrm{DIS} \succeq \mathscr{B}_t^\mathrm{DIS}$, for all $t \geq 0$.
 
-	There are two ways we can think about extending this process to our continuous-time chain. The first way is to "continuize it at rate n" \cite{Levin2009-fo}. To do this we use the discrete process as defined above but the time between each update is an independent exponential with rate $n$. That is, the continuous-time top and bottom chains are defined as $(\mathscr{B}_t, \mathscr{T}_t) = (\mathscr{B}_{N_t}^\mathrm{DIS}, \mathscr{T}_{N_t}^\mathrm{DIS})$ where $N_t$ is an independent rate $n$ Poisson process. We call $(\mathscr{B}_t, \mathscr{T}_t)_{t\geq 0}$ simply, \emph{the Ising heat-bath coupling}.
+	There are two ways we can think about extending this process to our continuous-time chain. The first way is to ``continuize it at rate n'' \cite{Levin2009-fo}. To do this we use the discrete process as defined above but the time between each update is an independent exponential with rate $n$. That is, the continuous-time top and bottom chains are defined as $(\mathscr{B}_t, \mathscr{T}_t) = (\mathscr{B}_{N_t}^\mathrm{DIS}, \mathscr{T}_{N_t}^\mathrm{DIS})$ where $N_t$ is an independent rate $n$ Poisson process. We call $(\mathscr{B}_t, \mathscr{T}_t)_{t\geq 0}$ simply \emph{the Ising heat-bath coupling}.
 
 	It is perhaps not immediately obvious that the continuous time top and bottom chains have the same dynamics we described in Section \ref{sec:heat-bath glauber dynamics definition}. This leads us to the second way of extending the discrete coupling to continuous time. Instead of updating the whole chain at rate $n$ and choosing a vertex to update on the $k$th update via $\mathcal{V}_k$, we can think of each vertex in the chain as having its own independent rate 1 Poisson clock that tells it when to update. To clarify, whenever the Poisson clock of any vertex $i$ rings at time $t$, we perform the $k$th update of the chain by setting $\mathcal{V}_k = i$ and updating as in the discrete case via $\mathscr{B}_t \leftarrow f(\mathscr{B}_t, \mathcal{V}_k, U_k)$ and $\mathscr{T}_t \leftarrow f(\mathscr{T}_t, \mathcal{V}_k, U_k)$.
 
 	From the memoryless property of the exponential, the sequence $\mathcal{V}_1, \mathcal{V}_2, \dots$ that is generated is i.i.d.\ uniform on $V$. Since we have $n$ vertices updating at rate 1, the whole chain is updating at rate $n$, and so our two methods of extending the discrete coupling to continuous time are equivalent.
-
-		
-	
-
-	
-
 
 	% Let $\mathscr{V}$ and $U$ be independent, with $\mathscr{V}$ uniform on $V$ and $U$ uniform on $[0,1]$. Then, updating our chain at rate $n = |V|$, and performing updates from $\sigma$ to $\sigma'$ according to $\sigma' = f(\sigma, \mathscr{V}, U)$, we recover the dynamics described in Section \ref{sec:heat-bath glauber dynamics definition}.
 
@@ -158,10 +152,43 @@
 	\begin{equation}
 		T = \inf \left\{t : \mathscr{T}_t = \mathscr{B}_t \right\}.	
 	\end{equation}
-	This is the main object of interest for our analysis. Note that the coupling time is not just a property of the Ising heat-bath process, but also of the coupling we have chosen. In Section \ref{sec:information percolation on the cycle} we will make a change to the coupling we use to make the analysis easier. Some care will need to be taken to verify that the coupling time is not affected by this change.
+	This is the main object of interest for our analysis. Note that the coupling time is not just a property of the Ising heat-bath process, but also of the coupling we have chosen. In Section \ref{sec:information percolation on the cycle} we will make a change to the coupling we use to make the analysis easier. Some care will need to be taken to verify that the distribution of the coupling time is not affected by this change.
+
+	
+
+	\subsection{Summary of CFTP}
+	\label{sec:summary of CFTP}
+	We are now in a position to give a brief summary of the CFTP method, as it applies to the Ising heat-bath coupling. It should be noted that we include this summary of CFTP for completeness. None of the details regarding the implementation of CFTP are required outside of this section. It serves only as motivation for the study of the coupling time.
+
+	Let $f: \Omega \times V \times [0,1] \mapsto \Omega$ and $(\mathcal{V}, U)$ be as defined in Section \ref{sec:the coupling time}. Let $(\mathcal{V}_k, U_k)$ be an i.i.d. sequence of copies of $(\mathcal{V}, U)$ and define 
+	\begin{equation}
+		f_{-k} = f(\cdot, \mathcal{V}_k, U_k).
+	\end{equation}
+	We construct the composition
+	\begin{equation}
+		F_{-k} = f_0 \circ f_{-1} \circ \dots \circ f_{-k+1}
+	\end{equation}
+	and define the \emph{backwards coupling time} to be
+	\begin{equation}
+		T_\mathrm{BACK} = \min\{k \in \mathbb{N} : F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0)\}.
+	\end{equation}
+
+	The state $F_{-T_\mathrm{BACK}}(\mathscr{B}_0) = F_{-T_\mathrm{BACK}}(\mathscr{T}_0)$ is the output of the CFTP algorithm, and was shown by Propp and Wilson \cite{Propp1996-cf} to be an exact sample from the chain's stationary distribution. To gain some intuition as to why this is so, observe that by the monotonicity of $f$, if $F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0)$, then $F_{-k}(\sigma) = F_{-k}(\mathscr{B}_0)  = F_{-k}(\mathscr{T}_0)$ for any $\sigma \in \Omega$. If we let $\sigma_\pi$ be a random sample from the stationary distribution $\pi$, then $F_{-k}(\sigma_\pi) = F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0)$ must also have distribution $\pi$, which in our case is given by \eqref{eq:gibbsmeasure}.
+	
+	If we reverse the composition to construct
+	\begin{equation}
+		F_{k} = f_{k} \circ f_{k-1} \circ \dots \circ f_1
+	\end{equation}
+	we can define the usual discrete time coupling time as
+	\begin{equation}
+		T_\mathrm{DIS} =  \min\{k \in \mathbb{N} : F_{k}(\mathscr{B}_0) = F_{k}(\mathscr{T}_0)\}.
+	\end{equation}
+	The forwards coupling time, $T_\mathrm{DIS}$, has the same distribution as the backwards coupling time, $T_\mathrm{BACK}$ \cite{Propp1996-cf}, although in general, $F_{T_\mathrm{DIS}}(\mathscr{B}_0) = F_{T_\mathrm{DIS}}(\mathscr{T}_0)$ does not have distribution $\pi$.
+
+	In practise, one runs the CFTP algorithm by starting both the top and bottom chains from some point in the past to time zero. This is repeated for increasingly more distant times in the past until both chains agree at time 0. The sequence of times at which one restarts this process need not be $-1, -2, -3, \dots$, rather, any monotonic natural sequence $a_1, a_2,\dots$ can  be used. See \cite{Levin2009-fo}, \cite{Haggstrom2002-os}, and \cite{Jerrum1998-ph} for further discussion.
 
 	\subsection{Equivalence of discrete and continuous coupling time}
-	So far we have stated that the running time of CFTP has the same distribution as the coupling time. In fact, we have glossed over one important detail. Namely, CFTP is exclusively run in discrete time, and our coupling time is defined by the continuous time dynamics. Therefore, for our motivation to be reasonable, we would like to show some sort of equivalence between the distributions of the discrete and continuous coupling times. We do this via Proposition \ref{prop:discrete vs continuous distributions}. 
+	At the beginning of this section we stated that the running time of CFTP has the same distribution as the coupling time. In fact, we have glossed over one important detail. Namely, CFTP is exclusively run in discrete time, and our coupling time is defined by the continuous time dynamics. Therefore, for our motivation to be reasonable, we would like to show some sort of equivalence between the distributions of the discrete and continuous coupling times. We do this via Proposition \ref{prop:discrete vs continuous distributions}. 
 
 	\begin{proposition}
 	\label{prop:discrete vs continuous distributions}
@@ -299,7 +326,7 @@
 		Since $x \leq \exp(x) - 1$ for $x \geq 0$, for sufficiently large $n$,
 		\begin{align}
 		2 \frac{\exp\left(-\epsilon^2 a_n^2 (m_n-1) /\left(64b_n^2\right)\right)}{\exp\left(\epsilon^2 a_n^2/\left(64b_n^2\right)\right) - 1} &\leq \frac{128 b_n^2}{a_n^2 \epsilon^2} \exp\left(-\epsilon^2 a_n^2 (m_n-1) /\left(64b_n^2\right)\right)\\
-		&\leq 256 \frac{b_n^2}{a_n^2 \epsilon^2} \exp\left(-m_n \epsilon^2 a_n^2/\left(64b_n^2\right)\right)
+		&\leq 256 \frac{b_n^2}{a_n^2 \epsilon^2} \exp\left(-m_n \epsilon^2 a_n^2/\left(64b_n^2\right)\right).
 		\end{align}
 		%where we have again used that $a_n < b_n$. 
 		By \eqref{eq:m_n a_n b_n constraint}, this goes to zero as $n \rightarrow \infty$.
@@ -334,44 +361,12 @@
 	% for some distribution $G(z)$. The following Lemma shows that if this is the case, in order for either \eqref{eq:Y_n goes to zero} or \eqref{eq:Z_n goes to zero} to hold, it is enough that $b_n$ dominates $a_n$.
 
 	\begin{remark}
-		We apply Proposition \ref{prop:discrete vs continuous distributions} to the coupling time of the Glauber heat-bath dynamics in the following way. Take $N_n$ to be the discrete coupling time on a graph of size $n$. The continuous time coupling time is given by $T(N_n)$. Note that $N_n \geq m_n = n$ since each vertex must be updated at least once for coupling to occur. Finally Theorems \ref{thm:Coupling Distribution on Cycle} and \ref{thm:Coupling Distribution on transitive graph} establish the limiting distribution of the continuous-time coupling time using scaling and shifting sequences $a_n$ and $b_n$ whose ratio is 
+		We apply Proposition \ref{prop:discrete vs continuous distributions} to the coupling time of the Ising heat-bath dynamics in the following way. Take $N_n$ to be the discrete coupling time on a graph of size $n$. The continuous time coupling time is given by $T(N_n)$. Note that $N_n \geq m_n = n$ since each vertex must be updated at least once for coupling to occur. Finally Theorems \ref{thm:Coupling Distribution on Cycle} and \ref{thm:Coupling Distribution on transitive graph} establish the limiting distribution of the continuous-time coupling time using scaling and shifting sequences $a_n$ and $b_n$ whose ratio is 
 		\begin{equation}
-			\frac{b_n}{a_n} = \log n
+			\frac{b_n}{a_n} = \mathcal{O}(\log n)
 		\end{equation}
 		and thus \eqref{eq:m_n a_n b_n constraint} is satisfied. This means that, appropriately scaled, the discrete-time coupling time has the same limiting distribution as the continuous-time coupling time.
 	\end{remark}
-
-	\subsection{Summary of CFTP}
-	\label{sec:summary of CFTP}
-	We are now in a position to give a brief summary of the CFTP method, as it applies to the Ising heat-bath coupling. It should be noted that we include this summary of CFTP for completeness. None of the details regarding the implementation of CFTP are required outside of this section. It serves only as motivation for the study of the coupling time.
-
-	Let $f: \Omega \times V \times [0,1] \mapsto \Omega$ and $(\mathcal{V}, U)$ be as defined in Section \ref{sec:the coupling time}. Let $(\mathcal{V}_k, U_k)$ be an i.i.d. sequence of copies of $(\mathcal{V}, U)$ and define 
-	\begin{equation}
-		f_{-k} = f(\cdot, \mathcal{V}_k, U_k).
-	\end{equation}
-	We construct the composition
-	\begin{equation}
-		F_{-k} = f_0 \circ f_{-1} \circ \dots \circ f_{-k+1}
-	\end{equation}
-	and define the \emph{backwards coupling time} to be
-	\begin{equation}
-		T_\mathrm{BACK} = \min\{k \in \mathbb{N} : F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0)\}.
-	\end{equation}
-
-	The state $F_{-T_\mathrm{BACK}}(\mathscr{B}_0) = F_{-T_\mathrm{BACK}}(\mathscr{T}_0)$ is the output of the CFTP algorithm, and was shown by Propp and Wilson \cite{Propp1996-cf} to be an exact sample from the chain's stationary distribution. To gain some intuition as to why this is so, observe that by the monotonicity of $f$, if $F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0)$, then $F_{-k}(\sigma) = F_{-k}(\mathscr{B}_0)$ for any $\sigma \in \Omega$. If we let $\sigma_\pi$ be a random sample from the stationary distribution $\pi$, then $F_{-k}(\mathscr{B}_0) = F_{-k}(\mathscr{T}_0) = F_{-k}(\sigma_\pi)$ must also have distribution $\pi$, which in our case is given by \eqref{eq:gibbsmeasure}.
-	
-	If we reverse the composition to construct
-	\begin{equation}
-		F_{k} = f_{k} \circ f_{k-1} \circ \dots \circ f_1
-	\end{equation}
-	we can define the usual discrete time coupling time as
-	\begin{equation}
-		T_\mathrm{DIS} =  \min\{k \in \mathbb{N} : F_{k}(\mathscr{B}_0) = F_{k}(\mathscr{T}_0)\}.
-	\end{equation}
-	The forwards coupling time, $T_\mathrm{DIS}$, has the same distribution as the backwards coupling time, $T_\mathrm{BACK}$ \cite{Propp1996-cf}, although in general, $F_{T_\mathrm{DIS}}(\mathscr{B}_0) = F_{T_\mathrm{DIS}}(\mathscr{T}_0)$ does not have distribution \eqref{eq:gibbsmeasure}.
-
-	In practise, one runs the CFTP algorithm by starting both the top and bottom chains from some point in the past to time zero. This is repeated for increasingly more distant times in the past until both chains agree at time 0. The sequence of times at which one restarts this process need not be $-1, -2, -3, \dots$, rather, any monotonic natural sequence $a_1, a_2,\dots$ can  be used. See \cite{Levin2009-fo}, \cite{Haggstrom2002-os}, and \cite{Jerrum1998-ph} for further discussion.
-
 	
 \section{Information percolation}
 \label{sec:information percolation}
@@ -401,10 +396,10 @@
 
 	Previous to \cite{Lubetzky2016-wd}, the best result known for general graphs was that cutoff occurs with a $\mathcal{O}(1)$ window in the simple case when $\beta = 0$ \cite{Aldous1983-gz}. However, no results were known for $\beta > 0$, despite a conjecture by Peres in 2009 \cite[Section 23.2]{Levin2009-fo} that cutoff occurs on any sequence of transitive graphs when the mixing time is of order $\log n$ (as one would expect when $\beta < c_0$ for some $c_0 > 0$ that depends on the sequence of graphs). On lattices, the first results to appear were due to Lubetzky and Sly in 2013 who established cutoff up to the critical temperature for dimensions $d \leq 2$ with a $\mathcal{O}(\log \log n)$ window \cite{Lubetzky2013-yv}. 
 
-	Using information percolation, Lubetzky and Sly proved the existence of cutoff for the continous time Glauber dynamics for the Ising model with an $\mathcal{O}(1)$ window on $\mathbb{Z}^d$ for all temperatures up to the critical temperature. In a companion paper \cite{Lubetzky2017-nc}, they extended this result to include any graph with maximum degree $d$ provided that $\beta < \kappa/d$ for some absolute constant $\kappa$. Recently, information percolation has also been used to establish cutoff for the Swendsen-Wang dynamics on the lattice \cite{Nam2018-io}, suggesting that the technique is effective on a broader class of problems than simply Glauber dynamics for Ising.
+	Using information percolation, Lubetzky and Sly proved the existence of cutoff for the continuous time Glauber dynamics for the Ising model with an $\mathcal{O}(1)$ window on $\mathbb{Z}^d$ for all temperatures up to the critical temperature. In a companion paper \cite{Lubetzky2017-nc}, they extended this result to include any graph with maximum degree $d$ provided that $\beta < \kappa/d$ for some absolute constant $\kappa$. Recently, information percolation has also been used to establish cutoff for the Swendsen-Wang dynamics on the lattice \cite{Nam2018-io}, suggesting that the technique is effective on a broader class of problems than simply Glauber dynamics for Ising.
 	
 	\subsection{The framework}
-	At its core, information percolation is a way of tracking how the dependencies of the final spins of the Glauber heat-bath dynamics percolate through the graph over time. These dependencies are traced backwards through time from some designated time $t_*$ on the space-time slab $V \times [0, t_*]$ to create the update history (see Figure \ref{fig:typical percolation} for example). These histories are made in such a way so that, if for every $j \in V$ no path exists connecting $(i, t_*)$ to $(j, 0)$, then the spin of $i$ does not depend on the initial state (and thus at time $t_*$ vertex $i$ takes $+1$ and $-1$ spins with equal probability by symmetry). The main constructs used to create this history are the update sequence, and the update support function which we will now define.
+	At its core, information percolation is a way of tracking how the dependencies of the final spins of the Glauber heat-bath dynamics percolate through the graph over time. These dependencies are traced backwards through time from some designated time $t_*$ on the space-time slab $V \times [0, t_*]$ to create the update history (see Figure \ref{fig:typical percolation} for example). These histories are made in such a way so that, if for every $j \in V$ no path exists connecting $(i, t_*)$ to $(j, 0)$, then the spin of $i$ does not depend on the initial state (and thus by symmetry, at time $t_*$ vertex $i$ takes $+1$ and $-1$ spins with equal probability). The main constructs used to create this history are the update sequence, and the update support function which we will now define.
 
 	\begin{figure}
 		\centering
@@ -416,7 +411,7 @@
 	\subsubsection{The update sequence}
 	Recalling our random mapping representation from Section \ref{sec:the coupling time}, we can encode an update of our coupled process with the tuple $(\mathcal{V}, U, S)$, where $S$ is the time of the update, $\mathcal{V}$ is the vertex that is updated, and $U$ is the value of the uniform random variable that tells us whether $\mathcal{V}$ is a plus or minus according to \eqref{eq:plusorminusrules}. The \emph{update sequence} along an interval $(t_0, t_1]$ is the set of these tuples with $t_0 < S \leq t_1$, ordered by $S$ decreasing from $t_1$. 
 
-	Let $(Y_t)_{t \geq 0}$ be a copy of the continuous-time heat-bath Glauber dynamics starting in some state $Y_0 \in \Omega$. So $Y_t = \mathscr{T}_t$ if $Y_0 = (1, 1, \dots, 1)$ and $Y_t = \mathscr{B}_t$ if $Y_0 = (-1, -1, \dots, -1)$. Given the state of $Y$ at time $t_0$, $Y_{t_0}$, the update sequence along $(t_0, t_1]$ contains all the information we need to contruct $Y_{t_1}$. In particular, given the update sequence along the interval $(0, t_1]$, $Y_{t_1}$ is a deterministic function of $Y_0$.
+	Let $(Y_t)_{t \geq 0}$ be a copy of the continuous-time heat-bath Glauber dynamics starting in some state $Y_0 \in \Omega$. So $Y_t = \mathscr{T}_t$ if $Y_0 = (1, 1, \dots, 1)$ and $Y_t = \mathscr{B}_t$ if $Y_0 = (-1, -1, \dots, -1)$. Given the state of $Y$ at time $t_0$, $Y_{t_0}$, the update sequence along $(t_0, t_1]$ contains all the information we need to construct $Y_{t_1}$. In particular, given the update sequence along the interval $(0, t_1]$, $Y_{t_1}$ is a deterministic function of $Y_0$.
 
 	\subsubsection{The update support function}
 	\label{sec: definition update support function}
@@ -517,7 +512,7 @@
 			-1	& U > \theta/2.
 		\end{cases}
 	\end{equation}
-	We can therefore represent each update $(\mathcal{V}, U, t)$ in the update sequence by placing at $(\mathcal{V}, t)$ one of the symbols $+$, $\vee$, $\wedge$, or $-$ choosen according to $U$. We then trace back from time $t_*$, branching to either side when we encounter a $\vee$ or $\wedge$, and terminating whenever we encounter a $+$ or $-$.
+	We can therefore represent each update $(\mathcal{V}, U, t)$ in the update sequence by placing at $(\mathcal{V}, t)$ one of the symbols $+$, $\vee$, $\wedge$, or $-$ chosen according to $U$. We then trace back from time $t_*$, branching to either side when we encounter a $\vee$ or $\wedge$, and terminating whenever we encounter a $+$ or $-$.
 
 	\begin{figure}
 		\centering
@@ -563,7 +558,7 @@
 	\begin{equation}
 		W = X_i + U_i + Z_i + W_i.
 	\end{equation}
-	For our approximation to be good, we want $B_i$ to contain those $X_j$ which strongly influence $X_i$, $D_i$ to contain those $X_j$ which have a neglibible effect on $X_i$ and $C_i$ to contain the remainder.
+	For our approximation to be good, we want $B_i$ to contain those $X_j$ which strongly influence $X_i$, $D_i$ to contain those $X_j$ which have a negligible effect on $X_i$ and $C_i$ to contain the remainder.
 
 	Using $\indicator[\cdot]$ to denote the indicator function, we now define the canonical parameters $\lambda$ and $\vect{\mu}$ by
 	\begin{align}
