@@ -26,14 +26,15 @@
 	The problem is one of \emph{deconvolution}, the recovery of the distribution, $F_X$, or density, $f_X$, of some random variable $X$, from measurements of
 	\begin{equation}
 		W = X + U
+		\label{eq:W=X+U}
 	\end{equation}
-	where the measurement error $U$ is independent of $X$. 
+	where the measurement error $U$ is independent of $X$, and $U$ and $X$ are unobserved. %We use $\phi_X$ and $\phi_U$ to denote the characteristics functions of $X$ and $U$, and $F_X$ and $F_U$ for the distributions. We use $f_X$ and $f_U$ for the densities if they exist.
 
-	In the case that we know the distribution of $U$, Carroll and Hall \cite{Carroll1988-aj} and Carroll and Stefanski \cite{Stefanski1990-uo} proposed a deconvolution kernel density estimator of $f_X$. If the distribution of $U$ is unknown, then we may hope to estimate it from replicate measurements, $W_{jk} = X_j + U_{jk}$, for $1 \leq k \leq N_j$ and $1 \leq j \leq n$. Delaigle, Hall, and Meister provide an estimator for $f_X$ in this scenario. However, up until Delaigle's and Hall's 2016 paper, ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' \cite{Delaigle2016-la}, there had been no nonparametric method to estimate the distribution of $X$ when we had no data on the distribution of $U$ (see the discussion in Section 1 of \cite{Delaigle2016-la}).
+	In the case that we know the distribution of $U$, Carroll and Hall \cite{Carroll1988-aj} and Stefanski and Carroll \cite{Stefanski1990-uo} proposed a deconvolution kernel density estimator of $f_X$. If the distribution of $U$ is unknown, then it is often possible to estimate it from replicate measurements, $W_{jk} = X_j + U_{jk}$, for $1 \leq k \leq N_j$ and $1 \leq j \leq n$, where the $U_{jk}$'s are totally independent. Delaigle, Hall, and Meister provide an estimator for $f_X$ in this scenario. However, up until Delaigle's and Hall's 2016 paper, ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' \cite{Delaigle2016-la}, there had been no nonparametric method to estimate the distribution of $X$ when we had no data on the distribution of $U$ (see the discussion in Section 1 of \cite{Delaigle2016-la}).
 
 	% [BRIEF SUMMARY OF LITERATURE]
 
-	In this chapter, we focus on the methods introduced in this paper. We will start in Section \ref{sec:summary of basic deconvolution} by summarizing deconvolution methods for when the error distribution is known, or estimated from replicates. This will serve as a basis for a discussion on Delaigle's and Hall's ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' in Section \ref{sec:summary of delaigle hall}. In Section \ref{sec:deconvolution empirical results}, we will empirically demonstrate that these methods produce a similar phenomenon to the one encountered when using maximum likelihood location mixtures, and we will explore how this phenomenon manifests under various conditions. We will also point out how we can take advantage of this phenomenon. 
+	In this chapter, we focus on the methods introduced in this paper. We will start in Section \ref{sec:summary of basic deconvolution} by summarizing deconvolution methods for when the error distribution is known, or estimated from replicates. This will serve as a basis for a discussion on Delaigle's and Hall's \cite{Delaigle2016-la} paper in Section \ref{sec:summary of delaigle hall}. In Section \ref{sec:deconvolution empirical results}, we will empirically demonstrate that these methods produce a similar phenomenon to the one encountered when using maximum likelihood location mixtures, and we will explore how this phenomenon manifests under various conditions. We will also point out how we can take advantage of this phenomenon. 
 	% Finally, in Section \ref{sec:deconvolution observations and results}, we will make some general observations about some similarities between our deconvolution problem, and that of maximum likelihood mixtures. 
 	Finally, in Section \ref{sec:deconvolution observations and results}, we will make a general observation about the deconvolution problem, and suggest that its behaviour might not be totally unexpected.
 
@@ -41,11 +42,8 @@
 \subsection{Prior deconvolution methods}
 \label{sec:summary of basic deconvolution}
 % \subsection{PhiU known}
-	We start with the estimator of Stefanski and Carroll in \cite{Stefanski1990-uo}. In this scenario, we let $X$ and $U$ be independent random variables with probability density functions $f_X$ and $f_U$ respectively. We observe a set of n independent observations, $\{W_j\}_{j = 1}^n$, where each $W_j$ is an observation of 
-	\begin{equation}
-		W = X + U.
-	\end{equation}
-	Furthermore, we assume that $f_U$ is known. Given this information, the goal is to estimate $f_X$.
+	We start with the estimator of Stefanski and Carroll in \cite{Stefanski1990-uo}. In this scenario, we let $X$ and $U$ be independent random variables with probability density functions $f_X$ and $f_U$ respectively. We observe a set of $n$ independent observations, $\{W_j\}_{j = 1}^n$, where each $W_j$ is an observation of the $W$ of \eqref{eq:W=X+U}.
+	Furthermore, we assume that $f_U$ is known. Given this information, the goal is to estimate $f_X$ from the $W_j$'s.
 
 	The estimator makes use of characteristic functions. A random variable $X$ with density $f_X$ has characteristic function
 	\begin{equation}
@@ -70,9 +68,9 @@
 	\begin{align}
 		\sup_t |\phi_K(t) / \phi_U(t / h) | < \infty, &&\int|\phi_K(t) / \phi_U(t / h)| \intd t < \infty,
 	\end{align}
-	for any fixed $h > 0$ (we impose these conditions make various functions integrable). We may estimate the density of $W$ via the usual kernel density estimator
+	for any fixed $h > 0$ (we impose these conditions so as to make various functions integrable). We may estimate the density of $W$ via the usual kernel density estimator
 	\begin{equation}
-		\hat{f}_W(t) = \frac{1}{n h} \sum_{j = 1}^n K((W_j - x)/h),
+		\hat{f}_W(x) = \frac{1}{n h} \sum_{j = 1}^n K((x - W_j)/h),
 	\end{equation}
 	which has characteristic function
 	\begin{equation}
@@ -94,16 +92,19 @@
 	\end{equation}
 
 % \subsection{PhiU est from replicates}
-	If the distribution of $U$ is unknown, we may still be able to estimate it if replicate measurements are present. Methods for deconvolution with the presence of replicates are presented in \cite{Li1998-mj}, \cite{Lin2006-mm}, \cite{Delaigle2008-hl}, and also \cite{McIntyre2011-fg} in the case of heteroscedastic errors. Here we look at the estimator of Delaigle, Hall, and Meister \cite{Delaigle2008-hl} as it has the most similarities with the estimator of interest in this chapter.
+	If the distribution of $U$ is unknown, it is often possible to estimate it if replicate measurements are present. Methods for deconvolution with the presence of replicates are presented in \cite{Li1998-mj}, \cite{Lin2006-mm}, \cite{Delaigle2008-hl}, and also \cite{McIntyre2011-fg} in the case of heteroscedastic errors. Here we look at the estimator of Delaigle, Hall, and Meister \cite{Delaigle2008-hl} as it has the most similarities with the estimator of interest in this chapter.
 
 	In this setting, we measure
 	\begin{align}
-		W_{jk} = X_j + U_j && j = 1, \dots, n \text{ and } k = 1, \dots, N_j
+		W_{jk} = X_j + U_{jk} && j = 1, \dots, n \text{ and } k = 1, \dots, N_j
 	\end{align}
-	where the $X_j$ and $U_{jk}$ are independent and are identically distributed as $X$ and $U$ respectively. A consistent estimator of $\phi_U$ is
+	where the $X_j$ and $U_{jk}$ are independent and are identically distributed as $X$ and $U$ respectively. A consistent estimator of $\phi_U(t)$ is
 	\begin{equation}
-		\hat{\phi}_U(t) = \left|\frac{1}{N} \sum_{j = 1}^n \sum_{(k1, k2) \in \mathscr{S}_j} \cos \left(t (W_{jk_1} - W_{jk_2}\right)\right|^{1/2}.
+		\hat{\phi}_U(t) = \left|\frac{1}{N} \sum_{j = 1}^n \sum_{(k_1, k_2) \in \mathscr{S}_j} \cos \left(t (W_{jk_1} - W_{jk_2})\right)\right|^{1/2},
+		\label{eq:phi_U estimator}
 	\end{equation}
+	where $\mathscr{S}_j$ is the set of $N_j(N_j - 1)/2$ pairs $(k_1, k_2)$ with $1 \leq k_1 < k_2 \leq N_j$, and $N = \sum_{j=1}^n N_j(N_j - 1)/2$ is the total number of terms inside \eqref{eq:phi_U estimator}.
+	%
 	In light of \eqref{eq:standard deconvolution estimator}, this suggests an estimator of $f_X$ given by 
 	\begin{equation}
 	\label{eq:replicates estimator}
@@ -121,11 +122,11 @@
 	% \begin{equation}
 	% 	\hat{L}\left(u\right) = \frac{1}{2\pi} \int \euler^{-itu} \phi_K(t) / (\hat{\phi}_U(t/h) + \rho) \intd t,
 	% \end{equation}
-	$h > 0$ is a bandwidth, $\rho \geq 0$ is a ridge parameter, and $K$ is a symmetric kernel density with compact support, whose characteristic function, $\phi_K$, has compact support.
+	$h > 0$ is a bandwidth, $\rho \geq 0$ is a ridge parameter, $M = \sum_j N_j$, and $K$ is a symmetric kernel function, whose characteristic function, $\phi_K$, has compact support.
 
-	[WHY COMPACT SUPPORT?]
+	% [WHY COMPACT SUPPORT?]
 
-	The presence of the ridge parameter is to account for potential fluctuations in $\hat{\phi}_U$ that could cause the denominator in \eqref{eq:replicates estimator} to be zero, or too close to zero. We may alternatively use another method to prevent $\hat{\phi}_U$ from getting too close to zero such as replacing $\hat{\phi}_U(t)$ with some other function for $|t|$ larger than some threshold $t^*$.
+	The presence of the ridge parameter is to account for potential fluctuations in $\hat{\phi}_U$ that could cause the denominator in \eqref{eq:replicates estimator} to be zero, or too close to zero. We may alternatively use another method to prevent $\hat{\phi}_U(t)$ from getting too close to zero such as replacing $\hat{\phi}_U(t)$ with some other function for $|t|$ larger than some threshold $t^*$.
 
 	A similar approach could be used in scenarios where we are able to sample directly from the distribution of $U$. See also \cite{Diggle1993-jy} and \cite{Neumann1997-cr} for further discussion of cases where samples of the errors are available.
 
@@ -134,20 +135,22 @@
  
 \section{Method for deconvolution when the error is unknown}
 \label{sec:summary of delaigle hall}
-	Delaigle's and Hall's 2016 paper, ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' \cite{Delaigle2016-la}, presents a non-parametric deconvolution estimator for when the error distribution is unknown, and we do not have access to replicates or samples from the error distribution. This is unusual in deconvolution problems. As in the methods described above, deconvolution methods usually require assumptions about the shape or scale of the error distribution, or rely on additional samples to estimate it. 
+	[SHOULD PROBABLY MENTION SCHENNECH'S PAPER ON REGRESSION AS IT HAS SIMILARITIES BUT IT NEEDS MORE DATA (NEEDS Y OF A REGRESSION)]
+
+	Delaigle's and Hall's 2016 paper \cite{Delaigle2016-la}, presents a non-parametric deconvolution estimator for when the error distribution is unknown, and we do not have access to replicates or samples from the error distribution. This is unusual in deconvolution problems. As in the methods described above, deconvolution methods usually require assumptions about the shape or scale of the error distribution, or rely on additional observations to estimate it. 
 
 	In this section we summarise the estimator of \cite{Delaigle2016-la}, and discuss some practicalities that arise in the implementation. 
 
 	\subsection{Problem Setup}
-	Suppose that we have $n$ observations of
+	Suppose that we observe $(W_1, \dots, W_n)$, where
 	\begin{align}
 		W_j &= X_j + U_j &&j = 1, \dots, n
 	\end{align}
-	where $X_j$ and $U_j$ are independent and identically distributed as $X$ and $U$ respectively, and $X$ and $U$ are independent. We use $\phi_X$ and $\phi_U$ to denote the characteristics functions of $X$ and $U$, and $F_X$ and $F_U$ for the distributions. We use $f_X$ and $f_U$ for the densities if they exist.
+	and $X_j$ and $U_j$ are independent and identically distributed as $X$ and $U$ respectively, and $X$ and $U$ are independent. 
 
 	% Suppose also that we do not know any information concerning the distribution of $U$. This is unusual in deconvolution problems; we usually assume that we either know the distribution of $U$, at least up to a scaling factor, or that replicate measurements of the $W_j$s are available for the same $X_j$. 
 
-	We still make some assumptions about $U$ and its characteristic function, $\phi_U$. These are 
+	We need the following assumptions about $U$ and its characteristic function, $\phi_U$:
 	\begin{assumption}
 	\label{assump:phiU real}
 		$\phi_U$ is real-valued.
@@ -157,11 +160,11 @@
 		For $U$ discrete, $\phi_U$ is non-negative and is zero at at most a countable number of points, and for $U$ continuous, $\phi_U$ is strictly positive on the whole real line.
 	\end{assumption}
 
-	Assumption \ref{assump:phiU real} is equivalent to assuming that $F_U$ is symmetric. Assumption \ref{assump:phiU non zero} is a standard assumption in deconvolution problems.
+	Assumption \ref{assump:phiU real} is equivalent to assuming that $F_U$ is symmetric. Assumption \ref{assump:phiU non zero} is a standard assumption in deconvolution problems. These conditions are mild and some common distributions which satisfy them include the normal distribution, the Laplace distribution, and the Cauchy distribution.
 
-	[WHAT DOES $\phi_U \geq 0$ MEAN FOR $f_U$]
+	% [WHAT DOES $\phi_U \geq 0$ MEAN FOR $f_U$]
 
-	We also make assumptions on the distribution of $X$. 
+	We also make the following assumptions on the distribution of $X$:
 	% We write the convolution of distributions $F$ and $G$ as
 	% \begin{equation}
 	% 	(F \circ G)(x) = \int F(x - u) \intd G(u).
