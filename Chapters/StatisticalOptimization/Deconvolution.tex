@@ -160,7 +160,7 @@
 		For $U$ discrete, $\phi_U$ is non-negative and is zero at at most a countable number of points, and for $U$ continuous, $\phi_U$ is strictly positive on the whole real line.
 	\end{assumption}
 
-	Assumption \ref{assump:phiU real} is equivalent to assuming that $F_U$ is symmetric. Assumption \ref{assump:phiU non zero} is a standard assumption in deconvolution problems. These conditions are mild and some common distributions which satisfy them include the normal distribution, the Laplace distribution, and the Cauchy distribution.
+	Assumption \ref{assump:phiU real} is equivalent to assuming that $F_U$ is symmetric. Assumption \ref{assump:phiU non zero} is a standard assumption in deconvolution problems. These conditions are mild and some common distributions which satisfy them when centred around zero include the normal distribution, the Laplace distribution, and the Cauchy distribution.
 
 	% [WHAT DOES $\phi_U \geq 0$ MEAN FOR $f_U$]
 
@@ -204,7 +204,7 @@
 	\begin{align}
 		\rho_W = \rho_X.
 	\end{align}
-	In fact, all random variables of the form $V = X + Z$, where $Z$ is symmetric and independent of $X$, will have phase function $\rho_W$, and the variance of these will satisfy $\var(V) \geq \var(X)$. This motivates the final assumption we make for $X$.
+	In fact, all random variables of the form $V = X + Z$, where $Z$ is symmetric and independent of $X$, will have phase function $\rho_W$, and the variance of these will satisfy $\var(V) \geq \var(X)$. This motivates the final assumption we make for $X$:
 
 	\begin{assumption}
 	\label{assump:X has smallest variance}
@@ -241,34 +241,47 @@
 	\begin{equation}
 		T(F) = \int_{-\infty}^\infty \left| \hat{\phi}_W(t) |\phi_F(t)| - \left|\hat{\psi}_W(t)\right|^{1/2} \phi_F(t) \right|^2 w_1(t) \intd t,
 	\end{equation}
-	where $w_1(t)$ is some non-negative weight function that assigns greater weight when $|t|$ is small. We also expect that $\hat{\phi}_U = \hat{\phi}_W / \phi_F$ should be symmetric, and have magnitude less than or equal to 1. We try to satisfy this by constructing penalties which we desire to be small,
+	where $w_1(t)$ is some non-negative symmetric weight function that assigns greater weight when $|t|$ is small. We also expect that $\hat{\phi}_U = \hat{\phi}_W / \phi_F$ should be real-valued as per Assumption \ref{assump:phiU real}, and have magnitude less than or equal to 1 as all characteristic functions do. For $\hat{\phi}_U$ to be real-valued we require that
+	\begin{equation}
+		\Im \left( \frac{\hat{\phi}_W}{\phi_F} \right) = 0
+	\end{equation}
+	where we use $\Im(z)$ to denote the imaginary part of $z$. Using $\bar{z}$ to denote the complex conjugate of $z$, we can replace this by,
+	\begin{equation}
+		\Im \left(\frac{\hat{\phi}_W \bar{\phi}_F}{|\phi_F|^2} \right) = 0,
+	\end{equation}
+	or again,
+	\begin{equation}
+		\Im \left(\hat{\phi}_W \bar{\phi}_F\right) = 0.
+	\end{equation}
+	In an attempt to satisfy this, we construct the following penalty which we desire to be small:
+	% We try to satisfy this by constructing penalties which we desire to be small,
 	\begin{align}
-		P1(F) = \int \Im \left(\hat{\phi}_W \bar{\phi}_F\right) w_2(t)\intd t
+		P_1(F) = \int \Im \left(\hat{\phi}_W \bar{\phi}_F\right) w_2(t)\intd t,
 		\label{eq:penalty1}
 	\end{align}
-	and
+	where $w_2(t)$ is some non-negative symmetric weight function with bounded support.	To try to force $\hat{\phi}_U$ to have magnitude less than or equal to 1, we use the penalty
 	\begin{align}
-		P2(F) = \int \left(\hat{\phi}_U(t) - 1\right) \indicator_{\hat{\phi}_U(t) > 1}  w_2(t) \intd t
+		P_2(F) = \int \left(|\hat{\phi}_U(t)| - 1\right) \indicator_{\{|\hat{\phi}_U(t)| > 1\}}  w_2(t) \intd t.
 		\label{eq:penalty2}
 	\end{align} 
-	where $\bar{a}$ represents the complex conjugate of $a$ and $w_2(t)$ is some non-negative weight function with bounded support.
 
 	Overall, the method is as follows. Let $\mathscr{F}$ be the set of distributions over which we search for our estimator (for example, discrete distributions with no more than $m$ points of support). Find
 	\begin{equation}
-		F_0 = \argmin_{F \in \mathscr{F}} \left[T(F) + \lambda_1 P1(F) + \lambda_2 P2(F)\right],
+		F_0 = \argmin_{F \in \mathscr{F}} \left[T(F) + \lambda_1 P_1(F) + \lambda_2 P_2(F)\right],
 		\label{eq:objective 1}
 	\end{equation}
 	for some choice of scaling factors $\lambda_1$ and $\lambda_2$, and set
 	\begin{align}
-		T_\mathrm{min} &= T(F_0)\\
-		P1_\mathrm{min} &= P1(F_0)\\
-		P2_\mathrm{min} &= P2(F_0).
+		T^\mathrm{min} &= T(F_0)\\
+		P_1^\mathrm{min} &= P_1(F_0)\\
+		P_2^\mathrm{min} &= P_2(F_0).
 	\end{align}
 	Then our estimator for $F_X$ is
 	\begin{equation}
 		\hat{F}_X = \argmin_{F \in \mathscr{F}} \var{F}
+		\label{eq:objective 2}
 	\end{equation}
-	subject to the constraints $T(F) \leq T_\mathrm{min}$, $P1(F) \leq P1_\mathrm{min}$, and $P2(F) \leq P2_\mathrm{min}$.
+	subject to the constraints $T(F) \leq T^\mathrm{min}$, $P_1(F) \leq P_1^\mathrm{min}$, and $P_2(F) \leq P_2^\mathrm{min}$.
 	
 	
 	% [UP TO HERE ]
@@ -279,25 +292,25 @@
 
 	\subsection{Numerical Implementation}
 
-	Delaigle and Hall suggest performing this optimization problem by approximating $F_X$ with a discrete distribution on $m$ points. They suggest choosing the location of the probability masses, $\vect{\theta} = (\theta_1, \dots, \theta_m)$, to be fixed and distributed uniformly but randomly along $[\min(W_i), \max(W_i)]$ and letting the probability weights $\vect{p} = (p_1, \dots p_m)$ be the variables over which we find the solution. We will denote by $F_{\vect{\theta}, \vect{p}}$ the distribution that places mass $p_j$ at $\theta_j$ for $j = 1,\dots, m$. Its characteristic function is given by
+	Delaigle and Hall \cite{Delaigle2016-la} suggest performing this optimization problem by approximating $F_X$ with a discrete distribution on $m$ points, allowing $m$ potentially to diverge with the sample size. They suggest choosing the locations of the probability masses of that discrete distribution, $\vect{\theta} = (\theta_1, \dots, \theta_m)$, to be distributed uniformly but randomly along $[\min(W_i), \max(W_i)]$ and letting the corresponding probability weights $\vect{p} = (p_1, \dots p_m)$ be the variables over which we find the solution of \eqref{eq:objective 1} -- \eqref{eq:objective 2}. We will denote by $F_{\vect{\theta}, \vect{p}}$ the distribution that places mass $p_j$ at $\theta_j$ for $j = 1,\dots, m$. Its characteristic function is given by
 	\begin{equation}
-		\phi_{\vect{\theta}, \vect{p}} = \sum_{j = 1}^m p_j \exp(it\theta_j)
+		\phi_{\vect{\theta}, \vect{p}}(t) = \sum_{j = 1}^m p_j \exp(it\theta_j)
 	\end{equation}
 	and its phase function by
 	\begin{equation}
-		\rho_{\vect{\theta}, \vect{p}} = \frac{ \sum_{j = 1}^m p_j \exp(it\theta_j)}{\left| \sum_{j = 1}^m p_j \exp(it\theta_j)\right|}.
+		\rho_{\vect{\theta}, \vect{p}}(t) = \frac{ \sum_{j = 1}^m p_j \exp(it\theta_j)}{\left| \sum_{j = 1}^m p_j \exp(it\theta_j)\right|}.
 	\end{equation}
 	It has variance
 	\begin{equation}
 		\var(F_{\vect{\theta}, \vect{p}}) = \sum_{j = 1}^m p_j \theta_j^2 - \left( \sum_{j=1}^m p_j \theta_j \right)^2.
 	\end{equation}
 
-	For the weight function, $w_1(t)$, Delaigle and Hall use the Epanechnikov kernel, rescaled to an interval $[-t^*, t^*]$ where $t^*$ is the smallest $t > 0$ such that 
+	For the weight function, $w_1(t)$, Delaigle and Hall \cite{Delaigle2016-la} use the Epanechnikov kernel, rescaled to an interval $[-t^*, t^*]$. To choose $t^*$, they pointed out that since $\hat{\phi}_W$ is an unbiased estimator for $\phi_W$, and since it has variance no more than $1/n$, we can expect it to be a reasonable estimator when $|\hat{\phi}_W(t)| \geq n^{-1/4}$. They therefore chose $t^*$ to be the smallest $t > 0$ such that 
 	\begin{equation}
 	\label{eq:define t star}
 		\left|\hat{\phi}_W(t)\right| \leq n^{-1/4}.
 	\end{equation}
-	For the weight function in the penalty terms, they use $w_2(t) = \indicator_{|t| \leq t^*} (\delta)^{-1}$, where $\delta$ is the distance between consecutive points in their discretization of the integrals in \eqref{eq:penalty1} and \eqref{eq:penalty2}. They use $\lambda_1 = \lambda_2 = 500$ for the scaling factors in \eqref{eq:objective 1}.
+	For the weight function in the penalty terms, they use $w_2(t) = \indicator_{\{|t| \leq t^*\}} (\delta)^{-1}$, where $\delta$ is the distance between consecutive points in their discretization of the integrals in \eqref{eq:penalty1} and \eqref{eq:penalty2}. They use $\lambda_1 = \lambda_2 = 500$ for the scaling factors in \eqref{eq:objective 1}.
 	There is some freedom of choice in the number of points in the approximating discrete distribution but the authors suggest that in their experience, $m = 5\sqrt{n}$ is a reasonable choice.
 
 	% Delaigle and Hall also impose some additional constraints. We desire that 
@@ -355,23 +368,27 @@
 	\end{equation}
 	where $K_h(x)$ is a kernel with some bandwidth $h > 0$. This is exactly equivalent to 
 	\begin{equation}
-		\hat{f}_X(x) = \frac{1}{2\pi}\int_{-\infty}^{\infty} \euler^{-itx} \phi_{\vect{\theta}, \vect{p}} \phi_K(ht) \intd t
+		\hat{f}_X(x) = \frac{1}{2\pi}\int_{-\infty}^{\infty} \euler^{-itx} \phi_{\vect{\theta}, \vect{p}}(t) \phi_K(ht) \intd t
 	\end{equation}
-	where $\phi_K$ is the Fourier transform of $K_1(x)$. However, since we only used $t \in [-t^*, t^*]$ when constructing $\phi_{\vect{\theta}, \vect{p}}$, it is reasonable to assume that $\phi_{\vect{\theta}, \vect{p}}$ is less reliable for $t$ outside this range. This motivates replacing $\phi_{\vect{\theta}, \vect{p}}$ with
+	where $\phi_K$ is the Fourier transform of $K_1$. However, since we only used $t \in [-t^*, t^*]$ when constructing $\phi_{\vect{\theta}, \vect{p}}$, it is reasonable to assume that $\phi_{\vect{\theta}, \vect{p}}(t)$ is less reliable for $t$ outside this range. This motivates replacing $\phi_{\vect{\theta}, \vect{p}}(t)$ with
 	\begin{equation}
-		\tilde{\phi} = 
+		\tilde{\phi}(t) = 
 		\begin{cases}
-			\phi_{\vect{\theta}, \vect{p}}, & t \in [-t^*, t^*],\\
+			\phi_{\vect{\theta}, \vect{p}}(t), & t \in [-t^*, t^*],\\
 			r(t), & \text{otherwise},
 		\end{cases}
 	\end{equation}
-	where $r(t)$ is some ridge function. Delaigle and Hall suggest following \cite{Delaigle2008-hl} and using
+	where $r(t)$ is some ridge function. Delaigle and Hall \cite{Delaigle2016-la} suggest following \cite{Delaigle2008-hl} and using
 	\begin{equation}
 		r = \hat{\phi}_W / \hat{\phi}_{U,P}
 	\end{equation}
-	where $\hat{\phi}_{U,P}$ is the characteristic function of a Laplace distribution with variance equal to an estimator of the variance of $U$. They also suggest choosing the bandwidth, $h$, using the two-stage plug-in bandwidth of Delaigle and Gijbels \cite{Delaigle2002-pa} \cite{Delaigle2004-fy}.
+	where $\hat{\phi}_{U,P}$ is the characteristic function of a Laplace distribution with variance equal to an estimator of the variance of $U$, obtained as a by-product of their estimator of $\phi_U$. They also suggest choosing the bandwidth, $h$, using the two-stage plug-in bandwidth of Delaigle and Gijbels \cite{Delaigle2002-pa} \cite{Delaigle2004-fy}, 
 
-	We wish to remark here that the conversion from the discrete $F_{\vect{\theta}, \vect{p}}$ to the continuous $\hat{f}_X(x)$ has no effect on the phenomenon of interest in this chapter. We are interested only in the discrete distribution $F_{\vect{\theta}, \vect{p}}$. However, we have included this section for completeness.
+	[as if $f_U$ was known, just replacing it by its estimator.]
+
+	[EXPLAIN WE GET ON ESTIMATOR OF $\phi_U$ FROM THIS TECHNIQUE AND SAY HOW TO GET IT]
+
+	We wish to remark here that the conversion from the discrete $F_{\vect{\theta}, \vect{p}}$ to the continuous $\hat{f}_X$ has no effect on the phenomenon of interest in this chapter. We are interested only in the discrete distribution $F_{\vect{\theta}, \vect{p}}$. However, we have included this section for completeness.
 
 
 
@@ -427,20 +444,20 @@
 	\begin{figure}
 		\centering
 		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example.png}
-		\caption[A typical example of $F_{\vect{\theta}, \vect{p}}$ being supported on only a few points]{A typical example of $F_{\vect{\theta}, \vect{p}}$ being supported on only a few points. The probability masses $(\theta_j, p_j)$ are represented by grey points, and the resulting estimating density is in dark blue. The true density is a chi-squared density with 3 degrees of freedom, and the errors were normal with variance $\sigma_U^2 = \sigma_X^2 / 5$. There were $n = 500$ samples taken from $W$. The naive density is a kernel density estimator of the $W_j$.}
+		\caption[A typical example of $F_{\vect{\theta}, \vect{p}}$ being supported on only a few points]{A typical example of $F_{\vect{\theta}, \vect{p}}$ being supported on only a few points. The probability masses $(\theta_j, p_j)$ are represented by grey points, and the resulting estimating density is in dark blue. The true density is a chi-squared density with 3 degrees of freedom, and the errors were normal with variance $\sigma_U^2 = \sigma_X^2 / 5$. There were $n = 500$ observations taken from $W$. The naive density is a standard kernel density estimator of the $W_j$.}
 		\label{fig:fixed masses example alone}
 	\end{figure}
 
 	% A theoretical justification for this behaviour is hard to obtain. We have made some observations which could be thought of as being in favour of this phenomenon, but mostly we are just pointing out similarities between this problem, and the maximum likelihood mixtures problem of the last chapter. These observations are left until Section \ref{sec:deconvolution observations and results}.
 
-	A theoretical justification for this behaviour is hard to obtain. In Section \ref{sec:deconvolution observations and results} we make an observation about the problem which could be thought of as being in favour of this phenomenon, but for the most part, we have no explanation for why it occurs.
+	A theoretical justification for this behaviour is hard to obtain. In Section \ref{sec:deconvolution observations and results} we make an observation about the problem which could be thought of as being in favour of this phenomenon, but for the most part, we have no rigourous explanation for why it occurs.
 
 	In this section, we instead explore the phenomenon empirically, and suggest that we might benefit by allowing both the $\theta_j$ and $p_j$ to be the variables of our optimization, rather than fixing the $\theta_j$ as suggested in \cite{Delaigle2016-la}.
 
 	We start by demonstrating the phenomenon using a variety of parameters and distributions. The base example (Figure \ref{fig:fixed masses example alone}) has the following setup:
 
 	\begin{itemize}
-		\item The true distribution, $F_X$, is chi-squared with 3 degrees of freedom, rescaled to have variance $\sigma_X = 1$.
+		\item The true distribution, $F_X$, is chi-squared with 3 degrees of freedom, rescaled to have variance $\sigma_X^2 = 1$.
 		\item The error distribution, $F_U$, is normal.
 		\item The noise to signal ratio (NSR) is 1/5. That is, $\sigma_U^2 = \sigma_X^2 / 5$.
 		\item We sample $n = 500$ points of $W = X+U$.
@@ -498,8 +515,8 @@ Given that most of the probability masses of $\hat{F}_X$ do not contribute to th
 			$OBJ_1$ & 0.2284\\
 			$\var \hat{F}_X$ & 0.8613\\
 			$T(\hat{F}_X)$ & 3.8697e-07\\
-			$P1$ & 4.5679e-04\\
-			$P2$ & 0\\
+			$P_1$ & 4.5679e-04\\
+			$P_2$ & 0\\
 			$t$ & 195s
 		\end{tabular}
 		\caption{112 fixed masses}
@@ -513,8 +530,8 @@ Given that most of the probability masses of $\hat{F}_X$ do not contribute to th
 			$OBJ_1$ & 54.3622\\
 			$\var \hat{F}_X$ & 0.6554\\
 			$T(\hat{F}_X)$ & 1.7882e-06\\
-			$P1$ & 0.1087\\
-			$P2$ & 0\\
+			$P_1$ & 0.1087\\
+			$P_2$ & 0\\
 			$t$ & 76s
 		\end{tabular}
 		\caption{40 moving masses}
@@ -527,8 +544,8 @@ Given that most of the probability masses of $\hat{F}_X$ do not contribute to th
 			$OBJ_1$ & 0.0396\\
 			$\var \hat{F}_X$ & 0.8042\\
 			$T(\hat{F}_X)$ & 4.4981e-07\\
-			$P1$ & 7.9209e-05\\
-			$P2$ & 0\\
+			$P_1$ & 7.9209e-05\\
+			$P_2$ & 0\\
 			$t$ & 37s
 		\end{tabular}
 		\caption{20 moving masses}
@@ -542,8 +559,8 @@ Given that most of the probability masses of $\hat{F}_X$ do not contribute to th
 			$OBJ_1$ & 0.1374\\
 			$\var \hat{F}_X$ & 0.8269\\
 			$T(\hat{F}_X)$ & 4.2464e-07\\
-			$P1$ & 2.7478e-04\\
-			$P2$ & 0\\
+			$P_1$ & 2.7478e-04\\
+			$P_2$ & 0\\
 			$t$ & 15s
 		\end{tabular}
 		\caption{10 moving masses}
@@ -556,8 +573,8 @@ Given that most of the probability masses of $\hat{F}_X$ do not contribute to th
 			$OBJ_1$ & 0.3905\\
 			$\var \hat{F}_X$ & 0.8888\\
 			$T(\hat{F}_X)$ & 3.6213e-07\\
-			$P1$ & 7.8093e-04\\
-			$P2$ & 0\\
+			$P_1$ & 7.8093e-04\\
+			$P_2$ & 0\\
 			$t$ & 4s
 		\end{tabular}
 		\caption{5 moving masses}
@@ -571,8 +588,8 @@ Given that most of the probability masses of $\hat{F}_X$ do not contribute to th
 			$OBJ_1$ & 2.7811e-07\\
 			$\var \hat{F}_X$ & 1.0350\\
 			$T(\hat{F}_X)$ & 2.7810e-07\\
-			$P1$ & 1.0079e-14\\
-			$P2$ & 1.7097e-14\\
+			$P_1$ & 1.0079e-14\\
+			$P_2$ & 1.7097e-14\\
 			$t$ & NA
 		\end{tabular}
 		\caption{The empirical distribution of W}
@@ -583,13 +600,13 @@ Given that most of the probability masses of $\hat{F}_X$ do not contribute to th
 	\label{fig:compare fixed moving masses}
 \end{figure}
 
-We start with Figure \ref{fig:compare fixed moving masses} in which we compare the result we obtain using the fixed masses method of Delaigle and Hall, and the results we obtain when we allow the location of the probability masses in $F_{\vect{\theta}, \vect{p}}$ to vary. As well as plotting $\hat{F}_X$ and $\hat{f}_X$, we also provide a table with the various objective values obtained in the final result, as well as the time taken to run the code on a i5-4670K CPU running at 4.3 GHz, running MATLAB R2018a. For comparison, we also give the various objective values obtained by using the empirical distribution of $W$ as $\hat{F}_X$. The values $T$, $P1$, $P2$ are as defined in Section \ref{sec:deconvolution estimator}, we use $OBJ1$ to denote the objective of our first minimization, $T(F) + \lambda_1 P1(F) + \lambda_2 P2(F)$, and $\var$ to denote the variance of $\hat{F}_X$ (our second objective).
+We start with Figure \ref{fig:compare fixed moving masses} in which we compare the result we obtain using the fixed masses method of Delaigle and Hall, and the results we obtain when we allow the location of the probability masses in $F_{\vect{\theta}, \vect{p}}$ to vary. As well as plotting $\hat{F}_X$ and $\hat{f}_X$, we also provide a table with the various objective values obtained in the final result, as well as the time taken to run the code on a i5-4670K CPU running at 4.3 GHz, running MATLAB R2018a. For comparison, we also give the various objective values obtained by using the empirical distribution of $W$ as $\hat{F}_X$. The values $T$, $P_1$, $P_2$ are as defined in Section \ref{sec:deconvolution estimator}, we use $OBJ1$ to denote the objective of our first minimization, $T(F) + \lambda_1 P_1(F) + \lambda_2 P_2(F)$, and $\var$ to denote the variance of $\hat{F}_X$ (our second objective).
 
-For this particular example, we note that we need only 10 masses to obtain smaller values for both of our objectives when compared to the original fixed masses, and that this results in a significant speed up, as expected. We get even further improvement going from 10 to 20 masses. However, when we use 40 masses, we note that $OBJ_1$ is significantly larger than in any of the cases where we use fewer masses, and that $\var\hat{F}_X$ is smaller than in any other case. One potential explanation here is that the parameter space becomes too complex for our optimization routine to find good solutions if we allow too many moving masses and so $OBJ_1$ is much larger than the global minimum. This means that when we come to our second objective of minimizing $\var \hat{F}_X$, the constraints $T(F) \leq T_\mathrm{min}$, $P1(F) \leq P1_\mathrm{min}$, and $P2(F) \leq P2_\mathrm{min}$ are lax, and so we have more room to search for feasible distributions with small variance.
+For this particular example, we note that we need only 10 masses to obtain smaller values for both of our objectives when compared to the original fixed masses, and that this results in a significant speed up, as expected. We get even further improvement going from 10 to 20 masses. However, when we use 40 masses, we note that $OBJ_1$ is significantly larger than in any of the cases where we use fewer masses, and that $\var\hat{F}_X$ is smaller than in any other case. One potential explanation here is that the parameter space becomes too complex for our optimization routine to find good solutions if we allow too many moving masses and so $OBJ_1$ is much larger than the global minimum. This means that when we come to our second objective of minimizing $\var \hat{F}_X$, the constraints $T(F) \leq T_\mathrm{min}$, $P_1(F) \leq P_1^\mathrm{min}$, and $P_2(F) \leq P_2^\mathrm{min}$ are lax, and so we have more room to search for feasible distributions with small variance.
 
-It also appears as if the 40 mass case is a closer fit for the true curve than any of the other estimates, despite acheiving worse results in the first objective. Although this is purely conjecture, we suggest that this could be because the constraints $T(F) \leq T_\mathrm{min}$, $P1(F) \leq P1_\mathrm{min}$, and $P2(F) \leq P2_\mathrm{min}$ are often too strict to acheive the variance we desire in the second optimization. The first optimization found a solution which just happened to be far enough away from the global minimum to allow for enough freedom in minimizing the variance that we obtained a result that acheived closer to the true variance. One could try using as constraints, $T(F) \leq (1 + \delta) T_\mathrm{min}$, $P1(F) \leq (1 + \delta) P1_\mathrm{min}$, and $P2(F) \leq (1 + \delta) P2_\mathrm{min}$, to allow for this behaviour when the first minimization attains a result closer to the global optimum, but we cannot see any obvious way to determine good values for $\delta$.
+It also appears as if the 40 mass case is a closer fit for the true curve than any of the other estimates, despite acheiving worse results in the first objective. Although this is purely conjecture, we suggest that this could be because the constraints $T(F) \leq T_\mathrm{min}$, $P_1(F) \leq P_1^\mathrm{min}$, and $P_2(F) \leq P_2^\mathrm{min}$ are often too strict to acheive the variance we desire in the second optimization. The first optimization found a solution which just happened to be far enough away from the global minimum to allow for enough freedom in minimizing the variance that we obtained a result that acheived closer to the true variance. One could try using as constraints, $T(F) \leq (1 + \delta) T_\mathrm{min}$, $P_1(F) \leq (1 + \delta) P_1^\mathrm{min}$, and $P_2(F) \leq (1 + \delta) P_2^\mathrm{min}$, to allow for this behaviour when the first minimization attains a result closer to the global optimum, but we cannot see any obvious way to determine good values for $\delta$.
 
-The results in Figure \ref{fig:compare fixed moving masses} are encouraging, and in our experience are consistent in a wide variety of scenarios. We present some more examples in Figure \ref{fig:more deconvolution examples}. Of course, it is possible that there is a wide class of deconvolution problems in which a large number of point masses are required to acheive a good solution, and that we have just happened to avoid examples of these. However, we do not think that this is a large concern. One can simply repeat the deconvolution with an increasing number of point masses in $\hat{F}_X$ until it does not result in an improvement in our objectives.
+The results in Figure \ref{fig:compare fixed moving masses} are encouraging, and in our experience are consistent in a wide variety of scenarios. We present some more examples in Figure \ref{fig:more deconvolution examples}. Of course, it is possible that there is a wide class of deconvolution problems in which a large number of point masses are required to achieve a good solution, and that we have just happened to avoid examples of these. However, we do not think that this is a large concern. One can simply repeat the deconvolution with an increasing number of point masses in $\hat{F}_X$ until it does not result in an improvement in our objectives.
 
 \begin{figure}
 	\centering
@@ -600,8 +617,8 @@ The results in Figure \ref{fig:compare fixed moving masses} are encouraging, and
 			$OBJ_1$ & 0.8786\\
 			$\var \hat{F}_X$ & 1.6542\\
 			$T(\hat{F}_X)$ & 1.1094e-08\\
-			$P1$ & 0.0018\\
-			$P2$ & 0\\
+			$P_1$ & 0.0018\\
+			$P_2$ & 0\\
 			$t$ & 62s
 		\end{tabular}
 		\caption{True distribution discrete (represented by blue points) with normal errors, $n = 5000$, moving masses.}
@@ -615,8 +632,8 @@ The results in Figure \ref{fig:compare fixed moving masses} are encouraging, and
 			$OBJ_1$ & 106.6533\\
 			$\var \hat{F}_X$ & 1.5731\\
 			$T(\hat{F}_X)$ & 0.0192\\
-			$P1$ & 0.2133\\
-			$P2$ & 0\\
+			$P_1$ & 0.2133\\
+			$P_2$ & 0\\
 			$t$ & 1354s
 		\end{tabular}
 		\caption{True distribution discrete (represented by blue points) with normal errors, $n = 5000$, fixed masses.}
@@ -629,8 +646,8 @@ The results in Figure \ref{fig:compare fixed moving masses} are encouraging, and
 			$OBJ_1$ & 0.3742\\
 			$\var \hat{F}_X$ & 1.0063\\
 			$T(\hat{F}_X)$ & 3.5329e-07\\
-			$P1$ & 7.4839e-04\\
-			$P2$ & 0\\
+			$P_1$ & 7.4839e-04\\
+			$P_2$ & 0\\
 			$t$ & 64s
 		\end{tabular}
 		\caption{True distribution gumbel with laplace errors, $n = 500$, moving masses.}
@@ -644,8 +661,8 @@ The results in Figure \ref{fig:compare fixed moving masses} are encouraging, and
 			$OBJ_1$ & 0.2603\\
 			$\var \hat{F}_X$ & 0.9413\\
 			$T(\hat{F}_X)$ & 4.9281e-07\\
-			$P1$ & 5.2056e-04\\
-			$P2$ & 0\\
+			$P_1$ & 5.2056e-04\\
+			$P_2$ & 0\\
 			$t$ & 195s
 		\end{tabular}
 		\caption{True distribution gumbel with laplace errors, $n = 500$, fixed masses.}
@@ -658,8 +675,8 @@ The results in Figure \ref{fig:compare fixed moving masses} are encouraging, and
 			$OBJ_1$ & 0.1506\\
 			$\var \hat{F}_X$ & 0.6176\\
 			$T(\hat{F}_X)$ & 1.2286e-05\\
-			$P1$ & 3.0108e-04\\
-			$P2$ & 0\\
+			$P_1$ & 3.0108e-04\\
+			$P_2$ & 0\\
 			$t$ & 47s
 		\end{tabular}
 		\caption{True distribution Gamma(5,2), with errors discrete (-1,0,1) with probabilities (0.2,0.6,0.2), $n = 100$, moving masses.}
@@ -673,8 +690,8 @@ The results in Figure \ref{fig:compare fixed moving masses} are encouraging, and
 			$OBJ_1$ & 0.1681\\
 			$\var \hat{F}_X$ & 0.5953\\
 			$T(\hat{F}_X)$ & 1.2921e-05\\
-			$P1$ & 3.3615e-04\\
-			$P2$ & 0\\
+			$P_1$ & 3.3615e-04\\
+			$P_2$ & 0\\
 			$t$ & 62s
 		\end{tabular}
 		\caption{True distribution Gamma(5,2), with errors discrete (-1,0,1) with probabilities (0.2,0.6,0.2), $n = 100$, fixed masses.}
@@ -694,8 +711,8 @@ Given all the discussion above, we see no reason not to use masses with variable
 			$OBJ_1$ & 2.277\\
 			$\var \hat{F}_X$ & 0.8684\\
 			$T(\hat{F}_X)$ & 1.1672e-06\\
-			$P1$ & 4.554e-03\\
-			$P2$ & 0\\
+			$P_1$ & 4.554e-03\\
+			$P_2$ & 0\\
 			$t$ & 50s
 		\end{tabular}
 	\caption{The output of the `deconvolve' package with data as in Figure \ref{fig:fixed masses example alone} and using $m=20$ moving masses.}
@@ -720,7 +737,7 @@ To perform the two non-linear optimizations we use the package Nlcoptim \cite{Ch
 % 	\begin{tabular}{r l}
 % 		$\var \hat{F}_X$ & 0.9011\\
 % 		$T(\hat{F}_X)$ & 3.5540e-07\\
-% 		$P1$ & 7.0136e-05\\
+% 		$P_1$ & 7.0136e-05\\
 % 		$P2$ & 0\\
 % 		$t$ & 492
 % 	\end{tabular}
@@ -814,6 +831,6 @@ Of course, in reality we do not search over distributions with phase function ex
 
 In this chapter we looked at the method for deconvolution when the error distribution is unknown that was proposed by Delaigle and Hall in \cite{Delaigle2016-la}. As in Chapter \ref{Ch:Mixtures}, this involved searching for a discrete probability distribution as the solution to an optimization problem. We found that even though we allowed for many probability masses when finding this distribution, our optimization produced solutions in which most of these points had zero weight and so did not contribute to the distribution. Motivated by this, we suggested that instead of letting the point masses have fixed location and optimizing over their weights, we instead use a smaller number of points and let both their weights and locations be variable. The resulting optimization problem was significantly faster to run and, on the examples we tested, was capable of finding solutions that were comparable or better than those found using the previous method.
 
-We used this new method in the R package `deconvolve', which contains not only methods for deconvolution when the error distribution is unknown, but also a variety of other tools for performing non-parametric deconvolution, finding bandwidths, and non-parametric regression estimates. We commented that while our implementation in R benefitted from the same speed up we observed in our MATLAB code, the objective values obtained were typically not as good, although they still produced reasonble looking densities.
+We used this new method in the R package `deconvolve', which contains not only methods for deconvolution when the error distribution is unknown, but also a variety of other tools for performing non-parametric deconvolution, finding bandwidths, and non-parametric regression estimates. We commented that while our implementation in R benefited from the same speed up we observed in our MATLAB code, the objective values obtained were typically not as good, although they still produced reasonable looking densities.
 
-We ended the chapter with a brief discussion on the set of distributions with equal phase function and made a suggestion as to why the phenomenon of interest in this chapter might not be totally unexpected. However, we did not obtain any rigourous results which either bounded the number of point masses required or explained why only a few point masses contributed to the final result. It would be of interest to obtain results like these in the future, and in particular, to use these results to improve the efficiency of our methods.
+We ended the chapter with a brief discussion on the set of distributions with equal phase function and made a suggestion as to why the phenomenon of interest in this chapter might not be totally unexpected. However, we did not obtain any rigorous results which either bounded the number of point masses required or explained why only a few point masses contributed to the final result. It would be of interest to obtain results like these in the future, and in particular, to use these results to improve the efficiency of our methods.
