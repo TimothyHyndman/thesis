@@ -64,7 +64,7 @@
 	\end{equation}
 	if $|\phi_U(t)| > 0$ for all real $t$. We assume this in the following estimator.
 
-	Let $f_K$ be a bounded, even, probability density function whose characteristic function, $\phi_K$, satisfies
+	Let $K$ be a bounded, even, function that integrates to 1 whose Fourier transform, $\phi_K$, satisfies
 	\begin{align}
 		\sup_t |\phi_K(t) / \phi_U(t / h) | < \infty, &&\int|\phi_K(t) / \phi_U(t / h)| \intd t < \infty,
 	\end{align}
@@ -122,7 +122,7 @@
 	% \begin{equation}
 	% 	\hat{L}\left(u\right) = \frac{1}{2\pi} \int \euler^{-itu} \phi_K(t) / (\hat{\phi}_U(t/h) + \rho) \intd t,
 	% \end{equation}
-	$h > 0$ is a bandwidth, $\rho \geq 0$ is a ridge parameter, $M = \sum_j N_j$, and $K$ is a symmetric kernel function, whose characteristic function, $\phi_K$, has compact support.
+	$h > 0$ is a bandwidth, $\rho \geq 0$ is a ridge parameter, $M = \sum_j N_j$, and $K$ is a symmetric kernel function, whose Fourier transform, $\phi_K$, has compact support.
 
 	% [WHY COMPACT SUPPORT?]
 
@@ -135,9 +135,7 @@
  
 \section{Method for deconvolution when the error is unknown}
 \label{sec:summary of delaigle hall}
-	[SHOULD PROBABLY MENTION SCHENNECH'S PAPER ON REGRESSION AS IT HAS SIMILARITIES BUT IT NEEDS MORE DATA (NEEDS Y OF A REGRESSION)]
-
-	Delaigle's and Hall's 2016 paper \cite{Delaigle2016-la}, presents a non-parametric deconvolution estimator for when the error distribution is unknown, and we do not have access to replicates or samples from the error distribution. This is unusual in deconvolution problems. As in the methods described above, deconvolution methods usually require assumptions about the shape or scale of the error distribution, or rely on additional observations to estimate it. 
+	Delaigle's and Hall's 2016 paper \cite{Delaigle2016-la}, presents a non-parametric deconvolution estimator for when the error distribution is unknown, and we do not have access to replicates or samples from the error distribution. This is unusual in deconvolution problems. As in the methods described above, deconvolution methods usually require assumptions about the shape or scale of the error distribution, or rely on additional observations to estimate it. One exception to this is found in \cite{Schennach2013-yv} where the authors discuss non-parametric estimation of an errors-in-variables regression problem without extra information about the error distributions. However, in regression problems one has access to not only observations of $W = X+ U$, but also observations of $Y = g(X) + \epsilon$, where $\epsilon$ denotes some independent experimental error. This extra data contains information about $F_U$ which, at least in theory, makes it easier to estimate than in the plain deconvolution case.
 
 	In this section we summarise the estimator of \cite{Delaigle2016-la}, and discuss some practicalities that arise in the implementation. 
 
