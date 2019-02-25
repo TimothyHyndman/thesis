@@ -273,7 +273,7 @@
 	% Note that $W$ is zero precisely when $T < t_*$ and so the events $\{W = 0\}$ and $\{T \leq t_*\}$ are the same. Furthermore, $\vect{\mu}$ as defined above in \eqref{eq:mu definition}, is supported only on the positive integers and so $\prob[\mathrm{CP}(\lambda, \vect{\mu}) = 0] = \euler^{-\lambda}$. These observations lead to the following corollary of Theorem \ref{thm: compound poisson approximation}.
 	\begin{corollary}
 	\label{cor:bound distance prob[w=0] and e^-lambda}
-	Let $T_n$ be the coupling time of the continuous-time heat-bath Glauber dynamics for the zero-field Ising model at inverse-temperature $\beta$ on the cycle $(\mathbb{Z}/n\mathbb{Z})$ and let $\delta_1$, $\delta_4$ and $\lambda$ be as defined above. Then
+	Let $T_n$ be the coupling time of the continuous-time heat-bath Glauber dynamics for the zero-field Ising model at inverse-temperature $\beta$ on the cycle $\mathbb{Z}/n\mathbb{Z}$ and let $\delta_1$, $\delta_4$ and $\lambda$ be as defined above. Then
 		\begin{equation}
 			\left|\prob\left[T_n \leq \frac{z+\ln(n)}{\theta}\right] - \euler^{-\lambda}\right| \leq (\delta_1 + \delta_4)\euler^\lambda,
 			\label{eq:bound distance prob[w=0] and e^-lambda}
@@ -283,7 +283,7 @@
 
 	\section{Proof of Theorem \ref{thm:Coupling Distribution on Cycle}}
 	\label{sec:proof thm coupling cycle}
-	In this section we use Corollary \ref{cor:bound distance prob[w=0] and e^-lambda} to prove Theorem \ref{thm:Coupling Distribution on Cycle} by bounding $\lambda$ and proving that it converges and by showing that $\delta_1$ and $\delta_4$ go to zero as $n \rightarrow \infty$. This is done in Lemmas \ref{lem:1Dlambda}, \ref{lem:lambda converges}, \ref{lem:delta1 goes to 0}, and \ref{lem:delta4 goes to 0} respectively. The proofs of these require some additional lemmas concerning properties of the update histories which have been deferred to Section \ref{sec:additional lemmas 1D}.
+	In this section we use Corollary \ref{cor:bound distance prob[w=0] and e^-lambda} to prove Theorem \ref{thm:Coupling Distribution on Cycle} by bounding $\lambda$ and proving that it converges, and by showing that $\delta_1$ and $\delta_4$ go to zero as $n \rightarrow \infty$. This is done in Lemmas \ref{lem:1Dlambda}, \ref{lem:lambda converges}, \ref{lem:delta1 goes to 0}, and \ref{lem:delta4 goes to 0} respectively. The proofs of these require some additional lemmas concerning properties of the update histories which have been deferred to Section \ref{sec:additional lemmas 1D}.
 
 	We begin by bounding $\lambda$.
 	\begin{lemma}
@@ -624,8 +624,6 @@
 		where we have used that $2n > 2 \ln n + 1$ for all $n \geq 1$. It is now clear that $\delta_1$ goes to $0$ as $n \rightarrow \infty$.
 	\end{proof}
 
-	[UP TO HERE PROOF READING]
-
 	\begin{lemma}
 	\label{lem:delta4 goes to 0}
 		Let $\delta_4$ be as defined above in \eqref{eq:delta_4 definition}. Then
@@ -636,55 +634,59 @@
 	\begin{proof}
 		Starting with the definition of $\delta_4$, we have
 		\begin{align}
-			\delta_4 &= \sum_{i = 1}^n \left(\expect[X_i Z_i] + \expect[X_i]\expect[X_i + U_i + Z_i]\right),\\
-				&= n \prob[X_i = 1] \expect[Z_i | X_i = 1] + \euler^{-z} \hspace{-15pt} \sum_{j \in \{i\}\cup B_i \cup C_i} \hspace{-15pt} \expect[X_j],\\
+			\delta_4 &= \sum_{i = 1}^n \left(\expect[X_i Z_i] + \expect[X_i]\expect[X_i + U_i + Z_i]\right)\\
+				&= n \prob[X_i = 1] \expect[Z_i | X_i = 1] + \euler^{-z} \hspace{-15pt} \sum_{j \in \{i\}\cup B_i \cup C_i} \hspace{-15pt} \expect[X_j]\\
 				% &= n \expect[X_i Z_i] + \frac{2\euler^{-2z}c_n}{n}\\
 				% &= n \prob[X_i = 1] \expect[Z_i | X_i = 1] + \frac{2\euler^{-2z}c_n}{n}\\
 				&= \euler^{-z}\expect[Z_i | X_i = 1] + \frac{(2\lfloor c_n\rfloor+1)\euler^{-2z}}{n}.
 		\end{align}
 		Now
 		\begin{align}
-			\expect[Z_i | X_i = 1] &= \sum_{j \in C_i} \prob[X_j = 1 | X_i = 1],\\
+			\expect[Z_i | X_i = 1] &= \sum_{j \in C_i} \prob[X_j = 1 | X_i = 1]\\
 			&= 2 \sum_{k = \lfloor b_n \rfloor + 1}^{\lfloor c_n\rfloor} \prob[X_{i+k} = 1 | X_i = 1].
 		\end{align}
 		From Lemma \ref{lem:X_i+k given X_i},
 		\begin{align}
-			\expect[Z_i | X_i = 1] &\leq 2 \sum_{k = \lfloor b_n\rfloor + 1}^{\lfloor c_n\rfloor} \left(\frac{e^{-z}}{n} + 2\left(\frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\right)^k\right),\\
+			\expect[Z_i | X_i = 1] &\leq 2 \sum_{k = \lfloor b_n\rfloor + 1}^{\lfloor c_n\rfloor} \left(\frac{e^{-z}}{n} + 2\left(\frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\right)^k\right)\\
 				&\leq \frac{2(c_n - b_n + 1)\euler^{-z}}{n} \notag \\
 				&\phantom{=} + 4(c_n - b_n + 1)\left(\frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\right)^{b_n + 1}.
 		\end{align}
 		Altogether,
 		\begin{align}
 			\delta_4 &\leq \frac{2(c_n - b_n + 1)\euler^{-z}}{n} + 4(c_n - b_n + 1)\left(\frac{2 - \theta -\sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\right)^{b_n + 1} \notag \\
-			&\phantom{=} + \frac{(2c_n + 1)\euler^{-2z}}{n}
+			&\phantom{=} + \frac{(2c_n + 1)\euler^{-2z}}{n},
 		\end{align}
 		which, recalling that $b_n = \ln(n)$ and $c_n = \ln(n)^2$, goes to $0$ as $n \rightarrow \infty$.
 	\end{proof}
 	
 	\section{Additional lemmas}
 	\label{sec:additional lemmas 1D}
-	This section contains the proofs for a number of lemmas concerning properties of the update histories on the cycle.
+
+	This section contains the statements and proofs for a number of lemmas concerning properties of the update histories that are required for the proofs in Section \ref{sec:proof thm coupling cycle}. We start with lemmas that are specific to the cycle $\mathbb{Z}/n\mathbb{Z}$ in Section \ref{sec:lemmas on cycle}. In Section \ref{sec:lemmas on general graphs}, we give two lemmas which hold on much more general families of graphs than just the cycle. We use these last two lemmas not only in this chapter, but also in Chapter \ref{Ch:GeneralResults}.
+
+	\subsection{Lemmas that hold on the cycle}
+	\label{sec:lemmas on cycle}
+	
 
 	\begin{lemma}
 	\label{lem:replace conditioning}
-		Let $E$ be an event that depends only on the update sequence along $[t_1, t_*]$. Then for any vertex in the cycle, $i$, and any $t_0 \leq t_1$,
+		Consider the update histories on the cycle $\mathbb{Z}/n\mathbb{Z}$. Let $E$ be an event that depends only on the update sequence along $[t_1, t_*]$. Then for any vertex, $i$, and any $t_0 \leq t_1$,
 		\begin{equation}
-			\prob\left(E | \hist_i(t_1) \neq \emptyset \right) = \prob\left(E | \hist_i(t_0) \neq \emptyset \right)
+			\prob\left(E | \hist_i(t_1) \neq \emptyset \right) = \prob\left(E | \hist_i(t_0) \neq \emptyset \right).
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
-		Let $\bar{\hist}_i$ be the update history that results from ignoring all oblivious updates (that is, the history does not die). Let $K_t^{\hist_i}$ be the point process that places a point every time $\bar{\hist}_i$ encounters an oblivious update. It is obvious that this is a Poisson process with waiting times that are exponential with rate $\theta$. We have that the event $\{\hist_i(t_1) \neq \emptyset \}$ coincides with the event	\{$K_t^{\hist_i}$ encounters no oblivious updates along $[t_1, t_*]$\}. Since the waiting times of $K_t^{\hist_i}$ are exponential, conditioning on the behaviour of $K_t^{\hist_i}$ along $[t_0, t_1)$ does not affect the behaviour of $K_t^{\hist_i}$ along $[t_1, t_*]$. Since $E$ only depends only on the update sequence along $[t_1, t_*]$, conditioning on the behaviour of $K_t^{\hist_i}$ along $[t_0, t_1)$ does not affect its probability. Hence
+		Let $\bar{\hist}_i$ be the update history that results from ignoring all oblivious updates (that is, the history does not die when it encounters an oblivious update). Let $K_t^{\hist_i}$ be the point process that places a point every time $\bar{\hist}_i$ encounters an oblivious update. It is obvious that this is a Poisson process with waiting times that are exponential with rate $\theta$. We have that the event $\{\hist_i(t_1) \neq \emptyset \}$ coincides with the event	\{$K_t^{\hist_i}$ encounters no oblivious updates along $[t_1, t_*]$\}. Since the waiting times of $K_t^{\hist_i}$ are exponential, conditioning on the behaviour of $K_t^{\hist_i}$ along $[t_0, t_1)$ does not affect the behaviour of $K_t^{\hist_i}$ along $[t_1, t_*]$. Since $E$ only depends only on the update sequence along $[t_1, t_*]$, conditioning on the behaviour of $K_t^{\hist_i}$ along $[t_0, t_1)$ does not affect its probability. Hence
 		\begin{align}
 			\prob\left(E | \hist_i(t_1) \neq \emptyset \right) &= \prob\left(E | K_t^{\hist_i} \text{ encounters no oblivious updates along } [t_1, t_*]\} \right)\\
 			&= \prob\left(E | K_t^{\hist_i} \text{ encounters no oblivious updates along } [t_0, t_*]\} \right)\\
 			&= \prob\left(E | \hist_i(t_0) \neq \emptyset \right).
 		\end{align}
-
 	\end{proof}
 
 	\begin{lemma}
 	\label{lem: U converges}
-	For all $k \in \mathbb{R}$, any positive integer $n$, and any integer $m > n$,
+	Let $U_i^n$ and $X_i^n$ be as defined in Section \ref{sec:1D problem setup} for a vertex $i$ on the cycle $\mathbb{Z}/n\mathbb{Z}$. For all $k \in \mathbb{R}$, any positive integer $n$, and any integer $m > n$,
 		\begin{align}
 			\prob(&U_i^n \leq k | X_i^n = 1) - \prob(U_i^{n+m} \leq k | X_i^{n+m} = 1) \notag \\
 			&\geq - 2 \euler^{z(1 + 1/\theta)} n^{1/\theta + \ln 2+ z}(2\ln n + 1) \left(\frac{1}{2}\right)^{n/2} - 2 \euler^{-z} \ln n / n.
@@ -777,7 +779,7 @@
 			&\geq -\prob\left(\left. V_i + Y_i > \bar{V}_i + \bar{Y}_i, \alpha^\mathrm{c} \right| X_i^{n+m} = 1 \right)\\
 			% &\geq -\prob\left( \left. U_i^{n+m} < \sum_{j \in B_i^n} \indicator(\hist_j^{n+m}(t_0) \neq \emptyset), \alpha^\mathrm{c} \right| X_i^{n+m} = 1\right)\\
 			&\geq -\prob\left(Y_i > \bar{Y}_i | X_i^{n+m} = 1 \right)\\
-			&\geq -\prob\left(Y_i \neq 0 | X_i^{n+m} = 1 \right)
+			&\geq -\prob\left(Y_i \neq 0 | X_i^{n+m} = 1 \right),
 		\end{align}
 		since conditioned on $X_i^{n+m} = 1$, if $\alpha^\mathrm{c}$ holds then $V_i \leq \bar{V}_i$. By Lemma \ref{lem:replace conditioning}, since $Y_i$ only depends on the update sequence along $[t_0, t_*^{n+m}]$, we may replace the conditioning above by
 		\begin{align}
@@ -793,7 +795,7 @@
 		\end{align}
 		and by Lemma \ref{lem:prob Xj Xi and no intersect} we get
 		\begin{equation}
-			\prob(Y_i \neq 0 | \hist_i^{n+m}(t_0) \neq \emptyset) \leq |B_i^n| \prob(\hist_i^{n+m}(t_0) \neq \emptyset)
+			\prob(Y_i \neq 0 | \hist_i^{n+m}(t_0) \neq \emptyset) \leq |B_i^n| \prob(\hist_i^{n+m}(t_0) \neq \emptyset).
 		\end{equation}
 		We also observe that the event $\{\hist_i^{n+m}(t_0) \neq \emptyset\}$ is simply the event that $\hist_i$ does not encounter an obvlivious update over an interval of length $t_*^n$. So
 		\begin{align}
@@ -829,45 +831,12 @@
 		% which goes to zero as $n \rightarrow \infty$.
 
 	\end{proof}
-	
-
-	\begin{lemma}
-	\label{lem:conditioning on A removes conditioning on W}
-		Let $i$ be a vertex in a graph and 
-		% let
-		% \begin{equation}
-		% 	C_i^c = \{j : d(j, i) \leq (b_n + c_n)/2\}
-		% \end{equation}
-		% be the set of vertices within distance $(b_n + c_n)/2$ of $i$. Define the events
-		define the events
-		\begin{equation}
-			A_1 = \{\exists j \in B_i \cup \{i\}, \exists t \in [0, t_*] : \mathcal{H}_j(t) \nsubseteq  B(i, (b_n + c_n)/2)\}
-		\end{equation}
-		and
-		\begin{equation}
-			A_2 = \{\exists j \in D_i, \exists t \in [0, t_*] : \mathcal{H}_j(t) \cap B(i, (b_n + c_n)/2) \neq \emptyset\}
-		\end{equation}
-		as well as their union
-		\begin{equation}
-			A = A_1 \cup A_2.
-		\end{equation}
-		Then
-		\begin{equation}
-			\prob[X_i = 1, U_i = j | A^\complement, W_i] = \prob[X_i = 1, U_i = j | A^\complement].
-		\end{equation}
-	\end{lemma}
-	\begin{proof}
-		If $A_1^\complement$ holds, then the events $\{X_i = 1\}$ and $\{U_i = j\}$ depend only on the values of the update sequence inside $B(i, (b_n + c_n)/2)$. If $A_2^\complement$ holds then the events $\{W_i = k\}$, $k \geq 0$, depend only on the values of the update sequence outside of $B(i, (b_n + c_n)/2)$. Since the update sequences of each vertex are independent of each other vertex, if $A_2^\complement$ holds, conditioning on $W_i$ does not affect the update sequences inside $B(i, (b_n + c_n)/2)$ and so 
-		\begin{equation}
-			\prob[X_i = 1, U_i = j | A^\complement, W_i] = \prob[X_i = 1, U_i = j | A^\complement].
-		\end{equation}
-	\end{proof}
 
 	The following Lemma bounds how fast updates can percolate through the cycle. The proof is a slight modification of a similar result in \cite[Lemma 2.1]{Lubetzky2016-wd}.
 	\begin{lemma}
 	\label{lem:1D prob history contained in ball}
 		% Consider the update histories on the cycle.	Let $B(i, l)$ indicate the set of vertices at integer distance at most $l$ from vertex $i$. 
-		Let $i$ be a vertex on the length $n$ cycle. The probability that the update history of vertex $i$ escapes $B(i,l)$ in time $s$ satisfies
+		Let $i$ be a vertex on the cycle $\mathbb{Z}/n\mathbb{Z}$. The probability that the update history of vertex $i$ escapes $B(i,l)$ in time $s$ satisfies
 		\begin{equation}
 			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t_* - u) \nsubseteq B(i, l)\right] \leq 2\exp\left(s - l \ln 2 \right).
 		\end{equation}
@@ -875,7 +844,7 @@
 	\begin{proof}
 		Let $\vect{w}^- = (i, i-1, \dots, i- l)$ and $\vect{w}^+ = (i, i+1, \dots, i+ l)$ denote the sequences of adjacent vertices starting at vertex $i$ and extending distance $l$ to the left and right respectively. For $\hist_i$ to contain any vertex outside $B(i, l)$ at a time $u \in [t_* - s, t_*]$ then either each $w_k^-$ was updated at some time $t_* > t_k \geq t_* - s$ with $t_{k-1} > t_k$ or each $w_k^+$ was updated at some time $t_* > t_k \geq t_* - s$ with $t_{k-1} > t_k$. Call the first event $M_-$ and the second $M_+$. For $M_-$ to occur, first $i$ must update, then $i-1$ must update, and so on. Each vertex updates at rate 1, and there are $l$ updates required within time $s$. So the probability of this event is the probability that a rate 1 Poisson clock goes off at least $l$ times in time $s$, or equivalently
 		\begin{equation}
-			\prob[M_-] = \prob[M_+] = \prob[Y \geq  l ]
+			\prob[M_-] = \prob[M_+] = \prob[Y \geq  l ],
 		\end{equation}
 		where $Y \sim \mathrm{Po}(s)$ is Poisson with rate $s$. By a union bound,
 		\begin{equation}
@@ -947,7 +916,7 @@
 
 	\begin{lemma}
 		\label{lem:X_i+k given X_i}
-		Let $i$ and $j$ be two vertices on the cycle $(\mathbb{Z}/n\mathbb{Z})$ separated by distance $k$. Then
+		Let $i$ and $j$ be two vertices on the cycle $\mathbb{Z}/n\mathbb{Z}$ separated by distance $k$. Then
 		\begin{equation}
 			\label{eq:prob X_i+k = 1|X_i = 1}
 			\prob[X_j = 1| X_i = 1] \leq \frac{e^{-z}}{n} + 2\left(\frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\right)^k.
@@ -980,33 +949,10 @@
 		The result follows from Lemmas \ref{lem:prob Xj and no intersect given Xi} and \ref{lem:A_ij bound conditioned}.
 	\end{proof}
 
-	\begin{lemma}
-	\label{lem:prob Xj Xi and no intersect}
-		Let $i$ and $j$ be two vertices in a transitive graph, $G = (V, E)$. Let $0 \leq t_0 < t_*$. Then
-		\begin{equation}
-			\prob\left(\hist_j(t_0) \neq \emptyset, \hist_i(t_0) \neq \emptyset, \hist_j \cap \hist_i \cap (V \times [t_0, t_*]) \neq \emptyset \right) \leq \prob[\hist_i(t_0) \neq \emptyset]^2.
-		\end{equation}
-	\end{lemma}
-	\begin{proof}
-		Define $S$ to be the time closest to $t_*$ that the histories of $i$ and $j$ intersect, or define $S = t_0$ if the histories do not intersect along $[t_0, t_*]$. We construct a new history, $\hist_j'$, in the following way. For all $t \in [S, t_*]$, $\hist_j'(t) = \hist_j(t)$. However, along the interval $[t_0, S)$, we replace the update sequence with an another i.i.d.\ copy of the update sequence along the interval $[t_0, S)$ and construct $\hist_j'$ using this new update sequence. 
-
-		Clearly, $\hist_j'$ and $\hist_j$ have the same distribution. Moreover, we now argue that $\hist_j'$ is independent of $\hist_i$. By construction, $\cup_{t = 0}^S \hist_j'(t)$ is independent of $\cup_{t=0}^S \hist_k(t)$ for all $k \in V$, and in particular, for $k = i$. 
-		For $t \geq S$ we note that no updates are a part of both histories. Since every update comes from independent Poisson processes, the updates in $\hist_j' \cap (V \times [S, t^*])$ are independent of those in $\hist_i \cap (V \times [S, t^*])$. Hence $\hist_j'$ and $\hist_i$ are independent.
-
-		% From the memoryless property of the exponential waiting times between updates, we get that each update is independent of the rest, and so the histories are independent too. 
-		Note that in the event $\{\hist_i \cap \hist_j \cap (V \times [t_0, t_*]) = \emptyset\}$, we have $\hist_j = \hist_j'$ along the interval $[t_0, t_*]$ and so
-		\begin{align}
-			\prob[&\hist_i(t_0) \neq \emptyset, \hist_j(t_0) \neq \emptyset, \hist_i \cap \hist_j \cap (V \times [t_0, t_*]) = \emptyset] \notag \\
-			&= \prob[\hist_i(t_0) \neq \emptyset, \hist_j'(t_0) \neq \emptyset, \hist_i \cap \hist_j \cap (V \times [t_0, t_*]) = \emptyset]\\
-			&\leq \prob[\hist_i(t_0) \neq \emptyset, \hist_j'(t_0) \neq \emptyset]\\
-			&= \prob[\hist_i(t_0) \neq \emptyset] \prob[\hist_j'(t_0) \neq \emptyset]\\
-			&= \prob[\hist_i(t_0) \neq \emptyset]^2
-		\end{align}
-		since $\hist_i$ and $\hist_j'$ are independent and $\prob[\hist_i(t_0) \neq \emptyset] = \prob[\hist_j'(t_0) \neq \emptyset]$ by the transitivity of $G$.
-	\end{proof}
+	
 	\begin{lemma}
 		\label{lem:prob Xj and no intersect given Xi}
-		Let $i$ and $j$ be the indices of two vertices on the cycle $(\mathbb{Z}/n\mathbb{Z})$. Then
+		Let $i$ and $j$ be two vertices on the cycle $\mathbb{Z}/n\mathbb{Z}$. Then
 		\begin{equation}
 			\prob[X_j = 1, \hist_i \cap\hist_j = \emptyset|X_i = 1] \leq \euler^{-z}/n.
 		\end{equation}
@@ -1027,13 +973,13 @@
 
 \begin{lemma}
 	\label{lem:A_ij bound conditioned}
-		Let $i$ and $j$ be two vertices on the length $n$ cycle that are separated by distance $k$. Then
+		Let $i$ and $j$ be two vertices on the cycle $\mathbb{Z}/n\mathbb{Z}$ that are separated by distance $k$. Then
 		\begin{equation}
 			\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset|X_{j} = 1] \leq 2\left(\frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\right)^k.
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
-		We must first deal with the effect that conditioning on $X_j = 1$ has on the probability that the two update histories merge. Recall from \ref{sec:update histories on the cycle} that we could interpret the update history as a collection of independent Poisson processes for each vertex. We may construct a different collection of filtered Poisson processes for each vertex by following the updates that occur along a single vertex's history. Let $\bar{\hist}_i$ be the update history that results from ignoring all oblivious updates (that is, the history does not die). Then $L_t^{\hist_i}$ is the Poisson process that places a point every time $\bar{\hist}_i$ encounters a left update, $R_t^{\hist_i}$ is the Poisson process that places a point every time $\bar{\hist}_i$ encounters a right update, and $K_t^{\hist_i}$ is the Poisson process that places a point every time $\bar{\hist}_i$ encounters an oblivious update. It is easy to see that these are Poisson processes with waiting times that are exponential with rate 1, and that $L_t^{\hist_i}$, $R_t^{\hist_i}$, and $K_t^{\hist_i}$ are all independent of each other. Furthermore, for two vertices $i$ and $j$, while $\hist_i$ and $\hist_j$ do not share any updates, $L_t^{\hist_i}$, $R_t^{\hist_i}$, and $K_t^{\hist_i}$ are all independent of each of $L_t^{\hist_j}$, $R_t^{\hist_j}$, and $K_t^{\hist_j}$.
+		We must first deal with the effect that conditioning on $X_j = 1$ has on the probability that the two update histories merge. Recall from \ref{sec:update histories on the cycle} that we could interpret the update sequence as a collection of independent Poisson processes for each vertex. We may construct a different collection of filtered Poisson processes for each vertex by following the updates that occur along a single vertex's history. Let $\bar{\hist}_i$ be the update history that results from ignoring all oblivious updates (that is, the history does not die when it encounters an oblivious update). Then define $L_t^{\hist_i}$ to be the Poisson process that places a point every time $\bar{\hist}_i$ encounters a left update, $R_t^{\hist_i}$ the Poisson process that places a point every time $\bar{\hist}_i$ encounters a right update, and $K_t^{\hist_i}$ the Poisson process that places a point every time $\bar{\hist}_i$ encounters an oblivious update. It is easy to see that these are Poisson processes with waiting times that are exponential with rate $(1 - \theta)/2$ for $L_t^{\hist_i}$ and $R_t^{\hist_i}$, and rate $\theta$ for $K_t^{\hist_i}$; and that $L_t^{\hist_i}$, $R_t^{\hist_i}$, and $K_t^{\hist_i}$ are all independent of each other. Furthermore, for two vertices $i$ and $j$, while $\hist_i$ and $\hist_j$ do not share any updates, $L_t^{\hist_i}$, $R_t^{\hist_i}$, and $K_t^{\hist_i}$ are all independent of each of $L_t^{\hist_j}$, $R_t^{\hist_j}$, and $K_t^{\hist_j}$.
 
 		We now see that conditioning on $X_j = 1$ is equivalent to conditioning that $K_t^{\hist_j}$ has no updates along $[0, t_*]$. Since $L_t^{\hist_j}$ and $R_t^{\hist_j}$ are independent of $K_t^{\hist_j}$, conditioning on $X_j = 1$ does not affect the left and right updates and so we have that
 		\begin{equation}
@@ -1063,7 +1009,7 @@
 
 		% Define the times $S_d$ and $S_0$ via $S_0 = \inf\{t: P(t)  = 0 \}$ or $-\inf$ and $S_d = \inf\{t : \hist_i(t_* - t) = \emptyset\}$
 
-		To account for this, we construct two related birth and death processes. We assume that $i$ is to the left of $j$ (if it is to the right, we may simply swap `left' and `right' in what follows). The first, $P_1(t)$, starts at $k = d(i,j)$ and increases by one every time $\bar{\hist}_i$ moves left or $\bar{\hist}_j$ moves right and decreases by one every time $\bar{\hist}_i$ moves right or $\bar{\hist}_j$ moves left. The second, $P_2(t)$, starts at $n - k$ and decreases by one every time $P_1(t)$ increases by one, and increases by one every time $P_1(t)$ decreases by one. We may also construct times $S^{P_1}_0$ and $S^{P_2}_0$ as above to be the first times that $P_1$ and $P_2$ reach 0 (or $\infty$ if they do not reach 0). The events $\{P(t)  = 0\}$ and $\{P_1(t) = 0\} \cup \{P_2(t) = 0\}$ coincide and so
+		To account for this, we construct two related birth and death processes. We assume that $i$ is to the left of $j$ (if it is to the right, we may simply swap `left' and `right' in what follows). The first, $P_1(t)$, starts at $k = d(i,j)$ and increases by one every time $\bar{\hist}_i$ moves left or $\bar{\hist}_j$ moves right and decreases by one every time $\bar{\hist}_i$ moves right or $\bar{\hist}_j$ moves left. The second, $P_2(t)$, starts at $n - k$ and decreases by one every time $P_1(t)$ increases by one, and increases by one every time $P_1(t)$ decreases by one. We may also construct times $S^{P_1}_0$ and $S^{P_2}_0$ as above to be the first times that $P_1$ reaches 0 and $P_2$ reaches 0 respectively (or $\infty$ if they do not reach 0). The events $\{P(t)  = 0\}$ and $\{P_1(t) = 0\} \cup \{P_2(t) = 0\}$ coincide and so
 		\begin{align}
 			\prob[\hist_i \cap \bar{\hist}_j \neq \emptyset] &= \prob[\min(S^{P_1}_0, S^{P_2}_0) \leq S_d]\\
 			 &\leq \prob[S^{P_1}_0 \leq S_d] + \prob[S^{P_2}_0 \leq S_d]\\
@@ -1075,7 +1021,7 @@
 			&\leq 2\prob[S^{P_1}_0 \leq S_\theta].
 		\end{align}
 		% On the interval $[0, \min(t_*, S_0^{P_1})]$, the process $P_1(t)$ is a birth and death process that starts at $k$ and has birth and death rates $\lambda = \mu = 1 - \theta$. 
-		In the case that $P_1(t) > 0$ for all $t \in [0, t_*]$, instead of defining $S_0^{P_1}$ to be infinite, we may instead choose to extend $P_1(t)$ into the interval $(t_*, \infty)$ by continuing the birth and death transitions with rates $\lambda = \mu = 1 - \theta$, independent of $S_\theta$. Call this extended process $P_1'(t)$. We can then define $S_0^{P_1'} = \inf\{t : P_1'(t) = 0\}$ which is constructed such that $S_0^{P_1'} \leq S_0^{P_1}$. We therefore have
+		In the case that $P_1(t) > 0$ for all $t \in [0, t_*]$, instead of defining $S_0^{P_1}$ to be infinite, we may instead choose to extend $P_1(t)$ into the interval $(t_*, \infty)$ by continuing the birth and death transitions with rates $\lambda = \mu = 1 - \theta$, independent of $S_\theta$. Call this extended process $P_1'(t)$. We can then define $S_0^{P_1'} = \inf\{t : P_1'(t) = 0\}$ which we note has been constructed such that $S_0^{P_1'} \leq S_0^{P_1}$. We therefore have
 		\begin{align}
 			\prob[\hist_i \cap \bar{\hist}_j \neq \emptyset] \leq 2\prob[S^{P_1'}_0 \leq S_\theta].
 		\end{align}
@@ -1091,7 +1037,7 @@
 
 		 While $t < S_\theta$ and $P_1'(t) > 0$, there are three possibilities for what can happen to $P_1'$ next. Either the next event is a birth with probability $(1 - \theta)/(2 - \theta)$, the next event is a death with the same probability or we reach time $S_\theta$ with probability $\theta/(2 - \theta)$. Writing $\zeta_k = \prob_k(S_0^{P_1'} < S_\theta)$, where $\prob_k$ denotes that $P_1(t)$ starts at $k$, this gives us the recurrence relation
 		 \begin{align}
-		 	\zeta_k = \frac{1 - \theta}{2 - \theta} \zeta_{k-1} + \frac{1 - \theta}{2 - \theta} \zeta_{k+1}
+		 	\zeta_k = \frac{1 - \theta}{2 - \theta} \zeta_{k-1} + \frac{1 - \theta}{2 - \theta} \zeta_{k+1},
 		 \end{align}
 		 which is subject to the conditions 
 		 \begin{align}
@@ -1102,16 +1048,16 @@
 		 \end{align} 
 		 This recurrence has characteristic equation
 		 \begin{align}
-		 	x^2 - \frac{2 -\theta}{1 - \theta} x + 1 = 0
+		 	x^2 - \frac{2 -\theta}{1 - \theta} x + 1 = 0,
 		 \end{align}
 		 which has roots
 		 \begin{align}
-		 	r_1 &= \frac{2 - \theta + \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\\
-		 	r_2 &= \frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}
+		 	r_1 &= \frac{2 - \theta + \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta},\\
+		 	r_2 &= \frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta},
 		 \end{align}
 		 and so
 		 \begin{align}
-		 	\zeta_k = a r_1^k + b r_2^k
+		 	\zeta_k = a r_1^k + b r_2^k,
 		 \end{align}
 		 where $a$ and $b$ are constants to be determined from \eqref{eq:zetacondition1_cond} and \eqref{eq:zetacondition2_cond}. We note that $r_1 \geq 1, \forall \theta \in [0,1]$ and so from \eqref{eq:zetacondition2_cond} we have that $a = 0$. Finally from \eqref{eq:zetacondition1_cond}, $b = 1$ and so
 		 \begin{equation}
@@ -1121,4 +1067,64 @@
 		 \begin{equation}
 			\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset|X_{j} = 1] \leq 2\left(\frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\right)^k.
 		\end{equation}
+	\end{proof}
+
+	\subsection{Lemmas that hold on a more general family of graphs}
+	\label{sec:lemmas on general graphs}
+
+	\begin{lemma}
+	\label{lem:conditioning on A removes conditioning on W}
+		Let $i$ be a vertex in a connected graph and 
+		% let
+		% \begin{equation}
+		% 	C_i^c = \{j : d(j, i) \leq (b_n + c_n)/2\}
+		% \end{equation}
+		% be the set of vertices within distance $(b_n + c_n)/2$ of $i$. Define the events
+		define the events
+		\begin{equation}
+			A_1 = \{\exists j \in B_i \cup \{i\}, \exists t \in [0, t_*] : \mathcal{H}_j(t) \nsubseteq  B(i, (b_n + c_n)/2)\}
+		\end{equation}
+		and
+		\begin{equation}
+			A_2 = \{\exists j \in D_i, \exists t \in [0, t_*] : \mathcal{H}_j(t) \cap B(i, (b_n + c_n)/2) \neq \emptyset\}
+		\end{equation}
+		as well as their union
+		\begin{equation}
+			A = A_1 \cup A_2.
+		\end{equation}
+		Then
+		\begin{equation}
+			\prob[X_i = 1, U_i = j | A^\complement, W_i] = \prob[X_i = 1, U_i = j | A^\complement].
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		If $A_1^\complement$ holds, then the events $\{X_i = 1\}$ and $\{U_i = j\}$ depend only on the values of the update sequence inside $B(i, (b_n + c_n)/2)$. If $A_2^\complement$ holds then the events $\{W_i = k\}$, $k \geq 0$, depend only on the values of the update sequence outside of $B(i, (b_n + c_n)/2)$. Since the update sequences of each vertex are independent of each other vertex, if $A_2^\complement$ holds, conditioning on $W_i$ does not affect the update sequences inside $B(i, (b_n + c_n)/2)$ and so 
+		\begin{equation}
+			\prob[X_i = 1, U_i = j | A^\complement, W_i] = \prob[X_i = 1, U_i = j | A^\complement].
+		\end{equation}
+	\end{proof}
+
+	\begin{lemma}
+	\label{lem:prob Xj Xi and no intersect}
+		Let $i$ and $j$ be two vertices in a transitive graph, $G = (V, E)$. Let $0 \leq t_0 < t_*$. Then
+		\begin{equation}
+			\prob\left(\hist_j(t_0) \neq \emptyset, \hist_i(t_0) \neq \emptyset, \hist_j \cap \hist_i \cap (V \times [t_0, t_*]) \neq \emptyset \right) \leq \prob[\hist_i(t_0) \neq \emptyset]^2.
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		Define $S$ to be the time closest to $t_*$ that the histories of $i$ and $j$ intersect, or define $S = t_0$ if the histories do not intersect along $[t_0, t_*]$. We construct a new history, $\hist_j'$, in the following way. For all $t \in [S, t_*]$, $\hist_j'(t) = \hist_j(t)$. However, along the interval $[t_0, S)$, we replace the update sequence with an another i.i.d.\ copy of the update sequence along the interval $[t_0, S)$ and construct the remainder of $\hist_j'$ using this new update sequence. 
+
+		Clearly, $\hist_j'$ and $\hist_j$ have the same distribution. Moreover, we now argue that $\hist_j'$ is independent of $\hist_i$. By construction, $\cup_{t = 0}^S \hist_j'(t)$ is independent of $\cup_{t=0}^S \hist_k(t)$ for all $k \in V$, and in particular, for $k = i$. 
+		For $t \geq S$ we note that no updates are a part of both histories. Since every update comes from independent Poisson processes, the updates in $\hist_j' \cap (V \times [S, t^*])$ are independent of those in $\hist_i \cap (V \times [S, t^*])$. Hence $\hist_j'$ and $\hist_i$ are independent.
+
+		% From the memoryless property of the exponential waiting times between updates, we get that each update is independent of the rest, and so the histories are independent too. 
+		Note that in the event $\{\hist_i \cap \hist_j \cap (V \times [t_0, t_*]) = \emptyset\}$, we have $\hist_j = \hist_j'$ along the interval $[t_0, t_*]$ and so
+		\begin{align}
+			\prob[&\hist_i(t_0) \neq \emptyset, \hist_j(t_0) \neq \emptyset, \hist_i \cap \hist_j \cap (V \times [t_0, t_*]) = \emptyset] \notag \\
+			&= \prob[\hist_i(t_0) \neq \emptyset, \hist_j'(t_0) \neq \emptyset, \hist_i \cap \hist_j \cap (V \times [t_0, t_*]) = \emptyset]\\
+			&\leq \prob[\hist_i(t_0) \neq \emptyset, \hist_j'(t_0) \neq \emptyset]\\
+			&= \prob[\hist_i(t_0) \neq \emptyset] \prob[\hist_j'(t_0) \neq \emptyset]\\
+			&= \prob[\hist_i(t_0) \neq \emptyset]^2,
+		\end{align}
+		since $\hist_i$ and $\hist_j'$ are independent and $\prob[\hist_i(t_0) \neq \emptyset] = \prob[\hist_j'(t_0) \neq \emptyset]$ by the transitivity of $G$.
 	\end{proof}

@@ -36,7 +36,7 @@
 
 	In this chapter, we focus on the methods introduced in this paper. We will start in Section \ref{sec:summary of basic deconvolution} by summarizing deconvolution methods for when the error distribution is known, or estimated from replicates. This will serve as a basis for a discussion on Delaigle's and Hall's \cite{Delaigle2016-la} paper in Section \ref{sec:summary of delaigle hall}. In Section \ref{sec:deconvolution empirical results}, we will empirically demonstrate that these methods produce a similar phenomenon to the one encountered when using maximum likelihood location mixtures, and we will explore how this phenomenon manifests under various conditions. We will also point out how we can take advantage of this phenomenon. 
 	% Finally, in Section \ref{sec:deconvolution observations and results}, we will make some general observations about some similarities between our deconvolution problem, and that of maximum likelihood mixtures. 
-	Finally, in Section \ref{sec:deconvolution observations and results}, we will make a general observation about the deconvolution problem, and suggest that its behaviour might not be totally unexpected.
+	Finally, in Section \ref{sec:deconvolution observations and results}, we will make a general observation about the deconvolution problem, and point out some similarities between it and the mixture problem of Chapter \ref{Ch:Mixtures}.
 
 
 \subsection{Prior deconvolution methods}
@@ -759,16 +759,14 @@ To perform the two non-linear optimizations we use the package Nlcoptim \cite{Ch
 \section{General Observations and Results}
 \label{sec:deconvolution observations and results}
 
-We end this chapter with a simple observations about our deconvolution problem. We do not claim that it is new, but we think that it is still worth stating. 
-
-[TELL US WHERE YOU THINK IT CAN BE USEFUL]
+We end this chapter with a simple observation about our deconvolution problem. We do not claim that it is new, but we think that it is still worth stating because it establishes a connection between our deconvolution problem, and the mixture problem of Chapter \ref{Ch:Mixtures}.
 
 	% \subsection{Results concerning phase functions}
 	\begin{theorem}
 	\label{thm:equal phase functions convex set}
-		Let $F_1$ and $F_2$ be two distributions, and let
+		Let $F_1$ and $F_2$ be two distributions with phase functions $\rho_1$ and $\rho_2$, and let
 		\begin{align}
-			F_Z &= (1 - \lambda) F_1 + \lambda F_2 && \lambda \in [0,1]
+			F_Z &= (1 - \lambda) F_1 + \lambda F_2, && \lambda \in [0,1]
 		\end{align}
 		be a convex combination of these distributions. If $\rho_1 = \rho_2$, then 
 		\begin{equation}
@@ -803,15 +801,18 @@ We end this chapter with a simple observations about our deconvolution problem. 
 		\end{equation}
 	\end{proof}
 
-Recall that ideally, we would like to search the set of all distributions with phase function equal to that of $W$ to find the distribution with smallest variance. Theorem \ref{thm:equal phase functions convex set} tells us that this set is convex. 
+Recall that ideally, we would like to search the set of all distributions with phase function equal to that of $W$ to find the distribution with smallest variance. Theorem \ref{thm:equal phase functions convex set} tells us that this set is convex. This is reminiscent of the maximum likelihood mixture problem of Chapter \ref{Ch:Mixtures} in which we also optimize a function over a convex set (see in particular Section \ref{sec:summary of Lindsay}).
 % [VARIANCE IS CONCAVE]
-Furthermore, given any two distributions $F_1$ and $F_2$ with variances $\sigma_1^2$ and $\sigma_2^2$ respectively, a convex combination of them, $F_Z = (1 - \lambda)F_1 + \lambda F_2$, will have variance $\sigma_Z^2 \geq (1 - \lambda) \sigma_1^2 + \lambda \sigma_2^2$. Hence, the minimum variance distribution with phase function exactly equal to $\rho_W$ will be on the boundary of this set, and will not be a non-trivial convex combination of two distributions with phase functions equal to $\rho_W$. The support of any non-trivial convex combination of two discrete distributions, $F_1$ and $F_2$, is the union of the supports of $F_1$ and $F_2$ and so it has at least as many points of support as either $F_1$ or $F_2$. 
 
-[WHY IS IT NOT SUPRRISING]
+Furthermore, given any two distributions $F_1$ and $F_2$ with variances $\sigma_1^2$ and $\sigma_2^2$ respectively, a convex combination of them, $F_Z = (1 - \lambda)F_1 + \lambda F_2$, will have variance $\sigma_Z^2 \geq (1 - \lambda) \sigma_1^2 + \lambda \sigma_2^2$. Hence, the minimum variance distribution with phase function exactly equal to $\rho_W$ must be on the boundary of this convex set, again reminiscent of the maximum likelihood mixture problem.
 
-and so it is perhaps not totally surprising that minimizing the variance in our problem results in distributions with few points of support.
+% Also of note is that the support of $F_Z = (1 - \lambda)F_1 + \lambda F_2$ is the union of the supports of $F_1$ and $F_2$ and so $F_Z$ has at least as many points of support as either $F_1$ or $F_2$. From the above discussion, we have that the minimum variance distribution with phase function exactly equal to $\rho_W$ will not be a non-trivial convex combination of two distributions with phase functions equal to $\rho_W$. That is, in minimizing the variance we move away from 
 
-[EXPLAIN THIS WHOLE THING BETTER/MORE]
+% % [WHY IS IT NOT SUPRRISING]
+
+% and so it is perhaps not totally surprising that minimizing the variance in our problem results in distributions with few points of support.
+
+% [EXPLAIN THIS WHOLE THING BETTER/MORE]
 
 Of course, in reality we do not search over distributions with phase function exactly equal to $W$, but rather over distributions with phase function in some sense `close' to an empirical estimate of the phase function of $W$. However the intuition gained above could potentially still be relevant.
 
@@ -844,4 +845,4 @@ In this chapter we looked at the method for deconvolution when the error distrib
 
 We used this new method in the R package `deconvolve', which contains not only methods for deconvolution when the error distribution is unknown, but also a variety of other tools for performing non-parametric deconvolution, finding bandwidths, and non-parametric regression estimates. We commented that while our implementation in R benefited from the same speed up we observed in our MATLAB code, the objective values obtained were typically not as good, although they still produced reasonable looking densities.
 
-We ended the chapter with a brief discussion on the set of distributions with equal phase function and made a suggestion as to why the phenomenon of interest in this chapter might not be totally unexpected. However, we did not obtain any rigorous results which either bounded the number of point masses required or explained why only a few point masses contributed to the final result. It would be of interest to obtain results like these in the future, and in particular, to use these results to improve the efficiency of our methods.
+We ended the chapter with a brief discussion on the set of distributions with equal phase function and made a connection between the phenomenon of interest in this chapter, and the similar one in Chapter \ref{Ch:Mixtures}. However, we did not obtain any rigorous results which either bounded the number of point masses required or explained why only a few point masses contributed to the final result. It would be of interest to obtain results like these in the future, and in particular, to use these results to improve the efficiency of our methods.
