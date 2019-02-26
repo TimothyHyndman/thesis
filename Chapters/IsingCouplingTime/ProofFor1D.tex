@@ -666,22 +666,40 @@
 
 	\subsection{Lemmas that hold on the cycle}
 	\label{sec:lemmas on cycle}
-	
 
 	\begin{lemma}
-	\label{lem:replace conditioning}
-		Consider the update histories on the cycle $\mathbb{Z}/n\mathbb{Z}$. Let $E$ be an event that depends only on the update sequence along $[t_1, t_*]$. Then for any vertex, $i$, and any $t_0 \leq t_1$,
+		\label{lem:X_i+k given X_i}
+		Let $i$ and $j$ be two vertices on the cycle $\mathbb{Z}/n\mathbb{Z}$ separated by distance $k$. Then
 		\begin{equation}
-			\prob\left(E | \hist_i(t_1) \neq \emptyset \right) = \prob\left(E | \hist_i(t_0) \neq \emptyset \right).
+			\label{eq:prob X_i+k = 1|X_i = 1}
+			\prob[X_j = 1| X_i = 1] \leq \frac{e^{-z}}{n} + 2\left(\frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\right)^k.
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
-		Let $\bar{\hist}_i$ be the update history that results from ignoring all oblivious updates (that is, the history does not die when it encounters an oblivious update). Let $K_t^{\hist_i}$ be the point process that places a point every time $\bar{\hist}_i$ encounters an oblivious update. It is obvious that this is a Poisson process with waiting times that are exponential with rate $\theta$. We have that the event $\{\hist_i(t_1) \neq \emptyset \}$ coincides with the event	\{$K_t^{\hist_i}$ encounters no oblivious updates along $[t_1, t_*]$\}. Since the waiting times of $K_t^{\hist_i}$ are exponential, conditioning on the behaviour of $K_t^{\hist_i}$ along $[t_0, t_1)$ does not affect the behaviour of $K_t^{\hist_i}$ along $[t_1, t_*]$. Since $E$ only depends only on the update sequence along $[t_1, t_*]$, conditioning on the behaviour of $K_t^{\hist_i}$ along $[t_0, t_1)$ does not affect its probability. Hence
+		There are two ways in which the update history of vertex $j$ can survive until time $0$. The update history can survive without intersecting with the update history of vertex $i$ or the update history of vertex $j$ can merge with the update history of vertex $i$ (whose survival we are conditioning on). %(Note that these events are not mutually exclusive as the update history of vertex $i+k$ could merge with the update history of vertex $i$ after it reaches time $0$.) 
+		Breaking up the probability this way we have
 		\begin{align}
-			\prob\left(E | \hist_i(t_1) \neq \emptyset \right) &= \prob\left(E | K_t^{\hist_i} \text{ encounters no oblivious updates along } [t_1, t_*]\} \right)\\
-			&= \prob\left(E | K_t^{\hist_i} \text{ encounters no oblivious updates along } [t_0, t_*]\} \right)\\
-			&= \prob\left(E | \hist_i(t_0) \neq \emptyset \right).
+			\prob[X_j = 1| X_i = 1] &= \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j = \emptyset | X_i = 1] \notag\\
+			&\phantom{=}+ \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1]\\
+			&\leq \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j = \emptyset | X_i = 1] %\notag\\
+			+ \prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1].
 		\end{align}
+
+		% If the histories of $i$ and $j$ do not intersect, then conditioning on $\mathcal{H}_i$ surviving does not affect the chance that $\mathcal{H}_j$ survives. However, conditioning on $\mathcal{H}_i$ surviving does make it more likely that the histories intersect. So
+		% % \begin{align}
+		% % 	\prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset | X_i = 1] &\leq \prob[X_{i+k} = 1| \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset, X_i = 1]\\
+		% % 	&\leq \prob[X_{i+k} = 1]
+		% % \end{align}
+		% \begin{equation}
+		% 	\prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset | X_i = 1] \leq \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset]
+		% \end{equation}
+		% [DOES THIS NEED FIXING?] and so
+		% \begin{align}
+		% 	\prob[X_{i+k} = 1| X_i = 1] &\leq \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset] \notag\\
+		% 	&\phantom{=}+ \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} \neq \emptyset | X_i = 1],\\
+		% 	&\leq \prob[X_{i+k} = 1] + \prob[\mathcal{H}_i \cap \mathcal{H}_{i+k} \neq \emptyset | X_i = 1].
+		% \end{align}
+		The result follows from Lemmas \ref{lem:prob Xj and no intersect given Xi} and \ref{lem:A_ij bound conditioned}.
 	\end{proof}
 
 	\begin{lemma}
@@ -831,7 +849,7 @@
 		% which goes to zero as $n \rightarrow \infty$.
 
 	\end{proof}
-
+	
 	The following Lemma bounds how fast updates can percolate through the cycle. The proof is a slight modification of a similar result in \cite[Lemma 2.1]{Lubetzky2016-wd}.
 	\begin{lemma}
 	\label{lem:1D prob history contained in ball}
@@ -869,87 +887,6 @@
 		\end{align}
 	\end{proof}
 
-
-	% \begin{lemma}
-	% 	\label{lem: A_ij bound}
-	% 	Let $i$ and $j$ be the indices of two vertices that are separated by distance $k$. The probability that the update history of vertex $i$ merges with the update history of vertex $j$ is bounded by
-	% 	\begin{equation}
-	% 		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset] \leq 2\left(\frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}\right)^k.
-	% 	\end{equation}
-	% \end{lemma}
-	% \begin{proof}
-	% 	We note that, while the update histories survive, the distance between the update histories of $i$ and $j$ is a birth and death process, travelling backwards in time from $t_*$, that starts at $k$ and has birth and death rates, $\lambda = \mu = 1 - \theta$. Let $P(t)$ be a birth and death process with these rates and define $s_0  = \inf\{t : P(t) = 0\}$ to be the first time the process reaches zero (this corresponds to the update histories merging). Let $s_d$ be exponentially distributed with rate $2\theta$ (this corresponds to the first time that one of the update histories dies). Then
-	% 	\begin{align}
-	% 	 	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset] \leq 2 \prob_k(s_0 < s_d),
-	% 	 \end{align} 
-	% 	 where $\prob_k$ indicates that $P(0) = k$. The factor of two comes from the fact that the update histories may meet by going the other direction around the cycle. We also note that we allow $P(t)$ to continue beyond $t = t_*$, unlike our update histories which stop at time $0$. This does not present a problem as the effect of allowing this is to increase the size of our upper bound.
-
-	% 	 At any time before $s_d$ there are three possibilities for what can happen to $P$ next. Either the next event is a birth with probability $(1 - \theta)/2$, the next event is a death with the same probability or we reach time $s_d$ with probability $\theta$. Writing $\zeta_k = \prob_k(s_0 < s_d)$ this gives us the recurrence relation
-	% 	 \begin{align}
-	% 	 	\zeta_k = \frac{1 - \theta}{2} \zeta_{k-1} + \frac{1 - \theta}{2} \zeta_{k+1}
-	% 	 \end{align}
-	% 	 which is subject to the conditions 
-	% 	 \begin{align}
-	% 	 	\label{eq:zetacondition1}
-	% 	 	\zeta_0 &= 1\\
-	% 	 	\zeta_k &\leq 1, \, \forall k \in \mathbb{N}.
-	% 	 	\label{eq:zetacondition2}
-	% 	 \end{align} 
-	% 	 This recurrence has characteristic equation
-	% 	 \begin{align}
-	% 	 	x^2 - \frac{2}{1 - \theta} x + 1 = 0
-	% 	 \end{align}
-	% 	 which has roots
-	% 	 \begin{align}
-	% 	 	r_1 &= \frac{1 + \sqrt{\theta(2 - \theta)}}{1 - \theta}\\
-	% 	 	r_2 &= \frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}
-	% 	 \end{align}
-	% 	 and so
-	% 	 \begin{align}
-	% 	 	\zeta_k = a r_1^k + b r_2^k
-	% 	 \end{align}
-	% 	 where $a$ and $b$ are constants to be determined from \eqref{eq:zetacondition1} and \eqref{eq:zetacondition2}. We note that $r_1 \geq 1, \forall \theta \in [0,1]$ and so from \eqref{eq:zetacondition2} we have that $a = 0$. Finally from \eqref{eq:zetacondition1}, $b = 1$ and so
-	% 	 \begin{equation}
-	% 	 	\zeta_k = \left(\frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}\right)^k.
-	% 	 \end{equation}
-	% \end{proof}
-
-	\begin{lemma}
-		\label{lem:X_i+k given X_i}
-		Let $i$ and $j$ be two vertices on the cycle $\mathbb{Z}/n\mathbb{Z}$ separated by distance $k$. Then
-		\begin{equation}
-			\label{eq:prob X_i+k = 1|X_i = 1}
-			\prob[X_j = 1| X_i = 1] \leq \frac{e^{-z}}{n} + 2\left(\frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\right)^k.
-		\end{equation}
-	\end{lemma}
-	\begin{proof}
-		There are two ways in which the update history of vertex $j$ can survive until time $0$. The update history can survive without intersecting with the update history of vertex $i$ or the update history of vertex $j$ can merge with the update history of vertex $i$ (whose survival we are conditioning on). %(Note that these events are not mutually exclusive as the update history of vertex $i+k$ could merge with the update history of vertex $i$ after it reaches time $0$.) 
-		Breaking up the probability this way we have
-		\begin{align}
-			\prob[X_j = 1| X_i = 1] &= \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j = \emptyset | X_i = 1] \notag\\
-			&\phantom{=}+ \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1]\\
-			&\leq \prob[X_j = 1, \mathcal{H}_i \cap \mathcal{H}_j = \emptyset | X_i = 1] %\notag\\
-			+ \prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset | X_i = 1].
-		\end{align}
-
-		% If the histories of $i$ and $j$ do not intersect, then conditioning on $\mathcal{H}_i$ surviving does not affect the chance that $\mathcal{H}_j$ survives. However, conditioning on $\mathcal{H}_i$ surviving does make it more likely that the histories intersect. So
-		% % \begin{align}
-		% % 	\prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset | X_i = 1] &\leq \prob[X_{i+k} = 1| \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset, X_i = 1]\\
-		% % 	&\leq \prob[X_{i+k} = 1]
-		% % \end{align}
-		% \begin{equation}
-		% 	\prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset | X_i = 1] \leq \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset]
-		% \end{equation}
-		% [DOES THIS NEED FIXING?] and so
-		% \begin{align}
-		% 	\prob[X_{i+k} = 1| X_i = 1] &\leq \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} = \emptyset] \notag\\
-		% 	&\phantom{=}+ \prob[X_{i+k} = 1, \mathcal{H}_i \cap \mathcal{H}_{i+k} \neq \emptyset | X_i = 1],\\
-		% 	&\leq \prob[X_{i+k} = 1] + \prob[\mathcal{H}_i \cap \mathcal{H}_{i+k} \neq \emptyset | X_i = 1].
-		% \end{align}
-		The result follows from Lemmas \ref{lem:prob Xj and no intersect given Xi} and \ref{lem:A_ij bound conditioned}.
-	\end{proof}
-
-	
 	\begin{lemma}
 		\label{lem:prob Xj and no intersect given Xi}
 		Let $i$ and $j$ be two vertices on the cycle $\mathbb{Z}/n\mathbb{Z}$. Then
@@ -1068,6 +1005,76 @@
 			\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset|X_{j} = 1] \leq 2\left(\frac{2 - \theta - \sqrt{\theta(4 - 3\theta)}}{2 - 2\theta}\right)^k.
 		\end{equation}
 	\end{proof}
+	
+	\begin{lemma}
+	\label{lem:replace conditioning}
+		Consider the update histories on the cycle $\mathbb{Z}/n\mathbb{Z}$. Let $E$ be an event that depends only on the update sequence along $[t_1, t_*]$. Then for any vertex, $i$, and any $t_0 \leq t_1$,
+		\begin{equation}
+			\prob\left(E | \hist_i(t_1) \neq \emptyset \right) = \prob\left(E | \hist_i(t_0) \neq \emptyset \right).
+		\end{equation}
+	\end{lemma}
+	\begin{proof}
+		Let $\bar{\hist}_i$ be the update history that results from ignoring all oblivious updates (that is, the history does not die when it encounters an oblivious update). Let $K_t^{\hist_i}$ be the point process that places a point every time $\bar{\hist}_i$ encounters an oblivious update. It is obvious that this is a Poisson process with waiting times that are exponential with rate $\theta$. We have that the event $\{\hist_i(t_1) \neq \emptyset \}$ coincides with the event	\{$K_t^{\hist_i}$ encounters no oblivious updates along $[t_1, t_*]$\}. Since the waiting times of $K_t^{\hist_i}$ are exponential, conditioning on the behaviour of $K_t^{\hist_i}$ along $[t_0, t_1)$ does not affect the behaviour of $K_t^{\hist_i}$ along $[t_1, t_*]$. Since $E$ only depends only on the update sequence along $[t_1, t_*]$, conditioning on the behaviour of $K_t^{\hist_i}$ along $[t_0, t_1)$ does not affect its probability. Hence
+		\begin{align}
+			\prob\left(E | \hist_i(t_1) \neq \emptyset \right) &= \prob\left(E | K_t^{\hist_i} \text{ encounters no oblivious updates along } [t_1, t_*]\} \right)\\
+			&= \prob\left(E | K_t^{\hist_i} \text{ encounters no oblivious updates along } [t_0, t_*]\} \right)\\
+			&= \prob\left(E | \hist_i(t_0) \neq \emptyset \right).
+		\end{align}
+	\end{proof}
+
+	
+
+	
+
+
+	% \begin{lemma}
+	% 	\label{lem: A_ij bound}
+	% 	Let $i$ and $j$ be the indices of two vertices that are separated by distance $k$. The probability that the update history of vertex $i$ merges with the update history of vertex $j$ is bounded by
+	% 	\begin{equation}
+	% 		\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset] \leq 2\left(\frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}\right)^k.
+	% 	\end{equation}
+	% \end{lemma}
+	% \begin{proof}
+	% 	We note that, while the update histories survive, the distance between the update histories of $i$ and $j$ is a birth and death process, travelling backwards in time from $t_*$, that starts at $k$ and has birth and death rates, $\lambda = \mu = 1 - \theta$. Let $P(t)$ be a birth and death process with these rates and define $s_0  = \inf\{t : P(t) = 0\}$ to be the first time the process reaches zero (this corresponds to the update histories merging). Let $s_d$ be exponentially distributed with rate $2\theta$ (this corresponds to the first time that one of the update histories dies). Then
+	% 	\begin{align}
+	% 	 	\prob[\mathcal{H}_i \cap \mathcal{H}_j \neq \emptyset] \leq 2 \prob_k(s_0 < s_d),
+	% 	 \end{align} 
+	% 	 where $\prob_k$ indicates that $P(0) = k$. The factor of two comes from the fact that the update histories may meet by going the other direction around the cycle. We also note that we allow $P(t)$ to continue beyond $t = t_*$, unlike our update histories which stop at time $0$. This does not present a problem as the effect of allowing this is to increase the size of our upper bound.
+
+	% 	 At any time before $s_d$ there are three possibilities for what can happen to $P$ next. Either the next event is a birth with probability $(1 - \theta)/2$, the next event is a death with the same probability or we reach time $s_d$ with probability $\theta$. Writing $\zeta_k = \prob_k(s_0 < s_d)$ this gives us the recurrence relation
+	% 	 \begin{align}
+	% 	 	\zeta_k = \frac{1 - \theta}{2} \zeta_{k-1} + \frac{1 - \theta}{2} \zeta_{k+1}
+	% 	 \end{align}
+	% 	 which is subject to the conditions 
+	% 	 \begin{align}
+	% 	 	\label{eq:zetacondition1}
+	% 	 	\zeta_0 &= 1\\
+	% 	 	\zeta_k &\leq 1, \, \forall k \in \mathbb{N}.
+	% 	 	\label{eq:zetacondition2}
+	% 	 \end{align} 
+	% 	 This recurrence has characteristic equation
+	% 	 \begin{align}
+	% 	 	x^2 - \frac{2}{1 - \theta} x + 1 = 0
+	% 	 \end{align}
+	% 	 which has roots
+	% 	 \begin{align}
+	% 	 	r_1 &= \frac{1 + \sqrt{\theta(2 - \theta)}}{1 - \theta}\\
+	% 	 	r_2 &= \frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}
+	% 	 \end{align}
+	% 	 and so
+	% 	 \begin{align}
+	% 	 	\zeta_k = a r_1^k + b r_2^k
+	% 	 \end{align}
+	% 	 where $a$ and $b$ are constants to be determined from \eqref{eq:zetacondition1} and \eqref{eq:zetacondition2}. We note that $r_1 \geq 1, \forall \theta \in [0,1]$ and so from \eqref{eq:zetacondition2} we have that $a = 0$. Finally from \eqref{eq:zetacondition1}, $b = 1$ and so
+	% 	 \begin{equation}
+	% 	 	\zeta_k = \left(\frac{1 - \sqrt{\theta(2 - \theta)}}{1 - \theta}\right)^k.
+	% 	 \end{equation}
+	% \end{proof}
+
+	
+
+	
+	
 
 	\subsection{Lemmas that hold on a more general family of graphs}
 	\label{sec:lemmas on general graphs}
