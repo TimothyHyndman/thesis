@@ -613,9 +613,15 @@
 		For $A_1$ to hold, we must have a history $\hist_j$ that extends from a distance of no more than $b_n$ from $i$ to a distance of at least $(b_n + c_n)/2$ from $i$. That is, it must extend a distance of at least $(c_n - b_n)/2$. For $A_2$ to hold, we must have a history $\hist_j'$ that extends from a distance of at least $c_n$ from $i$ to a distance of no more than $(b_n + c_n)/2$ from $i$. That is, it must extend a distance of at least $(c_n - b_n)/2$. So for either $A_1$ or $A_2$ to hold, there must exist a history that spreads at least distance $(c_n - b_n) / 2$ away from its starting vertex. 
 		By a union bound
 		\begin{align}
-			\prob[A] &\leq \sum_{i = 1}^n \prob[\mathcal{H}_i \nsubseteq B(i, (c_n - b_n)/2) \times [0, t_*]]\\
-				&= n \prob\left[\bigcup_{u \in [0, t_*]}\mathcal{H}_i(t_* - u) \nsubseteq B(i, (c_n - b_n)/2)\right].
+			\prob[A] &\leq \prob[A_1 \cup A_2]\\
+				&\leq \prob\left[\bigcup_{j \in V} \left\{\hist_j \nsubseteq B(j, (c_n - b_n)/2) \times [0, t_*] \right\} \right]\\
+				&\leq \sum_{j \in V} \prob[\mathcal{H}_j \nsubseteq B(j, (c_n - b_n)/2) \times [0, t_*]]\\
+				&= n \prob\left[\bigcup_{u \in [0, t_*]}\mathcal{H}_j(t_* - u) \nsubseteq B(j, (c_n - b_n)/2)\right].
 		\end{align}
+		% \begin{align}
+		% 	\prob[A] &\leq \sum_{i = 1}^n \prob[\mathcal{H}_i \nsubseteq B(i, (c_n - b_n)/2) \times [0, t_*]]\\
+		% 		&= n \prob\left[\bigcup_{u \in [0, t_*]}\mathcal{H}_i(t_* - u) \nsubseteq B(i, (c_n - b_n)/2)\right].
+		% \end{align}
 		Combining this with Lemma \ref{lem:1D prob history contained in ball}, and recalling our choices of $b_n = \ln(n)$ and $c_n = \ln(n)^2$ we get that
 		\begin{align}
 			\delta_1 &\leq 8n^2(2\lfloor b_n\rfloor + 1) \exp\left((z + \ln n)/\theta - \ln 2(c_n - b_n) /2 \right)\\
