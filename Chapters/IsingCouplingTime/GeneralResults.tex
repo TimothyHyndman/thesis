@@ -4,15 +4,15 @@
 
 \lhead{Chapter \ref{Ch:GeneralResults}. \emph{The Coupling Time on Vertex Transitive Graphs}}
 
-For the most part, this chapter will be similar in structure and content to Chapter \ref{Ch:1D}. The main difference is that we extend the family of graphs on which we consider the Ising heat-bath Glauber dynamics from the cycle to any vertex transitive graph. Again, the main result, Theorem \ref{thm:Coupling Distribution on transitive graph}, concerns the coupling time, $T_n$, as defined in Section \ref{sec:the coupling time}, and establishes that at sufficiently high temperature (that is, for $\beta$ small enough), the coupling time converges in distribution to a Gumbel distribution.
+For the most part, this chapter will be similar in structure and content to Chapter \ref{Ch:1D}. The main difference is that we extend the family of graphs on which we consider the Ising heat-bath Glauber dynamics from the cycle to a certain family of vertex transitive graphs. Again, the main result, Theorem \ref{thm:Coupling Distribution on transitive graph}, concerns the coupling time, $T_n$, as defined in Section \ref{sec:the coupling time}, and establishes that at sufficiently high temperature (that is, for $\beta$ small enough), the coupling time converges in distribution to a Gumbel distribution.
 
 Restricting $\beta$ to be sufficiently small is a consequence of the increased generality of this chapter. As mentioned in Chapter \ref{Ch:1D}, in the high-temperature regime we expect the dynamics to be similar to those when $\beta = 0$. When $\beta = 0$ the problem simplifies to the coupon collector's problem, which is known to have a Gumbel limit. However, at the critical temperature, and below in the low-temperature regime, there is no reason to suspect that the dynamics will behave similarly to when $\beta = 0$. So our restriction of $\beta$ to be small enough for the result to hold is, on at least a descriptive level, somewhat expected. 
 
-Our result partially confirms the conjecture by \citeauthor{Collevecchio2018-nq} in \cite{Collevecchio2018-nq} that the coupling time for the Ising heat-bath process on the $d$-dimensional lattice, $G_L = (\mathbb{Z}/L\mathbb{Z})^d$, converges to a Gumbel distribution as $L \rightarrow\infty$ for all $\beta < \beta_C$. Our result does not hold all the way up until the critical temperature. This is due to the fact that we are considering a larger class of graphs than just the square lattice, and so it is unreasonable to expect such a result to provide sharp bounds for the lattice. A separate treatment of the square lattice in particular may be needed for a result holding all the way up to the critical temperature. Note that this is what \citeauthor{Lubetzky2013-yv} did in \cite{Lubetzky2013-yv} to prove the existence of cutoff for the full high-temperature regime. Since our proof is also based on information percolation there is good reason to think that a similar approach could also work to extend our result.
+Our result partially confirms the conjecture by \citeauthor{Collevecchio2018-nq} in \cite{Collevecchio2018-nq} that the coupling time for the Ising heat-bath process on the $d$-dimensional lattice, $G_L = (\mathbb{Z}/L\mathbb{Z})^d$, converges to a Gumbel distribution as $L \rightarrow\infty$ for all $\beta < \beta_C$. Our result does not hold all the way up to the critical temperature. This is due to the fact that we are considering a larger class of graphs than just the square lattice, and so it is unreasonable to expect such a result to provide sharp bounds for the lattice. A separate treatment of the square lattice in particular may be needed for a result holding all the way up to the critical temperature. Note that this is what \citeauthor{Lubetzky2013-yv} did in \cite{Lubetzky2013-yv} to prove the existence of cutoff for the full high-temperature regime. Since our proof is also based on information percolation there is good reason to think that a similar approach could also work to extend our result.
 
-The main part of our proof which requires $\beta$ to be sufficiently small is in Lemma \ref{lem: prob intersect given X_i = 1}. In particular, this Lemma concerns a quantity (see the comments immediately preceding Lemma \ref{lem: prob intersect given X_i = 1}) that is very similar to a quantity used in \cite{Lubetzky2015-po} to prove the existence of cutoff. This similarity further encourages future efforts to sharpen our result.
+The main part of our proof which requires $\beta$ to be sufficiently small is in Lemma \ref{lem: prob intersect given X_i = 1}. In particular, this Lemma concerns a quantity which is closely related to a quantity used in \cite{Lubetzky2015-po} to prove the existence of cutoff (see the comments immediately preceding Lemma \ref{lem: prob intersect given X_i = 1}). This similarity further encourages future efforts to sharpen our result.
 
-To state the main result we first must define the graphs on which it is valid. Let $(G_{n})$ be a sequence of vertex-transitive graphs with fixed degree $\Delta$ and $n$ vertices. Let $P_n(k)$ denote the number of vertices at distance $k$ from a vertex $i$ in $G_n$ and let $Q_n(k)$ denote the number of vertices at distance $k$ or less from a vertex $i$ in $G_n$. Define
+To state the main result we must first define the graphs on which it is valid. Let $(G_{n})$ be a sequence of vertex-transitive graphs with fixed degree $\Delta$ and where $n$ counts the number of vertices in $G_n$. Let $P_n(k)$ denote the number of vertices at distance $k$ from a vertex $i$ in $G_n$ and let $Q_n(k)$ denote the number of vertices at distance $k$ or less from a vertex $i$ in $G_n$. Define
 \begin{equation}
 	\mathscr{G} = \left\{(G_n) : \exists C_2 > 0 \text{ such that} \lim_{n \rightarrow \infty}\sum_{k = 1}^\infty P_n(k)\euler^{-k} \leq C_2, Q_n(\ln^2(n)) = o(n) \right\}.
 	\label{eq:set valid graphs}
@@ -22,16 +22,16 @@ In this chapter we consider sequences of vertex-transitive graphs $(G_n) \in \ma
 It is worth verifying that the set $\mathscr{G}$ contains some graph sequences that are of interest. We start by showing that it contains the $d$-dimensional discrete tori.
 
 \begin{lemma}
-	Define the sequence of length $L$ $d$-dimensional square lattices on a torus, $(G_L)_{L \geq 1}$, via $G_L = (\mathbb{Z}/\mathbb{Z} L)^d$. Then $(G_L)_{L \geq 1} \in \mathscr{G}$.
+	Define the sequence of length $L$ $d$-dimensional square lattices on a torus, $(G_L)_{L \geq 1}$, via $G_L = (\mathbb{Z}/L \mathbb{Z})^d$. Then $(G_L)_{L \geq 1} \in \mathscr{G}$.
 \end{lemma}
 \begin{proof}
-	The torus $G_L = (\mathbb{Z}/\mathbb{Z}L)^d$ is obviously vertex transitive and the sequence $(G_L)_{L \geq 1}$ has fixed degree $\Delta = 2d$. By definition $P_n(k) \leq Q_n(k)$ and we can upper bound $Q_n(k)$ by the number of vertices contained within distance $k$ of the origin on the infinite $d$-dimensional integer lattice, $Q_\infty(k)$.
+	The torus $G_L = (\mathbb{Z}/L \mathbb{Z})^d$ is obviously vertex transitive and the sequence $(G_L)_{L \geq 1}$ has fixed degree $\Delta = 2d$. By definition $P_n(k) \leq Q_n(k)$ and we can upper bound $Q_n(k)$ by the number of vertices contained within distance $k$ of the origin on the infinite $d$-dimensional integer lattice, $Q_\infty(k)$.
 
 	To bound $Q_\infty(k)$, consider first the number of vertices contained within distance $k$ of the origin in the closed positive orthant, $Q_\infty(k)^+$. That is, the number of vertices $\vect{x} = (x_1, \dots, x_d)$ with $x_i \geq 0$ and such that
 	\begin{align}
 		\sum_{i = 1}^d x_i \leq k
 	\end{align}
-	We note that we can represent each vertex in the positive orthant within distance $k$ of the origin by $k$ stars separated by $d$ bars, and taking $x_i$ to be the number of stars between bars $i-1$ and $i$. So for example, if $k = 5$ and $d = 2$, the arrangement
+	We note that we can represent each vertex in the positive orthant within distance $k$ of the origin by $k$ stars separated by $d$ bars, and taking $x_i$ to be the number of stars between bars $i-1$ and $i$. So for example, if $k = 5$ and $d = 3$, the arrangement
 	\begin{equation}
 		\star | \star \star | | \star \star
 	\end{equation}
@@ -46,7 +46,7 @@ It is worth verifying that the set $\mathscr{G}$ contains some graph sequences t
 	This is a degree $d$ polynomial in $k$ which satisfies the constraints in \eqref{eq:set valid graphs}.
 \end{proof}
 
-Another class of graphs contained in $\mathscr{G}$ are the $m$th powers of $G_L = (\mathbb{Z}/\mathbb{Z} L)^d$.	The $m$th power of a graph $G$ is a graph, $G^m$, with the same vertices as $G$, but in which we make adjacent all vertices whose distance in $G$ is no more than $m$. Clearly, $Q_n^{G^m}(k) \leq Q_n^G(mk)$, and $G^m$ inherits the transitivity of $G$. Hence sequences of powers of $G_L = (\mathbb{Z}/\mathbb{Z}L)^d$ are also in $\mathscr{G}$. This is of practical interest since the Ising model on $G^m$ corresponds to the Ising model with $m$ nearest neighbours on $G$.
+Another class of graphs contained in $\mathscr{G}$ are the $m$th powers of $G_L = (\mathbb{Z}/L \mathbb{Z})^d$.	The $m$th power of a graph $G$ is a graph, $G^m$, with the same vertices as $G$, but in which we make adjacent all vertices whose distance in $G$ is no more than $m$. Clearly, $Q_n^{G^m}(k) \leq Q_n^G(mk)$, and $G^m$ inherits the transitivity of $G$. Hence sequences of powers of $G_L = (\mathbb{Z}/L \mathbb{Z})^d$ are also in $\mathscr{G}$. This is of practical interest since the Ising model on $G^m$ corresponds to the Ising model with $m$ nearest neighbours on $G$ (see for example \cite{Domb1951-nb} on the Ising model with next nearest neighbours).
 
 We now define a couple of quantities. 
 % Recall from \eqref{eq:magnetization on volume definition} that given a fixed configuration, the magnetization on a volume $\Lambda$ is the sum of the spins on $\Lambda$. We can consider an analogous random variable, $M_t$, that is the sum of the spins of the top process, $\mathcal{T}_t$, at any fixed time $t$. 
@@ -59,7 +59,7 @@ Firstly, the \emph{expected magnetization at vertex $i$ at time $t$} is
 \end{equation} 
 where $(\mathcal{T}_t)_{t \geq 0}$ is the dynamics starting from the all-plus configuration. Note that on transitive graphs, with which this chapter is concerned, we can drop the dependence on $i$ and simply write $m_t$ for the expected magnetization at any vertex at time $t$. 
 
-This quantity is not to be confused with the total magnetization of a stationary Ising configuration, as defined in Section \ref{sec:the phase transition}. Recall from \eqref{eq:magnetization on volume definition} that given a fixed configuration, the magnetization on a volume $\Lambda$ is the sum of the spins on $\Lambda$. We could consider an analogous random variable, $M_t$, that is the sum of the spins of the top process, $\mathcal{T}_t$, at any fixed time $t$. Then we have
+This quantity is not to be confused with the total magnetization of a stationary Ising configuration, as defined in Section \ref{sec:the phase transition}. Recall from \eqref{eq:magnetization on volume definition} that given a fixed configuration, the total magnetization on a volume $\Lambda$ is the sum of the spins on $\Lambda$. We could consider an analogous random variable, $M_t$, that is the sum of the spins of the top process, $\mathcal{T}_t$, at any fixed time $t$. Then we have
 \begin{equation}
 	\frac{\expect[M_t]}{n} = m_t.
 \end{equation}
@@ -72,15 +72,15 @@ We can now define the time
 	\label{eq:definition t_c(n)}
 	t_c(n) = \inf\left\{ t > 0 : m_t = \frac{1}{n}\right\}.
 \end{equation}
-which is around the time it takes for the top and bottom chains to couple. Note that this is well defined since by definition $m_0 = 1$ and by Lemma \ref{lemma: exponential decay magnetization}, $m_t$ is continuous and assymptotically decays to zero, and hence must take value $1/n$ at some time.
+which is around the time it takes for the top and bottom chains to couple. Note that this is well defined since by definition $m_0 = 1$ and by Lemma \ref{lemma: exponential decay magnetization}, $m_t$ is continuous and asymptotically decays to zero, and hence must take value $1/n$ at some time.
 
-One way of interpreting this time is that at time $t_c(n)$, $\expect[M_{t_c(n)}] = \mathcal{O}(1)$. By way of comparison, at the inital state, $\expect[M_0] = n$, and at stationarity, $\expect[M] = 0$.
+One way of interpreting this time is that at time $t_c(n)$, $\expect[M_{t_c(n)}] = 1$. By way of comparison, at the initial state, $\expect[M_0] = n$, and at stationarity, $\expect[M] = 0$.
 
 % [SHOW EXISTS t S.T. $m_t = 1/n$, SEE TIM'S COMMENT]
 
 \begin{theorem}
 \label{thm:Coupling Distribution on transitive graph}
-	Let $(G_n) \in \mathscr{G}$ be a sequence of vertex-transitive graphs, $G_n = (V, E)$ with $|V| = n$ vertices. Let $T_n$ be the coupling time for the continuous-time Ising heat-bath dynamics for the zero-field ferromagnetic Ising model on $G_n$. Then for any small enough inverse-temperature $\beta$, there exists a subsequence $(T_m)$ of $(T_n)$ such that
+	Let $(G_n) \in \mathscr{G}$ be a sequence of vertex-transitive graphs, $G_n = (V, E)$ with $n = |V|$ vertices. Let $T_n$ be the coupling time for the continuous-time Ising heat-bath dynamics for the zero-field ferromagnetic Ising model on $G_n$. Then for any small enough inverse-temperature $\beta$, there exists a subsequence $(T_m)$ of $(T_n)$ such that
 	\begin{equation}
 		\lim_{m \rightarrow \infty} \prob[T_m < z + t_c(m)] = \euler^{-C_1\euler^{-C_2 z}}
 	\end{equation}
@@ -95,17 +95,17 @@ One way of interpreting this time is that at time $t_c(n)$, $\expect[M_{t_c(n)}]
 
 \end{theorem}
 
-The proof of Theorem \ref{thm:Coupling Distribution on transitive graph} will be given in Section \ref{sec:proof thm coupling nd} after the essential preliminaries are presented. In Section \ref{sec:information percolation in higher dimensions} we describe an alternative construction of the histories that can sometimes be easier to work with. Then in Section \ref{sec:nd problem setup}, we outline the overall approach to the proof. The method is very similar to the method used in Chapter \ref{Ch:1D} but there are some additional problems that are addressed. Finally, we defer results directly concerning the update histories to Section \ref{sec:additional lemmas nd}.
+The proof of Theorem \ref{thm:Coupling Distribution on transitive graph} will be given in Section \ref{sec:proof thm coupling nd} after the essential preliminaries are presented. In Section \ref{sec:information percolation in higher dimensions} we describe an alternative construction of the histories that can sometimes be easier to work with, and state some results concerning the magnetization. Then in Section \ref{sec:nd problem setup}, we outline the overall approach to the proof. The method is similar to the method used in Chapter \ref{Ch:1D}. Finally, we defer results directly concerning the update histories to Section \ref{sec:additional lemmas nd}.
 
 \section{Information percolation in higher dimensions}
 \label{sec:information percolation in higher dimensions}
 In the previous chapter, we showed that on the cycle, there was a coupling that made the update history of a single vertex to be a continuous-time random walk that died at rate $\theta$. On lattices of dimension $d > 2$, we can no longer use this coupling and so the updates histories are significantly more complex. 
 
-Recall from Section \ref{sec: definition update support function} that given a target time $t_*$, the update history of a vertex set $A$ at time $t$, $\mathcal{H}_A(t)$, is the set of vertices whose spins at time $t$ determine the spins of $A$ at time $t_*$. Developing this history backwards in time from $t = t_*$ produces a subgraph of $V \times [0, t_*]$ which we write as $\mathcal{H}_A$ and call the update history of vertex set $A$. This history can be constructed using the update sequence along $(t, t_*]$. 
+Recall from Section \ref{sec: definition update support function} that given a target time $t_*$, the update support of a vertex set $A$ at time $t$, $\mathcal{H}_A(t)$, is the set of vertices whose spins at time $t$ determine the spins of $A$ at time $t_*$. This support can be constructed using the update sequence along $(t, t_*]$. Developing the update support backwards in time from $t = t_*$ produces a subgraph of $V \times [0, t_*]$ which we write as $\mathcal{H}_A$ and call the update history of $A$.
 
-It is not immediately obvious what these histories look like. To gain some intuition, and to simplify some upcoming proofs, we will construct a different subgraph, $\hat{\hist}_A$ which contains $\hist_A$. In doing so we also define an analogous update support $\hat{\hist}_A(t)$ for every $t \in [0, t_*]$. 
+It is not immediately obvious what these histories look like. To gain some intuition, and to simplify some later proofs, we will construct a different subgraph, $\hat{\hist}_A$ which contains $\hist_A$. In doing so we also define an analogous update support $\hat{\hist}_A(t)$ for every $t \in [0, t_*]$. 
 
-Construct $\hat{\hist}_A$ as follows: For each $i \in A$, create a temporal edge between $(i, t_*)$ and $(i, t_i)$ where $t_i$ is the time of the latest update to $i$ (or $0$ if $i$ is never updated). Then for each update $(i, u, t_i)$, we either terminate the edge if $u$ is such that the update is oblivious, or we add spatial branches to each of the neighbours of $i$. We repeat this process recursively for the neighbours of $i$ until every branch has been terminated due to an oblivious update or has reached time $0$. Since oblivious updates do not depend on any other vertices, and since a non-oblivious update to $i$ depends on at most the neighbours of $i$, we have that $\hist_A(t) \subseteq \hat{\hist}_A(t)$, and that $\hist_A$ is a subgraph of $\hat{\hist}_A$.
+Construct $\hat{\hist}_A$ as follows: For each $i \in A$, create a temporal edge between $(i, t_*)$ and $(i, t_i)$ where $t_i$ is the time of the latest update to $i$ (or $0$ if $i$ is never updated). Then for each update $(i, U, t_i)$, we either terminate the edge if $U$ is such that the update is oblivious, or we add spatial branches to each of the neighbours of $i$. We repeat this process recursively for the neighbours of $i$ until every branch has been terminated due to an oblivious update or has reached time $0$. Since oblivious updates do not depend on any other vertices, and since a non-oblivious update to $i$ depends on at most the neighbours of $i$, we have that $\hist_A(t) \subseteq \hat{\hist}_A(t)$, and that $\hist_A$ is a subgraph of $\hat{\hist}_A$.
 
 Note that it is possible for vertices to be removed from $\mathcal{H}_A(t)$ by updates that are not oblivious (see Figure \ref{fig:nonoblivious shrink} for an example on the cycle). Since our method for constructing $\hat{\hist}_A$ does not take this into account, in general we expect that $\hist_A$ and $\hat{\hist}_A$ are not equal.
 
@@ -116,11 +116,11 @@ Note that it is possible for vertices to be removed from $\mathcal{H}_A(t)$ by u
 % and also that $\mathcal{H}_A$ is a subgraph of $\hat{\mathcal{H}}_A$.
 
 \subsection{The magnetization}
-One quantity which we used multiple times in Chapter \ref{Ch:1D} was $\prob[X_i = 1]$. Although it was not required earlier, we would now like to make clear that this is in fact the magnetization at time $t_*$. 
+One quantity which we used multiple times in Chapter \ref{Ch:1D} was $\prob[X_i = 1] = \prob[\hist_i(0) \neq \emptyset]$. Although it was not required earlier, we would now like to make clear that this is in fact the magnetization at time $t_*$. 
 
-Recall that the magnetization at vertex $i \in V$ at time $t > 0$ is defined to be
+Recall that the magnetization at vertex $i \in V$ at time $t \geq 0$ is defined to be
 \begin{equation}
-	m_t(i) = \expect[\mathcal{T}_t[i]]
+	m_t(i) = \expect[\mathcal{T}_t[i]],
 \end{equation}
 where $(\mathcal{T}_t)_{t \geq 0}$ is the dynamics starting from the all-plus configuration. %On vertex-transitive graphs, we can drop the vertex specific notation and simply write $m_t$. 
 Given a monotonically coupled chain $(\mathcal{B}_t)_{t\geq0}$, starting in the all minus configuration and such that $\mathcal{T}_t[i] \geq \mathcal{B}_t[i]$ for all $t\geq 0$ and $i \in V$, we can split up this expectation by conditioning on the event $A_t = \{\mathcal{T}_t[i] \neq \mathcal{B}_t[i]\}$. We obtain that
@@ -238,7 +238,7 @@ By Corollary \ref{cor:bound t_c(n)}, for any fixed $z \in \mathbb{R}$, $t_* > 0$
 	D_i &= V \setminus (B_i \cup C_i \cup \{i\}),
 \end{align}
 where $b_n = \ln(n)$ and $c_n = \ln^2(n)$.
-From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and $\mu$ exactly as in Section \ref{sec:compound poisson overview} using our new definition for $t_*$. From \eqref{eq:bound distribution T}, we get the following Corollary of Theorem \ref{thm: compound poisson approximation}.
+From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and $\mu$ exactly as in Section \ref{sec:application of compound poisson} using our new definition for $t_*$. From \eqref{eq:bound distribution T}, we get the following Corollary of Theorem \ref{thm: compound poisson approximation}.
 
 % For each vertex $i \in V$, define indicators
 % 	\begin{equation}
@@ -293,6 +293,8 @@ From here we define $X_i$, $U_i$, $W_i$, $\delta_1$, $\delta_4$, $\lambda$, and 
 			\label{eq:nd bound distance prob[w=0] and e^-lambda}
 		\end{equation}
 	\end{corollary}
+
+	[PROOF READING UP TO HERE]
 
 \section{Proof of Theorem \ref{thm:Coupling Distribution on transitive graph}}
 \label{sec:proof thm coupling nd}

@@ -10,7 +10,7 @@
 	The Ising model is named after Ernst Ising who studied it in his 1924 thesis \cite{Ising1925-nd} under the supervision of Wilhelm Lenz, who introduced the model in \cite{Lenz1920-bn}. It was originally motivated by the phenomenon of ferromagnetism but it has since found application to numerous other situations in both physics and other fields \footnote{See \cite[notes of Section 1.4.2]{Friedli2017-xm} for a list of references concerning this.}.
 
 	The Ising model occupies a prominent position in the statistical physics literature. This is largely due to the existence of a phase transition; a sharp transition in the large scale behaviour of the model as a parameter crosses a critical value. The transition was first shown to exist by Rudolph Peierls \cite{Peierls1936-pu} in what was the first proof of the existence of a phase transition for any model with purely local interactions in statistical mechanics.
-	Additionally, the Ising model is both relatively simple, and also mathematically tractable in some non-trivial cases \cite{Onsager1944-li}. These qualities are rare among models with a phase transition and so the Ising model has become somewhat of a staple for both studying phase transitions and testing new statistical mechanics techniques.
+	Additionally, the Ising model is both relatively simple, and also mathematically tractable in some non-trivial cases \cite{Onsager1944-li}. These qualities are rare among models with a phase transition and so the Ising model has become a staple for both studying phase transitions and testing new statistical mechanics techniques.
 
 	The model is a probability distribution on spin configurations - assignments of $+1$ and $-1$ spins to each vertex in a finite graph $G = (V, E)$. The set of all possible configurations is
 	\begin{equation}
@@ -60,7 +60,7 @@
 	% The zero-field ferromagnetic Ising model on finite graph $G = (V, E)$ at 
 	% inverse temperature $\beta \geq 0$ has Gibbs measure
 	%
-	One difficulty in using MCMC is that one does not know a priori what constitutes "long enough". In principal, bounds on this time can be obtained, but in practise, proving these bounds can be very challenging.
+	One difficulty in using MCMC is that one does not know a priori what constitutes "long enough". In principal, bounds on this time can be obtained, but in practise, proving these bounds can be challenging.
 
 	An alternative to classical MCMC called Coupling from the Past (CFTP) was introduced by Propp and Wilson \cite{Propp1996-cf}. Unlike MCMC, CFTP not only has an automatically determined running time, but it has the additional advantage of outputting exact samples from the stationary distribution. This does not come without a cost - CFTP has a random running time. Therefore, a key question towards evaluating the effectiveness of CFTP is understanding the distribution of its running time, that is, the \emph{coupling time}.
 
@@ -534,7 +534,7 @@
 
 \section{Compound Poisson Approximation}
 \label{sec:compound poisson overview}
-	In addition to the framework of information percolation, we will also make use of compound Poisson approximation, as described in \cite{Barbour2001-nh}. This paper reviews a number of different methods by which approximations may be made. The specific method that we will employ is based on Stein's method for the compound Poisson distribution, introduced in \cite{Barbour1992-mc}.
+	In addition to the framework of information percolation, we will also make use of compound Poisson approximation, as described in \cite{Barbour2001-nh}. This paper reviews a number of methods by which approximations may be made. The specific method that we will employ is based on Stein's method for the compound Poisson distribution, introduced in \cite{Barbour1992-mc}.
 
 	A compound Poisson distribution, $\mathrm{CP}(\lambda, \vect{\mu})$, is the distribution of the sum of a rate $\lambda$ Poisson number of independent random variables, each with distribution $\vect{\mu}$. That is, a compound Poisson random variable can be defined by
 	\begin{equation}
