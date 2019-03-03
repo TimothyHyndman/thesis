@@ -48,23 +48,23 @@
 		l(Q; \vect{x}, f) = \log L(Q; \vect{x}, f) = \sum_{i = 1}^n \log f_Q(x_i),
 		\label{eq:loglikelihood}
 	\end{equation}
-	since $\log(x)$ is a strictly increasing function. In \cite{Lindsay1983-tf}, Lindsay showed that so long as the likelihood is bounded, there exists a maximizing $Q$ that has at most $n$ points of support. This is a useful result because it means that the problem of finding a maximizing $Q$ is an optimization problem having finite dimensions. It also justifies our decision to only consider finite mixtures in this chapter.
+	since $\log(x)$ is a strictly increasing function. In \cite{Lindsay1983-tf}, Lindsay showed that provide that the likelihood is bounded, there exists a maximizing $Q$ that has at most $n$ points of support. This is a useful result because it means that the problem of finding a maximizing $Q$ is an optimization problem having finite dimensions. It also justifies our decision to consider only finite mixtures in this chapter.
 
 	% While one can construct examples in which the mixing distribution that maximizes the likelihood has all $n$ points of support, in practise, 
 	The size of the support of the $Q$ that maximizes \eqref{eq:loglikelihood} is the primary quantity of interest for this chapter. We define it as follows. Let $\mathcal{Q}_n$ be the set of all discrete probability distributions on $\mathbb{R}$ with no more than $n$ points of support. Let
 	\begin{equation}
-		\hat{Q}_{\vect{x},f} = \{Q \in \mathcal{Q}_n: \forall Q' \in \mathcal{Q}_n, l(Q;\vect{x}) \geq l(Q';\vect{x})\}
+		\hat{Q}_{\vect{x},f} = \{Q \in \mathcal{Q}_n: l(Q;\vect{x}) \geq l(Q';\vect{x}), \forall Q' \in \mathcal{Q}_n\}
 	\end{equation}
 	be the set of all global maximizers of \eqref{eq:loglikelihood}. Then define
 	\begin{equation}
-		K_\vect{x} = K(\vect{x}; f) = \min\{m \leq n : \mathcal{Q}_m \cap \hat{Q}_{\vect{x},f} \neq \emptyset\}
+		K_\vect{x} = K(\vect{x}; f) = \min\{m : \mathcal{Q}_m \cap \hat{Q}_{\vect{x},f} \neq \emptyset\}
 	\end{equation}
 	which counts the smallest number of probability masses needed to maximize the likelihood.
 
 
-	There are a few considerations to be made here. The first is that there is not necessarily a unique mixing distribution that maximizes \eqref{eq:loglikelihood} and so we have defined the quantity of interest as the smallest number of points of support required for a maximizing distribution. However, in many cases, including when the component density is from the exponential family, we know that the maximizing mixing distribution is unique. This question of uniqueness was addressed by Lindsay in \cite{Lindsay1983-tf} and in \cite{Lindsay1983a-he} for continuous univariate component densities in the exponential family. A generalization of these results to discrete exponential families be found in \cite{Lindsay1993-rj}.
+	There are a few considerations to be made here. The first is that there is not necessarily a unique mixing distribution that maximizes \eqref{eq:loglikelihood} and so we have defined the quantity of interest as the smallest number of points of support required for a maximizing distribution. However, in many cases, including when the component density is from the exponential family, we know that the maximizing mixing distribution is unique. This question of uniqueness was addressed by Lindsay in \cite{Lindsay1983-tf} and in \cite{Lindsay1983a-he} for continuous univariate component densities in the exponential family. A generalization of these results to discrete exponential families can be found in \cite{Lindsay1993-rj}.
 
-	The second, is that our choice to only consider location mixtures is significant in that it guarantees the likelihood to be bounded so long as the component density is bounded. In general, this is not the case. Consider the likelihood function for a mixture of normals parametrized by both the mean and variance. We can create a mixture by placing equally weighted normals with very small variance at each $x_i$ in our sample. This corresponds to a mixing distribution $Q$ which places probability mass $1/n$ at points $(x_i, \sigma^2)$ for $i = 1, \dots, n$. As $\sigma^2$ approaches zero, the density at each $x_i$, $f_Q(x_i)$, increases without bound and so the likelihood is unbounded. There are a number of techniques that can be employed to ensure the likelihood is bounded such as restricting the parameter space appropriately or restricting the number of components to some number that grows slowly with $n$ (the sieve method \cite{Grenander1981-dy}).
+	The second, is that our choice to consider only location mixtures is significant in that it guarantees that the likelihood is bounded so long as the component density is bounded. In general, this is not the case. Consider the likelihood function for a mixture of normals parametrized by both the mean and variance. We can create a mixture by placing equally weighted normals with very small variance at each $x_i$ in our sample. This corresponds to a mixing distribution $Q$ which places probability mass $1/n$ at points $(x_i, \sigma^2)$ for $i = 1, \dots, n$. As $\sigma^2$ approaches zero, the density at each $x_i$, $f_Q(x_i)$, increases without bound and so the likelihood is unbounded. There are a number of techniques that can be employed to ensure the likelihood is bounded such as restricting the parameter space appropriately or restricting the number of components to some number that grows slowly with $n$ (the sieve method \cite{Grenander1981-dy}).
 
 	The third, is that we should be careful to make a distinction between calculating $K_\vect{x}$ and choosing an appropriate number of components for a mixture model. The former is simply a deterministic property of an optimization problem whereas the latter is an in-depth and difficult problem which involves consideration of properties such as consistency, and the use of techniques such as information criteria and likelihood ratio. This latter problem is discussed in \cite[Chapter 6]{McLachlan2004-ik}. In particular, if each $X_i$ comes from a distribution with density $g(x) = f_Q(x)$ (that is, $g(x)$ is a mixture density itself) then we may consider the `true' number of components and using certain penalised log likelihood criteria, such as the Akaike information criterion (AIC) \cite{Akaike1974-bl} or the Bayesian information criterion (BIC) \cite{Schwarz1978-ci}, does not underestimate this quantity asymptotically \cite{Leroux1992-ek}. This suggests that we should not expect $K_\vect{x}$ (which is defined from an unpenalised likelihood) to necessarily be reflective of the properties of $g(x)$.
  
@@ -94,27 +94,28 @@
 	% In this paper we are primarily interested in the number of probability masses that are required in the maximizing mixture. We will call this quantity $K_{\vect{x}}$. It should be noted that there is not always a unique mixing distribution that maximizes \eqref{eq:loglikelihood}. However we can choose $K_{\vect{x}}$ to be the smallest number of probability masses that any of the maximizing distributions have.
 \section{Summary of Lindsay}
 \label{sec:summary of Lindsay}
-	To obtain results concerning $K_\vect{x}$ we will make use of the geometrical approach employed by Lindsay in \cite{Lindsay1983-tf} and \cite{Lindsay1983a-he} and summarized later in \cite[Chapter 5]{Lindsay1995-sq}. This section is dedicated to laying out the basics of this approach and summarising the results that are most relevant to our work. Here, we assume that the component densities, $f(\vect{x};\vect{\theta})$, are bounded, but we do not restrict ourselves to finite location mixtures on the real line.
+	To obtain results concerning $K_\vect{x}$ we will make use of the geometric approach employed by Lindsay in \cite{Lindsay1983-tf} and \cite{Lindsay1983a-he} and summarized later in \cite[Chapter 5]{Lindsay1995-sq}. This section is dedicated to laying out the basics of this approach and summarising the results that are most relevant to our work. Here, we assume that the component densities, $f(\vect{x};\vect{\theta})$, are bounded, but we do not restrict ourselves to finite location mixtures on the real line.
 
 	\subsection{The likelihood curve}
-	The key to Lindsay's approach is to reformulate the problem from optimizing over all mixing distributions, to optimizing an appropriate objective function over a convex set in $\mathbb{R}^n$. Define the \emph{likelihood vector}
+	The key to Lindsay's approach is to reformulate the problem from optimizing over all mixing distributions, to optimizing an appropriate objective function over a convex set in $\mathbb{R}^n$. For a component density $f$, mixing distribution $Q$, and sample $(x_1, \dots, x_n)$, define the \emph{likelihood vector}
 	\begin{equation}
-		\vect{\gamma}(Q;\vect{x}, f) = (f_Q(x_1), \dots, f_Q(x_n))
+		\vect{\gamma}(Q;\vect{x}, f) = (\gamma_1, \dots, \gamma_n) = (f_Q(x_1), \dots, f_Q(x_n))
 		\label{eq:likelihood vector}
 	\end{equation}
 	and the objective function
 	\begin{equation}
 		\mathcal{L}(\vect{\gamma}) = \sum_{i = 1}^n \ln(\gamma_i).
 	\end{equation}
-	Let 
+	For fixed $\vect{x}$ and $f$, let $\mathcal{M}$ be the set of all possible values of the likelihood vector as $Q$ varies over the set of mixing distributions.
+	% Let 
+	% \begin{equation}
+	% 	\mathcal{M} = \{\vect{\gamma}(Q;\vect{x}, f): \text{$Q$ is a probability distribution}\}
+	% \end{equation}
+	% be the set of all possible values of the likelihood vector. 
+	A maximizing mixing distribution may be found by first finding the $\hat{\vect{\gamma}} \in \mathcal{M}$ that maximizes $\mathcal{L}(\vect{\gamma})$ and then solving for $Q$ the $n$ equations that arise by considering each component of 
 	\begin{equation}
-		\mathcal{M} = \{\vect{\gamma}(Q;\vect{x}, f): \text{$Q$ is a probability distribution}\}
+		\vect{\gamma}(Q; \vect{x}, f) = \hat{\vect{\gamma}}.
 	\end{equation}
-	be the set of all possible values of the likelihood vector. A maximizing mixing distribution may be found by first finding the $\hat{\vect{\gamma}} \in \mathcal{M}$ that maximizes $\mathcal{L}(\vect{\gamma})$ and then solving the $n$ equations
-	\begin{equation}
-		\vect{\gamma}(Q; \vect{x}, f) = \hat{\vect{\gamma}}
-	\end{equation}
-	for $Q$.
 
 	To show that $\mathcal{M}$ is a convex set, consider the \emph{unicomponent likelihood vector}
 	\begin{equation}
@@ -159,7 +160,7 @@
 	\end{equation}
 
 	\subsection{All points separated by \texorpdfstring{$\alpha$}{a}}
-		Lindsay states that for normal mixtures with fixed variance, $\sigma^2$, ``one can construct sets of data for which the bound [$K_\vect{x} = n$] is attained simply by spreading the observations widely apart,'' \cite[Section 5.2]{Lindsay1995-sq}. Here we make this intuition concrete by saying how far apart we should spread our observations to ensure that we use all $n$ components.
+		Lindsay states that for normal mixtures with fixed variance, $\sigma^2$, ``one can construct sets of data for which the bound [$K_\vect{x} = n$] is attained simply by spreading the observations widely apart,'' \cite[Section 5.2]{Lindsay1995-sq}. Here we make this intuition concrete by saying how far apart we should spread our observations to ensure that the mixing distribution has $n$ separate components.
 
 		% Consider the situation in which $|x_i - x_j| > \alpha$ for all $i\neq j$. Intuitively, we would expect that there is some $\alpha^*$ such that if $\alpha > \alpha^*$ then $\vect{x} \in C_n$.
 		
@@ -305,11 +306,11 @@
 		D_Q(\vect{\theta}; \vect{x}, f) = -n + \sum_{i = 1}^n \frac{f(x_i;\vect{\theta})}{f_Q(x_i)}.
 		\label{eq:def gradient function}
 	\end{equation}
-	This is the derivative of $l(Q;\vect{x},f)$ as we move along the path parametrized by
+	For each value of $\theta \in \Omega$, this is the derivative of $l(Q;\vect{x},f)$ as we move along the path parametrized by
 	\begin{equation}
 		(1 - p)Q + p\Delta_\vect{\theta}
 	\end{equation}
-	evaluated at $p = 0$ and where $\Delta_\vect{\theta}$ is a degenerate distribution that places all of its mass at $\vect{\theta}$. In \cite[Theorem 4.1]{Lindsay1983-tf}, Lindsay showed you could characterise the maximizing mixture by three equivalent conditions. The statement of the Theorem here is taken from \cite[Theorem 19]{Lindsay1995-sq}.
+	evaluated at $p = 0$ and where $\Delta_\vect{\theta}$ is a degenerate distribution that places all of its mass at $\vect{\theta}$. In \cite[Theorem 4.1]{Lindsay1983-tf}, Lindsay showed we can characterise the maximizing mixture by three equivalent conditions. The statement of the Theorem here is taken from \cite[Theorem 19]{Lindsay1995-sq}.
 
 	\begin{theorem}[\cite{Lindsay1995-sq}]
 	\label{thm:Lindsay three statements that characterise maximizing mixture}
@@ -352,7 +353,7 @@
 	\begin{equation}
 		D(Q;\vect{x},f) = \langle \vect{\gamma}^{-1}(Q;\vect{x},f), \vect{\gamma}(\vect{\theta};\vect{x},f)\rangle - n.
 	\end{equation}
-	If $\hat{Q}$ maximizes $l(Q;\vect{x},f)$ then by statement \ref{item:supremum of gradient is zero}, 
+	If $\hat{Q}$ maximizes $l(Q;\vect{x},f)$ then by statement \ref{item:supremum of gradient is zero} of Theorem \ref{thm:Lindsay three statements that characterise maximizing mixture}, 
 	\begin{equation}
 		\langle \vect{\gamma}^{-1}(\hat{Q};\vect{x},f), \vect{\gamma}(\vect{\theta};\vect{x},f) \rangle \leq n
 	\end{equation}
@@ -384,18 +385,18 @@
 
 	Constraints \eqref{eq:constrainpj} and \eqref{eq:constrainpjequal} ensure that the mixture is valid. We also include \eqref{eq:constraintheta} so that any mixture which can be written with fewer than $m$ components appears on the boundary of the feasible space (we will either have some $p_j = 0$ or some $\theta_j = \theta_{j+1}$). Conversely, any point at which we have equality in any of the constraints in \eqref{eq:constraintheta} or \eqref{eq:constrainpj}, can be written with fewer than $m$ components. Hence, a necessary condition for $K_\vect{x} = m$ is that any maximizing point of \eqref{eq:l_m} must also satisfy strict inequalities in \eqref{eq:constraintheta} and \eqref{eq:constrainpj}.
 
-	Introduce KKT multipliers $\lambda$, $\vect{\mu}$, $\vect{\nu}$ and form the lagrangian
+	Introduce Lagrange multipliers $\lambda$, $\vect{\mu}$, $\vect{\nu}$ and form the Lagrangian
 	\begin{equation}
 		\mathcal{L}(\vect{\theta},\vect{p},\lambda,\vect{\mu},\vect{\nu}) = l_m(\vect{\theta},\vect{p};\vect{x}) - \lambda\left(1 - \sum_{j=1}^m p_j\right) - \sum_{j=1}^m \mu_j p_j + \sum_{j=1}^{m-1} \nu_j \left(\theta_j - \theta_{j+1}\right).
 	\end{equation}
-	The KKT conditions tell us that at a local maximum the following equations must be satisfied:
+	The KKT conditions tell us that at a local maximum the equations
 	\begin{align}
 		&\frac{\partial}{\partial \theta_1} l_m(\vect{\theta},\vect{p};\vect{x}) = \nu_1 \label{eq:KKTtheta1}\\ 
 		&\frac{\partial}{\partial \theta_j} l_m(\vect{\theta},\vect{p};\vect{x}) = \nu_j - \nu_{j-1}, &&j=2,\dots,m-1 \label{eq:KKTtheta}\\ 
 		&\frac{\partial}{\partial \theta_m} l_m(\vect{\theta},\vect{p};\vect{x}) = -\nu_{m-1} \label{eq:KKTthetam}\\ 
 		&\frac{\partial}{\partial p_j} l_m(\vect{\theta},\vect{p};\vect{x}) = \lambda - \mu_j && j = 1,\dots,m. \label{eq:KKTlambda}
 	\end{align}
-	along with the constraints in \eqref{eq:constraintheta}, \eqref{eq:constrainpj}, \eqref{eq:constrainpjequal}, and the additional constraints
+	must be satisfied along with the constraints in \eqref{eq:constraintheta}, \eqref{eq:constrainpj}, \eqref{eq:constrainpjequal}, and the additional constraints
 	\begin{align}
 		&\vect{\mu},\vect{\nu} \geq 0,\\
 		&\mu_j p_j = 0, &&j=1,\dots,m \label{eq:mujpjconstraint}\\
@@ -405,7 +406,7 @@
 
 	Multiplying both sides of \eqref{eq:KKTlambda} by $p_j$ (recall \eqref{eq:mujpjconstraint}) and summing over $j$ we get that
 	\begin{equation}
-		\lambda = \sum_{j = 1}^m p_j \frac{\partial}{\partial p_j} L_m(\vect{\theta},\vect{p};\vect{x}).
+		\lambda = \sum_{j = 1}^m p_j \frac{\partial}{\partial p_j} l_m(\vect{\theta},\vect{p};\vect{x}).
 	\end{equation}
 	From \eqref{eq:l_m},
 	\begin{align}
@@ -415,7 +416,7 @@
 			&= n.
 	\end{align}
 
-	If we additionally require that the solution uses all $m$ components, then we must have that $p_j > 0$, and $\theta_j - \theta_{j+1} < 0$ for all $j$. Constraints \eqref{eq:mujpjconstraint} and \eqref{eq:nujthetajconstraint} then require $\mu_j = 0$ and $\nu_j = 0$ for all $j$. This gives us the following necessary conditions for $\hat{Q} = (\vect{\theta}, \vect{p})$ to be an $m$ point maximizing mixture.
+	If we additionally require that the solution uses all $m$ components, then we must have that $p_j > 0$, and $\theta_j - \theta_{j+1} < 0$ for all $j$. Constraints \eqref{eq:mujpjconstraint} and \eqref{eq:nujthetajconstraint} then require $\mu_j = 0$ and $\nu_j = 0$ for all $j$. This gives us necessary conditions for $\hat{Q} = (\vect{\theta}, \vect{p})$ to be an $m$ point maximizing mixture,
 	\begin{align}
 		&-n + \frac{\partial}{\partial p_j} l_m(\vect{\theta},\vect{p};\vect{x}) = 0, && j = 1,\dots,m\\
 		&\frac{\partial}{\partial \theta_j} l_m(\vect{\theta},\vect{p};\vect{x}) = 0, && j = 1,\dots, m.
@@ -437,7 +438,7 @@
 
 	\begin{theorem}[Theorem 4.1, \cite{Lindsay1983a-he}]
 	\label{thm:exponential family k=1 bound}
-		Let $f_\theta$ belong to the exponential class of densities and be parameterized by its mean value $\theta$. Let $\vect{x} = (x_1, \dots, x_n)$, $x_1 \leq \dots \leq x_n$, be the sample to which we are finding the maximum likelihood mixture of $f_\theta$. Define the function
+		Let $f_\theta$ belong to the exponential class of densities and be parametrized by its mean value $\theta$. Let $\vect{x} = (x_1, \dots, x_n)$, $x_1 \leq \dots \leq x_n$, be the sample for which we are finding the maximum likelihood mixture of $f_\theta$. Define the function
 		\begin{equation}
 			M(\theta) = (x_1 - \theta)(x_2 - \theta) + \var_\theta(X).
 		\end{equation}
@@ -484,7 +485,7 @@
 	\end{tabular}
 
 	\subsection{Method}
-	There are two parts to determining $K_\vect{x}$ empirically. The first part is to find the maximum likelihood mixture, $\hat{Q}$, or at least a good approximation $Q^*$. Given $\vect{x} \in \mathbb{R}^n$, we use a general purpose nonlinear programming solver to find the maximum likelihood mixture (we use the MATLAB function \emph{fmincon}). We can test that we have indeed reached the global maximum through the use of the derivative function conditions given in Theorem \ref{thm:Lindsay three statements that characterise maximizing mixture}. If the mixture that is returned by our general solver does not satisfy these conditions then we may use another method, such as the vertex direction method (VDM) or the vertex exchange method (VEM), which is guaranteed to converge to the global maximum but converges slowly (see \cite{Bohning1995-di} for a review of different methods). We note that the actual method used is not important so long as the final result satisfies the derivative conditions. In practise, when $n$ is small, a general purpose solver is sufficient, fast, and simple to implement, and we rarely need to use a secondary method.
+	There are two parts to determining $K_\vect{x}$ empirically. The first part is to find the maximum likelihood mixture, $\hat{Q}$, or at least a good approximation $Q^*$. Given $\vect{x} \in \mathbb{R}^n$, we use a general purpose nonlinear programming solver (the MATLAB function \emph{fmincon}) to find the maximum likelihood mixture. We can test that we have indeed reached the global maximum through the use of the derivative function conditions given in Theorem \ref{thm:Lindsay three statements that characterise maximizing mixture}. If the mixture that is returned by our general solver does not satisfy these conditions then we may use another method, such as the vertex direction method (VDM) or the vertex exchange method (VEM), which is guaranteed to converge to the global maximum but converges slowly (see \cite{Bohning1995-di} for a review of different methods). We note that the actual method used is not important so long as the final result satisfies the derivative conditions. In practice, when $n$ is small, a general purpose solver is sufficient, fast, and simple to implement, and we rarely need to use a secondary method.
 
 	The second part is to determine the number of points of support of $Q^*$. We initiate our general purpose solver with a mixture distribution that has more points of support than is needed. Under the optimization, this collapses down to the distribution $Q^*$ which may assign zero weight to some masses, and may concentrate multiple masses on the one point of support. We may simplify such a distribution by removing all masses with zero weight, and by combining all masses which share a point of support into one mass which takes the combined weight of the constituent masses (see Figure \ref{fig:collapsing distribution}). A naive approach would be to take the number of probability masses in this simplified distribution as the value for $K_\vect{x}$.
 
@@ -497,9 +498,9 @@
 
 	However, there are some problems with this approach. In practice, we do not remove masses with exactly zero weight, but rather remove masses with weight $p_j < \epsilon$ for some small $\epsilon > 0$. Similarly, we merge masses $i$ and $j$ with support $|\theta_j - \theta_i| < \delta$ for some small $\delta > 0$. It may be that the true maximum likelihood mixture does contain components that have either very small weight, or are located very close to other masses. In this scenario, we would produce a value for $K_\vect{x}$ that is too small.
 
-	Instead, we propose the following. From Theorem \ref{thm: Lindsay support is zeros of gradient}, each point of support, $\hat{\theta}_j$ of the maximizing mixture distribution $\hat{Q}$ is a local maximum of $D_{\hat{Q}}(\theta;\vect{x}, f)$ with $D_{\hat{Q}}(\theta_j;\vect{x},f) = 0$. So, given the mixing distribution $Q^*$ that results from our optimization, we take $K_\vect{x}$ to be the number of local maximums in $D_{Q^*}(\theta;\vect{x}, f)$ that take maximum value close to $0$. Note that $D_{\hat{Q}}(\theta_j; \vect{x}, f) = 0$ does not guarantee that $\theta_j$ is a support point of $\hat{Q}$ and so it is possible that this method produces a value for $K_\vect{x}$ that is too large. However, in our experience, $D_{\hat{Q}}(\theta;\vect{x}, f)$ is typically zero only at the support points of $\hat{Q}$.
+	Instead, we propose the following. From Theorem \ref{thm: Lindsay support is zeros of gradient}, each point of support, $\hat{\theta}_j$ of the maximizing mixture distribution $\hat{Q}$ is a local maximum of $D_{\hat{Q}}(\theta;\vect{x}, f)$ with $D_{\hat{Q}}(\theta_j;\vect{x},f) = 0$. So, given the mixing distribution $Q^*$ that results from our optimization, we take $K_\vect{x}$ to be the number of local maxima in $D_{Q^*}(\theta;\vect{x}, f)$ that take maximum value close to $0$. Note that $D_{\hat{Q}}(\theta_j; \vect{x}, f) = 0$ does not guarantee that $\theta_j$ is a support point of $\hat{Q}$ and so it is possible that this method produces a value for $K_\vect{x}$ that is too large. However, in our experience, $D_{\hat{Q}}(\theta;\vect{x}, f)$ is typically zero only at the support points of $\hat{Q}$.
 
-	% [WHEN IS SUPPORT ALWAYS EQUAL TO SET OF D(THETA) = 0?]
+	[WHEN IS SUPPORT ALWAYS EQUAL TO SET OF D(THETA) = 0?]
 
 	[EXTEND AS REQUIRED]
 	% \subsection{Motivating Example?}
@@ -517,7 +518,7 @@
 
 	However, there is some redundancy in this plot which arises because we are using location mixtures. When using a location mixture, if the maximizing mixing distribution for $\vect{x}$ places weights $p_j$ at locations $\theta_j$, then a maximizing mixing distribution for $\vect{x} + (c, \dots, c)$ for some constant $c \in \mathbb{R}$ is simply the distribution that places weights $p_j$ at locations $\theta_j + c$. That is, shifting $\vect{x}$ by $c$ results in the maximizing mixture also shifting by $c$. A consequence of this fact is that $K_\vect{x}$ is invariant under translations of $\vect{x}$.
 
-	This suggests increases $n$ to $3$, and fixing one of the $x_i$ while letting the other two vary. We do this by taking $\vect{x} = (0, x_2, x_3)$ with $x_2$ and $x_3$ varying across an evenly spaced grid. We do this for both a normal component density with variance $\sigma^2 = 1$ (Figure \ref{fig:normal_flag_graph}) and a Cauchy density with scale $\gamma = \sqrt{3}$ (Figure \ref{fig:cauchy_flag_graph}). We have chosen the scale of the Cauchy so that it has inflection points in the same places as the normal density, namely at $x = \pm 1$. This decision is made in light of Theorem \ref{thm:n=2 inflection result} which says that for $n = 2$ and for certain component densities $f$, $K_\vect{x}$ can be determined by comparing $|x_1 - x_2|$ and the distance between the inflection points of $f$. It seems reasonable to expect that the choice of scale that makes the $n = 2$ figures identical is a good choice for comparing the effects of choosing different component densities in the $n = 3$ case.
+	This suggests increasing $n$ to $3$, and fixing one of the $x_i$ while letting the other two vary. We do this by taking $\vect{x} = (0, x_2, x_3)$ with $x_2$ and $x_3$ varying across an evenly spaced grid. We do this for both a normal component density with variance $\sigma^2 = 1$ (Figure \ref{fig:normal_flag_graph}) and a Cauchy density with scale $\gamma = \sqrt{3}$ (Figure \ref{fig:cauchy_flag_graph}). We have chosen the scale of the Cauchy distribution so that it has inflection points in the same places as the normal density, namely at $x = \pm 1$. This decision is made in light of Theorem \ref{thm:n=2 inflection result} which says that for $n = 2$ and for certain component densities $f$, $K_\vect{x}$ can be determined by comparing $|x_1 - x_2|$ and the distance between the inflection points of $f$. It seems reasonable to expect that the choice of scale that makes the $n = 2$ figures identical is a good choice for comparing the effects of choosing different component densities in the $n = 3$ case.
 
 	% One point that we wish to emphasize is that, given a component density $f$, $K$ is a function of $\vect{x}$ only. We can visualise this for small values of $n$. In Figure \ref{fig:normal_flag_graph}, we empirically found the MLE for $\vect{x} = (0,x_2,x_3)$ and recorded the number of probability masses in the maximizing mixture. We took values for $x_2$ and $x_3$ from an evenly spaced grid with $-6\leq x_2,x_3\leq 6$. We fixed $x_1 = 0$ since the shape of the maximum likelihood mixture (and therefore $K_{\vect{x}}$) depends only on the relative location of the $x_i$, not their absolute location.
 	
@@ -539,7 +540,7 @@
 		C_k = \{ \vect{x} \in \mathbb{R}^n | K_{\vect{x}} = k \}, \hspace{40pt} k = 1,\dots,n.
 		\label{eq: C_k partition sets}
 	\end{equation}
-	The problem of determining $K_{\vect{x}}$ is then the same as determining in which of the $C_k$ $\vect{x}$ lies. If $\vect{x} = \vect{X}$ is randomly chosen, then the probability that $K_\vect{X} = k$ is simply the probability that $\vect{X} \in C_k$. In Section \ref{sec:mixture results}, we present various results which bound the regions $C_k$ in various settings.
+	The problem of determining $K_{\vect{x}}$ is then the same as determining in which of the sets $C_k$ $\vect{x}$ lies. If $\vect{x} = \vect{X}$ is randomly chosen, then the probability that $K_\vect{X} = k$ is simply the probability that $\vect{X} \in C_k$. In Section \ref{sec:mixture results}, we present various results which bound the regions $C_k$ in various settings.
 
 	\subsection{Other interesting things}
 	We end our empirical results section with 
@@ -551,7 +552,7 @@
 		The figures obtained in Section \ref{sec:empirical results} suggest that the bounds on $K_\vect{x}$ from Section \ref{sec:summary of Lindsay} could be significantly tightened for location mixtures. The main bounds that we have discussed so far are Theorem \ref{thm: lindsay no more than n points} which states that under mild conditions, $K_\vect{x} \leq n$; and Theorem \ref{thm:exponential family k=1 bound} which provides a sufficient condition for $K_\vect{x} = 1$ for component densities in the exponential class of densities. In this section we will present new bounds on $K_\vect{x}$ that either tighten these bounds, or extend them to different classes of component densities.
 
 		\subsection{Results for \texorpdfstring{$n = 2$}{n = 2}}
-		The first bound we present is Theorem \ref{thm:n=2 inflection result} which extends Theorem \ref{thm:exponential family k=1 bound} to a different class of component densities in the case that $n=2$, and which tightens the result to be both sufficient and necessary on this class. The theorem concerns component densities, $f(x)$, which satisfy the following assumptions.
+		The first bound we present is Theorem \ref{thm:n=2 inflection result} which extends Theorem \ref{thm:exponential family k=1 bound} to a different class of component densities in the case that $n=2$, and which tightens the result to be both sufficient and necessary on this class. The theorem concerns component densities, $f(x)$, which satisfy the assumptions,
 
 		\begin{assumption}[Continuity]
 		\label{assump:reallinesupport}
@@ -721,7 +722,7 @@
 			% Since $f(x)$ has a single mode at $x = 0$, the points of support of the maximizing mixing distribution must lie between $x_{1}$ and $x_{2}$. Hence we are
 			If $x_1 = x_2$ then clearly $K_\vect{x} = 1$. Otherwise, without loss of generality, assume $x_1 < x_2$. By the unimodality of $f$ (\ref{assump:singlemode}), the points of support of any maximizing mixing distribution, $\hat{Q}$, must lie between $x_1$ and $x_2$ \cite[Proposition 25]{Lindsay1995-sq}. Hence $\hat{\vect{\gamma}} = \vect{\gamma}(\hat{Q}, \vect{x}, f)$ must lie in the convex hull of $\Gamma^*_{\vect{x}, f} = \{\vect{\gamma}(\theta; \vect{x}, f) : \theta \in [x_1, x_2]\}$. 
 
-			Consider the behaviour of $\vect{\gamma}(\theta; \vect{x}, f) = (f(x_1 - \theta), f(x_2 - \theta))$ as we increase $\theta$ from $x_1$ to $x_2$. Since $f(x)$ has a single mode at $x = 0$, $f(x_1 - \theta)$ is non-increasing and $f(x_2 - \theta)$ is non-decreasing along this interval. So $\vect{\gamma}(\theta;\vect{x}, f)$ crosses the line $\gamma_1 = \gamma_2$ once only and by the symmetry of $f(x)$, this occurs at $\theta = (x_1 + x_2)/2$. We also have that by Lemma \ref{lemma: maximizing point on line u = v}, $\hat{\vect{\gamma}}$ must lie on the line $\gamma_1 = \gamma_2$.
+			Consider the behaviour of $\vect{\gamma}(\theta; \vect{x}, f) = (f(x_1 - \theta), f(x_2 - \theta))$ as we increase $\theta$ from $x_1$ to $x_2$. Since $f(x)$ has a single mode at $x = 0$, $f(x_1 - \theta)$ is non-increasing and $f(x_2 - \theta)$ is non-decreasing along this interval. So $\vect{\gamma}(\theta;\vect{x}, f)$ crosses the line $\gamma_1 = \gamma_2$ once only and by the symmetry of $f(x)$, this occurs at $\theta = (x_1 + x_2)/2$. By Lemma \ref{lemma: maximizing point on line u = v}, we also know that $\hat{\vect{\gamma}}$ must lie on the line $\gamma_1 = \gamma_2$.
 
 			Since $f$ is continuous and twice differentiable, $\vect{\gamma}$ traces out a continuous, smooth curve. The signed curvature
 			\begin{align}
@@ -878,8 +879,8 @@
 			Since the above intervals cover the real line and since we have shown that there is only one solution in one of these intervals, \eqref{eq:gradientsequal} must have only one solution.
 		\end{proof}
 
-	\subsection{Results for general n}
-	To obtain results for $n \geq 2$ we now restrict our component density to be normal with fixed variance $\sigma^2$. In this case, we can make use of the gradient function defined in Section \ref{sec: gradient characterization} and the equations, \eqref{eq:Deq1} to \eqref{eq:Deq3}, which it must satisfy at a maximizing mixture.
+	\subsection{Results for general \texorpdfstring{$n$}{n}}
+	To obtain results for $n \geq 2$ we now restrict our component density to be normal with fixed variance $\sigma^2$. In this case, we can make use of the gradient function defined in Section \ref{sec: gradient characterization} and equations, \eqref{eq:Deq1} to \eqref{eq:Deq3}, which must be satisfied at a maximizing mixture.
 
 	When our component density is normal with variance $\sigma^2$, that is
 	\begin{equation}
@@ -928,7 +929,7 @@
 	\begin{figure}
 		\centering
 		\includegraphics[width = \textwidth]{Figures/Mixtures/normal_flag_graph_m1_bound.png}
-		\caption{The bound obtanied in Theorem \ref{thm:general n C1 bound} tells us that $C_1$ must lie within the orange ellipse. The true shape of $C_1$ is given by the dark blue region.}
+		\caption{The bound obtained in Theorem \ref{thm:general n C1 bound} tells us that $C_1$ must lie within the orange ellipse. The true shape of $C_1$ is given by the dark blue region.}
 		\label{fig:flag graph m1 bound}
 	\end{figure}
 
@@ -1116,7 +1117,7 @@
 
 \section{Conclusion}
 
-In this chapter we analysed the behaviour of the mixing distribution of certain maximum likelihood location mixtures. We were concerned mainly with $K_\vect{x}$ - the number of components in these mixtures, or equivalently, the number of points of support in the corresponding mixing distribution. While bounds on $K_\vect{x}$ existed in the literature, mainly thanks to Lindsay's seminal papers on the geometry of mixture likelihoods, empirical results suggested that in many cases these bounds could be significantly tightened. In exploring these empirical results, we demonstrated that given a component density, we could partition $\mathbb{R}^n$ into sets, $C_m$, based on the number of components that each point $\vect{x} \in \mathbb{R}^n$ required. For small $n$ these could be easily visualized and these plots provided a reference against which to compare any bounds on $K_\vect{x}$.
+In this chapter we have analysed the behaviour of the mixing distribution of certain maximum likelihood location mixtures. We were concerned mainly with $K_\vect{x}$ - the number of components in these mixtures, or equivalently, the number of points of support in the corresponding mixing distribution. While bounds on $K_\vect{x}$ existed in the literature, mainly thanks to Lindsay's seminal papers on the geometry of mixture likelihoods, empirical results suggested that in many cases these bounds could be significantly tightened. In exploring these empirical results, we demonstrated that given a component density, we could partition $\mathbb{R}^n$ into sets, $C_m$, based on the number of components that each point $\vect{x} \in \mathbb{R}^n$ required. For small $n$ these could be easily visualized and these plots provided a reference against which to compare any bounds on $K_\vect{x}$.
 
 We proved a number of results providing bounds on $K_\vect{x}$ that to the best of our knowledge are new. For $n = 2$, we found an explicit formula for $K_\vect{x}$ for a certain class of symmetric, unimodal component densities. For $n \geq 2$, we restricted our attention to normal component densities and, for each $m \leq n$, provided a necessary condition for $\vect{x} \in C_m$. We used these bounds to show that the number of components chosen by a normal location mixture is not a consistent estimator for the true number of components. 
 
