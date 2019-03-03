@@ -477,12 +477,18 @@
 \label{sec:empirical results}
 	In this section we explore $K_\vect{x}$ through empirical results and figures. Throughout this section, and for the remainder of this chapter, we will consider only location mixtures (see \eqref{eq:location mixture}). All component densities will be unimodal, with a mode at $x = 0$. We list here the component densities that we will use.
 
-	\begin{tabular}{l | c}
-		Density & $f(x) = $\\
-		\hline
-		normal with fixed variance $\sigma^2$ & $\frac{1}{\sigma \sqrt{2 \pi}} \exp\left(-\frac{x^2}{2\sigma^2}\right) $\\
-		Cauchy with fixed scale $\gamma$ & $\frac{1}{\pi \gamma + \pi x^2/\gamma}$
-	\end{tabular}
+	\begin{table}[h]
+	\centering
+		\begin{tabular}{l | c}
+			Density & $f(x) = $\\
+			\hline
+			normal with fixed variance $\sigma^2$ & $\frac{1}{\sigma \sqrt{2 \pi}} \exp\left(-\frac{x^2}{2\sigma^2}\right) $\\
+			Cauchy with fixed scale $\gamma$ & $\frac{1}{\pi \gamma + \pi x^2/\gamma}$
+		\end{tabular}	
+		\caption{List of component densities we consider.}
+		\label{tab:component densities}
+	\end{table}
+	
 
 	\subsection{Method}
 	There are two parts to determining $K_\vect{x}$ empirically. The first part is to find the maximum likelihood mixture, $\hat{Q}$, or at least a good approximation $Q^*$. Given $\vect{x} \in \mathbb{R}^n$, we use a general purpose nonlinear programming solver (the MATLAB function \emph{fmincon}) to find the maximum likelihood mixture. We can test that we have indeed reached the global maximum through the use of the derivative function conditions given in Theorem \ref{thm:Lindsay three statements that characterise maximizing mixture}. If the mixture that is returned by our general solver does not satisfy these conditions then we may use another method, such as the vertex direction method (VDM) or the vertex exchange method (VEM), which is guaranteed to converge to the global maximum but converges slowly (see \cite{Bohning1995-di} for a review of different methods). We note that the actual method used is not important so long as the final result satisfies the derivative conditions. In practice, when $n$ is small, a general purpose solver is sufficient, fast, and simple to implement, and we rarely need to use a secondary method.
@@ -611,8 +617,8 @@
 		The proof of Theorem \ref{thm:n=2 inflection result} will be given in Section \ref{sec:proof of n=2 inflection result} after some discussion concerning how the likelihood curve behaves when $n = 2$.
 
 		
-		It is worth verifying that Assumptions \ref{assump:reallinesupport} through to \ref{assump:magnitudegradients} are satisfied by some common densities. 
-		We remark here on the following common unimodal densities:
+		It is worth verifying that Assumptions \ref{assump:reallinesupport} through to \ref{assump:magnitudegradients} are satisfied by some common densities. In particular they are satisfied by the common unimodal densities in Table \ref{tab:component densities},
+		% We remark here on the following common unimodal densities:
 		\begin{align}
 			&\text{Normal with variance $\sigma^2$} && f(x) = \frac{1}{\sigma\sqrt{2\pi}} \euler^{-x^2/(2\sigma^2)}\\
 			&\text{Cauchy with scale $\gamma$} && g(x) = \frac{1}{\pi (\gamma + x^2/\gamma)}
@@ -853,7 +859,7 @@
 			
 			For $\theta \in [-i + x_2 - x_1,i]$, $g(\theta)$ is decreasing and $h(\theta)$ is increasing and $h(-i+x_2 -x_1) = g(i)$ (since $f'$ is odd). Therefore there must be exactly one solution in this interval.
 			
-			We note that if $x_2 - x_1 \leq i$ then the above intervals cover the real line. In the case that $i <x_2 - x_1 < 2i$ we need to consider these additional intervals.
+			We note that if $x_2 - x_1 \leq i$ then the above intervals cover the real line. In the case that $i <x_2 - x_1 < 2i$ we need to consider additional intervals.
 
 			For $\theta \in (i,x_2 - x_1)$, from assumption \ref{assump:magnitudegradients}, $f'(\theta) < -f'(\theta - 2i) < -f'(\theta - (x_2 - x_1))$ since both $-f'(\theta - 2i)$ and $-f'(\theta - (x_2 - x_1))$ are increasing on this interval. Hence there can be no solutions to \eqref{eq:gradientsequalequivalent} on this interval.
 			
