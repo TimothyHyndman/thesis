@@ -367,7 +367,12 @@
 	\end{equation}
 	and so $\vect{\gamma}(\vect{\theta};\vect{x},f) \in \mathcal{H}$. Thus the question of determining the number of support points of $\hat{Q}$ can be answered by finding the number of points at which $\Gamma_{\vect{x},f}$ touches $\mathcal{H}_{\hat{Q}}$.
 
-	[FIGURE?]
+	\begin{figure}
+		\centering
+		\includegraphics[width = 0.9\textwidth]{Figures/Mixtures/cauchy_support_hyperplane.png}
+		\caption{The likelihood curve along with the support hyperplane, $\mathcal{H}_{\hat{Q}}$, that contains $\hat{\vect{\gamma}}$. The support line has two points of contact with $\vect{\gamma}$ which correspond to the two points of support of the maximum likelihood mixture $\hat{Q}$. In this example $\vect{x} = (1,2)$ and $f$ is a Cauchy density with scale parameter $1/2$.}
+		\label{fig:cauchy support hyperplane}
+	\end{figure}
 
 	\subsection{KKT conditions}
 	We will now point out that the gradient function conditions in \eqref{eq:Deq1} and \eqref{eq:Deq2} can be obtained using the Karush-Kuhn-Tucker (KKT) conditions \cite{Kuhn1951-ih} \cite{Karush2014-vk}. Suppose that we restrict our mixture to have no more than $m$ components. Then given a component density $f$, and data $\vect{x}$, the problem of finding the maximum likelihood location mixture can be written as the following non-linear optimization problem.
