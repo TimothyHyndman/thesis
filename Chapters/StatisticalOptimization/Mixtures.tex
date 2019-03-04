@@ -349,7 +349,7 @@
 
 	\subsubsection{Support Hyperplane}
 	\label{sec: support hyperplane}
-	There is a geometrical interpretation to these theorems that ties in with the likelihood curve interpretation given above. For any given mixing distribution $Q$, define the \emph{inverse likelihood vector} $\vect{\gamma}^{-1}(Q;\vect{x},f) = (1/f_Q(x_1),\dots, 1/f_Q(x_n))$ and the hyperplane
+	There is a geometric interpretation to these theorems that ties in with the likelihood curve interpretation given above. For any given mixing distribution $Q$, define the \emph{inverse likelihood vector} $\vect{\gamma}^{-1}(Q;\vect{x},f) = (1/f_Q(x_1),\dots, 1/f_Q(x_n))$ and the hyperplane
 	\begin{equation}
 		\mathcal{H}_{Q} = \{\vect{z} : \langle \vect{\gamma}^{-1}(Q;\vect{x},f), \vect{z}\rangle = n\},
 	\end{equation}
@@ -365,12 +365,12 @@
 	\begin{equation}
 		\langle \vect{\gamma}^{-1}(\hat{Q};\vect{x},f), \vect{\gamma}(\vect{\theta};\vect{x},f) \rangle = n
 	\end{equation}
-	and so $\vect{\gamma}(\vect{\theta};\vect{x},f) \in \mathcal{H}$. Thus the question of determining the number of support points of $\hat{Q}$ can be answered by finding the number of points at which $\Gamma_{\vect{x},f}$ touches $\mathcal{H}_{\hat{Q}}$.
+	and so $\vect{\gamma}(\vect{\theta};\vect{x},f) \in \mathcal{H}$. Thus the question of determining the number of support points of $\hat{Q}$ can be answered by finding the number of points at which $\Gamma_{\vect{x},f}$ touches $\mathcal{H}_{\hat{Q}}$. An example of this is shown in Figure \ref{fig:cauchy support hyperplane}.
 
 	\begin{figure}
 		\centering
 		\includegraphics[width = 0.9\textwidth]{Figures/Mixtures/cauchy_support_hyperplane.png}
-		\caption{The likelihood curve along with the support hyperplane, $\mathcal{H}_{\hat{Q}}$, that contains $\hat{\vect{\gamma}}$. The support line has two points of contact with $\vect{\gamma}$ which correspond to the two points of support of the maximum likelihood mixture $\hat{Q}$. In this example $\vect{x} = (1,2)$ and $f$ is a Cauchy density with scale parameter $1/2$.}
+		\caption{The likelihood curve (solid line) along with the support hyperplane, $\mathcal{H}_{\hat{Q}}$, (dashed line) that contains $\hat{\vect{\gamma}}$ (blue point). The support line has two points of contact with $\vect{\gamma}$ (magenta points) which correspond to the two points of support of the maximum likelihood mixture $\hat{Q}$. In this example $\vect{x} = (1,2)$ and $f$ is a Cauchy density with scale parameter $1/2$.}
 		\label{fig:cauchy support hyperplane}
 	\end{figure}
 
