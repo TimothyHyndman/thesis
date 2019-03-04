@@ -29,7 +29,7 @@
 		f_Q(\vect{x}) = f_{\vect{\theta}, \vect{p}}(\vect{x}) = \sum_{j = 1}^m p_j f(\vect{x}; \vect{\theta}_j).
 	\end{equation}
 
-	In this chapter, we will be concerned only with finite mixtures on the real line, whose component densities are parametrised by a single shifting parameter, $\theta$. This is what we will call a \emph{location mixture}, and it can be written as
+	In this chapter, we will be concerned only with finite mixtures on the real line, whose component densities are parametrised by a single shifting parameter, $\theta$ (we may of course allow for other fixed parameters, for example normal distributions with varying locations but fixed variance). This is what we will call a \emph{location mixture}, and it can be written as
 	\begin{equation}
 		f_{\vect{p}, \vect{\theta}} = \sum_{j = 1}^m p_j f(x - \theta_j)
 		\label{eq:location mixture}
@@ -175,7 +175,7 @@
 			Then if for all $i\neq j$, $|x_i - x_j| > \alpha$ we must have $K_\vect{x} = n$.
 		\end{theorem}
 		\begin{proof}
-			First consider constructing the maximum likelihood mixture density using no more than $n-1$ components. Let $\hat{f}_{n-1}$ be this maximum likelihood mixture density of $\vect{x}$ with no more than $n-1$ components and let $L_{n-1}$ be the corresponding likelihood. Since all the $x_i$ are separated by at least $\alpha$, there exists an $x_{i^*}$ such that $|x_{i^*} - \theta_j|>\frac{\alpha}{2}$ for all $j$. Hence
+			First consider constructing the maximum likelihood mixture density using no more than $n-1$ components. Let $\hat{f}_{n-1}$ be this maximum likelihood mixture density of $\vect{x}$ with no more than $n-1$ components and let $L_{n-1}$ be the corresponding likelihood. Let $\vect{\theta}$ and $\vect{p}$ be the locations and weights for the probability masses of $\hat{f}_{n-1}$. Since all the $x_i$ are separated by at least $\alpha$, there exists an $x_{i^*}$ such that $|x_{i^*} - \theta_j|>\frac{\alpha}{2}$ for all $j$. Hence
 			\begin{equation}
 				\hat{f}_{n-1}(x_{i^*}) < f(\alpha/2),
 			\end{equation}
@@ -322,6 +322,10 @@
 			\label{item:supremum of gradient is zero}
 		\end{enumerate}
 	\end{theorem}
+
+	The intuition here is
+
+	[BLAHBLAH]
 
 	Also contained in \cite[Theorem 4.1]{Lindsay1983-tf} was the following result concerning the locations of the support points of $\hat{Q}$. The statement here is taken from \cite[Theorem 20]{Lindsay1995-sq}.
 
@@ -747,7 +751,7 @@
 				\end{vmatrix}.
 			\end{equation}
 
-			Recall from Section \ref{sec: support hyperplane}, that the points of support of a maximizing mixture $\hat{Q}$, correspond with the contact points of $\Gamma_{\vect{x}, f}$ with the support hyperplane of $\conv(\Gamma_{\vect{x}, f})$ that contains $\hat{\vect{\gamma}}$. Note that any point $\vect{\gamma}(\theta_j;\vect{x},f)$ that is in contact with a support hyperplane of $\conv(\Gamma_{\vect{x}, f})$ must have non-negative curvature.
+			Recall from Section \ref{sec: support hyperplane}, that each point of support of a maximizing mixture $\hat{Q}$, corresponds with a contact point of $\Gamma_{\vect{x}, f}$ with the support hyperplane of $\conv(\Gamma_{\vect{x}, f})$ that contains $\hat{\vect{\gamma}}$. Note that any point $\vect{\gamma}(\theta_j;\vect{x},f)$ that is in contact with a support hyperplane of $\conv(\Gamma_{\vect{x}, f})$ must have non-negative curvature.
 
 			First, let us assume that $x_2 - x_1 > 2i$. By the symmetry of $f$, $\vect{\gamma}(\theta;\vect{x})$ crosses the $u_1 = u_2$ line at $\theta = (x_1 + x_2)/2$. At this point, the curvature of $\vect{\gamma}$ has the same sign as
 			\begin{equation}
