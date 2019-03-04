@@ -65,4 +65,4 @@ axis([0, a+0.01, 0, a])
 
 filename = 'cauchy_support_hyperplane.png';
 set(h, 'PaperPositionMode', 'auto');
-saveas(h, filename)
+% saveas(h, filename)
