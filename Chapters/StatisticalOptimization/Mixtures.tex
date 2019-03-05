@@ -350,21 +350,21 @@
 
 	\subsubsection{Support Hyperplane}
 	\label{sec: support hyperplane}
-	There is a geometric interpretation to these theorems that ties in with the likelihood curve interpretation given above. For any given mixing distribution $Q$, define the \emph{inverse likelihood vector} $\vect{\gamma}^{-1}(Q;\vect{x},f) = (1/f_Q(x_1),\dots, 1/f_Q(x_n))$ and the hyperplane
+	There is a geometric interpretation to these theorems that ties in with the likelihood curve interpretation given above. For any given mixing distribution $Q$, define the \emph{inverse likelihood vector} $\vect{\lambda}(Q;\vect{x},f) = (1/f_Q(x_1),\dots, 1/f_Q(x_n))$ and the hyperplane
 	\begin{equation}
-		\mathcal{H}_{Q} = \{\vect{z} : \langle \vect{\gamma}^{-1}(Q;\vect{x},f), \vect{z}\rangle = n\},
+		\mathcal{H}_{Q} = \{\vect{z} : \langle \vect{\lambda}(Q;\vect{x},f), \vect{z}\rangle = n\},
 	\end{equation}
 	which contains the usual likelihood vector, $\vect{\gamma}(Q;\vect{x}, f)$. We may write the gradient function as
 	\begin{equation}
-		D(Q;\vect{x},f) = \langle \vect{\gamma}^{-1}(Q;\vect{x},f), \vect{\gamma}(\vect{\theta};\vect{x},f)\rangle - n.
+		D(Q;\vect{x},f) = \langle \vect{\lambda}(Q;\vect{x},f), \vect{\gamma}(\vect{\theta};\vect{x},f)\rangle - n.
 	\end{equation}
 	If $\hat{Q}$ maximizes $l(Q;\vect{x},f)$ then by statement \ref{item:supremum of gradient is zero} of Theorem \ref{thm:Lindsay three statements that characterise maximizing mixture}, 
 	\begin{equation}
-		\langle \vect{\gamma}^{-1}(\hat{Q};\vect{x},f), \vect{\gamma}(\vect{\theta};\vect{x},f) \rangle \leq n
+		\langle \vect{\lambda}(\hat{Q};\vect{x},f), \vect{\gamma}(\vect{\theta};\vect{x},f) \rangle \leq n
 	\end{equation}
 	for all $\vect{\theta} \in \Omega$. This means that $\mathcal{M} = \conv(\Gamma_{\vect{x},f})$ lies entirely on one side of $\mathcal{H}$ and Theorem \ref{thm: Lindsay support is zeros of gradient} tell us that if $\vect{\theta}$ is in the support of $\hat{Q}$, then 
 	\begin{equation}
-		\langle \vect{\gamma}^{-1}(\hat{Q};\vect{x},f), \vect{\gamma}(\vect{\theta};\vect{x},f) \rangle = n
+		\langle \vect{\lambda}(\hat{Q};\vect{x},f), \vect{\gamma}(\vect{\theta};\vect{x},f) \rangle = n
 	\end{equation}
 	and so $\vect{\gamma}(\vect{\theta};\vect{x},f) \in \mathcal{H}$. Thus we can gain information about the number of support points of $\hat{Q}$ by finding the number of points at which $\Gamma_{\vect{x},f}$ touches $\mathcal{H}_{\hat{Q}}$. As an example, consider Figure \ref{fig:cauchy support hyperplane}. Here we observe the likelihood curve for a Cauchy density and $n = 2$ observations. The support line containing $\hat{\vect{\gamma}}$ has two points of contact with $\Gamma_{\vect{x}, f}$ which correspond to the two points of support of the maximum likelihood mixture $\hat{Q}$. In our experience it is fairly typical for every contact point of $\Gamma_{\vect{x}, f}$ with $\mathcal{H}_{\hat{Q}}$ (or equivalently, every point in \eqref{eq:set D_Q = 0}) to correspond to a support point of $\hat{Q}$. However, this is not always the case. In Figure \ref{fig:triangle support hyperplane} we have shown the likelihood curve for a symmetric triangular density and $n =2$ observations. We observe that $\mathcal{H}_{\hat{Q}}$ touches $\Gamma_{\vect{x}, f}$ at an infinite number of points along a line segment. The interpretation is that there are an infinite number of distinct mixtures which achieve the maximum likelihood, each with support points corresponding to various locations along that line segment.
 
@@ -383,7 +383,7 @@
 	\end{figure}
 
 	\subsection{KKT conditions}
-	We will now point out that the gradient function conditions in \eqref{eq:Deq1} and \eqref{eq:Deq2} can be obtained using the Karush-Kuhn-Tucker (KKT) conditions \cite{Kuhn1951-ih} \cite{Karush2014-vk}. Suppose that we restrict our mixture to have no more than $m$ components. Then given a component density $f$, and data $\vect{x}$, the problem of finding the maximum likelihood location mixture can be written as the following non-linear optimization problem.
+	We will now point out that the gradient function conditions in \eqref{eq:Deq1} and \eqref{eq:Deq2} can be obtained using the Karush-Kuhn-Tucker (KKT) conditions \cite{Kuhn1951-ih} \cite{Karush2014-vk} for the following optimisation problem. Suppose that we restrict our mixture to have no more than $m$ components. Then given a component density $f$, and data $\vect{x}$, the problem of finding the maximum likelihood location mixture can be written as the following non-linear optimization problem.
 
 	Find $\vect{\theta}$ and $\vect{p}$ that maximize
 	\begin{equation}
@@ -539,7 +539,7 @@
 		\label{fig:normal_flag_graph_n2}
 	\end{figure}
 
-	However, there is some redundancy in this plot which arises because we are using location mixtures. When using a location mixture, if the maximizing mixing distribution for $\vect{x}$ places weights $p_j$ at locations $\theta_j$, then a maximizing mixing distribution for $\vect{x} + (c, \dots, c)$ for some constant $c \in \mathbb{R}$ is simply the distribution that places weights $p_j$ at locations $\theta_j + c$. That is, shifting $\vect{x}$ by $c$ results in the maximizing mixture also shifting by $c$. A consequence of this fact is that $K_\vect{x}$ is invariant under translations of $\vect{x}$.
+	However, there is some redundancy in this plot which arises because we are using location mixtures. When using a location mixture, if the maximizing mixing distribution for $\vect{x}$ places weights $p_j$ at locations $\theta_j$, then a maximizing mixing distribution for $\vect{x} + (c, \dots, c)$ for some constant $c \in \mathbb{R}$ is simply the distribution that places weights $p_j$ at locations $\theta_j + c$. That is, shifting $\vect{x}$ by $c$ results in the maximizing mixture also shifting by $c$. A consequence of this fact is that $K_\vect{x}$ is invariant under translations of the form $\vect{x} \mapsto \vect{x} + (c, \dots, c)$.
 
 	This suggests increasing $n$ to $3$, and fixing one of the $x_i$ while letting the other two vary. We do this by taking $\vect{x} = (0, x_2, x_3)$ with $x_2$ and $x_3$ varying across an evenly spaced grid. We do this for both a normal component density with variance $\sigma^2 = 1$ (Figure \ref{fig:normal_flag_graph}) and a Cauchy density with scale $\gamma = \sqrt{3}$ (Figure \ref{fig:cauchy_flag_graph}). We have chosen the scale of the Cauchy distribution so that it has inflection points in the same places as the normal density, namely at $x = \pm 1$. This decision is made in light of Theorem \ref{thm:n=2 inflection result} which says that for $n = 2$ and for certain component densities $f$, $K_\vect{x}$ can be determined by comparing $|x_1 - x_2|$ and the distance between the inflection points of $f$. It seems reasonable to expect that the choice of scale that makes the $n = 2$ figures identical is a good choice for comparing the effects of choosing different component densities in the $n = 3$ case.
 
@@ -598,7 +598,8 @@
 		\end{assumption}
 		
 		\begin{assumption}
-			The density $f(x)$ has only two points of inflection, located at $x = \pm i$.
+			The density $f(x)$ has only two points of inflection, located at $x = \pm a$.
+			% For some $a > 0$, $f''(-a) = f''(a) = 0$ and these are the only zeros of $f''$.
 			\label{assump:twoinflectionpoints}
 		\end{assumption}
 
@@ -615,7 +616,7 @@
 			% That is, $i^-$ and $i^+$ are inflection points of $f$. Note that for any $f$ satisfying \ref{assump:symmetric}, $i^- = -i^+$. In this case we will write $i = i^+ = -i^-$.
 		
 		\begin{assumption}
-			The density $f(x)$ satisfies $f'(x) < -f'(x - 2i)$ for $x \in (i,\infty)$.
+			The density $f(x)$ satisfies $f'(x) < -f'(x - 2a)$ for $x \in (a,\infty)$.
 			\label{assump:magnitudegradients}
 		\end{assumption}
 
@@ -625,7 +626,7 @@
 			\begin{equation}
 				K_\vect{x} = K(\vect{x};f) = 
 					\begin{cases}
-						1, &|x_2 - x_1| \leq 2i,\\
+						1, &|x_2 - x_1| \leq 2a,\\
 						2, &\text{otherwise.}
 					\end{cases}
 			\end{equation}
@@ -637,18 +638,20 @@
 		It is worth verifying that Assumptions \ref{assump:reallinesupport} through to \ref{assump:magnitudegradients} are satisfied by some common densities. In particular they are satisfied by the common unimodal densities in Table \ref{tab:component densities},
 		% We remark here on the following common unimodal densities:
 		\begin{align}
-			&\text{Normal with variance $\sigma^2$} && f(x) = \frac{1}{\sigma\sqrt{2\pi}} \euler^{-x^2/(2\sigma^2)}\\
-			&\text{Cauchy with scale $\gamma$} && g(x) = \frac{1}{\pi (\gamma + x^2/\gamma)}
+			% &\text{Normal with variance $\sigma^2$} && 
+			f_\mathrm{norm}(x) &= \frac{1}{\sigma\sqrt{2\pi}} \euler^{-x^2/(2\sigma^2)},\\
+			% &\text{Cauchy with scale $\gamma$} && 
+			f_\mathrm{Cauchy}(x) &= \frac{1}{\pi (\gamma + x^2/\gamma)}.
 			% &\text{Student's t-distribution with $\nu$ degrees of freedom} && f(x) = (1 + x^2/\nu)^{-\frac{\nu + 1}{2}}
 		\end{align}
-		Clearly, Assumptions \ref{assump:reallinesupport} through to \ref{assump:symmetric} are satisfied for both $f(x)$ and $g(x)$.
-		The inflection points of $f(x)$ are located at $x = \pm \sigma$ and the inflection points of $g(x)$ are located at $x = \pm \gamma/\sqrt{3}$, satisfying Assumption \ref{assump:twoinflectionpoints}. A plot of $f'(x)$ against $-f'(x - 2\sigma)$ and of $g'(x)$ against $-g'(x - 2\gamma/\sqrt{3})$ in Figure \ref{fig:assumption6} makes it clear that Assumption \ref{assump:magnitudegradients} is satisfied too. Of course, one could make this rigourous if desired.
+		Clearly, Assumptions \ref{assump:reallinesupport} through to \ref{assump:symmetric} are satisfied for both $f_\mathrm{norm}(x)$ and $f_\mathrm{Cauchy}(x)$.
+		The inflection points of $f_\mathrm{norm}(x)$ are located at $x = \pm \sigma$ and the inflection points of $f_\mathrm{Cauchy}(x)$ are located at $x = \pm \gamma/\sqrt{3}$, satisfying Assumption \ref{assump:twoinflectionpoints}. A plot of $f_\mathrm{norm}'(x)$ against $-f_\mathrm{norm}'(x - 2\sigma)$ and of $f_\mathrm{Cauchy}'(x)$ against $-f_\mathrm{Cauchy}'(x - 2\gamma/\sqrt{3})$ in Figure \ref{fig:assumption6} makes it clear that Assumption \ref{assump:magnitudegradients} is satisfied too. Of course, one could make this rigourous if desired.
 
 		\begin{figure}
 			\centering
 			\includegraphics[width = \textwidth]{Figures/Mixtures/assumption6_normal.png}
 			\includegraphics[width = \textwidth]{Figures/Mixtures/assumption6_cauchy.png}
-			\caption{Plots of $f'(x)$ against $-f'(x - 2\sigma)$ and $g'(x)$ against $-g'(x - 2\gamma/\sqrt{3})$ for $\sigma = 1$ and $\gamma = 1$.}
+			\caption{Plots of $f_\mathrm{norm}'(x)$ against $-f_\mathrm{norm}'(x - 2\sigma)$ and $f_\mathrm{Cauchy}'(x)$ against $-f_\mathrm{Cauchy}'(x - 2\gamma/\sqrt{3})$ for $\sigma = 1$ and $\gamma = 1$.}
 			\label{fig:assumption6}
 		\end{figure}
 		% We do this in the following Lemma.
@@ -766,7 +769,7 @@
 
 			Recall from Section \ref{sec: support hyperplane}, that each point of support of a maximizing mixture $\hat{Q}$, corresponds with a contact point of $\Gamma_{\vect{x}, f}$ with the support hyperplane of $\conv(\Gamma_{\vect{x}, f})$ that contains $\hat{\vect{\gamma}}$. Note that any point $\vect{\gamma}(\theta_j;\vect{x},f)$ that is in contact with a support hyperplane of $\conv(\Gamma_{\vect{x}, f})$ must have non-negative curvature.
 
-			First, let us assume that $x_2 - x_1 > 2i$. By the symmetry of $f$, $\vect{\gamma}(\theta;\vect{x})$ crosses the $u_1 = u_2$ line at $\theta = (x_1 + x_2)/2$. At this point, the curvature of $\vect{\gamma}$ has the same sign as
+			First, let us assume that $x_2 - x_1 > 2a$. By the symmetry of $f$, $\vect{\gamma}(\theta;\vect{x})$ crosses the $u_1 = u_2$ line at $\theta = (x_1 + x_2)/2$. At this point, the curvature of $\vect{\gamma}$ has the same sign as
 			\begin{equation}
 				S\left(\frac{x_1+x_2}{2}\right) = 
 				\begin{vmatrix}
@@ -774,11 +777,11 @@
 					-f'(\frac{x_2 - x_1}{2}) & f''(\frac{x_2 - x_1}{2})
 				\end{vmatrix}.
 			\end{equation}
-			Since $x_2 - x_1 > 2i$, by \ref{assump:twoinflectionpoints},  $f''((x_2 - x_1)/2)>0$. Similarly, $f''((x_1 - x_2)/2) > 0$. We also have that $-f'((x_1 - x_2)/2) < 0$ and $-f'((x_2 - x_1)/2) > 0$. Hence $S((x_1 + x_2)/2)<0$ and so $\vect{\gamma}((x_1 + x_2)/2;\vect{x})$ has negative curvature. Since $\vect{\gamma}$ has negative curvature when it crosses the line $\gamma_1 = \gamma_2$, and since $\hat{\gamma}$ lies on that line, the maximizing point $\hat{\gamma}$ must be the convex combination of two separate points in $\Gamma_{\vect{x},f}$ and so $K_\vect{x} = 2$.
+			Since $x_2 - x_1 > 2a$, by \ref{assump:twoinflectionpoints},  $f''((x_2 - x_1)/2)>0$. Similarly, $f''((x_1 - x_2)/2) > 0$. We also have that $-f'((x_1 - x_2)/2) < 0$ and $-f'((x_2 - x_1)/2) > 0$. Hence $S((x_1 + x_2)/2)<0$ and so $\vect{\gamma}((x_1 + x_2)/2;\vect{x})$ has negative curvature. Since $\vect{\gamma}$ has negative curvature when it crosses the line $\gamma_1 = \gamma_2$, and since $\hat{\gamma}$ lies on that line, the maximizing point $\hat{\gamma}$ must be the convex combination of at least two separate points in $\Gamma_{\vect{x},f}$ and so $K_\vect{x} = 2$.
 
 			% By Lemma \ref{lemma: gamma has non-negative curvature at points of support} the curve $\Gamma$ cannot have negative curvature at the points of support and so we cannot have that $K_\vect{x} = 1$.
 			
-			Now assume that $x_2 - x_1 \leq 2i$. By Lemma \ref{lem:magnitudegradients}, there is only one point at which $\vect{\gamma}$ is pointing along the direction $(1,-1)$. Now, by the symmetry of $f$, $\Gamma_{\vect{x}, f}$ must have a line of symmetry along $\gamma_1 = \gamma_2$. Since $\hat{\vect{\gamma}}$ lies on the line $\gamma_1 = \gamma_2$ by Lemma \ref{lemma: maximizing point on line u = v}, the support line of $\Gamma_{\vect{x},f}$ that contains $\hat{\vect{\gamma}}$ must point along the direction $(1, -1)$. Each contact point of $\Gamma_{\vect{x}, f}$ with one of its support lines must be tangent to that support line. Hence, there is only one possible point of contact with the support line that contains $\hat{\vect{\gamma}}$ and so $K_\vect{x} = 1$.
+			Now assume that $x_2 - x_1 \leq 2a$. By Lemma \ref{lem:magnitudegradients}, there is only one point at which $\vect{\gamma}$ is pointing along the direction $(1,-1)$. Now, by the symmetry of $f$, $\Gamma_{\vect{x}, f}$ must have a line of symmetry along $\gamma_1 = \gamma_2$. Since $\hat{\vect{\gamma}}$ lies on the line $\gamma_1 = \gamma_2$ by Lemma \ref{lemma: maximizing point on line u = v}, the support line of $\Gamma_{\vect{x},f}$ that contains $\hat{\vect{\gamma}}$ must point along the direction $(1, -1)$. Each contact point of $\Gamma_{\vect{x}, f}$ with one of its support lines must be tangent to that support line. Hence, there is only one possible point of contact with the support line that contains $\hat{\vect{\gamma}}$ and so $K_\vect{x} = 1$.
 
 			% [JUST USE SUPORT HYPERPLANE WHICH MUST BE PARALLEL TO u1 = -u2]
 
@@ -836,8 +839,8 @@
 		\begin{lemma}
 			\label{lem:magnitudegradients}
 			% Prove stuff about magnitude of gradients (i.e. $\gamma_x < \gamma_y$)
-			Let $f(x)$ be a density which satisfies assumptions \ref{assump:reallinesupport} through to \ref{assump:magnitudegradients} and whose inflection points are at $x=i$ and $x=-i$. If 
-			$x_2 - x_1 < 2i$ ($x_2 > x_1$) then the equation
+			Let $f(x)$ be a density which satisfies assumptions \ref{assump:reallinesupport} through to \ref{assump:magnitudegradients} and whose inflection points are at $x=a$ and $x=-a$. If 
+			$x_2 - x_1 < 2a$ ($x_2 > x_1$) then the equation
 			\begin{equation}
 				-f'(x_1 - \theta) = f'(x_2 - \theta)
 				\label{eq:gradientsequal}
@@ -845,14 +848,17 @@
 			has only one solution.
 		\end{lemma}
 		\begin{proof}
-			We first consider the shape of $f'(x)$. Assumption \ref{assump:singlemode} tells us that $f'(x)$ is positive for $x<0$ and negative for $x>0$. The function $f'(x)$ will have turning points at $\pm i$ and from Assumption \ref{assump:twoinflectionpoints} these will be the only turning points. Hence we have the following picture of $f'(x)$:
+			We first consider the shape of $f'(x)$. Assumption \ref{assump:singlemode} tells us that $f'(x)$ is positive for $x<0$ and negative for $x>0$. 
+			From Assumption \ref{assump:twoinflectionpoints}, the function $f'(x)$ will have turning points at $\pm a$ and these will be the only turning points.
+			% From Assumption \ref{assump:twoinflectionpoints}, its derivative, $f''(x)$, satisfies $f''(-a) = f''(a) = 0$ and these are the only zeros of $f''$.
+			Hence we have the following picture of $f'(x)$:
 			\begin{equation}
 				f'(x) \text{ is } 
 				\begin{cases}
-					\text{positive and increasing,} &x \in (-\infty,-i)\\
-					\text{positive and decreasing,} &x \in (-i,0)\\
-					\text{negative and decreasing,} &x \in (0,i)\\
-					\text{negative and increasing,} &x \in (i,\infty).
+					\text{positive and increasing,} &x \in (-\infty,-a)\\
+					\text{positive and decreasing,} &x \in (-a,0)\\
+					\text{negative and decreasing,} &x \in (0,a)\\
+					\text{negative and increasing,} &x \in (a,\infty).
 				\end{cases}
 			\end{equation}
 			We also note, from \ref{assump:symmetric}, that $f'(x)$ is an odd function. Using this and rearranging \eqref{eq:gradientsequal} we obtain the equivalent equation
@@ -868,36 +874,36 @@
 			% \end{equation}
 			% that is, it comes before the positive turning point of $f'(\theta)$.
 			
-			If we assume that $0< x_2 - x_1 < 2i$ then we can consider possible solutions to \eqref{eq:gradientsequalequivalent} on each of the following intervals. 
+			If we assume that $0< x_2 - x_1 < 2a$ then we can consider possible solutions to \eqref{eq:gradientsequalequivalent} on each of the following intervals. 
 			
 			For $\theta \in (-\infty, 0]$, $g(\theta)\geq 0$ and $h(\theta) < 0$ and so there are no possible solutions.
 			
 			Likewise, for $\theta \in [x_2 - x_1,\infty)$, $g(\theta)<0$ and $h(\theta) \geq 0$ and so there are no possible solutions.
 			
-			For $\theta \in [-i + x_2 - x_1,i]$, $g(\theta)$ is decreasing and $h(\theta)$ is increasing and $h(-i+x_2 -x_1) = g(i)$ (since $f'$ is odd). Therefore there must be exactly one solution in this interval.
+			For $\theta \in [-a + x_2 - x_1, a]$, $g(\theta)$ is decreasing and $h(\theta)$ is increasing and $h(-a +x_2 -x_1) = g(a)$ (since $f'$ is odd). Therefore there must be exactly one solution in this interval.
 			
-			We note that if $x_2 - x_1 \leq i$ then the above intervals cover the real line. In the case that $i <x_2 - x_1 < 2i$ we need to consider additional intervals.
+			We note that if $x_2 - x_1 \leq a$ then the above intervals cover the real line. In the case that $a <x_2 - x_1 < 2a$ we need to consider additional intervals.
 
-			For $\theta \in (i,x_2 - x_1)$, from assumption \ref{assump:magnitudegradients}, $f'(\theta) < -f'(\theta - 2i) < -f'(\theta - (x_2 - x_1))$ since both $-f'(\theta - 2i)$ and $-f'(\theta - (x_2 - x_1))$ are increasing on this interval. Hence there can be no solutions to \eqref{eq:gradientsequalequivalent} on this interval.
+			For $\theta \in (a,x_2 - x_1)$, from assumption \ref{assump:magnitudegradients}, $f'(\theta) < -f'(\theta - 2a) < -f'(\theta - (x_2 - x_1))$ since both $-f'(\theta - 2a)$ and $-f'(\theta - (x_2 - x_1))$ are increasing on this interval. Hence there can be no solutions to \eqref{eq:gradientsequalequivalent} on this interval.
 			
-			For $\theta \in (0, -i+x_2 - x_1)$ we can again use assumption \ref{assump:magnitudegradients} by observing that since 
+			For $\theta \in (0, -a+x_2 - x_1)$ we can again use assumption \ref{assump:magnitudegradients} by observing that since 
 			\begin{equation}
-				f'(\theta) < -f'(\theta - 2i)
+				f'(\theta) < -f'(\theta - 2a)
 			\end{equation}
-			for $\theta \in (i, \infty)$, we also have that for $\theta \in (-\infty, -i)$
+			for $\theta \in (a, \infty)$, we also have that for $\theta \in (-\infty, -a)$
 			\begin{equation}
-				f'(-\theta) < -f'(-\theta - 2i)
+				f'(-\theta) < -f'(-\theta - 2a)
 			\end{equation}
-			and so for $\theta \in (-\infty, i)$,
+			and so for $\theta \in (-\infty, a)$,
 			\begin{equation}
-				f'(-\theta + 2i) < -f'(-\theta)
+				f'(-\theta + 2a) < -f'(-\theta)
 			\end{equation}
 			which, since $f'$ is odd, is equivalent to 
 			\begin{equation}
-				-f'(\theta - 2i) < f'(\theta).
+				-f'(\theta - 2a) < f'(\theta).
 			\end{equation}
 
-			So for $\theta \in (0,-i+x_2-x_1)$,  $f'(\theta)>-f'(\theta - 2i) > -f'(\theta - x_2 - x_1)$ and there are no solutions to \eqref{eq:gradientsequalequivalent} on this interval either.
+			So for $\theta \in (0,-a+x_2-x_1)$,  $f'(\theta)>-f'(\theta - 2a) > -f'(\theta - x_2 - x_1)$ and there are no solutions to \eqref{eq:gradientsequalequivalent} on this interval either.
 			
 			Since the above intervals cover the real line and since we have shown that there is only one solution in one of these intervals, \eqref{eq:gradientsequal} must have only one solution.
 		\end{proof}
