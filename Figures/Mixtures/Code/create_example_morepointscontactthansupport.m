@@ -1,22 +1,23 @@
-
 sigma = 1;
 % Normal Density
-g = @(Y,theta) (1/(sigma*sqrt(2*pi)))*exp(-((repmat(Y,[1,length(theta)]) - repmat(theta,[length(Y),1])).^2)./(2*sigma^2));
+% g = @(Y,theta) (1/(sigma*sqrt(2*pi)))*exp(-((repmat(Y,[1,length(theta)]) - repmat(theta,[length(Y),1])).^2)./(2*sigma^2));
 
-f = @(Y, theta) 0.4*g(Y, theta - 2) + 0.4*g(Y, theta + 2) + 0.2*g(Y, theta);
-Y = [0,2]';
+% f = @(Y, theta) 0.4*g(Y, theta - 4) + 0.4*g(Y, theta + 4) + 0.2*g(Y, theta);
+% Y = [0,3]';
 
 % Custom
-% f = @(Y, theta) max(0, 1 - 2*abs(repmat(Y,[1,length(theta)]) - repmat(theta,[length(Y),1])));
-% Y = [0;0.4];
+f = @(Y, theta) max(0, 1 - 2*abs(repmat(Y,[1,length(theta)]) - repmat(theta,[length(Y),1])));
+Y = [0;0.4];
 
 % f = @(Y, theta) (abs(repmat(Y,[1,length(theta)]) - repmat(theta,[length(Y),1])) <= 1) .* (1 + cos(3 * pi * ( repmat(Y,[1,length(theta)]) - repmat(theta,[length(Y),1]) ) ));
-% xx = linspace(-2,2)';
-% yy = f(xx, 0);
-% plot(xx, yy);
+
+xx = linspace(-1,1, 1000)';
+yy = f(xx, 0);
+figure(1)
+plot(xx, yy);
 
 %Cauchy density
-lambda = sqrt(3);   %makes inflection points at +- 1
+% lambda = sqrt(3);   %makes inflection points at +- 1
 % f = @(x,u) (1/(pi*lambda))*(1 + ((repmat(x,[1,length(u)]) - repmat(u,[length(x),1]))./lambda).^2).^(-1);
 
 %Gamma
@@ -45,6 +46,14 @@ gamma = f(Y,theta_values);
 plotflag = 1;
 % [solution_grid_points,solution_masses] = MixtureLikelihoodMovingMasses(f,plotflag,Y);
 Q = MixtureLikelihoodMovingMasses2(f,Y);
+
+% options.xx_padding = 1;
+% options.plot_data_points = true;
+% options.filename = 'triangle_density_mixture.png';
+% options.save = false;
+% options.plot_Q = true;
+% plot_mixture(f, Q, Y, options)
+
 optimal_thetas = f(Y,Q.Support);
 optimal_u = Q.ProbWeights*optimal_thetas';
 
@@ -66,7 +75,7 @@ set(gca,'YDir','normal')
 plot(gamma(1,:),gamma(2,:),'k','LineWidth',1.5');
 plot(hyperplane_x, hyperplane_y,'--','LineWidth',1.5');
 % plot(gamma(1,k),gamma(2,k),'k','LineStyle','--','LineWidth',1.5');
-scatter(optimal_thetas(1,:),optimal_thetas(2,:),'m','filled')
+% scatter(optimal_thetas(1,:),optimal_thetas(2,:),'m','filled')
 scatter(optimal_u(1),optimal_u(2),'b','filled')
 hold off
 xlabel('\gamma_1','FontSize',20)
@@ -75,6 +84,6 @@ axis equal
 axis([0, a+0.01, 0, a])
 % export_fig GammaSigma06.pdf
 
-filename = 'cauchy_support_hyperplane.png';
+filename = 'triangle_density_gamma.png';
 set(h, 'PaperPositionMode', 'auto');
-% saveas(h, filename)
+saveas(h, filename)

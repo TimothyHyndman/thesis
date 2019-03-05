@@ -334,6 +334,7 @@
 		The support of any maximum likelihood estimator $\hat{Q}$ lies in the set 
 		\begin{equation}
 			\left\{\vect{\theta} : D_{\hat{Q}}(\vect{\theta};\vect{x},f) = 0 \right\}.
+			\label{eq:set D_Q = 0}
 		\end{equation}
 	\end{theorem}
 
@@ -365,13 +366,20 @@
 	\begin{equation}
 		\langle \vect{\gamma}^{-1}(\hat{Q};\vect{x},f), \vect{\gamma}(\vect{\theta};\vect{x},f) \rangle = n
 	\end{equation}
-	and so $\vect{\gamma}(\vect{\theta};\vect{x},f) \in \mathcal{H}$. Thus the question of determining the number of support points of $\hat{Q}$ can be answered by finding the number of points at which $\Gamma_{\vect{x},f}$ touches $\mathcal{H}_{\hat{Q}}$. An example of this is shown in Figure \ref{fig:cauchy support hyperplane}.
+	and so $\vect{\gamma}(\vect{\theta};\vect{x},f) \in \mathcal{H}$. Thus we can gain information about the number of support points of $\hat{Q}$ by finding the number of points at which $\Gamma_{\vect{x},f}$ touches $\mathcal{H}_{\hat{Q}}$. As an example, consider Figure \ref{fig:cauchy support hyperplane}. Here we observe the likelihood curve for a Cauchy density and $n = 2$ observations. The support line containing $\hat{\vect{\gamma}}$ has two points of contact with $\Gamma_{\vect{x}, f}$ which correspond to the two points of support of the maximum likelihood mixture $\hat{Q}$. In our experience it is fairly typical for every contact point of $\Gamma_{\vect{x}, f}$ with $\mathcal{H}_{\hat{Q}}$ (or equivalently, every point in \eqref{eq:set D_Q = 0}) to correspond to a support point of $\hat{Q}$. However, this is not always the case. In Figure \ref{fig:triangle support hyperplane} we have shown the likelihood curve for a symmetric triangular density and $n =2$ observations. We observe that $\mathcal{H}_{\hat{Q}}$ touches $\Gamma_{\vect{x}, f}$ at an infinite number of points along a line segment. The interpretation is that there are an infinite number of distinct mixtures which achieve the maximum likelihood, each with support points corresponding to various locations along that line segment.
 
 	\begin{figure}
 		\centering
 		\includegraphics[width = 0.9\textwidth]{Figures/Mixtures/cauchy_support_hyperplane.png}
-		\caption{The likelihood curve (solid line) along with the support hyperplane, $\mathcal{H}_{\hat{Q}}$, (dashed line) that contains $\hat{\vect{\gamma}}$ (blue point). The support line has two points of contact with $\vect{\gamma}$ (magenta points) which correspond to the two points of support of the maximum likelihood mixture $\hat{Q}$. In this example $\vect{x} = (1,2)$ and $f$ is a Cauchy density with scale parameter $1/2$.}
+		\caption{The likelihood curve, $\Gamma_{\vect{x}, f}$, (solid line) along with the support hyperplane, $\mathcal{H}_{\hat{Q}}$, (dashed line) that contains $\hat{\vect{\gamma}}$ (blue point), and the points of contact with $\Gamma_{\vect{x}, f}$ (magenta points). In this example $\vect{x} = (1,2)$ and $f$ is a Cauchy density with scale parameter $1/2$.}
 		\label{fig:cauchy support hyperplane}
+	\end{figure}
+
+	\begin{figure}
+		\centering
+		\includegraphics[width = 0.9\textwidth]{Figures/Mixtures/triangle_density_gamma.png}
+		\caption{The likelihood curve, $\Gamma_{\vect{x}, f}$, (solid line) along with the support hyperplane, $\mathcal{H}_{\hat{Q}}$, (dashed line) that contains $\hat{\vect{\gamma}}$ (blue point). In this example $\vect{x} = (0,0.4)$ and $f$ is a symmetric triangular density with width $1/2$.}
+		\label{fig:triangle support hyperplane}
 	\end{figure}
 
 	\subsection{KKT conditions}

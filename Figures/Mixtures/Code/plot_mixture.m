@@ -29,7 +29,7 @@ function fig = plot_mixture(phi, Q, Y, options, Q_unsimplified)
 
     if options.plot_data_points
         hold on
-        h_datapoints = scatter(Y,0*Y,'*');
+        h_datapoints = scatter(Y,0*Y,'*', 'DisplayName', 'x');
     end
 
     if options.plot_mixture_density
