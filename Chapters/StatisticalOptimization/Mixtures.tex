@@ -795,7 +795,7 @@
 
 		\begin{lemma}
 		\label{lemma: maximizing point on line u = v}
-			Let $f(x)$ be a component density symmetric around $x = 0$, and $\vect{x} = (x_1, x_2) \in \mathbb{R}^2$ such that the conditions of Theorem \ref{thm: lindsay maximizing likelihood vector point} are met. Let $\hat{Q}$ be a maximum likelihood location mixture of $f(x)$ to $\vect{x}$. Then $f_{\hat{Q}}(x_1) = f_{\hat{Q}}(x_2)$.
+			Let $f(x)$ be a component density symmetric around $x = 0$, and $\vect{x} = (x_1, x_2) \in \mathbb{R}^2$ such that the conditions of Theorem \ref{thm: lindsay maximizing likelihood vector point} are met. Let $\hat{Q}$ maximise the likelihood, $l(Q; \vect{x}, f)$. Then $f_{\hat{Q}}(x_1) = f_{\hat{Q}}(x_2)$.
 		\end{lemma}
 		\begin{proof}
 			Let $(u, v)$ denote the coordinates of $\hat{\vect{\gamma}}  = (f_{\hat{Q}}(x_1), f_{\hat{Q}}(x_2))$. By Theorem \ref{thm: lindsay no more than n points} we have
@@ -917,23 +917,23 @@
 	\end{equation}
 	the gradient function defined in \eqref{eq:def gradient function}, evaluated at a mixture $Q$ which places masses $\vect{p}$ at locations $\vect{\theta}$, becomes
 	\begin{equation}
-		D_Q(\theta; \vect{x}, f_\sigma) = - n + \sum_{i = 1}^n \frac{\exp({-(x_i - \theta)^2/2\sigma^2})}{\sum_{j=1}^m p_j \exp({-(x_i - \theta_j)^2/2\sigma^2})},
+		D_Q(\theta; \vect{x}, f_\sigma) = - n + \sum_{i = 1}^n \frac{\exp({-(x_i - \theta)^2/2\sigma^2})}{\sum_{j=1}^m p_j \exp({-(x_i - \theta_j)^2/2\sigma^2})}.
 	\end{equation}
 	% where we have written
 	% \begin{equation}{}
 	% 	\Gamma_k(x;\vect{\theta},\vect{p}) = \frac{f(x - \theta_k;\sigma)}{\sum_{j=1}^m p_j f(x - \theta_j;\sigma)}.
 	% \end{equation}
 	% for ease of notation. Using this notation, equations \eqref{eq:Deq1} to \eqref{eq:Deq3} become
-	and equations \eqref{eq:Deq1} to \eqref{eq:Deq3} become
+	Equations \eqref{eq:Deq1} to \eqref{eq:Deq3} state that at a maximizing mixture $\hat{Q}$, 
 	\begin{align}
-		&\frac{1}{n} \sum_{i=1}^n \Psi_k(x_i;\vect{\theta},\vect{p}) = 1, &&k = 1,\dots, m, \label{eq:PsiEq1}\\
-		&\frac{1}{n} \sum_{i=1}^n x_i \Psi_k(x_i;\vect{\theta},\vect{p}) = \theta_k, &&k = 1,\dots, m,\label{eq:PsiEq2}\\
-		&\frac{1}{n} \sum_{i=1}^n (x_i - \theta_k)^2 \Psi_k(x_i;\vect{\theta},\vect{p}) \leq \sigma^2, &&k = 1,\dots, m,
+		&\frac{1}{n} \sum_{i=1}^n \Psi_k(x_i;\hat{\vect{\theta}},\hat{\vect{p}}) = 1, &&k = 1,\dots, m, \label{eq:PsiEq1}\\
+		&\frac{1}{n} \sum_{i=1}^n x_i \Psi_k(x_i;\hat{\vect{\theta}},\hat{\vect{p}}) = \theta_k, &&k = 1,\dots, m,\label{eq:PsiEq2}\\
+		&\frac{1}{n} \sum_{i=1}^n (x_i - \theta_k)^2 \Psi_k(x_i;\hat{\vect{\theta}},\hat{\vect{p}}) \leq \sigma^2, &&k = 1,\dots, m,
 		\label{eq:PsiEq3}
 	\end{align}
-	 where we have written
+	where $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ are the locations and masses of $\hat{Q}$ and we have written
 	\begin{equation}{}
-		\Psi_k(x;\vect{\theta},\vect{p}) = \Psi_k(x;\vect{\theta},\vect{p}, f_\sigma) = \frac{f_\sigma(x - \theta_k)}{\sum_{j=1}^m p_j f_\sigma(x - \theta_j)}.
+		\Psi_k(x;\vect{\theta},\vect{p}) = \Psi_k(x;\vect{\theta},\vect{p}, f_\sigma) = \frac{f_\sigma(x - \theta_k)}{\sum_{j=1}^m p_j f_\sigma(x - \theta_j)}
 	\end{equation}
 	for ease of notation.
 
@@ -987,20 +987,34 @@
 			\label{thm:general n constraints result}
 		\end{theorem}
 		\begin{proof}
-			Let $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ represent the $m$ point maximizing mixture of $\vect{x} \in C_m$. By Lemma \ref{lem:maxkGamma}, there exists a $k^*$ such that $\Psi_{k^*}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$ for at least $n / m$ different $x_i$. Call the set of these $x_i$, $A_{k^*}$.
+			Let $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ represent an $m$ point maximizing mixture of $\vect{x} \in C_m$. By Lemma \ref{lem:maxkGamma}, for every $i \in \{1, \dots, n\}$ there exists a $k \in \{1, \dots, m\}$ such that $\Psi_{k}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$. Therefore by the pigeonhole principle there must exists some $k^*$ such that $\Psi_{k^*}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$ for at least $n / m$ different $i$. Define the set
+			\begin{equation}
+			 	A_{k^*} = \{i : \Psi_{k^*}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1 \},
+			\end{equation}
+			which we know must have size $|A_{k^*}| \geq n/m$.
 			% Let $\vect{x} = (x_1,\dots,x_n)$ and assume that the maximum likelihood mixture for $\vect{x}$ has no more than $m$ components. Let $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ denote this maximizing mixture. %Let $\hat{\vect{\theta}} = (\hat{\theta}_1,\dots,\hat{\theta}_m)$ and $\hat{\vect{p}} = (\hat{p}_1,\dots,\hat{p}_m)$ be a maximizing mixture for $\vect{x}$
 			% Then by Lemma \ref{lem:maxkGamma}, there exists a $k^*$ such that $\Psi_{k^*}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$ for at least $\lceil \frac{n}{m} \rceil$ different $x_i$. Let $A_{k^*}$ be the set of all these $x_i$. 
 
-			Let $A_{\theta_{k^*}}$ be the set of the $|A_{k^*}|$ closest $x_i$ to $\theta_{k^*}$. Then
-			\begin{align}
-				\frac{1}{n} \sum_{i=1}^n (x_i - \theta_{k^*})^2 \Psi_{k^*}(x_i; \hat{\vect{p}},\hat{\vect{\theta}}) &\geq \frac{1}{n} \sum_{i \in A_{\theta_{k^*}}} (x_i - \theta_{k^*})^2 \\
-				&\geq \frac{1}{n} \sum_{i \in A_{\theta_{k^*}}} \left(x_i - \bar{x}_{A_{\theta_{k^*}}}\right)^2.
-			\end{align}
+			% Let $A_{\theta_{k^*}}$ be the set of the $|A_{k^*}|$ closest $x_i$ to $\theta_{k^*}$. 
+
 			From \eqref{eq:PsiEq3},
+			\begin{align}
+				\sigma^2 &\geq \frac{1}{n} \sum_{i=1}^n (x_i - \theta_{k^*})^2 \Psi_{k^*}(x_i; \hat{\vect{\theta}}, \hat{\vect{p}})\\ 
+					&\geq \frac{1}{n} \sum_{i \in A_{k^*}} (x_i - \theta_{k^*})^2 \Psi_{k^*}(x_i; \hat{\vect{\theta}}, \hat{\vect{p}})\\
+					&\geq \frac{1}{n} \sum_{i \in A_{k^*}} (x_i - \theta_{k^*})^2,
+					\label{eq:sum A_k^star x_i - theta}
+					% &\geq \frac{1}{n} \sum_{i \in A_{\theta_{k^*}}} (x_i - \theta_{k^*})^2 \\
+					% &\geq \frac{1}{n} \sum_{i \in A_{k^*}} \left(x_i - \bar{x}_{A_{k^*}}\right)^2.
+			\end{align}
+			since $\Psi_{k^*}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$ for all $i \in A_{k^*}$. Finally, we can reduce \eqref{eq:sum A_k^star x_i - theta} by replacing $\theta_{k^*}$ with $\bar{x}_{A_{k^*}}$ to get that
 			\begin{equation}
-				\frac{1}{n} \sum_{i \in A_{\theta_{k^*}}} \left(x_i - \bar{x}_{A_{\theta_{k^*}}}\right)^2 \leq \sigma^2.
+				\sigma^2 \geq \frac{1}{n} \sum_{i \in A_{k^*}} \left(x_i - \bar{x}_{A_{k^*}}\right)^2.
 			\end{equation}
-		\end{proof}		
+			% From \eqref{eq:PsiEq3},
+			% \begin{equation}
+			% 	\frac{1}{n} \sum_{i \in A_{\theta_{k^*}}} \left(x_i - \bar{x}_{A_{\theta_{k^*}}}\right)^2 \leq \sigma^2.
+			% \end{equation}
+		\end{proof}
 
 		% This means that if we cannot find a subset of the $x_i$ that has at least $\frac{n}{m}$ elements and has (biased) variance less than $\frac{n\sigma^2}{\left\lceil \frac{n}{m} \right\rceil}$ then we need more than $m$ components in our maximum likelihood mixture.
 	% \subsection{Properties of \texorpdfstring{$\Psi$}{Psi}}
