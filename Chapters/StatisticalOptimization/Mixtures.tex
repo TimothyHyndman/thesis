@@ -347,9 +347,24 @@
 		D''_{\hat{Q}}(\theta^*;\vect{x}, f) &\leq 0,
 		\label{eq:Deq3}
 	\end{align}
-	so long as $\theta^*$ is not on the boundary of the parameter space.
+	so long as $\theta^*$ is not on the boundary of the parameter space. A typical example of this is shown in Figure \ref{fig:D_Q example}. In this figure we observe that $D_Q(\theta)$ has a local maximum at every point where $Q$ places a probability mass. Since $D_Q(\theta) \leq 0$ for all $\theta \in \mathbb{R}$, we know that $Q$ is the maximum likelihood mixing distribution.
 
-	[EXAMPLE]
+	% [EXAMPLE]
+
+	\begin{figure}[ht]
+		\begin{subfigure}[t]{0.49\textwidth}
+			\centering
+			\includegraphics[width = \textwidth]{Figures/Mixtures/D_Q_example.png}
+			\caption{}\label{subfig:D_Q}
+		\end{subfigure}
+		\begin{subfigure}[t]{0.49\textwidth}
+			\centering
+			\includegraphics[width = \textwidth]{Figures/Mixtures/D_Q_example_mixture.png}
+			\caption{}\label{subfig:D_Qmixture}
+		\end{subfigure}
+		\caption[The gradient function and its associated mixing distribution and mixture.]{The gradient function, $D_{\hat{Q}}$, (\subref{subfig:D_Q}) and its associated mixing distribution, $Q$, and mixture, $f_Q$, (\subref{subfig:D_Qmixture}). In this example $f$ is normal with variance $1/4$ and $\vect{x}$ is made up of $n = 50$ points distributed uniformly but randomly along $[-3, 3]$.}
+		\label{fig:D_Q example}
+	\end{figure}
 
 	\subsubsection{Support Hyperplane}
 	\label{sec: support hyperplane}
@@ -565,11 +580,11 @@
 
 	However, there are some problems with this approach. In practice, we do not remove masses with exactly zero weight, but rather remove masses with weight $p_j < \epsilon$ for some small $\epsilon > 0$. Similarly, we merge masses $i$ and $j$ with support $|\theta_j - \theta_i| < \delta$ for some small $\delta > 0$. It may be that the true maximum likelihood mixture does contain components that have either very small weight, or are located very close to other masses. In this scenario, we would produce a value for $K_\vect{x}$ that is too small.
 
-	Instead, we propose the following. From Theorem \ref{thm: Lindsay support is zeros of gradient}, each point of support, $\hat{\theta}_j$ of the maximizing mixture distribution $\hat{Q}$ is a local maximum of $D_{\hat{Q}}(\theta;\vect{x}, f)$ with $D_{\hat{Q}}(\theta_j;\vect{x},f) = 0$. So, given the mixing distribution $Q^*$ that results from our optimization, we take $K_\vect{x}$ to be the number of local maxima in $D_{Q^*}(\theta;\vect{x}, f)$ that take maximum value close to $0$. Note that $D_{\hat{Q}}(\theta_j; \vect{x}, f) = 0$ does not guarantee that $\theta_j$ is a support point of $\hat{Q}$ and so it is possible that this method produces a value for $K_\vect{x}$ that is too large. However, in our experience, $D_{\hat{Q}}(\theta;\vect{x}, f)$ is typically zero only at the support points of $\hat{Q}$.
+	Instead, we propose the following. From Theorem \ref{thm: Lindsay support is zeros of gradient}, each point of support, $\hat{\theta}_j$ of the maximizing mixture distribution $\hat{Q}$ is a local maximum of $D_{\hat{Q}}(\theta;\vect{x}, f)$ with $D_{\hat{Q}}(\theta_j;\vect{x},f) = 0$. So, given the mixing distribution $Q^*$ that results from our optimization, we take $K_\vect{x}$ to be the number of local maxima in $D_{Q^*}(\theta;\vect{x}, f)$ that take maximum value close to $0$. Note that $D_{\hat{Q}}(\theta_j; \vect{x}, f) = 0$ does not guarantee that $\theta_j$ is a support point of $\hat{Q}$ and so it is possible that this method produces a value for $K_\vect{x}$ that is too large. However, apart from some deliberately constructed scenarios, in our experience $D_{\hat{Q}}(\theta;\vect{x}, f)$ is typically zero only at the support points of $\hat{Q}$.
 
-	[WHEN IS SUPPORT ALWAYS EQUAL TO SET OF D(THETA) = 0?]
+	% [WHEN IS SUPPORT ALWAYS EQUAL TO SET OF D(THETA) = 0?]
 
-	[EXTEND AS REQUIRED]
+	% [EXTEND AS REQUIRED]
 	% \subsection{Motivating Example?}
 
 	\subsection{Flag graphs}
