@@ -323,9 +323,9 @@
 		\end{enumerate}
 	\end{theorem}
 
-	The intuition here is
+	The intuition here is that $D_Q(\vect{\theta}; \vect{x}, f)$ measures the change in likelihood as we move a little bit of mass from each of the points of support of $Q$ to a point at $\vect{\theta}$. If a mixing distribution $\hat{Q}$ maximizes the likelihood, then this change in likelihood should never be positive and if we are not at the maximizing distribution $\hat{Q}$, then there should be some $\vect{\theta}$ to which we can move some mass to increase the likelihood.
 
-	[BLAHBLAH]
+	% [BLAHBLAH]
 
 	Also contained in \cite[Theorem 4.1]{Lindsay1983-tf} was the following result concerning the locations of the support points of $\hat{Q}$. The statement here is taken from \cite[Theorem 20]{Lindsay1995-sq}.
 
@@ -338,15 +338,18 @@
 		\end{equation}
 	\end{theorem}
 
-	If $f$ is parametrized by a single parameter $\theta$ and $D_Q(\theta;\vect{x},f)$ is twice differentiable in $\theta$, then each interior support point $\theta^*$ of the maximizing mixture distribution, $\hat{Q}$, satisfies
+	Theorems \ref{thm:Lindsay three statements that characterise maximizing mixture} and \ref{thm: Lindsay support is zeros of gradient} indicate that each support point of $\hat{Q}$ is a local maximum of $D_{\hat{Q}}(\vect{\theta}; \vect{x}, f)$. So if $f$ is parametrized by a single parameter $\theta$ and $D_Q(\theta;\vect{x},f)$ is twice differentiable in $\theta$, then each support point $\theta^*$ of the maximizing mixture distribution, $\hat{Q}$, satisfies
 	\begin{align}
 		D_{\hat{Q}}(\theta^*;\vect{x}, f) &= 0, 
 		\label{eq:Deq1}\\
 		D'_{\hat{Q}}(\theta^*;\vect{x}, f) &= 0, 
 		\label{eq:Deq2}\\
-		D''_{\hat{Q}}(\theta^*;\vect{x}, f) &\leq 0.
+		D''_{\hat{Q}}(\theta^*;\vect{x}, f) &\leq 0,
 		\label{eq:Deq3}
 	\end{align}
+	so long as $\theta^*$ is not on the boundary of the parameter space.
+
+	[EXAMPLE]
 
 	\subsubsection{Support Hyperplane}
 	\label{sec: support hyperplane}
@@ -405,6 +408,7 @@
 	Introduce Lagrange multipliers $\lambda$, $\vect{\mu}$, $\vect{\nu}$ and form the Lagrangian
 	\begin{equation}
 		\mathcal{L}(\vect{\theta},\vect{p},\lambda,\vect{\mu},\vect{\nu}) = l_m(\vect{\theta},\vect{p};\vect{x}) - \lambda\left(1 - \sum_{j=1}^m p_j\right) - \sum_{j=1}^m \mu_j p_j + \sum_{j=1}^{m-1} \nu_j \left(\theta_j - \theta_{j+1}\right).
+		\label{eq:kkt lagrangian}
 	\end{equation}
 	The KKT conditions tell us that at a local maximum the equations
 	\begin{align}
@@ -441,11 +445,51 @@
 	Substituting in $l_m$ from \eqref{eq:l_m} we obtain
 	\begin{align}
 		&-n + \sum_{i=1}^n \frac{f(x_i - \theta_j)}{f_{\hat{Q}}(x_i)} = D_{\hat{Q}}(\theta_j;\vect{x}, f) =  0 && j = 1, \dots, m\\
-		&\sum_{i=1}^n \frac{-f(x_i - \theta_j)}{f_{\hat{Q}}(x_i)} = D_{\hat{Q}}'(\theta_j;\vect{x}, f) = 0 && j = 1, \dots, m
+		&\sum_{i=1}^n \frac{-p_jf'(x_i - \theta_j)}{f_{\hat{Q}}(x_i)} = p_j D_{\hat{Q}}'(\theta_j;\vect{x}, f) = 0 && j = 1, \dots, m
 	\end{align}
 	which are equivalent to \eqref{eq:Deq1} and \eqref{eq:Deq2} respectively.
 
-	[SECOND ORDER?]
+	[KEEP THIS SECOND ORDER STUFF IN?]
+
+	The second order conditions are slightly more complex. In the context of our problem they state \cite[Proposition 3.3.1]{Bertsekas1995-mh} that a necessary condition for the point $(\vect{\theta}, \vect{p}, \lambda, \vect{\mu}, \vect{\nu})$ to be a local maximum is that,
+	% \begin{equation}
+	% 	y' 
+	% 	\begin{bmatrix}
+	% 		\frac{\partial^2}{\partial \theta_1^2} & \frac{\partial^2}{\partial \theta_1 \theta_2} & \dots & \frac{\partial^2}{\partial \theta_1 p_1} & \dots\\
+	% 		\frac{\partial^2}{\partial \theta_2 \theta_1} & \frac{\partial^2}{\partial \theta_1^2} & \dots & \vdots  & \dots\\
+	% 		\vdots & & \ddots & &\\
+	% 		\vdots & & & \frac{\partial^2}{\partial p_1^2} &\\
+	% 		\vdots & & \ddots & &
+	% 	\end{bmatrix} y \geq 0.
+	% \end{equation}
+	\begin{equation}
+		\vect{y}' \nabla^2_{\vect{\theta}, \vect{p}} \mathcal{L}(\vect{\theta}, \vect{p}, \lambda, \vect{\mu}, \vect{\nu}) \vect{y} \leq 0
+		\label{eq:KKT second order}
+	\end{equation}
+	for all $\vect{y} \in \mathbb{R}^{2m}$ such that
+	\begin{equation}
+		\nabla h(\vect{\theta}, \vect{p})' \vect{y} = 0.
+	\end{equation}
+	where
+	\begin{equation}
+		h(\vect{\theta}, \vect{p}) = 1 - \sum_{j = 1}^m p_j.
+	\end{equation}
+	Since 
+	\begin{equation}
+		\nabla h(\vect{\theta}, \vect{p}) = (0, \dots, 0, -1, \dots, -1),
+	\end{equation}{}
+	equation \eqref{eq:KKT second order} must be satisfied in particular for $\vect{y}$ with components $y_k = 1$ for some $k \leq m$ and $y_i  = 0$ for all $i \neq k$. This gives us that necessary conditions for $\hat{Q}$ to be an $m$ point maximum are that
+	\begin{align}
+		\frac{\partial^2}{\partial \theta_j} \mathcal{L}(\vect{\theta}, \vect{p}, \lambda, \vect{\mu}, \vect{\nu}) &\leq 0, && j = 1, \dots, m.
+	\end{align}
+	Recalling \eqref{eq:kkt lagrangian} and \eqref{eq:l_m}, we get that
+	\begin{align}
+		\frac{\partial^2}{\partial \theta_j} \mathcal{L}(\vect{\theta}, \vect{p}, \lambda, \vect{\mu}, \vect{\nu}) &= \sum_{i = 1}^n \frac{p_j f''(x_i - \theta_j)}{\sum_{k = 1}^m p_k f(x_i - \theta_k)} - \sum_{i = 1}^n \left(\frac{p_j f'(x_i - \theta_j)}{\sum_{k = 1}^m p_k f(x_i - \theta_k)}\right)^2 \\
+		&= p_j D_Q''(\theta_j;\vect{x}, f) - \sum_{i = 1}^n \left(\frac{p_j f'(x_i - \theta_j)}{\sum_{k = 1}^m p_k f(x_i - \theta_k)}\right)^2 \\
+		&\leq 0.
+	\end{align}
+	This is a weaker condition than that in \eqref{eq:Deq3}. We were unable to obtain an equivalent condition to \eqref{eq:Deq3} using the above method.
+
 
 	\subsection{Additional results on \texorpdfstring{$K_\vect{x}$}{Kx}}
 
