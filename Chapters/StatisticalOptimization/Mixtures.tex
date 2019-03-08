@@ -356,7 +356,7 @@
 		D''_{\hat{Q}}(\theta^*;\vect{x}, f) &\leq 0,
 		\label{eq:Deq3}
 	\end{align}
-	so long as $\theta^*$ is not on the boundary of the parameter space. A typical example of this is shown in Figure \ref{fig:D_Q example}. In this figure we observe that $D_Q(\theta)$ has a local maximum at every point where $Q$ places a probability mass. Since $D_Q(\theta) \leq 0$ for all $\theta \in \mathbb{R}$, we know that $Q$ is the maximum likelihood mixing distribution.
+	so long as $\theta^*$ is not on the boundary of the parameter space. A typical example of this is shown in Figure \ref{fig:D_Q example}. In this figure we observe that $D_Q(\theta)$ has a local maximum at every point where $Q$ places a probability mass. Since $D_Q(\theta) \leq 0$ for all $\theta \in \mathbb{R}$, we know that $Q$ is the maximum likelihood mixing distribution. In Section \ref{sec:KKT conditions} we will show how to obtain equations \eqref{eq:Deq1} and \eqref{eq:Deq2} using a different method to Lindsay that does not involve the gradient function.
 
 	% [EXAMPLE]
 
@@ -410,6 +410,7 @@
 	\end{figure}
 
 	\subsection{KKT conditions}
+	\label{sec:KKT conditions}
 	We will now point out that the gradient function conditions in \eqref{eq:Deq1} and \eqref{eq:Deq2} can be obtained using the Karush-Kuhn-Tucker (KKT) conditions \cite{Kuhn1951-ih} \cite{Karush2014-vk} for the following optimisation problem. Suppose that we restrict our mixture to have no more than $m$ components. Then given a component density $f$, and data $\vect{x}$, the problem of finding the maximum likelihood location mixture can be written as the following non-linear optimization problem.
 
 	Find $\vect{\theta}$ and $\vect{p}$ that maximize
@@ -636,10 +637,10 @@
 	We have attempted to compare the sizes of shapes of the sets $C_k$ for $n = 2$ for the normal and Cauchy densities in Figure \ref{fig:compare cauchy norm flag graph}. In this figure we have plotted $(K_\vect{x}^\mathrm{norm} + K_\vect{x}^\mathrm{Cauchy}) / 2$ to create the effect of overlaying Figures \ref{fig:normal_flag_graph} and \ref{fig:cauchy_flag_graph} (we suggest using these figures as reference to aid readability). We observe in this example that although $C_1^\mathrm{norm} \subset C_1^\mathrm{Cauchy}$, $C_2^\mathrm{norm}$ contains points outside of $C_2^\mathrm{Cauchy}$.
 
 
-	\subsection{Other interesting things}
-	We end our empirical results section with 
+	% \subsection{Other interesting things}
+	% We end our empirical results section with 
 
-	[PUT MORE RESULTS IN HERE]
+	% [PUT MORE RESULTS IN HERE]
 
 	\begin{figure}
 		\centering
