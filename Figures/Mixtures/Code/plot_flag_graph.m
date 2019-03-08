@@ -13,14 +13,7 @@ y2 = [y2,y2(res)+y2(res) - y2(res-1)];  %*
 h = pcolor(Y1,Y2,Z);
 shading flat
 axis equal tight
-% cmap = gray(3);
-% cmap = parula(3);
-% cmap = summer(3);
-% cmap = [0.3 0.3 0.3;0.2 0.4 0.3;0.3 0.3 0.3];
-cmap = [255 189 76; 180 114 0;103 65 0]/255;    %Light to Dark Highlight
-cmap = [103 65 0;180 114 0;255 189 76]/255;    %Dark to Light Highlight
-cmap = [0 51 104;38 82 127;76 164 255]/255; %Darkt to Light Primary
-% cmap = [76 164 255;38 82 127;0 51 104]/255; %Light to Dark Primary
+cmap = options.cmap;
 colormap(cmap);
 hcb = colorbar;
 
@@ -187,5 +180,8 @@ function options = fill_default_options(options)
     end
     if ~isfield(options,'m2lines')
         options.m2lines = false;
+    end
+    if ~isfield(options, 'cmap')
+        options.cmap = [0 51 104;38 82 127;76 164 255]/255; %Darkt to Light Primary
     end
 end

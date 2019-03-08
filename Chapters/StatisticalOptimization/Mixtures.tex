@@ -50,6 +50,15 @@
 	\end{equation}
 	since $\log(x)$ is a strictly increasing function. In \cite{Lindsay1983-tf}, Lindsay showed that provide that the likelihood is bounded, there exists a maximizing $Q$ that has at most $n$ points of support. This is a useful result because it means that the problem of finding a maximizing $Q$ is an optimization problem having finite dimensions. It also justifies our decision to consider only finite mixtures in this chapter.
 
+	However, we often find that the maximizing $Q$ has far fewer than $n$ points of support. An example of this is shown in Figure \ref{fig:chi2 n500 motivation}. In this example we have taken $n = 500$ points from a chi-squared distribution with 3 degrees of freedom and used a normal component density with fixed variance $\sigma^2 = 1$ as our component density. The maximum likelihood mixing distribution $Q$ has only 6 points of support (represented by points $(\theta_j, p_j)$ for each probability mass $p_j$ at $\theta_j$), well short of the stated bound of $500$. This behaviour is typical for maximum likelihood location mixtures, with the upper bound of $n$ only being realised in pathological cases where the observations are spread widely apart.
+
+	\begin{figure}
+		\centering
+		\includegraphics[width = \textwidth]{Figures/Mixtures/chi2_n500_motivation.png}
+		\caption{A maximum likelihood location mixture of $n = 500$ points where the maximising mixing distribution, $Q$, has only 6 points of support.}
+		\label{fig:chi2 n500 motivation}
+	\end{figure}
+
 	% While one can construct examples in which the mixing distribution that maximizes the likelihood has all $n$ points of support, in practise, 
 	The size of the support of the $Q$ that maximizes \eqref{eq:loglikelihood} is the primary quantity of interest for this chapter. We define it as follows. Let $\mathcal{Q}_n$ be the set of all discrete probability distributions on $\mathbb{R}$ with no more than $n$ points of support. Let
 	\begin{equation}
@@ -551,9 +560,9 @@
 
 \section{Empirical Results}
 \label{sec:empirical results}
-	In this section we explore $K_\vect{x}$ through empirical results and figures. Throughout this section, and for the remainder of this chapter, we will consider only location mixtures (see \eqref{eq:location mixture}). All component densities will be unimodal, with a mode at $x = 0$. We list here the component densities that we will use.
+	In this section we explore $K_\vect{x}$ through empirical results and figures. Throughout this section, and for the remainder of this chapter, we will consider only location mixtures (see \eqref{eq:location mixture}). All component densities will be unimodal, with a mode at $x = 0$. We list in Table \ref{tab:component densities} the component densities that we will use.
 
-	\begin{table}[h]
+	\begin{table}[ht]
 	\centering
 		\begin{tabular}{l | c}
 			Density & $f(x) = $\\
@@ -574,7 +583,7 @@
 	\begin{figure}
 		\centering
 		\includegraphics[width = \textwidth]{Figures/Mixtures/collapsing_distribution.png}
-		\caption[The unsimplified mixing distribution $Q^*$ that results from using more points of support than required when finding our maximizing mixture, as well as the equivalent simplified distribution, $Q$, and the resulting mixture density, $f_Q(x)$.]{The unsimplified mixing distribution $Q^*$ that results from using more points of support than required when finding our maximizing mixture, as well as the equivalent simplified distribution, $Q$, and the resulting mixture density, $f_Q(x)$. Each probability mass with support $\theta$ and weight $p$ is represented by a point at $(\theta, p)$.}
+		\caption[The unsimplified mixing distribution $Q^*$ that results from using more points of support than required when finding our maximizing mixture, as well as the equivalent simplified distribution, $Q$, and the resulting mixture density, $f_Q(x)$.]{The unsimplified mixing distribution $Q^*$ that results from using more points of support than required when finding our maximizing mixture, as well as the equivalent simplified distribution, $Q$, and the resulting mixture density, $f_Q(x)$. Each probability mass with support $\theta$ and weight $p$ is represented by a point at $(\theta, p)$. In this example $\vect{x}$ is made up of $n = 50$ independent points distributed uniformly but randomly on the interval $[-2,-2]$, and $f$ is normal with unit variance.}
 		\label{fig:collapsing distribution}
 	\end{figure}
 
@@ -631,9 +640,10 @@
 
 	\section{Results}
 		\label{sec:mixture results}
-		The figures obtained in Section \ref{sec:empirical results} suggest that the bounds on $K_\vect{x}$ from Section \ref{sec:summary of Lindsay} could be significantly tightened for location mixtures. The main bounds that we have discussed so far are Theorem \ref{thm: lindsay no more than n points} which states that under mild conditions, $K_\vect{x} \leq n$; and Theorem \ref{thm:exponential family k=1 bound} which provides a sufficient condition for $K_\vect{x} = 1$ for component densities in the exponential class of densities. In this section we will present new bounds on $K_\vect{x}$ that either tighten these bounds, or extend them to different classes of component densities.
+		The figures obtained in Section \ref{sec:empirical results}, as well as the examples in Figures \ref{fig:chi2 n500 motivation} and \ref{fig:collapsing distribution}, suggest that the bounds on $K_\vect{x}$ from Section \ref{sec:summary of Lindsay} could be significantly tightened for location mixtures. The main bounds that we have discussed so far are Theorem \ref{thm: lindsay no more than n points} which states that under mild conditions, $K_\vect{x} \leq n$; and Theorem \ref{thm:exponential family k=1 bound} which provides a sufficient condition for $K_\vect{x} = 1$ for component densities in the exponential class of densities. In this section we will present new bounds on $K_\vect{x}$ that either tighten these bounds, or extend them to different classes of component densities.
 
 		\subsection{Results for \texorpdfstring{$n = 2$}{n = 2}}
+		\label{sec:results for n = 2}
 		The first bound we present is Theorem \ref{thm:n=2 inflection result} which extends Theorem \ref{thm:exponential family k=1 bound} to a different class of component densities in the case that $n=2$, and which tightens the result to be both sufficient and necessary on this class. The theorem concerns component densities, $f(x)$, which satisfy the assumptions,
 
 		\begin{assumption}[Continuity]
@@ -968,6 +978,7 @@
 		\end{proof}
 
 	\subsection{Results for general \texorpdfstring{$n$}{n}}
+	\label{sec: results for general n}
 	To obtain results for $n \geq 2$ we now restrict our component density to be normal with fixed variance $\sigma^2$. In this case, we can make use of the gradient function defined in Section \ref{sec: gradient characterization} and equations, \eqref{eq:Deq1} to \eqref{eq:Deq3}, which must be satisfied at a maximizing mixture.
 
 	When our component density is normal with variance $\sigma^2$, that is
@@ -994,7 +1005,7 @@
 	\begin{equation}{}
 		\Psi_k(x;\vect{\theta},\vect{p}) = \Psi_k(x;\vect{\theta},\vect{p}, f_\sigma) = \frac{f_\sigma(x - \theta_k)}{\sum_{j=1}^m p_j f_\sigma(x - \theta_j)}
 	\end{equation}
-	for ease of notation.
+	for ease of notation. 
 
 	We will show that these three equations constrain the regions $C_1, \dots, C_n$ as defined in \eqref{eq: C_k partition sets}. This will be done in Theorem \ref{thm:general n constraints result}. However, as a gentle introduction, we will start with the much simpler problem of just bounding $C_1$.
 
@@ -1171,7 +1182,7 @@
 			\end{align}
 		\end{proof}
 
-		Theorem \ref{thm:probability in C1} is of particular interest when the $\sigma_1 = \sigma_2$. In this case, our mixture can select the `true' number of components, which will happen if $\vect{X} \in C_1$. The probability of this occuring satisfies
+		Theorem \ref{thm:probability in C1} is of particular interest when the $\sigma_1 = \sigma_2$. In this case, our mixture can select the `true' number of components, which will happen if $\vect{X} \in C_1$. The probability of this occurring satisfies
 		\begin{align}
 			\prob\left(\vect{X} \in C_1\right) &\leq \prob\left(\chi_{n-1}^2 \leq n\right)
 		\end{align}
@@ -1185,7 +1196,7 @@
 
 		[SOMETHING RELATED TO RESULT FOR N = 2?]
 
-	
+		In this section, we have taken advantage of the simple form that the gradient function and its derivatives take when the component density is normal. One might consider using equations \eqref{eq:Deq1} through \eqref{eq:Deq3} to find analogous results for the Cauchy density (which we considered in Section \ref{sec:results for n = 2}) or other densities outside of the normal family. However, we found that the derivatives of the gradient function were too complex to be able generalise these results to other component densities.
 
 	% \subsection{Derive Constraints again}
 	% WE SHOULD BE ABLE TO DERIVE \eqref{eq:PsiEq1} THROUGH \eqref{eq:PsiEq3} AGAIN USING THEOREM \ref{thm:solution in interior}.
