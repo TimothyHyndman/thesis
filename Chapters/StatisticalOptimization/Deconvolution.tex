@@ -30,11 +30,11 @@
 	\end{equation}
 	where the measurement error $U$ is independent of $X$, and $U$ and $X$ are unobserved. %We use $\phi_X$ and $\phi_U$ to denote the characteristics functions of $X$ and $U$, and $F_X$ and $F_U$ for the distributions. We use $f_X$ and $f_U$ for the densities if they exist.
 
-	In the case that we know the distribution of $U$, Carroll and Hall \cite{Carroll1988-aj} and Stefanski and Carroll \cite{Stefanski1990-uo} proposed a deconvolution kernel density estimator of $f_X$. If the distribution of $U$ is unknown, then it is often possible to estimate it from replicate measurements, $W_{jk} = X_j + U_{jk}$, for $1 \leq k \leq N_j$ and $1 \leq j \leq n$, where the $U_{jk}$'s are totally independent. Delaigle, Hall, and Meister provide an estimator for $f_X$ in this scenario. However, up until Delaigle's and Hall's 2016 paper, ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' \cite{Delaigle2016-la}, there had been no nonparametric method to estimate the distribution of $X$ when we had no data on the distribution of $U$ (see the discussion in Section 1 of \cite{Delaigle2016-la}).
+	In the case that we know the distribution of $U$, Carroll and Hall \cite{Carroll1988-aj} and Stefanski and Carroll \cite{Stefanski1990-uo} proposed a deconvolution kernel density estimator of $f_X$. If the distribution of $U$ is unknown, then it is often possible to estimate it from replicate measurements, $W_{jk} = X_j + U_{jk}$, for $1 \leq k \leq N_j$ and $1 \leq j \leq n$, where the $U_{jk}$'s are independent. Delaigle, Hall, and Meister provided an estimator for $f_X$ in this scenario. However, until Delaigle's and Hall's 2016 paper, ``Methodology for nonparametric deconvolution when the error distribution is unknown,'' \cite{Delaigle2016-la}, there had been no nonparametric method to estimate the distribution of $X$ when we had no data on the distribution of $U$ (see the discussion in Section 1 of \cite{Delaigle2016-la}).
 
 	% [BRIEF SUMMARY OF LITERATURE]
 
-	In this chapter, we focus on the methods introduced in this paper. We will start in Section \ref{sec:summary of basic deconvolution} by summarizing deconvolution methods for when the error distribution is known, or estimated from replicates. This will serve as a basis for a discussion on Delaigle's and Hall's \cite{Delaigle2016-la} paper in Section \ref{sec:summary of delaigle hall}. In Section \ref{sec:deconvolution empirical results}, we will empirically demonstrate that these methods produce a similar phenomenon to the one encountered when using maximum likelihood location mixtures, and we will explore how this phenomenon manifests under various conditions. We will also point out how we can take advantage of this phenomenon. 
+	In this chapter, we focus on the methods introduced in \cite{Delaigle2016-la}. We will start in Section \ref{sec:summary of basic deconvolution} by summarizing deconvolution methods for the cases where the error distribution is known, or estimated from replicates. This will serve as a basis for a discussion of Delaigle's and Hall's \cite{Delaigle2016-la} paper in Section \ref{sec:summary of delaigle hall}. In Section \ref{sec:deconvolution empirical results}, we will empirically demonstrate that these methods produce a similar phenomenon to the one encountered when using maximum likelihood location mixtures, and we will explore how this phenomenon manifests under various conditions. We will also point out how we can take advantage of this phenomenon. 
 	% Finally, in Section \ref{sec:deconvolution observations and results}, we will make some general observations about some similarities between our deconvolution problem, and that of maximum likelihood mixtures. 
 	Finally, in Section \ref{sec:deconvolution observations and results}, we will make a general observation about the deconvolution problem, and point out some similarities between it and the mixture problem of Chapter \ref{Ch:Mixtures}.
 
@@ -45,15 +45,15 @@
 	We start with the estimator of Stefanski and Carroll in \cite{Stefanski1990-uo}. In this scenario, we let $X$ and $U$ be independent random variables with probability density functions $f_X$ and $f_U$ respectively. We observe a set of $n$ independent observations, $\{W_j\}_{j = 1}^n$, where each $W_j$ is an observation of the $W$ of \eqref{eq:W=X+U}.
 	Furthermore, we assume that $f_U$ is known. Given this information, the goal is to estimate $f_X$ from the $W_j$'s.
 
-	The estimator makes use of characteristic functions. A random variable $X$ with density $f_X$ has characteristic function
+	The estimator makes use of characteristic functions. A random variable $Y$ with density $f_Y$ has characteristic function
 	\begin{equation}
-		\phi_X(t) = \int \euler^{i t x} f_X(x) \intd x
+		\phi_Y(t) = \int_\mathbb{R} \euler^{i t x} f_Y(x) \intd x
 	\end{equation}
 	which can be inverted via
 	\begin{equation}
-		f_X(x) = \frac{1}{2\pi} \int \euler^{-itx} \phi_X(t) \intd t
+		f_Y(x) = \frac{1}{2\pi} \int_\mathbb{R} \euler^{-itx} \phi_Y(t) \intd t
 	\end{equation}
-	if $\phi_X$ is integrable. One property of characteristic functions that is convenient for this deconvolution problem is that since $X$ and $U$ are independent, we know that the characteristic function of $W = X+ U$ is
+	if $\phi_Y$ is integrable. One property of characteristic functions that is convenient for this deconvolution problem is that since $X$ and $U$ are independent, we know that the characteristic function of $W = X+ U$ is
 	\begin{equation}
 		\phi_W = \phi_X \phi_U,
 	\end{equation}
@@ -62,13 +62,13 @@
 		\phi_X = \frac{\phi_W}{\phi_U}
 		\label{eq: phi_X is fraction phi_W phi_U}
 	\end{equation}
-	if $|\phi_U(t)| > 0$ for all real $t$. We assume this in the following estimator.
+	if $|\phi_U(t)| > 0$ for all real $t$. We assume this in constructing the following estimator.
 
 	Let $K$ be a bounded, even, function that integrates to 1 whose Fourier transform, $\phi_K$, satisfies
 	\begin{align}
-		\sup_t |\phi_K(t) / \phi_U(t / h) | < \infty, &&\int|\phi_K(t) / \phi_U(t / h)| \intd t < \infty,
+		\sup_t |\phi_K(t) / \phi_U(t / h) | < \infty, &&\int_\mathbb{R} |\phi_K(t) / \phi_U(t / h)| \intd t < \infty,
 	\end{align}
-	for any fixed $h > 0$ (we impose these conditions so as to make various functions integrable). We may estimate the density of $W$ via the usual kernel density estimator
+	for any fixed $h > 0$ (we impose these conditions to make various functions integrable). We may estimate the density of $W$ via the usual kernel density estimator
 	\begin{equation}
 		\hat{f}_W(x) = \frac{1}{n h} \sum_{j = 1}^n K((x - W_j)/h),
 	\end{equation}
@@ -88,11 +88,11 @@
 	and the density of $X$ by inverting $\hat{\phi}_X$. Overall, the estimator for $f_X$ is given by
 	\begin{equation}
 	\label{eq:standard deconvolution estimator}
-		\hat{f}_X(x) = \frac{1}{2\pi} \int \euler^{-itx} \phi_K(ht) \phi_{W_\mathrm{EMP}}(t)  / \phi_U(t) \intd t.
+		\hat{f}_X(x) = \frac{1}{2\pi} \int_\mathbb{R} \euler^{-itx} \phi_K(ht) \phi_{W_\mathrm{EMP}}(t)  / \phi_U(t) \intd t.
 	\end{equation}
 
 % \subsection{PhiU est from replicates}
-	If the distribution of $U$ is unknown, it is often possible to estimate it if replicate measurements are present. Methods for deconvolution with the presence of replicates are presented in \cite{Li1998-mj}, \cite{Lin2006-mm}, \cite{Delaigle2008-hl}, and also \cite{McIntyre2011-fg} in the case of heteroscedastic errors. Here we look at the estimator of Delaigle, Hall, and Meister \cite{Delaigle2008-hl} as it has the most similarities with the estimator of interest in this chapter.
+	If the distribution of $U$ is unknown, it is often possible to estimate it if replicate measurements are present. Methods for deconvolution with the presence of replicates have been presented in \cite{Li1998-mj}, \cite{Lin2006-mm}, \cite{Delaigle2008-hl}, and also \cite{McIntyre2011-fg} in the case of heteroscedastic errors. Here we look at the estimator of Delaigle, Hall, and Meister \cite{Delaigle2008-hl} as it has the most similarities with the estimator of interest in this chapter.
 
 	In this setting, we measure
 	\begin{align}
@@ -108,7 +108,7 @@
 	In light of \eqref{eq:standard deconvolution estimator}, this suggests an estimator of $f_X$ given by 
 	\begin{equation}
 	\label{eq:replicates estimator}
-		\hat{f}_X(x) = \frac{1}{2\pi} \int \euler^{-itx} \phi_K(ht) \phi_{W_\mathrm{EMP}}(t)  / (\hat{\phi}_U(t) + \rho )\intd t
+		\hat{f}_X(x) = \frac{1}{2\pi} \int_\mathbb{R} \euler^{-itx} \phi_K(ht) \phi_{W_\mathrm{EMP}}(t)  / (\hat{\phi}_U(t) + \rho )\intd t
 	\end{equation}
 	with
 	\begin{equation}
@@ -122,7 +122,7 @@
 	% \begin{equation}
 	% 	\hat{L}\left(u\right) = \frac{1}{2\pi} \int \euler^{-itu} \phi_K(t) / (\hat{\phi}_U(t/h) + \rho) \intd t,
 	% \end{equation}
-	$h > 0$ is a bandwidth, $\rho \geq 0$ is a ridge parameter, $M = \sum_j N_j$, and $K$ is a symmetric kernel function, whose Fourier transform, $\phi_K$, has compact support.
+	$h > 0$ is a bandwidth, $\rho \geq 0$ is a ridge parameter (which we explain below), $M = \sum_j N_j$, and $K$ is a symmetric kernel function, whose Fourier transform, $\phi_K$, has compact support.
 
 	% [WHY COMPACT SUPPORT?]
 
@@ -235,10 +235,11 @@
 
 	Ideally, we would like to choose our estimate for $F_X$ to have phase function $\hat{\rho}_X = \hat{\rho}_W$, or equivalently, $\hat{\phi}_W(t) |\hat{\phi}_X(t)| - |\hat{\phi}_W(t)| \hat{\phi}_X(t) = 0$ for all $t$. 
 	% However, unless we take $F_X$ to be the empirical distribution function of $\{W_j\}_j$, it is not clear that it is even possible to choose it to have phase function exactly equal to $\hat{\rho}_W$. 
-	However, $\hat{\rho}_W(t)$ grows less reliable for large values of $|t|$, and we should preference matching $\hat{\rho}_X$ and $\hat{\rho}_W$ around $t = 0$ over large values of $|t|$. Taking this into consideration, our goal is to instead choose an $F$ that makes small
+	However, $\hat{\rho}_W(t)$ grows less reliable for large values of $|t|$, and we should preference matching $\hat{\rho}_X$ and $\hat{\rho}_W$ around $t = 0$ over large values of $|t|$. Taking this into consideration, our goal is to instead choose an $F$ that makes
 	\begin{equation}
-		T(F) = \int_{-\infty}^\infty \left| \hat{\phi}_W(t) |\phi_F(t)| - \left|\hat{\psi}_W(t)\right|^{1/2} \phi_F(t) \right|^2 w_1(t) \intd t,
+		T(F) = \int_{-\infty}^\infty \left| \hat{\phi}_W(t) |\phi_F(t)| - \left|\hat{\psi}_W(t)\right|^{1/2} \phi_F(t) \right|^2 w_1(t) \intd t
 	\end{equation}
+	small,
 	where $w_1(t)$ is some non-negative symmetric weight function that assigns greater weight when $|t|$ is small. We also expect that $\hat{\phi}_U = \hat{\phi}_W / \phi_F$ should be real-valued as per Assumption \ref{assump:phiU real}, and have magnitude less than or equal to 1 as all characteristic functions do. For $\hat{\phi}_U$ to be real-valued we require that
 	\begin{equation}
 		\Im \left( \frac{\hat{\phi}_W}{\phi_F} \right) = 0
@@ -251,12 +252,13 @@
 	\begin{equation}
 		\Im \left(\hat{\phi}_W \bar{\phi}_F\right) = 0.
 	\end{equation}
-	In an attempt to satisfy this, we construct the following penalty which we desire to be small:
+	In an attempt to satisfy this, we construct a penalty
 	% We try to satisfy this by constructing penalties which we desire to be small,
 	\begin{align}
 		P_1(F) = \int \Im \left(\hat{\phi}_W \bar{\phi}_F\right) w_2(t)\intd t,
 		\label{eq:penalty1}
 	\end{align}
+	which we desire to be small,
 	where $w_2(t)$ is some non-negative symmetric weight function with bounded support.	To try to force $\hat{\phi}_U$ to have magnitude less than or equal to 1, we use the penalty
 	\begin{align}
 		P_2(F) = \int \left(|\hat{\phi}_U(t)| - 1\right) \indicator_{\{|\hat{\phi}_U(t)| > 1\}}  w_2(t) \intd t.
@@ -292,7 +294,7 @@
 
 	\subsection{Numerical Implementation}
 
-	Delaigle and Hall \cite{Delaigle2016-la} suggest performing this optimization problem by approximating $F_X$ with a discrete distribution on $m$ points, allowing $m$ potentially to diverge with the sample size. They suggest choosing the locations of the probability masses of that discrete distribution, $\vect{\theta} = (\theta_1, \dots, \theta_m)$, to be distributed uniformly but randomly along $[\min(W_i), \max(W_i)]$ and letting the corresponding probability weights $\vect{p} = (p_1, \dots p_m)$ be the variables over which we find the solution of \eqref{eq:objective 1} -- \eqref{eq:objective 2}. We will denote by $F_{\vect{\theta}, \vect{p}}$ the distribution that places mass $p_j$ at $\theta_j$ for $j = 1,\dots, m$. Its characteristic function is given by
+	Delaigle and Hall \cite{Delaigle2016-la} suggested performing this optimization problem by approximating $F_X$ with a discrete distribution on $m$ points, allowing $m$ potentially to diverge with the sample size. They suggested choosing the locations of the probability masses of that discrete distribution, $\vect{\theta} = (\theta_1, \dots, \theta_m)$, to be distributed uniformly but randomly along $[\min(W_i), \max(W_i)]$ and letting the corresponding probability weights $\vect{p} = (p_1, \dots p_m)$ be the variables over which we find the solution of \eqref{eq:objective 1} -- \eqref{eq:objective 2}. We will denote by $F_{\vect{\theta}, \vect{p}}$ the distribution that places mass $p_j$ at $\theta_j$ for $j = 1,\dots, m$. Its characteristic function is given by
 	\begin{equation}
 		\phi_{\vect{\theta}, \vect{p}}(t) = \sum_{j = 1}^m p_j \exp(it\theta_j)
 	\end{equation}
@@ -305,13 +307,13 @@
 		\var(F_{\vect{\theta}, \vect{p}}) = \sum_{j = 1}^m p_j \theta_j^2 - \left( \sum_{j=1}^m p_j \theta_j \right)^2.
 	\end{equation}
 
-	For the weight function, $w_1(t)$, Delaigle and Hall \cite{Delaigle2016-la} use the Epanechnikov kernel, rescaled to an interval $[-t^*, t^*]$. To choose $t^*$, they pointed out that since $\hat{\phi}_W$ is an unbiased estimator for $\phi_W$, and since it has variance no more than $1/n$, we can expect it to be a reasonable estimator when $|\hat{\phi}_W(t)| \geq n^{-1/4}$. They therefore chose $t^*$ to be the smallest $t > 0$ such that 
+	For the weight function, $w_1(t)$, Delaigle and Hall \cite{Delaigle2016-la} used the Epanechnikov kernel, rescaled to an interval $[-t^*, t^*]$. To choose $t^*$, they pointed out that since $\hat{\phi}_W$ is an unbiased estimator for $\phi_W$, and since it has variance no more than $1/n$, we can expect it to be a reasonable estimator when $|\hat{\phi}_W(t)| \geq n^{-1/4}$. They therefore chose $t^*$ to be the smallest $t > 0$ such that 
 	\begin{equation}
 	\label{eq:define t star}
 		\left|\hat{\phi}_W(t)\right| \leq n^{-1/4}.
 	\end{equation}
-	For the weight function in the penalty terms, they use $w_2(t) = \indicator_{\{|t| \leq t^*\}}$. They use $\lambda_1 = \lambda_2 = 500 \Delta t$ for the scaling factors in \eqref{eq:objective 1}, where $\Delta t$ is the distance between grid points in their approximation of the integrals in \eqref{eq:penalty1} and \eqref{eq:penalty2}.
-	There is some freedom of choice in the number of points in the approximating discrete distribution but the authors suggest that in their experience, $m = 5\sqrt{n}$ is a reasonable choice.
+	For the weight function in the penalty terms, they used $w_2(t) = \indicator_{\{|t| \leq t^*\}}$. They used $\lambda_1 = \lambda_2 = 500 \Delta t$ for the scaling factors in \eqref{eq:objective 1}, where $\Delta t$ is the distance between grid points in their approximation of the integrals in \eqref{eq:penalty1} and \eqref{eq:penalty2}.
+	There is some freedom of choice in the number of points in the approximating discrete distribution but the authors suggested that in their experience, $m = 5\sqrt{n}$ is a reasonable choice.
 
 	% Delaigle and Hall also impose some additional constraints. We desire that 
 	% \begin{equation}
@@ -466,7 +468,7 @@
 		\item We sample $n = 500$ points of $W = X+U$.
 	\end{itemize}
 
-	As recommended in the paper, we use $m = 5\sqrt{n}$ point masses in our approximating distribution $\hat{F}_X$. In each of Figures \ref{fig:fixed masses example NSR1}, \ref{fig:fixed masses example Ucauchy}, \ref{fig:fixed masses example n10000}, and \ref{fig:fixed masses example Xgamma}, we change one of these properties and plot the result. Of particular interest in each plot is $\hat{F}_X$ which we represent by placing a grey point at each probability mass. In each of these figures, as well as in the base example in Figure \ref{fig:fixed masses example alone}, we observe that the majority of the probability masses of $\hat{F}_X$ take values very close to, or equal to zero.
+	As recommended in \cite{Delaigle2016-la}, we use $m = 5\sqrt{n}$ point masses in our approximating distribution $\hat{F}_X$. In each of Figures \ref{fig:fixed masses example NSR1}, \ref{fig:fixed masses example Ucauchy}, \ref{fig:fixed masses example n10000}, and \ref{fig:fixed masses example Xgamma}, we change one of these properties and plot the result. Of particular interest in each plot is $\hat{F}_X$ which we represent by placing a grey point at each probability mass. In each of these figures, as well as in the base example in Figure \ref{fig:fixed masses example alone}, we observe that the majority of the probability masses of $\hat{F}_X$ take values very close to, or equal to zero.
 
 	% \begin{figure}
 	% 	\centering
