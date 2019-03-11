@@ -32,7 +32,7 @@ function fig = plot_deconvolution_graph(Q, xx, yy, W, options)
         h = options.naivebw;
         xout=outerop(xx,W,'-');
         fWEF=normpdf(xout,0,h)*ones(n,1)/n;
-        fig_naive = plot(xx, fWEF, ':', 'Color', primarylight,'LineWidth', options.line_width, 'DisplayName', 'Naive f_X');
+        fig_naive = plot(xx, fWEF, ':', 'Color', primarylight,'LineWidth', options.line_width, 'DisplayName', 'Estimated f_W');
     end
 
     if options.plot_density

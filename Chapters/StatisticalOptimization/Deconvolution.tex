@@ -34,7 +34,7 @@
 
 	% [BRIEF SUMMARY OF LITERATURE]
 
-	In this chapter, we focus on the methods introduced in \cite{Delaigle2016-la}. We will start in Section \ref{sec:summary of basic deconvolution} by summarizing deconvolution methods for the cases where the error distribution is known, or estimated from replicates. This will serve as a basis for a discussion of Delaigle's and Hall's \cite{Delaigle2016-la} paper in Section \ref{sec:summary of delaigle hall}. In Section \ref{sec:deconvolution empirical results}, we will empirically demonstrate that these methods produce a similar phenomenon to the one encountered when using maximum likelihood location mixtures, and we will explore how this phenomenon manifests under various conditions. We will also point out how we can take advantage of this phenomenon. 
+	In this chapter, we focus on the methods introduced in \cite{Delaigle2016-la}. We will start in Section \ref{sec:summary of basic deconvolution} by summarizing deconvolution methods for the cases where the error distribution is known, or estimated from replicates. This will serve as a basis for a discussion of Delaigle's and Hall's \cite{Delaigle2016-la} paper in Section \ref{sec:summary of delaigle hall}. In Section \ref{sec:deconvolution empirical results}, we will empirically demonstrate that these methods produce a similar phenomenon to the one encountered in Chapter \ref{Ch:Mixtures} --- the probability mass function which we obtain from an optimization problem has only a few points of support ---  and we will explore how this phenomenon manifests under various conditions. We will also point out how we can take advantage of this phenomenon. 
 	% Finally, in Section \ref{sec:deconvolution observations and results}, we will make some general observations about some similarities between our deconvolution problem, and that of maximum likelihood mixtures. 
 	Finally, in Section \ref{sec:deconvolution observations and results}, we will make a general observation about the deconvolution problem, and point out some similarities between it and the mixture problem of Chapter \ref{Ch:Mixtures}.
 
@@ -315,6 +315,20 @@
 	For the weight function in the penalty terms, they used $w_2(t) = \indicator_{\{|t| \leq t^*\}}$. They used $\lambda_1 = \lambda_2 = 500 \Delta t$ for the scaling factors in \eqref{eq:objective 1}, where $\Delta t$ is the distance between grid points in their approximation of the integrals in \eqref{eq:penalty1} and \eqref{eq:penalty2}.
 	There is some freedom of choice in the number of points in the approximating discrete distribution but the authors suggested that in their experience, $m = 5\sqrt{n}$ is a reasonable choice.
 
+	\subsection{Example}
+	In Figure \ref{fig:fixed masses example no smoothing}, we provide an example of a typical output of the method just described. In this example we have sampled $n = 500$ points of $W = X+U$ where the true distribution, $F_X$, is chi-squared with 3 degrees of freedom, rescaled to have variance $\sigma_X^2 = 1$. The error distribution, $F_U$, is normal with variance $\sigma_U^2 = 0.2$, resulting in a noise to signal ratio (NSR) of $0.2$. Our deconvolved estimator, $\hat{F}_{\vect{\theta}, \vect{p}}$, is represented by placing a grey point at each $(\theta_j, p_j)$. For comparison, we also plot the true density, $f_X(x)$, as well as an empirical kernel density estimator of $f_W$.
+
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example_nosmoothing.png}
+		\caption{A typical deconvolution following the method of Delaigle and Hall \cite{Delaigle2016-la}.}
+		\label{fig:fixed masses example no smoothing}
+	\end{figure}
+
+	There are two things we wish to highlight here. The first is that the majority of the probability weights $p_j$ are either close to or equal to zero. Only a select few points seem to contribute notably to the estimator. This is reminiscent of Figure \ref{fig:collapsing distribution} in which most of the probability masses in the unsimplified mixing distribution were redundant. This phenomenon appears consistently over a wide variety of deconvolution problems and we will explore this further in Section \ref{sec:empirical results}. 
+
+	The second point we want to highlight is that it is hard to compare our discrete estimator with the continuous true density. Based on Figure \ref{fig:fixed masses example no smoothing} alone, one might even say that $\hat{F}_{\vect{\theta},\vect{p}}$ is a very poor estimator for $F_X$. So we now describe how we can construct a continuous estimator from the discrete one. This continuous estimator will allow us to more intuitively evaluate how well our deconvolution has performed.
+
 	% Delaigle and Hall also impose some additional constraints. We desire that 
 	% \begin{equation}
 	% 	\hat{\phi}_U = \frac{\hat{\phi}_W}{\phi_{\vect{\theta}, \hat{\vect{p}}}}
@@ -395,6 +409,17 @@
 
 	We wish to remark here that the conversion from the discrete $F_{\vect{\theta}, \vect{p}}$ to the continuous $\hat{f}_X$ has no effect on the phenomenon of interest in this chapter. We are interested only in the discrete distribution $F_{\vect{\theta}, \vect{p}}$. However, we have included this section for completeness.
 
+	In Figure \ref{fig:fixed masses example alone} we add our continuous estimator, $\hat{f}_X(x)$, to the results from Figure \ref{fig:fixed masses example no smoothing}.
+
+	[CONTINUE DESCRIPTION]
+
+	\begin{figure}
+		\centering
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example.png}
+		\caption{A typical deconvolution following the method of Delaigle and Hall \cite{Delaigle2016-la} with the continuous estimator $\hat{f}_X$.}
+		\label{fig:fixed masses example alone}
+	\end{figure}
+
 
 
 	% From here to the end of Section \ref{ssec:KernelSmoothing} is a summary of \cite{Delaigle2016-la}.
@@ -444,14 +469,7 @@
 \section{Empirical Results}
 \label{sec:deconvolution empirical results}
 % \section{Examples and Relation to Mixture Phenomenon}
-	Following the methods outlined above, the authors noted that $F_{\vect{\theta}, \vect{p}}$ was usually supported on a small number of points. That is, only a few of the $p_j$ were non-zero. A typical example of this is given in Figure \ref{fig:fixed masses example alone}.
-
-	\begin{figure}
-		\centering
-		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example.png}
-		\caption[A typical example of $F_{\vect{\theta}, \vect{p}}$ being supported on only a few points]{A typical example of $F_{\vect{\theta}, \vect{p}}$ being supported on only a few points. The probability masses $(\theta_j, p_j)$ are represented by grey points, and the resulting estimating density is in dark blue. The true density is a chi-squared density with 3 degrees of freedom, and the errors were normal with variance $\sigma_U^2 = \sigma_X^2 / 5$. There were $n = 500$ observations taken from $W$. The naive density is a standard kernel density estimator of the $W_j$.}
-		\label{fig:fixed masses example alone}
-	\end{figure}
+	Following the methods outlined above, the authors noted that $F_{\vect{\theta}, \vect{p}}$ was usually supported on a small number of points. That is, only a few of the $p_j$ were non-zero. A typical example of this was given in Figures \ref{fig:fixed masses example no smoothing} and \ref{fig:fixed masses example alone}.
 
 	% A theoretical justification for this behaviour is hard to obtain. We have made some observations which could be thought of as being in favour of this phenomenon, but mostly we are just pointing out similarities between this problem, and the maximum likelihood mixtures problem of the last chapter. These observations are left until Section \ref{sec:deconvolution observations and results}.
 
@@ -461,12 +479,14 @@
 
 	We start by demonstrating the phenomenon using a variety of parameters and distributions. The base example (Figure \ref{fig:fixed masses example alone}) has the following setup:
 
-	\begin{itemize}
+	\begin{enumerate}
 		\item The true distribution, $F_X$, is chi-squared with 3 degrees of freedom, rescaled to have variance $\sigma_X^2 = 1$.
 		\item The error distribution, $F_U$, is normal.
 		\item The noise to signal ratio (NSR) is 1/5. That is, $\sigma_U^2 = \sigma_X^2 / 5$.
 		\item We sample $n = 500$ points of $W = X+U$.
-	\end{itemize}
+	\end{enumerate}
+
+	[ENUMERATE THESE AND REFER???]
 
 	As recommended in \cite{Delaigle2016-la}, we use $m = 5\sqrt{n}$ point masses in our approximating distribution $\hat{F}_X$. In each of Figures \ref{fig:fixed masses example NSR1}, \ref{fig:fixed masses example Ucauchy}, \ref{fig:fixed masses example n10000}, and \ref{fig:fixed masses example Xgamma}, we change one of these properties and plot the result. Of particular interest in each plot is $\hat{F}_X$ which we represent by placing a grey point at each probability mass. In each of these figures, as well as in the base example in Figure \ref{fig:fixed masses example alone}, we observe that the majority of the probability masses of $\hat{F}_X$ take values very close to, or equal to zero.
 
