@@ -407,11 +407,7 @@
 
 	% [EXPLAIN WE GET ON ESTIMATOR OF $\phi_U$ FROM THIS TECHNIQUE AND SAY HOW TO GET IT]
 
-	We wish to remark here that the conversion from the discrete $F_{\vect{\theta}, \vect{p}}$ to the continuous $\hat{f}_X$ has no effect on the phenomenon of interest in this chapter. We are interested only in the discrete distribution $F_{\vect{\theta}, \vect{p}}$. However, we have included this section for completeness.
-
-	In Figure \ref{fig:fixed masses example alone} we add our continuous estimator, $\hat{f}_X(x)$, to the results from Figure \ref{fig:fixed masses example no smoothing}.
-
-	[CONTINUE DESCRIPTION]
+	In Figure \ref{fig:fixed masses example alone} we add our continuous estimator, $\hat{f}_X(x)$, to the results from Figure \ref{fig:fixed masses example no smoothing}. Now it is easy to visually confirm that our estimator has indeed improved upon the empirical kernel density estimator for $f_W$.
 
 	\begin{figure}
 		\centering
@@ -419,6 +415,11 @@
 		\caption{A typical deconvolution following the method of Delaigle and Hall \cite{Delaigle2016-la} with the continuous estimator $\hat{f}_X$.}
 		\label{fig:fixed masses example alone}
 	\end{figure}
+
+	We wish to remark here that the conversion from the discrete $F_{\vect{\theta}, \vect{p}}$ to the continuous $\hat{f}_X$ has no effect on the phenomenon of interest in this chapter. We are mainly interested in the probability masses of the discrete distribution $F_{\vect{\theta}, \vect{p}}$. However, because we wish to include $\hat{f}_X(x)$ in our plots, we have included this section for completeness.
+
+	
+
 
 
 
@@ -481,14 +482,18 @@
 
 	\begin{enumerate}
 		\item The true distribution, $F_X$, is chi-squared with 3 degrees of freedom, rescaled to have variance $\sigma_X^2 = 1$.
+		\label{enum: true F_X chi-squared}
 		\item The error distribution, $F_U$, is normal.
+		\label{enum: error F_U normal}
 		\item The noise to signal ratio (NSR) is 1/5. That is, $\sigma_U^2 = \sigma_X^2 / 5$.
+		\label{enum: NSR 1/5}
 		\item We sample $n = 500$ points of $W = X+U$.
+		\label{enum: n 500}
 	\end{enumerate}
 
-	[ENUMERATE THESE AND REFER???]
+	As recommended in \cite{Delaigle2016-la}, we use $m = 5\sqrt{n}$ point masses in our approximating distribution $\hat{F}_X$. In Figures \ref{fig:fixed masses example Xgamma}, \ref{fig:fixed masses example Ucauchy}, \ref{fig:fixed masses example NSR1}, and \ref{fig:fixed masses example n10000} we change properties 1, 2, 3, and 4 respectively and plot the result. Of particular interest in each plot is $\hat{F}_X$ which we represent by placing a grey point at each probability mass. In each of these figures, as well as in the base example in Figure \ref{fig:fixed masses example alone}, we observe that the majority of the probability masses of $\hat{F}_X$ take values very close to, or equal to zero.
 
-	As recommended in \cite{Delaigle2016-la}, we use $m = 5\sqrt{n}$ point masses in our approximating distribution $\hat{F}_X$. In each of Figures \ref{fig:fixed masses example NSR1}, \ref{fig:fixed masses example Ucauchy}, \ref{fig:fixed masses example n10000}, and \ref{fig:fixed masses example Xgamma}, we change one of these properties and plot the result. Of particular interest in each plot is $\hat{F}_X$ which we represent by placing a grey point at each probability mass. In each of these figures, as well as in the base example in Figure \ref{fig:fixed masses example alone}, we observe that the majority of the probability masses of $\hat{F}_X$ take values very close to, or equal to zero.
+	[MORE EXTENSIVE EXPLANATION OF WHAT'S GOING ON IN FIGURES???]
 
 	% \begin{figure}
 	% 	\centering
@@ -501,9 +506,9 @@
 \begin{figure}
 	\begin{subfigure}[b]{0.49\textwidth}
 		\centering
-		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example_NSR1.png}
-		\caption{Using a NSR of 1}
-		\label{fig:fixed masses example NSR1}
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example_Xgamma.png}
+		\caption{Using a Gamma(5,2) true distribution}
+		\label{fig:fixed masses example Xgamma}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.49\textwidth}
@@ -514,16 +519,17 @@
 	\end{subfigure}
 	\begin{subfigure}[b]{0.49\textwidth}
 		\centering
-		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example_n10000.png}
-		\caption{Using $n = 10000$ points}
-		\label{fig:fixed masses example n10000}
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example_NSR1.png}
+		\caption{Using a NSR of 1}
+		\label{fig:fixed masses example NSR1}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.49\textwidth}
 		\centering
-		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example_Xgamma.png}
-		\caption{Using a Gamma(5,2) true distribution}
-		\label{fig:fixed masses example Xgamma}
+		% \includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example_n10000.png}
+		\includegraphics[width = \textwidth]{Figures/Deconvolution/fixed_masses_example_n10000_updated.png}
+		\caption{Using $n = 10000$ points}
+		\label{fig:fixed masses example n10000}
 	\end{subfigure}
 	\caption{Four variations on the base example in Figure \ref{fig:fixed masses example alone}.}
 	\label{fig:comparison different fixed masses examples}
