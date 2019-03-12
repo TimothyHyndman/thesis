@@ -211,13 +211,10 @@
 
 	\subsection{Estimator}
 	\label{sec:deconvolution estimator}
-	From the discussion above, we might think to take our estimator for $F_X$ to be the distribution that has smallest variance out of all distributions with phase function equal to some estimator of $\rho_W$ constructed from $W_1, \dots, W_n$.
+	From the discussion above, we might think to take our estimator for $F_X$ to be the distribution that has smallest variance out of all distributions with phase function equal to some estimator of $\rho_W$ constructed from $W_1, \dots, W_n$. However, when it comes to the implementation of our estimator, there are some additional details which make it more complex. We will introduce these details by presenting a hierarchy of estimators, leading from the idealised problem to what we implement in practice. 
 
-	% The discussion above suggests the following estimator for $F_X$. 
-	% we might think to take our estimator of $F_X$ to be the distribution with minimum variance that has phase function equal to an estimator of $\rho_W$ constructed from $W_1, \dots, W_n$. However, there are a few considerations to be made.
-	% Firstly, 
-
-	We can estimate $\rho_W$ by
+	\subsubsection{Estimator 1}
+	As mentioned above, ideally we would like to $\hat{F}_X$ to be the distribution with smallest variance out of all distributions with phase function equal to some estimator of $\rho_W$. We can estimate $\rho_W$ by
 	\begin{equation}
 		\hat{\rho}_W = \frac{\hat{\phi}_W}{\left|\hat{\psi}_W\right|^{1/2}}
 	\end{equation}
@@ -231,16 +228,47 @@
 	\label{eq:define hat psi W}
 		\hat{\psi}_W(t) = \frac{1}{n(n-1)} \sum_{k=1}^n \sum_{j \neq k} \exp(it (W_j - W_k))
 	\end{equation}
-	are consistent estimators of $\phi_W$ and $\psi_W = |\phi_W|^2$ respectively.
+	are consistent estimators of $\phi_W$ and $\psi_W = |\phi_W|^2$ respectively. This gives us our first estimator,
+	\begin{equation}
+		\hat{F}_X^1 = \argmin_{F \in \mathscr{F}_1} \var(F),
+	\end{equation}
+	where 
+	\begin{equation}
+		\mathscr{F}_1 = \{F: \rho_F(t) = \hat{\rho}_W(t), \forall t \in \mathbb{R}\}
+	\end{equation}
+	is the set of distributions with phase function equal to $\hat{\rho}_W$.
 
-	Ideally, we would like to choose our estimate for $F_X$ to have phase function $\hat{\rho}_X = \hat{\rho}_W$, or equivalently, $\hat{\phi}_W(t) |\hat{\phi}_X(t)| - |\hat{\phi}_W(t)| \hat{\phi}_X(t) = 0$ for all $t$. 
+	\subsubsection{Estimator 2}
+	% Ideally, we would like to choose our estimate for $F_X$ to have phase function $\hat{\rho}_X = \hat{\rho}_W$, or equivalently, $\hat{\phi}_W(t) |\hat{\phi}_X(t)| - |\hat{\phi}_W(t)| \hat{\phi}_X(t) = 0$ for all $t$. 
 	% However, unless we take $F_X$ to be the empirical distribution function of $\{W_j\}_j$, it is not clear that it is even possible to choose it to have phase function exactly equal to $\hat{\rho}_W$. 
-	However, $\hat{\rho}_W(t)$ grows less reliable for large values of $|t|$, and we should preference matching $\hat{\rho}_X$ and $\hat{\rho}_W$ around $t = 0$ over large values of $|t|$. Taking this into consideration, our goal is to instead choose an $F$ that makes
+	However, $\hat{\rho}_W(t)$ grows less reliable for large values of $|t|$, and so we should preference matching $\hat{\rho}_X$ and $\hat{\rho}_W$ around $t = 0$ over large values of $|t|$. Furthermore, it is not clear that there even exists a distribution with phase function equal to $\hat{\rho}_W(t)$ for all $t \in \mathbb{R}$. Taking this into consideration, and noting that when $\rho_F(t) = \hat{\rho}_W(t)$ we have $\hat{\phi}_W(t) |\phi_F(t)| - \left|\hat{\psi}_W(t)\right|^{1/2} \phi_F(t) = 0$, our goal is to instead choose an $F$ that makes
 	\begin{equation}
 		T(F) = \int_{-\infty}^\infty \left| \hat{\phi}_W(t) |\phi_F(t)| - \left|\hat{\psi}_W(t)\right|^{1/2} \phi_F(t) \right|^2 w_1(t) \intd t
 	\end{equation}
 	small,
-	where $w_1(t)$ is some non-negative symmetric weight function that assigns greater weight when $|t|$ is small. We also expect that $\hat{\phi}_U = \hat{\phi}_W / \phi_F$ should be real-valued as per Assumption \ref{assump:phiU real}, and have magnitude less than or equal to 1 as all characteristic functions do. For $\hat{\phi}_U$ to be real-valued we require that
+	where $w_1(t)$ is some non-negative symmetric weight function that assigns greater weight when $|t|$ is small. This gives us our second estimator.
+	Find 
+	\begin{equation}
+		T^\mathrm{min} = \min_F T(F)
+	\end{equation}
+	and put
+	\begin{equation}
+		\hat{F}_X^2 = \argmin_{F \in \mathscr{F}_2} \var{F},
+	\end{equation}
+	where
+	\begin{equation}
+		\mathscr{F}_2 = \{F: T(F) = T^\mathrm{min}\}.
+	\end{equation}
+
+	\subsection{Estimator 3}
+
+	A concern that we might have at this stage is that even though $\phi_U = \phi_W / \phi_X$, there is no guarantee that 
+	\begin{equation}
+		\hat{\phi}_U = \hat{\phi}_W / \phi_{\hat{F}}
+	\end{equation}
+	is a valid characteristic function, or that it is real-valued as per Assumption \ref{assump:phiU real}.
+	% We also expect that $\hat{\phi}_U = \hat{\phi}_W / \phi_F$ should be real-valued as per Assumption \ref{assump:phiU real}, and have magnitude less than or equal to 1 as all characteristic functions do. 
+	For $\hat{\phi}_U$ to be real-valued we require that
 	\begin{equation}
 		\Im \left( \frac{\hat{\phi}_W}{\phi_F} \right) = 0
 	\end{equation}
@@ -259,13 +287,15 @@
 		\label{eq:penalty1}
 	\end{align}
 	which we desire to be small,
-	where $w_2(t)$ is some non-negative symmetric weight function with bounded support.	To try to force $\hat{\phi}_U$ to have magnitude less than or equal to 1, we use the penalty
+	where $w_2(t)$ is some non-negative symmetric weight function with bounded support.	
+
+	It is difficult to determine whether a given function is a characteristic function, but we can at least try to force $\hat{\phi}_U$ to have magnitude less than or equal to 1, as all valid characteristic functions do. We use the penalty
 	\begin{align}
 		P_2(F) = \int \left(|\hat{\phi}_U(t)| - 1\right) \indicator_{\{|\hat{\phi}_U(t)| > 1\}}  w_2(t) \intd t.
 		\label{eq:penalty2}
 	\end{align} 
 
-	Overall, the method is as follows. Let $\mathscr{F}$ be the set of distributions over which we search for our estimator (for example, discrete distributions with no more than $m$ points of support). Find
+	Overall, our third estimator, and the one we use in practice, is as follows. Let $\mathscr{F}$ be the set of distributions over which we search for our estimator (for example, discrete distributions with no more than $m$ points of support). Find
 	\begin{equation}
 		F_0 = \argmin_{F \in \mathscr{F}} \left[T(F) + \lambda_1 P_1(F) + \lambda_2 P_2(F)\right],
 		\label{eq:objective 1}
