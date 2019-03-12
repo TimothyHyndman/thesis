@@ -821,9 +821,16 @@ We are unsure as to why our implementation in R tends to produce worse objective
 \section{General observations and results}
 \label{sec:deconvolution observations and results}
 
+We end this chapter by making some comparisons between our deconvolution problem, and the maximum likelihood location mixture problem of Chapter \ref{Ch:Mixtures}.
+
+\subsection{Not the same}
+In Chapter \ref{Ch:Mixtures}, we defined a quantity $K_\vect{x}$ \eqref{eq:K_x definition} which counted the number of components in the maximum likelihood mixture. One might think to define an analogous quantity here which counts the number of point masses required to find the global optimum to our optimization problem. However, we do not think that this would be a very useful construct. Consider the empirical distribution of $W$. 
+
 [EXPLAIN WHY KX EQUIVALENT DOESN'T MAKE SENSE]
 
 [NOT AS CLEAN AS MIXTURES, COULD POINT OUT BY WRITING PROBLEM WITH THETAS AND PS]
+
+\subsection{Simple observation}
 
 We end this chapter with a simple observation about our deconvolution problem. We do not claim that it is new, but we think that it is still worth stating because it establishes a connection between our deconvolution problem, and the mixture problem of Chapter \ref{Ch:Mixtures}.
 
