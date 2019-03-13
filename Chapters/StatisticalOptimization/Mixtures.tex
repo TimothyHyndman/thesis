@@ -476,6 +476,9 @@
 	which are equivalent to \eqref{eq:Deq1} and \eqref{eq:Deq2} respectively.
 
 	[KEEP THIS SECOND ORDER STUFF IN?]
+	[COMMENT ON LINDSAY THM 7.1]
+	[CHECK FOR MISTAKES IN MY WORK AND LINDSAY'S]
+	[IF NO MISTAKES SAY "NOT WHAT WE GOT" (if they are comparable)]
 
 	The second order conditions are slightly more complex. In the context of our problem they state \cite[Proposition 3.3.1]{Bertsekas1995-mh} that a necessary condition for the point $(\vect{\theta}, \vect{p}, \lambda, \vect{\mu}, \vect{\nu})$ to be a local maximum is that,
 	% \begin{equation}
@@ -1091,7 +1094,7 @@
 			\label{thm:general n constraints result}
 		\end{theorem}
 		\begin{proof}
-			Let $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ represent an $m$ point maximizing mixture of $\vect{x} \in C_m$. By Lemma \ref{lem:maxkGamma}, for every $i \in \{1, \dots, n\}$ there exists a $k \in \{1, \dots, m\}$ such that $\Psi_{k}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$. Therefore by the pigeonhole principle there must exists some $k^*$ such that $\Psi_{k^*}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$ for at least $n / m$ different $i$. Define the set
+			Let $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ represent an $m$ point maximizing mixture of $\vect{x} \in C_m$. By Lemma \ref{lem:maxkGamma} below, for every $i \in \{1, \dots, n\}$ there exists a $k \in \{1, \dots, m\}$ such that $\Psi_{k}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$. Therefore by the pigeonhole principle there must exists some $k^*$ such that $\Psi_{k^*}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$ for at least $n / m$ different $i$. Define the set
 			\begin{equation}
 			 	A_{k^*} = \{i : \Psi_{k^*}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1 \},
 			\end{equation}
