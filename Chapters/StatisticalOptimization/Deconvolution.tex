@@ -21,8 +21,8 @@
 % We do this in R-package.
 
 \section{Introduction}
-	In this final chapter, we look at another statistical problem in which we perform an optimization over discrete probability distributions and find that the number of points of support of the optimal distribution is much smaller than expected. In contrast to Chapter \ref{Ch:Mixtures}, we will take a descriptive and practically minded point of view, rather than the more theory driven previous chapter. This is partly due to the additional complexity of the problem, which prevents many of the tools used on maximum likelihood mixtures from working here. However, this does not stop us from pointing out similarities between the two problems, and an empirical exploration allows us to benefit from the similar phenomenon that occurs in a variety of scenarios.
-
+	In this final chapter, we look at another statistical problem in which we perform an optimization over discrete probability distributions and find that the number of points of support of the optimal distribution is much smaller than expected. In contrast to Chapter \ref{Ch:Mixtures}, we will take a descriptive and practically minded point of view, rather than the more theory driven previous chapter. This is partly due to the additional complexity of the problem, which prevents many of the tools used on maximum likelihood mixtures from working here. However, this does not stop us from pointing out similarities between the two problems, and an empirical exploration allows us to benefit from the similar phenomenon that occurs in a variety of scenarios
+.
 	The problem is one of \emph{deconvolution}, the recovery of the distribution, $F_X$, or density, $f_X$, of some random variable $X$, from measurements of
 	\begin{equation}
 		W = X + U
@@ -824,34 +824,33 @@ We are unsure as to why our implementation in R tends to produce worse objective
 We end this chapter by making some comparisons between our deconvolution problem, and the maximum likelihood location mixture problem of Chapter \ref{Ch:Mixtures}.
 
 % \subsection{Not the same}
-In Chapter \ref{Ch:Mixtures}, we defined a quantity $K_\vect{x}$ \eqref{eq:K_x definition} which counted the number of components in the maximum likelihood mixture. One might think to define an analogous quantity here, $K_W$, which counts the number of point masses required to find the global optimum to our optimization problem. However, we do not think that this would be a very useful construct. Consider the empirical distribution of $W$, $\hat{F}_W$. We trivially have that $P_1(\hat{F}_W) = P_2(\hat{F}_W) = 0$ and that $T(\hat{F}_W)$ is very close to zero (it would be exactly zero if we replaced $|\hat{\psi}_W|^{1/2}$ with $|\hat{\phi}_W|$). We suspect that $OBJ_1$ will be typically much smaller for $\hat{F}_W$ than for distributions with fewer than $n$ points of support (see for example Figure \ref{fig:emp masses example}) and so we would have $K_W \geq n$.
+In Chapter \ref{Ch:Mixtures}, we defined a quantity $K_\vect{x}$ \eqref{eq:K_x definition} which counted the number of components in the maximum likelihood mixture. One might think to define an analogous quantity here, $K_W$, which counts the number of point masses required to find the global optimum to our optimization problem. However, we do not think that this would be a very useful construct. Consider the empirical distribution of $W$, $\hat{F}_W$. We trivially have that $P_1(\hat{F}_W) = P_2(\hat{F}_W) = 0$ and that $T(\hat{F}_W)$ is very close to zero (it would be exactly zero if we replaced $|\hat{\psi}_W|^{1/2}$ with $|\hat{\phi}_W|$). We suspect that $OBJ_1$ will typically be much smaller for $\hat{F}_W$ than for distributions with fewer than $n$ points of support (see for example Figure \ref{fig:emp masses example}, and compare with the other figures in Figure \ref{fig:compare fixed moving masses}) and so we would have $K_W \geq n$. This is clearly much larger than the quantity we are interested in.
 
-[EXPLAIN WHY KX EQUIVALENT DOESN'T MAKE SENSE]
-
-Another approach we used in Chapter \ref{Ch:Mixtures} was to explicitly write out our optimization problem in terms of the $\theta_j$s and $p_j$s (see Section \ref{sec:KKT conditions}). However, in the deconvolution setting, this becomes more complex. Even if we ignore our two penalties, the problem becomes that of finding the $\vect{\theta}$ and $\vect{p}$ that minimize
+Another approach we used in Chapter \ref{Ch:Mixtures} was to explicitly write out our optimization problem in terms of the $\theta_j$s and $p_j$s (see Section \ref{sec:KKT conditions}). However, in the deconvolution setting, this becomes more complex. Even if we ignore our two penalties (and these might even simply be implementation details that are obscuring the basic problem), the problem becomes that of finding the $\vect{\theta}$ and $\vect{p}$ that minimize
 \begin{equation}
 	\var(F_{\vect{\theta}, \vect{p}}) = \left(\sum_{j =1}^m p_j \theta_j^2 \right) - \left(\sum_{j = 1}^m p_j \theta_j \right)^2
 \end{equation}
 subject to the constraints
 \begin{align}
-	&\theta_j -\theta_{j+1} \leq 0, &&j=1,\dots,m-1	\\
-	&-p_j \leq 0, &&j=1,\dots,m	\\
+	&\theta_j -\theta_{j+1} \leq 0, &&j=1,\dots,m-1	\label{eq:decon constraint 1}\\
+	&-p_j \leq 0, &&j=1,\dots,m	\label{eq:decon constraint 2} \\
 	&\sum_{j=1}^m p_j = 1.
+	\label{eq:decon constraint 3}
 \end{align}
 and
 \begin{equation}
 	\int_{-\infty}^\infty \left| \hat{\phi}_W(t) \left|\sum_{j = 1}^m p_j \exp(it\theta_j)\right| - \left|\hat{\psi}_W(t)\right|^{1/2} \left(\sum_{j = 1}^m p_j \exp(it\theta_j) \right)\right|^2 w_1(t) \intd t \leq T^\mathrm{min}.
 \end{equation}
-It is this last constraint which makes a similar analysis difficult.
+It is this last constraint which makes a similar analysis difficult. However, it is still worth noting that constraints \eqref{eq:decon constraint 1} to \eqref{eq:decon constraint 3} are shared with the maximum likelihood optimization problem (in both problems we are searching for a discrete probability distribution), and that perhaps these constraints contribute to the phenomenon of interest.
 % \begin{equation}
 % 	\sum_{j = 1}^m p_j \exp(it\theta_j)
 % \end{equation}
 
-[NOT AS CLEAN AS MIXTURES, COULD POINT OUT BY WRITING PROBLEM WITH THETAS AND PS]
+% [NOT AS CLEAN AS MIXTURES, COULD POINT OUT BY WRITING PROBLEM WITH THETAS AND PS]
 
 % \subsection{Simple observation}
 
-We now make a simple observation about our deconvolution problem. We do not claim that it is new, but we think that it is still worth stating because it establishes a connection between our deconvolution problem, and the mixture problem of Chapter \ref{Ch:Mixtures}.
+We now make a simple observation about our deconvolution problem. We do not claim that it is new, but we think that it is still worth stating because it establishes another connection between our deconvolution problem, and the mixture problem of Chapter \ref{Ch:Mixtures}.
 
 	% \subsection{Results concerning phase functions}
 	\begin{theorem}
@@ -906,7 +905,7 @@ Furthermore, given any two distributions $F_1$ and $F_2$ with variances $\sigma_
 
 % [EXPLAIN THIS WHOLE THING BETTER/MORE]
 
-Of course, in reality we do not search over distributions with phase function exactly equal to $W$, but rather over distributions with phase function in some sense `close' to an empirical estimate of the phase function of $W$. However the intuition gained above could potentially still be relevant.
+Of course, in reality we do not search over distributions with phase function exactly equal to $W$, but rather over distributions with phase function in some sense `close' to an empirical estimate of the phase function of $W$. However the intuition gained above could potentially still be relevant. As mentioned above, it is possible that our implementation contains details that, while important for obtaining a good estimator, obscure the basic underlying problem which gives rise to the phenomenon of interest.
 
 % [UP TO HERE]
 
