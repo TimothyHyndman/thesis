@@ -67,8 +67,9 @@
 	Let $K$ be a bounded, even, function that integrates to 1 whose Fourier transform, $\phi_K$, satisfies
 	\begin{align}
 		\sup_t |\phi_K(t) / \phi_U(t / h) | < \infty, &&\int_\mathbb{R} |\phi_K(t) / \phi_U(t / h)| \intd t < \infty,
+		\label{eq:phiK conditions error known}
 	\end{align}
-	for any fixed $h > 0$ (we impose these conditions to make various functions integrable). We may estimate the density of $W$ via the usual kernel density estimator
+	for any fixed $h > 0$ (we impose these conditions to make various functions integrable). We may estimate the density of $W$ via the usual kernel density estimator \cite[Section 20.3]{Wasserman2003-ot}
 	\begin{equation}
 		\hat{f}_W(x) = \frac{1}{n h} \sum_{j = 1}^n K((x - W_j)/h),
 	\end{equation}
@@ -122,7 +123,7 @@
 	% \begin{equation}
 	% 	\hat{L}\left(u\right) = \frac{1}{2\pi} \int \euler^{-itu} \phi_K(t) / (\hat{\phi}_U(t/h) + \rho) \intd t,
 	% \end{equation}
-	$h > 0$ is a bandwidth, $\rho \geq 0$ is a ridge parameter (which we explain below), $M = \sum_j N_j$, and $K$ is a symmetric kernel function, whose Fourier transform, $\phi_K$, has compact support.
+	$h > 0$ is a bandwidth, $\rho \geq 0$ is a ridge parameter (which we explain below), $M = \sum_j N_j$, and $K$ is a symmetric kernel function, whose Fourier transform, $\phi_K$, has compact support. As in \eqref{eq:phiK conditions error known}, this last condition is to make sure that an integral (in this case, \eqref{eq:replicates estimator}) converges. The condition is stronger than \eqref{eq:phiK conditions error known} since the error distribution is unknown and so we have to account for more possibilities.
 
 	% [WHY COMPACT SUPPORT?]
 
@@ -131,12 +132,11 @@
 	A similar approach could be used in scenarios where we are able to sample directly from the distribution of $U$. See also \cite{Diggle1993-jy} and \cite{Neumann1997-cr} for further discussion of cases where samples of the errors are available.
 
 	% \subsection{U unknown}
-	In the case where we do not know the distribution of $U$, nor have access to replicate measurements or direct measurements from $U$, methods for deconvolution generally require $F_U$ to have a parameteric or semi-parametric form. Such methods can be found in \cite{Butucea2005-be}, \cite{Meister2006-nu}, \cite{Butucea2008-wm}, and \cite{Kneip2012-aa}.
+	In the case where we do not know the distribution of $U$, nor have access to replicate measurements or direct measurements from $U$, methods for deconvolution generally require $F_U$ to have a parametric or semi-parametric form. Such methods can be found in \cite{Butucea2005-be}, \cite{Meister2006-nu}, \cite{Butucea2008-wm}, and \cite{Kneip2012-aa}. One exception to this is found in \cite{Schennach2013-yv} where the authors discuss non-parametric estimation of an errors-in-variables regression problem without extra information about the error distributions. However, in regression problems one has access to not only observations of $W = X+ U$, but also observations of $Y = g(X) + \epsilon$, where $\epsilon$ denotes some independent experimental error. This extra data contains information about $F_U$ which, at least in theory, makes it easier to estimate than in the plain deconvolution case.
  
 \section{Method for deconvolution when the error is unknown}
 \label{sec:summary of delaigle hall}
-	Delaigle's and Hall's 2016 paper \cite{Delaigle2016-la}, presents a non-parametric deconvolution estimator for when the error distribution is unknown, and we do not have access to replicates or samples from the error distribution. This is unusual in deconvolution problems. As in the methods described above, deconvolution methods usually require assumptions about the shape or scale of the error distribution, or rely on additional observations to estimate it. One exception to this is found in \cite{Schennach2013-yv} where the authors discuss non-parametric estimation of an errors-in-variables regression problem without extra information about the error distributions. However, in regression problems one has access to not only observations of $W = X+ U$, but also observations of $Y = g(X) + \epsilon$, where $\epsilon$ denotes some independent experimental error. This extra data contains information about $F_U$ which, at least in theory, makes it easier to estimate than in the plain deconvolution case.
-
+	Delaigle's and Hall's 2016 paper \cite{Delaigle2016-la}, presents a non-parametric deconvolution estimator for when the error distribution is unknown, and we do not have access to replicates or samples from the error distribution. %This is unusual in deconvolution problems. As in the methods described above, deconvolution methods usually require assumptions about the shape or scale of the error distribution, or rely on additional observations to estimate it. 
 	In this section we summarise the estimator of \cite{Delaigle2016-la}, and discuss some practicalities that arise in the implementation. 
 
 	\subsection{Problem Setup}
@@ -523,7 +523,7 @@
 
 	As recommended in \cite{Delaigle2016-la}, we use $m = 5\sqrt{n}$ point masses in our approximating distribution $\hat{F}_X$. In Figures \ref{fig:fixed masses example Xgamma}, \ref{fig:fixed masses example Ucauchy}, \ref{fig:fixed masses example NSR1}, and \ref{fig:fixed masses example n10000} we change properties 1, 2, 3, and 4 respectively and plot the result. Of particular interest in each plot is $\hat{F}_X$ which we represent by placing a grey point at each probability mass. In each of these figures, as well as in the base example in Figure \ref{fig:fixed masses example alone}, we observe that the majority of the probability masses of $\hat{F}_X$ take values very close to, or equal to zero.
 
-	[MORE EXTENSIVE EXPLANATION OF WHAT'S GOING ON IN FIGURES???]
+	% [MORE EXTENSIVE EXPLANATION OF WHAT'S GOING ON IN FIGURES???]
 
 	% \begin{figure}
 	% 	\centering
@@ -667,7 +667,12 @@ For this particular example, we note that we need only 10 masses (Figure \ref{fi
 
 It also appears as if the 40 mass case is a closer fit for the true curve than any of the other estimates, despite achieving worse results in the first objective. Although this is purely conjecture, we suggest that this could be because the constraints $T(F) \leq T_\mathrm{min}$, $P_1(F) \leq P_1^\mathrm{min}$, and $P_2(F) \leq P_2^\mathrm{min}$ are often too strict to achieve the variance we desire in the second optimization. The first optimization found a solution which just happened to be far enough away from the global minimum to allow for enough freedom in minimizing the variance that we obtained a result that achieved closer to the true variance. One could try using as constraints, $T(F) \leq (1 + \delta) T_\mathrm{min}$, $P_1(F) \leq (1 + \delta) P_1^\mathrm{min}$, and $P_2(F) \leq (1 + \delta) P_2^\mathrm{min}$, to allow for this behaviour when the first minimization attains a result closer to the global optimum, but we cannot see any obvious way to determine good values for $\delta$.
 
-The results in Figure \ref{fig:compare fixed moving masses} are encouraging, and in our experience are consistent in a wide variety of scenarios. We present some more examples in Figure \ref{fig:more deconvolution examples}. Of course, it is possible that there is a wide class of deconvolution problems in which a large number of point masses are required to achieve a good solution, and that we have just happened to avoid examples of these. However, we do not think that this is a large concern. One can simply repeat the deconvolution with an increasing number of point masses in $\hat{F}_X$ until it does not result in an improvement in our objectives.
+The results in Figure \ref{fig:compare fixed moving masses} are encouraging, and in our experience are consistent in a wide variety of scenarios. We present some more examples in Figure \ref{fig:more deconvolution examples}. 
+In this figure we compare the fixed but random location method with the varying location method for three different scenarios. A discrete true distribution with normal errors and $n = 5000$ observations (Figures \ref{fig:moving masses discrete} and \ref{fig:fixed masses discrete}), a Gumbel true distribution with Laplace errors and $n = 500$ observations (Figures \ref{fig:moving masses gumbel lap} and \ref{fig:fixed masses gumbel lap}), and a Gamma with shape 5 and rate 2 true distribution with discrete errors and $n = 100$ observations (Figures \ref{fig:moving masses gamma discrete} and \ref{fig:fixed masses gamma discrete}). For the varying location method we use $m = 20$ masses and for the fixed but random location method we use $m = 5\sqrt{n}$ masses. In each scenario we observe that the varying location method is much faster, and in two of the three scenarios produces better objective values. In the scenario where the varying location method did not produce as good results (Figures \ref{fig:moving masses gumbel lap} and \ref{fig:fixed masses gumbel lap}), the fixed location method only assigned approximately 12 or 13 points weights that were noticeably larger than zero and the varying location method made several point masses redundant. This suggests that the slightly worse result of the varying location method is not due to using too few points.
+
+% [GIVE AN EXPLANATION OF WHAT IS HAPPENING]
+
+Of course, it is possible that there is a wide class of deconvolution problems in which a large number of point masses are required to achieve a good solution, and that we have just happened to avoid examples of these. However, we do not think that this is the case, and even if it is, we do not think that this is a large concern. One can simply repeat the deconvolution with an increasing number of point masses in $\hat{F}_X$ until it does not result in an improvement in our objectives.
 
 \begin{figure}
 	\centering
@@ -934,6 +939,6 @@ Of course, in reality we do not search over distributions with phase function ex
 
 In this chapter we looked at the method for deconvolution when the error distribution is unknown that was proposed by Delaigle and Hall in \cite{Delaigle2016-la}. As in Chapter \ref{Ch:Mixtures}, this involved searching for a discrete probability distribution as the solution to an optimization problem. We found that even though we allowed for many probability masses when finding this distribution, our optimization produced solutions in which most of these points had zero weight and so did not contribute to the distribution. Motivated by this, we suggested that instead of letting the point masses have fixed location and optimizing over their weights, we instead use a smaller number of points and let both their weights and locations be variable. The resulting optimization problem was significantly faster to run and, on the examples we tested, was capable of finding solutions that were comparable or better than those found using the previous method.
 
-We used this new method in the R package `deconvolve', which contains not only methods for deconvolution when the error distribution is unknown, but also a variety of other tools for performing non-parametric deconvolution, finding bandwidths, and non-parametric regression estimates. We commented that while our implementation in R benefited from the same speed up we observed in our MATLAB code, the objective values obtained were typically not as good, although they still produced reasonable looking densities.
+We used this new method in the R package `deconvolve', which contains not only methods for deconvolution when the error distribution is unknown, but also a variety of other tools for performing non-parametric deconvolution, finding bandwidths, and non-parametric regression estimates. We commented that while our implementation in R benefited from the same speed up we observed in our MATLAB code, the objective values obtained were typically not as good. While we did not know why this was happening, we were not too concerned about it as our R implementation still produced reasonable looking densities.
 
 We ended the chapter with a brief discussion on the set of distributions with equal phase function and made a connection between the phenomenon of interest in this chapter, and the similar one in Chapter \ref{Ch:Mixtures}. However, we did not obtain any rigorous results which either bounded the number of point masses required or explained why only a few point masses contributed to the final result. It would be of interest to obtain results like these in the future, and in particular, to use these results to improve the efficiency of our methods.
