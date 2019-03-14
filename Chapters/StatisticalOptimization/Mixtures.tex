@@ -470,15 +470,16 @@
 	\end{align}
 	Substituting in $l_m$ from \eqref{eq:l_m} we obtain
 	\begin{align}
-		&-n + \sum_{i=1}^n \frac{f(x_i - \theta_j)}{f_{\hat{Q}}(x_i)} = D_{\hat{Q}}(\theta_j;\vect{x}, f) =  0 && j = 1, \dots, m\\
+		&-n + \sum_{i=1}^n \frac{f(x_i - \theta_j)}{f_{\hat{Q}}(x_i)} = D_{\hat{Q}}(\theta_j;\vect{x}, f) =  0 && j = 1, \dots, m \label{eq:KKT Deq1}\\
 		&\sum_{i=1}^n \frac{-p_jf'(x_i - \theta_j)}{f_{\hat{Q}}(x_i)} = p_j D_{\hat{Q}}'(\theta_j;\vect{x}, f) = 0 && j = 1, \dots, m
+		\label{eq:KKT Deq2}
 	\end{align}
 	which are equivalent to \eqref{eq:Deq1} and \eqref{eq:Deq2} respectively.
 
-	[KEEP THIS SECOND ORDER STUFF IN?]
-	[COMMENT ON LINDSAY THM 7.1]
-	[CHECK FOR MISTAKES IN MY WORK AND LINDSAY'S]
-	[IF NO MISTAKES SAY "NOT WHAT WE GOT" (if they are comparable)]
+	% [KEEP THIS SECOND ORDER STUFF IN?]
+	% [COMMENT ON LINDSAY THM 7.1]
+	% [CHECK FOR MISTAKES IN MY WORK AND LINDSAY'S]
+	% [IF NO MISTAKES SAY "NOT WHAT WE GOT" (if they are comparable)]
 
 	The second order conditions are slightly more complex. In the context of our problem they state \cite[Proposition 3.3.1]{Bertsekas1995-mh} that a necessary condition for the point $(\vect{\theta}, \vect{p}, \lambda, \vect{\mu}, \vect{\nu})$ to be a local maximum is that,
 	% \begin{equation}
@@ -517,7 +518,58 @@
 		&= p_j D_Q''(\theta_j;\vect{x}, f) - \sum_{i = 1}^n \left(\frac{p_j f'(x_i - \theta_j)}{\sum_{k = 1}^m p_k f(x_i - \theta_k)}\right)^2 \\
 		&\leq 0.
 	\end{align}
-	This is a weaker condition than that in \eqref{eq:Deq3}. We were unable to obtain an equivalent condition to \eqref{eq:Deq3} using the above method.
+	Overall, we have that at every support point, $\theta^*$, of an $m$-point maximizing mixture, $Q$, we must have that
+	\begin{equation}
+		D_Q''(\theta^*;\vect{x},f) \leq p^* \sum_{i = 1}^n \left(\frac{f'(x_i - \theta_j)}{\sum_{k = 1}^m p_k f(x_i - \theta_k)}\right)^2.
+		\label{eq: our second order KKT condition}
+	\end{equation}
+	This is a weaker condition than that in \eqref{eq:Deq3}. We were unable to obtain an equivalent condition to \eqref{eq:Deq3} using the above method. This is somewhat expected as we have restricted our mixture to have no more than $m$ components, whereas the condition in \eqref{eq:Deq3} relates to the global maximizing mixture distribution.
+
+	We note that Lindsay presented a similar result in \cite[Theorem 7.1]{Lindsay1983-tf} and \cite[Theorem 24]{Lindsay1995-sq} which concerned maximum likelihood estimators with a fixed number of components, $m$. Below we rewrite this statement in the context of location mixtures.
+	\begin{claim}[\cite{Lindsay1995-sq}, Theorem 24]
+	\label{thm:Lindsay m-point conditions}
+		Let $\tilde{Q}_m$ be a mixing distribution that maximizes the $m$ component location mixture likelihood, and let $\theta^*$ be a support point of $\tilde{Q}_m$. If the gradient function is twice differentiable at $\theta^*$, then:
+		\begin{align}
+			D_{\tilde{Q}_m}(\theta^*; \vect{x}, f) &= 0,\\
+			D_{\tilde{Q}_m}'(\theta^*; \vect{x}, f) &= 0,\\
+			D_{\tilde{Q}_m}''(\theta^*; \vect{x}, f) &\leq \sum_{i = 1}^n \left(\frac{f(x_i - \theta^*)}{\sum_{k = 1}^m p_k f(x_i - \theta_k)}\right)^2.
+			\label{eq:Lindsay m-point Deq 3}
+		\end{align}
+	\end{claim}
+
+	Equations \eqref{eq: our second order KKT condition} and \eqref{eq:Lindsay m-point Deq 3} appear similar in form but are not equivalent. Lindsay does not provide a proof for his statement but asserts that Claim \ref{thm:Lindsay m-point conditions} can be proved in a straightforward way using the likelihood equations and the formula for the gradient. We are unable to replicate his result, and instead present a counter-example to Claim \ref{thm:Lindsay m-point conditions}.
+
+	Let our component density $f$ be normal with unit variance, and let $\vect{x} = (-2,2)$. Consider the mixing distribution, $\tilde{Q}_1$, that maximizes the 1 component location mixture likelihood. It has one support point, $\theta_1$. The gradient function for this distribution is given by
+	\begin{equation}
+		D_{\tilde{Q}_1}(\theta;\vect{x}, f) = -n + \sum_{i = 1}^2 \frac{f(x_i - \theta)}{f(x_i - \theta_1)}
+	\end{equation}
+	with derivatives
+	\begin{equation}
+		D_{\tilde{Q}_1}'(\theta;\vect{x}, f) = \sum_{i = 1}^2 \frac{-f'(x_i - \theta)}{f(x_i - \theta_1)} = \sum_{i = 1}^2 \frac{(x_i - \theta) f(x_i - \theta)}{f(x_i - \theta_1)}
+	\end{equation}
+	and
+	\begin{equation}
+		D_{\tilde{Q}_1}''(\theta;\vect{x}, f) = \sum_{i = 1}^2 \frac{f''(x_i - \theta)}{f(x_i - \theta_1)} = \sum_{i = 1}^2 \frac{((x_i - \theta)^2 - 1)f(x_i - \theta)}{f(x_i - \theta_1)},
+	\end{equation}
+	where
+	\begin{equation}
+		f(x) = \frac{1}{\sqrt{2 \pi}} \exp\left(-\frac{x^2}{2}\right).
+	\end{equation}
+	By \eqref{eq:KKT Deq2}, we must have that $D'_{\tilde{Q}_1}(\theta_1;\vect{x}, f) = (x_1 - \theta_1) + (x_2 - \theta_1) = 0$ and so $\theta_1 = 0$. Then it is simple to calculate
+	\begin{equation}
+		D_{\tilde{Q}_1}''(\theta_1;\vect{x}, f) = 6
+	\end{equation}
+	and
+	\begin{equation}
+		\sum_{i = 1}^n \left(\frac{f(x_i - \theta_1)}{\sum_{k = 1}^m p_k f(x_i - \theta_k)}\right)^2 = 2.
+	\end{equation}
+	Clearly \eqref{eq:Lindsay m-point Deq 3} does not hold. 
+
+	By way of comparison, 
+	\begin{equation}
+		p_1 \sum_{i = 1}^n \left(\frac{f'(x_i - \theta_1)}{\sum_{k = 1}^m p_k f(x_i - \theta_k)}\right)^2 = \sum_{i = 1}^2 x_i^2 = 8,
+	\end{equation}
+	verifying that \eqref{eq: our second order KKT condition} holds for this example.
 
 
 	\subsection{Additional results on \texorpdfstring{$K_\vect{x}$}{Kx}}
