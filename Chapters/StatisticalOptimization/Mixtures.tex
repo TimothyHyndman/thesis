@@ -21,7 +21,7 @@
 	% \subsection{Definitions}
 	A \emph{mixture density} is a probability density function that can be written in the form
 	\begin{equation}
-		f_Q(\vect{x}) = \int_\Omega f(\vect{x}; \vect{\theta}) \intd Q(\vect{\theta})
+		f_Q(\vect{x}) = \int_\Omega f(\vect{x}; \vect{\theta}) \intd Q(\vect{\theta}),
 		\label{eq:mixture definition}
 	\end{equation}
 	where $f(\vect{x};\vect{\theta})$ is the \emph{component density}, parametrised by $\vect{\theta} \in \Omega$, and $Q$ is a probability distribution on $\Omega$, called the \emph{mixing distribution}. In the case that $Q$ is a discrete probability distribution, with probability masses $p_j$ at points $\vect{\theta}_j$, $j = 1, \dots, m$, the mixture density in \eqref{eq:mixture definition} is a \emph{finite mixture} and can be written
@@ -48,7 +48,7 @@
 		l(Q; \vect{x}, f) = \log L(Q; \vect{x}, f) = \sum_{i = 1}^n \log f_Q(x_i),
 		\label{eq:loglikelihood}
 	\end{equation}
-	since $\log(x)$ is a strictly increasing function. In \cite{Lindsay1983-tf}, Lindsay showed that provide that the likelihood is bounded, there exists a maximizing $Q$ that has at most $n$ points of support. This is a useful result because it means that the problem of finding a maximizing $Q$ is an optimization problem having finite dimensions. It also justifies our decision to consider only finite mixtures in this chapter.
+	since $\log(x)$ is a strictly increasing function. In \cite{Lindsay1983-tf}, Lindsay showed that provided that the likelihood is bounded, there exists a maximizing $Q$ that has at most $n$ points of support. This is a useful result because it means that the problem of finding a maximizing $Q$ is an optimization problem having finite dimensions. It also justifies our decision to consider only finite mixtures in this chapter.
 
 	However, we often find that the maximizing $Q$ has far fewer than $n$ points of support. An example of this is shown in Figure \ref{fig:chi2 n500 motivation}. In this example we have taken $n = 500$ points from a chi-squared distribution with 3 degrees of freedom and used a normal component density with fixed variance $\sigma^2 = 1$ as our component density. The maximum likelihood mixing distribution $Q$ has only 6 points of support (represented by points $(\theta_j, p_j)$ for each probability mass $p_j$ at $\theta_j$), well short of the stated bound of $500$. This behaviour is typical for maximum likelihood location mixtures, with the upper bound of $n$ only being realised in pathological cases where the observations are spread widely apart.
 
@@ -104,6 +104,9 @@
 	% In this paper we are primarily interested in the number of probability masses that are required in the maximizing mixture. We will call this quantity $K_{\vect{x}}$. It should be noted that there is not always a unique mixing distribution that maximizes \eqref{eq:loglikelihood}. However we can choose $K_{\vect{x}}$ to be the smallest number of probability masses that any of the maximizing distributions have.
 \section{Summary of Lindsay}
 \label{sec:summary of Lindsay}
+
+[PROOF READING UP TO HERE]
+
 	To obtain results concerning $K_\vect{x}$ we will make use of the geometric approach employed by Lindsay in \cite{Lindsay1983-tf} and \cite{Lindsay1983a-he} and summarized later in \cite[Chapter 5]{Lindsay1995-sq}. This section is dedicated to laying out the basics of this approach and summarising the results that are most relevant to our work. Here, we assume that the component densities, $f(\vect{x};\vect{\theta})$, are bounded, but we do not restrict ourselves to finite location mixtures on the real line.
 
 	\subsection{The likelihood curve}
