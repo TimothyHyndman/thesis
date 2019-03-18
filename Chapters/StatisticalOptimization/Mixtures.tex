@@ -191,25 +191,25 @@
 			Let $\vect{\theta}$ and $\vect{p}$ be the locations and weights for the $m \leq n-1$ probability masses of $\hat{Q}_{n-1}$. %$\hat{f}_{n-1}$. 
 			Since all the $x_i$ are separated by at least $\alpha$, there exists an $x_{i^*}$ such that $|x_{i^*} - \theta_j|>\frac{\alpha}{2}$ for all $j = 1, \dots, m$. Since $f$ is symmetric and unimodal,
 			\begin{equation}
-				f(x_i - \theta_j) < f(\alpha/2)
+				f(x_{i^*} - \theta_j) \leq f(\alpha/2)
 			\end{equation}
 			for all $j = 1, \dots, m$ and so
 			\begin{equation}
-				\hat{f}_{n-1}(x_{i^*}) < f(\alpha/2),
+				\hat{f}_{n-1}(x_{i^*})  = \sum_{j = 1}^m p_j f(x_{i^*} - \theta_j) \leq f(\alpha/2)
 			\end{equation}
 			which implies
 			\begin{equation}
-				L_{n-1} < f(\alpha/2) \prod_{i\neq i^*} \hat{f}_{n-1}(x_{i}).	
+				L_{n-1} \leq f(\alpha/2) \prod_{i\neq i^*} \hat{f}_{n-1}(x_{i}).	
 			\end{equation}
 						
-			We will now construct a mixture density that has one more component that $\hat{f}_{n-1}$. We do this by scaling all the components of $\hat{f}_{n-1}$ by a factor of $\frac{m}{m+1}$ and introducing a new component with parameters $(\theta, p) = (x_{i^*},\frac{1}{m+1})$. Call this function $f^*_n$ and the corresponding likelihood $L_n$. At each $x_i \neq x_{i^*}$ the likelihood has decreased by $m/(m+1)$ and at $x_{i^*}$ the likelihood is at least $f(0)/(m+1)$. So
+			We will now construct a mixture density that has one more component than $\hat{f}_{n-1}$. We do this by scaling all the components of $\hat{f}_{n-1}$ by a factor of $\frac{m}{m+1}$ and introducing a new component with parameters $(\theta, p) = (x_{i^*},\frac{1}{m+1})$. Call this function $f^*_n$ and the corresponding likelihood $L_n$. At each $x_i \neq x_{i^*}$ the likelihood has decreased by a factor of no less than $m/(m+1)$ and at $x_{i^*}$ the likelihood is at least $f(0)/(m+1)$. So
 			\begin{align}
-				L_n &> \frac{f(0)}{m+1} \left(\frac{m}{m+1}\right)^{m}\prod_{i\neq i^*} \hat{f}_{n-1}(x_i) \\
+				L_n &\geq \frac{f(0)}{m+1} \left(\frac{m}{m+1}\right)^{m}\prod_{i\neq i^*} \hat{f}_{n-1}(x_i) \\
 				&\geq \frac{f(0)}{n} \left(\frac{n-1}{n}\right)^{n-1}\prod_{i\neq i^*} \hat{f}_{n-1}(x_i),
 			\end{align}
 			since $m \leq n-1$.
 			
-			By \eqref{eq:alpha condition}, we get that $L_n > L_{n-1}$. That is, $L_n$ is greater than the maximum likelihood using no more than $n-1$ components. Hence the maximum likelihood solution must have at least $n$ components. By Theorem \ref{thm: lindsay no more than n points}, the maximum likelihood solution cannot have any more than $n$ components and so $K_\vect{x} = n$.
+			By \eqref{eq:alpha condition}, we get that $L_n > L_{n-1}$. That is, $L_n$ is greater than the maximum likelihood obtained using no more than $n-1$ components. Hence the maximum likelihood solution must have at least $n$ components. By Theorem \ref{thm: lindsay no more than n points}, the maximum likelihood solution cannot have any more than $n$ components and so $K_\vect{x} = n$.
 		\end{proof}
 
 	% \subsection{The likelihood curve}
@@ -321,16 +321,16 @@
 
 	\subsection{Gradient characterization}
 	\label{sec: gradient characterization}
-	Another important construction due to Lindsay is the gradient function
+	Another important construction due to Lindsay is the gradient function,
 	\begin{equation}
 		D_Q(\vect{\theta}; \vect{x}, f) = -n + \sum_{i = 1}^n \frac{f(x_i;\vect{\theta})}{f_Q(x_i)}.
 		\label{eq:def gradient function}
 	\end{equation}
 	For each value of $\theta \in \Omega$, this is the derivative of $l(Q;\vect{x},f)$ as we move along the path parametrized by
 	\begin{equation}
-		(1 - p)Q + p\Delta_\vect{\theta}
+		(1 - p)Q + p\Delta_\vect{\theta},
 	\end{equation}
-	evaluated at $p = 0$ and where $\Delta_\vect{\theta}$ is a degenerate distribution that places all of its mass at $\vect{\theta}$. In \cite[Theorem 4.1]{Lindsay1983-tf}, Lindsay showed we can characterise the maximizing mixture by three equivalent conditions. The statement of the Theorem here is taken from \cite[Theorem 19]{Lindsay1995-sq}.
+	evaluated at $p = 0$ and where $\Delta_\vect{\theta}$ is a degenerate distribution that places all of its mass at $\vect{\theta}$. In \cite[Theorem 4.1]{Lindsay1983-tf}, Lindsay showed that we can use the gradient function to characterise the maximizing mixture using three equivalent conditions. The statement of the Theorem here is taken from \cite[Theorem 19]{Lindsay1995-sq}.
 
 	\begin{theorem}[\cite{Lindsay1995-sq}]
 	\label{thm:Lindsay three statements that characterise maximizing mixture}
@@ -422,9 +422,9 @@
 
 	\subsection{KKT conditions}
 	\label{sec:KKT conditions}
-	We will now point out that the gradient function conditions in \eqref{eq:Deq1} and \eqref{eq:Deq2} can be obtained using the Karush-Kuhn-Tucker (KKT) conditions \cite{Kuhn1951-ih} \cite{Karush2014-vk} for the following optimisation problem. Suppose that we restrict our mixture to have no more than $m$ components. Then given a component density $f$, and data $\vect{x}$, the problem of finding the maximum likelihood location mixture can be written as the following non-linear optimization problem.
-
-	Find $\vect{\theta}$ and $\vect{p}$ that maximize
+	We will now point out that the gradient function conditions in \eqref{eq:Deq1} and \eqref{eq:Deq2} can be obtained using the Karush-Kuhn-Tucker (KKT) conditions \cite{Kuhn1951-ih} \cite{Karush2014-vk} for the following optimisation problem. Suppose that we restrict our mixture to have no more than $m$ components. Then given a component density $f$, and data $\vect{x}$, %the problem of finding the maximum likelihood location mixture can be written as the following non-linear optimization problem.
+%
+	find $\vect{\theta}$ and $\vect{p}$ that maximize
 	\begin{equation}
 		l_m(\vect{\theta},\vect{p};\vect{x}) = \sum_{i=1}^n \log \left[\sum_{j=1}^m p_j f(x_i - \theta_j) \right]
 		\label{eq:l_m}
@@ -448,15 +448,15 @@
 	\end{equation}
 	The KKT conditions tell us that at a local maximum the equations
 	\begin{align}
-		&\frac{\partial}{\partial \theta_1} l_m(\vect{\theta},\vect{p};\vect{x}) = \nu_1 \label{eq:KKTtheta1}\\ 
-		&\frac{\partial}{\partial \theta_j} l_m(\vect{\theta},\vect{p};\vect{x}) = \nu_j - \nu_{j-1}, &&j=2,\dots,m-1 \label{eq:KKTtheta}\\ 
-		&\frac{\partial}{\partial \theta_m} l_m(\vect{\theta},\vect{p};\vect{x}) = -\nu_{m-1} \label{eq:KKTthetam}\\ 
-		&\frac{\partial}{\partial p_j} l_m(\vect{\theta},\vect{p};\vect{x}) = \lambda - \mu_j && j = 1,\dots,m. \label{eq:KKTlambda}
+		&\frac{\partial}{\partial \theta_1} l_m(\vect{\theta},\vect{p};\vect{x}) = \nu_1, \label{eq:KKTtheta1}\\ 
+		&\frac{\partial}{\partial \theta_j} l_m(\vect{\theta},\vect{p};\vect{x}) = \nu_j - \nu_{j-1}, &&j=2,\dots,m-1 \label{eq:KKTtheta},\\ 
+		&\frac{\partial}{\partial \theta_m} l_m(\vect{\theta},\vect{p};\vect{x}) = -\nu_{m-1} \label{eq:KKTthetam},\\ 
+		&\frac{\partial}{\partial p_j} l_m(\vect{\theta},\vect{p};\vect{x}) = \lambda - \mu_j, && j = 1,\dots,m, \label{eq:KKTlambda}
 	\end{align}
 	must be satisfied along with the constraints in \eqref{eq:constraintheta}, \eqref{eq:constrainpj}, \eqref{eq:constrainpjequal}, and the additional constraints
 	\begin{align}
 		&\vect{\mu},\vect{\nu} \geq 0,\\
-		&\mu_j p_j = 0, &&j=1,\dots,m \label{eq:mujpjconstraint}\\
+		&\mu_j p_j = 0, &&j=1,\dots,m, \label{eq:mujpjconstraint}\\
 		&\nu_j (\theta_j - \theta_{j+1}) = 0, &&j=1,\dots,m-1.
 		\label{eq:nujthetajconstraint}
 	\end{align}
@@ -475,13 +475,13 @@
 
 	If we additionally require that the solution uses all $m$ components, then we must have that $p_j > 0$, and $\theta_j - \theta_{j+1} < 0$ for all $j$. Constraints \eqref{eq:mujpjconstraint} and \eqref{eq:nujthetajconstraint} then require $\mu_j = 0$ and $\nu_j = 0$ for all $j$. This gives us necessary conditions for $\hat{Q} = (\vect{\theta}, \vect{p})$ to be an $m$ point maximizing mixture,
 	\begin{align}
-		&-n + \frac{\partial}{\partial p_j} l_m(\vect{\theta},\vect{p};\vect{x}) = 0, && j = 1,\dots,m\\
+		&-n + \frac{\partial}{\partial p_j} l_m(\vect{\theta},\vect{p};\vect{x}) = 0, && j = 1,\dots,m,\\
 		&\frac{\partial}{\partial \theta_j} l_m(\vect{\theta},\vect{p};\vect{x}) = 0, && j = 1,\dots, m.
 	\end{align}
 	Substituting in $l_m$ from \eqref{eq:l_m} we obtain
 	\begin{align}
-		&-n + \sum_{i=1}^n \frac{f(x_i - \theta_j)}{f_{\hat{Q}}(x_i)} = D_{\hat{Q}}(\theta_j;\vect{x}, f) =  0 && j = 1, \dots, m \label{eq:KKT Deq1}\\
-		&\sum_{i=1}^n \frac{-p_jf'(x_i - \theta_j)}{f_{\hat{Q}}(x_i)} = p_j D_{\hat{Q}}'(\theta_j;\vect{x}, f) = 0 && j = 1, \dots, m
+		&-n + \sum_{i=1}^n \frac{f(x_i - \theta_j)}{f_{\hat{Q}}(x_i)} = D_{\hat{Q}}(\theta_j;\vect{x}, f) =  0, && j = 1, \dots, m, \label{eq:KKT Deq1}\\
+		&\sum_{i=1}^n \frac{-p_jf'(x_i - \theta_j)}{f_{\hat{Q}}(x_i)} = p_j D_{\hat{Q}}'(\theta_j;\vect{x}, f) = 0, && j = 1, \dots, m,
 		\label{eq:KKT Deq2}
 	\end{align}
 	which are equivalent to \eqref{eq:Deq1} and \eqref{eq:Deq2} respectively.
@@ -508,7 +508,7 @@
 	\end{equation}
 	for all $\vect{y} \in \mathbb{R}^{2m}$ such that
 	\begin{equation}
-		\nabla h(\vect{\theta}, \vect{p})' \vect{y} = 0.
+		\nabla h(\vect{\theta}, \vect{p})' \vect{y} = 0,
 	\end{equation}
 	where
 	\begin{equation}
@@ -517,7 +517,7 @@
 	Since 
 	\begin{equation}
 		\nabla h(\vect{\theta}, \vect{p}) = (0, \dots, 0, -1, \dots, -1),
-	\end{equation}{}
+	\end{equation}
 	equation \eqref{eq:KKT second order} must be satisfied in particular for $\vect{y}$ with components $y_k = 1$ for some $k \leq m$ and $y_i  = 0$ for all $i \neq k$. This gives us that necessary conditions for $\hat{Q}$ to be an $m$ point maximum are that
 	\begin{align}
 		\frac{\partial^2}{\partial \theta_j} \mathcal{L}(\vect{\theta}, \vect{p}, \lambda, \vect{\mu}, \vect{\nu}) &\leq 0, && j = 1, \dots, m.
@@ -535,7 +535,7 @@
 	\end{equation}
 	This is a weaker condition than that in \eqref{eq:Deq3}. We were unable to obtain an equivalent condition to \eqref{eq:Deq3} using the above method. This is somewhat expected as we have restricted our mixture to have no more than $m$ components, whereas the condition in \eqref{eq:Deq3} relates to the global maximizing mixture distribution.
 
-	We note that Lindsay presented a similar result in \cite[Theorem 7.1]{Lindsay1983-tf} and \cite[Theorem 24]{Lindsay1995-sq} which concerned maximum likelihood estimators with a fixed number of components, $m$. Below we rewrite this statement in the context of location mixtures.
+	We note that Lindsay presented a similar result in \cite[Theorem 7.1]{Lindsay1983-tf} and \cite[Theorem 24]{Lindsay1995-sq} which concerned maximum likelihood estimators with a fixed number of components. Below we rewrite this statement in the context of location mixtures.
 	\begin{claim}[\cite{Lindsay1995-sq}, Theorem 24]
 	\label{thm:Lindsay m-point conditions}
 		Let $\tilde{Q}_m$ be a mixing distribution that maximizes the $m$ component location mixture likelihood, and let $\theta^*$ be a support point of $\tilde{Q}_m$. If the gradient function is twice differentiable at $\theta^*$, then:
@@ -551,7 +551,7 @@
 
 	Let our component density $f$ be normal with unit variance, and let $\vect{x} = (-2,2)$. Consider the mixing distribution, $\tilde{Q}_1$, that maximizes the 1 component location mixture likelihood. It has one support point, $\theta_1$. The gradient function for this distribution is given by
 	\begin{equation}
-		D_{\tilde{Q}_1}(\theta;\vect{x}, f) = -n + \sum_{i = 1}^2 \frac{f(x_i - \theta)}{f(x_i - \theta_1)}
+		D_{\tilde{Q}_1}(\theta;\vect{x}, f) = -n + \sum_{i = 1}^2 \frac{f(x_i - \theta)}{f(x_i - \theta_1)},
 	\end{equation}
 	with derivatives
 	\begin{equation}
