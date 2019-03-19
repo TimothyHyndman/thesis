@@ -260,7 +260,7 @@
 		\mathscr{F}_2 = \{F: T(F) = T^\mathrm{min}\}.
 	\end{equation}
 
-	\subsection{Estimator 3}
+	\subsubsection{Estimator 3}
 
 	A concern that we might have at this stage is that even though $\phi_U = \phi_W / \phi_X$, there is no guarantee that 
 	\begin{equation}
@@ -322,7 +322,7 @@
 	
 	% we then choose our estimator to be the distribution $F \in \mathscr{F}$ that has smallest variance, under the constraint that $T(F) = T_\mathrm{min}$.
 
-	\subsection{Numerical Implementation}
+	\subsection{Numerical implementation}
 
 	Delaigle and Hall \cite{Delaigle2016-la} suggested performing this optimization problem by approximating $F_X$ with a discrete distribution on $m$ points, allowing $m$ potentially to diverge with the sample size. They suggested choosing the locations of the probability masses of that discrete distribution, $\vect{\theta} = (\theta_1, \dots, \theta_m)$, to be distributed uniformly but randomly along $[\min(W_i), \max(W_i)]$ and letting the corresponding probability weights $\vect{p} = (p_1, \dots p_m)$ be the variables over which we find the solution of \eqref{eq:objective 1} -- \eqref{eq:objective 2}. We will denote by $F_{\vect{\theta}, \vect{p}}$ the distribution that places mass $p_j$ at $\theta_j$ for $j = 1,\dots, m$. Its characteristic function is given by
 	\begin{equation}
@@ -497,7 +497,7 @@
 		%Integral considerations (stuff I did about how to integrate this thing)
 
 % \FloatBarrier
-\section{Empirical Results}
+\section{Empirical results}
 \label{sec:deconvolution empirical results}
 % \section{Examples and Relation to Mixture Phenomenon}
 	Following the methods outlined above, the authors of \cite{Delaigle2016-la} noted that $F_{\vect{\theta}, \vect{p}}$ was usually supported on a small number of points. That is, only a few of the $p_j$ were non-zero. A typical example of this was given in Figures \ref{fig:fixed masses example no smoothing} and \ref{fig:fixed masses example alone}.
