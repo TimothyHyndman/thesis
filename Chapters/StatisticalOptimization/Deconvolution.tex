@@ -414,7 +414,7 @@
 	\end{equation}
 	where $K$ is a kernel and $h > 0$ is a bandwidth. This is exactly equivalent to 
 	\begin{equation}
-		\hat{f}_X(x) = \frac{1}{2\pi}\int_{-\infty}^{\infty} \euler^{-itx} \phi_{\vect{\theta}, \vect{p}}(t) \phi_K(ht) \intd t
+		\hat{f}_X(x) = \frac{1}{2\pi}\int_{-\infty}^{\infty} \euler^{-itx} \phi_{\vect{\theta}, \vect{p}}(t) \phi_K(ht) \intd t,
 	\end{equation}
 	where $\phi_K$ is the Fourier transform of $K$. However, since we only used $t \in [-t^*, t^*]$ when constructing $\phi_{\vect{\theta}, \vect{p}}$, it is reasonable to assume that $\phi_{\vect{\theta}, \vect{p}}(t)$ is less reliable for $t$ outside this range. This motivates replacing $\phi_{\vect{\theta}, \vect{p}}(t)$ with
 	\begin{equation}
@@ -500,7 +500,7 @@
 \section{Empirical Results}
 \label{sec:deconvolution empirical results}
 % \section{Examples and Relation to Mixture Phenomenon}
-	Following the methods outlined above, the authors noted that $F_{\vect{\theta}, \vect{p}}$ was usually supported on a small number of points. That is, only a few of the $p_j$ were non-zero. A typical example of this was given in Figures \ref{fig:fixed masses example no smoothing} and \ref{fig:fixed masses example alone}.
+	Following the methods outlined above, the authors of \cite{Delaigle2016-la} noted that $F_{\vect{\theta}, \vect{p}}$ was usually supported on a small number of points. That is, only a few of the $p_j$ were non-zero. A typical example of this was given in Figures \ref{fig:fixed masses example no smoothing} and \ref{fig:fixed masses example alone}.
 
 	% A theoretical justification for this behaviour is hard to obtain. We have made some observations which could be thought of as being in favour of this phenomenon, but mostly we are just pointing out similarities between this problem, and the maximum likelihood mixtures problem of the last chapter. These observations are left until Section \ref{sec:deconvolution observations and results}.
 
@@ -565,7 +565,7 @@
 	\label{fig:comparison different fixed masses examples}
 \end{figure}
 
-Given that most of the probability masses of $\hat{F}_X$ do not contribute to the final density, we might hope to reduce the complexity of our optimization problem by using a more appropriate number of masses. Of course, we do not know a priori where these masses should be located along the x axis, and so should make their locations variables in our optimization. While this essentially doubles the dimension of our optimization, we suspect that we will need fewer than half the original number of points and so do not expect a computational slow down. In the figures above, we observe that roughly 10 to 20 points out of $m = 112$ or $m = 500$ masses have weights that are visibly greater than 0. Furthermore, it is feasible that two points located close to each other might coalesce into a single point in such a way as to improve the objective if their locations are allowed to vary. This encourages us to proceed using roughly 10 to 20 probability masses with variable weights and locations for $\hat{F}_X$.
+Given that most of the probability masses of $\hat{F}_X$ do not contribute to the final density, we might hope to reduce the complexity of our optimization problem by using a more appropriate number of masses. Of course, we do not know a priori where these masses should be located along the x axis, and so should make their locations variables in our optimization. While this essentially doubles the dimension of our optimization, we suspect that we will need fewer than half the original number of points and so do not expect a computational slow down. In the examples from Figure \ref{fig:comparison different fixed masses examples}, we observe that roughly 10 to 20 points out of $m = 112$ or $m = 500$ masses have weights that are visibly greater than 0. Furthermore, it is feasible that two points located close to each other might coalesce into a single point in such a way as to improve the objective if their locations are allowed to vary. This encourages us to proceed using roughly 10 to 20 probability masses with variable weights and locations for $\hat{F}_X$.
 
 \begin{figure}
 	\centering
@@ -661,7 +661,7 @@ Given that most of the probability masses of $\hat{F}_X$ do not contribute to th
 	\label{fig:compare fixed moving masses}
 \end{figure}
 
-We start with Figure \ref{fig:compare fixed moving masses} in which we compare the result we obtain using the fixed but random location method of Delaigle and Hall \cite{Delaigle2016-la}, and the results we obtain when we allow the location of the probability masses in $F_{\vect{\theta}, \vect{p}}$ to vary. As well as plotting $\hat{F}_X$ and $\hat{f}_X$, we also provide a table with the various objective values obtained in the final result, as well as the time taken to run the code on a i5-4670K CPU running at 4.3 GHz, running MATLAB R2018a. For comparison, we also give the various objective values obtained by using the empirical distribution of $W$ as $\hat{F}_X$. The values $T$, $P_1$, $P_2$ are as defined in Section \ref{sec:deconvolution estimator}, we use $OBJ1$ to denote the objective of our first minimization, $T(F) + \lambda_1 P_1(F) + \lambda_2 P_2(F)$, and $\var$ to denote the variance of $\hat{F}_X$ (our second objective).
+We start with Figure \ref{fig:compare fixed moving masses} in which we compare the result we obtain using the fixed but random location method of Delaigle and Hall \cite{Delaigle2016-la}, and the results we obtain when we allow the location of the probability masses in $F_{\vect{\theta}, \vect{p}}$ to vary. As well as plotting $\hat{F}_X$ and $\hat{f}_X$, we also provide a table with the various objective values obtained in the final result, as well as the time taken to run the code on a i5-4670K CPU running at 4.3 GHz, running MATLAB R2018a. For comparison, we also give the various objective values obtained when using the empirical distribution of $W$ as $\hat{F}_X$. The values $T$, $P_1$, $P_2$ are as defined in Section \ref{sec:deconvolution estimator}, we use $OBJ1$ to denote the objective of our first minimization, $T(F) + \lambda_1 P_1(F) + \lambda_2 P_2(F)$, and $\var$ to denote the variance of $\hat{F}_X$ (our second objective).
 
 For this particular example, we note that we need only 10 masses (Figure \ref{fig:moving masses m10 example}) to obtain smaller values for both of our objectives when compared to the original fixed masses, and that this results in a significant speed up, as expected. We get even further improvement going from 10 to 20 masses (Figure \ref{fig:moving masses m20 example}). However, when we use 40 masses (Figure \ref{fig:moving masses m40 example}), we note that $OBJ_1$ is significantly larger than in any of the cases where we use fewer masses, and that $\var\hat{F}_X$ is smaller than in any other case. One potential explanation here is that the parameter space becomes too complex for our optimization routine to find good solutions if we allow too many moving masses and so $OBJ_1$ is much larger than the global minimum. This means that when we come to our second objective of minimizing $\var \hat{F}_X$, the constraints $T(F) \leq T_\mathrm{min}$, $P_1(F) \leq P_1^\mathrm{min}$, and $P_2(F) \leq P_2^\mathrm{min}$ are lax, and so we have more room to search for feasible distributions with small variance.
 
@@ -785,9 +785,9 @@ Given all the discussion above, we see no reason not to use masses with variable
 	\label{fig:R example}
 \end{figure}
 
-In Figure \ref{fig:R example}, we show the output of our package when the contaminated data is identical to that used in producing Figure \ref{fig:fixed masses example alone}. As in Figure \ref{fig:compare fixed moving masses}, we provide the values obtained of each of our objectives, as well as the time taken to run.
+In Figure \ref{fig:R example}, we show the output of our package when the contaminated data is identical to that used in producing Figure \ref{fig:fixed masses example alone}. As in Figure \ref{fig:compare fixed moving masses}, we provide the values obtained for each of our objectives, as well as the time taken to run.
 
-To perform the two non-linear optimizations we use the package Nlcoptim \cite{Chen2017-mn}. In the example in Figure \ref{fig:R example}, we used 20 moving masses in our estimate $\hat{F}_X$. This make it directly comparable to \ref{fig:moving masses m20 example}, since we are using identical data and parameters. While the objective values obtained are worse than those in the equivalent MATLAB implementation, the resulting density is still reasonable and we still benefit from a significant speed up over the original fixed mass implementation. In practice, we found this to be fairly typical of our implementation in `deconvolve'. 
+To perform the two non-linear optimizations, we use the package Nlcoptim \cite{Chen2017-mn}. In the example in Figure \ref{fig:R example}, we used 20 moving masses in our estimate $\hat{F}_X$. This make it directly comparable to \ref{fig:moving masses m20 example}, since we are using identical data and parameters. While the objective values obtained are worse than those in the equivalent MATLAB implementation, the resulting density is still reasonable and we still benefit from a significant speed up over the original fixed mass implementation. In practice, we found this to be fairly typical of our implementation in `deconvolve'. 
 
 We are unsure as to why our implementation in R tends to produce worse objective values than our implementation in MATLAB. We suspect that the optimization routines used in MATLAB's \emph{fmincon} function are more powerful than those used in the Nlcoptim package for R, but we do not know exactly what is going on. However, we are not particularly concerned about it since despite the difference in objective values, the estimated densities we obtain using R appear to be just as good as those we get in MATLAB. This could also be related to the discussion earlier in this section about Figure \ref{fig:moving masses m40 example} in which we pointed out that worse objective values in our first optimization can sometimes produce better looking densities.
 
@@ -837,9 +837,9 @@ Another approach we used in Chapter \ref{Ch:Mixtures} was to explicitly write ou
 \end{equation}
 subject to the constraints
 \begin{align}
-	&\theta_j -\theta_{j+1} \leq 0, &&j=1,\dots,m-1	\label{eq:decon constraint 1}\\
-	&-p_j \leq 0, &&j=1,\dots,m	\label{eq:decon constraint 2} \\
-	&\sum_{j=1}^m p_j = 1.
+	&\theta_j -\theta_{j+1} \leq 0, &&j=1,\dots,m-1,	\label{eq:decon constraint 1}\\
+	&-p_j \leq 0, &&j=1,\dots,m,	\label{eq:decon constraint 2} \\
+	&\sum_{j=1}^m p_j = 1,
 	\label{eq:decon constraint 3}
 \end{align}
 and
@@ -900,7 +900,7 @@ We now make a simple observation about our deconvolution problem. We do not clai
 Recall that ideally, we would like to search the set of all distributions with phase function equal to that of $W$ to find the distribution with smallest variance. Theorem \ref{thm:equal phase functions convex set} tells us that this set is convex. This is reminiscent of the maximum likelihood mixture problem of Chapter \ref{Ch:Mixtures} in which we also optimize a function over a convex set (see in particular Section \ref{sec:summary of Lindsay}).
 % [VARIANCE IS CONCAVE]
 
-Furthermore, given any two distributions $F_1$ and $F_2$ with variances $\sigma_1^2$ and $\sigma_2^2$ respectively, a convex combination of them, $F_Z = (1 - \lambda)F_1 + \lambda F_2$, will have variance $\sigma_Z^2 \geq (1 - \lambda) \sigma_1^2 + \lambda \sigma_2^2$. Hence, the minimum variance distribution with phase function exactly equal to $\rho_W$ must be on the boundary of this convex set, again reminiscent of the maximum likelihood mixture problem.
+Furthermore, given any two distributions $F_1$ and $F_2$, with variances $\sigma_1^2$ and $\sigma_2^2$ respectively, a convex combination of them, $F_Z = (1 - \lambda)F_1 + \lambda F_2$, will have variance $\sigma_Z^2 \geq (1 - \lambda) \sigma_1^2 + \lambda \sigma_2^2$. Hence, the minimum variance distribution with phase function exactly equal to $\rho_W$ must be on the boundary of this convex set, again reminiscent of the maximum likelihood mixture problem.
 
 % Also of note is that the support of $F_Z = (1 - \lambda)F_1 + \lambda F_2$ is the union of the supports of $F_1$ and $F_2$ and so $F_Z$ has at least as many points of support as either $F_1$ or $F_2$. From the above discussion, we have that the minimum variance distribution with phase function exactly equal to $\rho_W$ will not be a non-trivial convex combination of two distributions with phase functions equal to $\rho_W$. That is, in minimizing the variance we move away from 
 
