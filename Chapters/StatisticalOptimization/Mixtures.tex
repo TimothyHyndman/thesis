@@ -1106,23 +1106,21 @@
 	\end{equation}
 	for ease of notation. 
 
-	[PROOF READING UP TO HERE]
-
 	We will show that these three equations constrain the regions $C_1, \dots, C_n$ as defined in \eqref{eq: C_k partition sets}. This will be done in Theorem \ref{thm:general n constraints result}. However, as a gentle introduction, we will start with the much simpler problem of just bounding $C_1$.
 
 	\begin{theorem}
 		\label{thm:general n C1 bound}
-		If $\vect{x} \in C_1$ then 
+		Let the component density with which we are finding a maximum likelihood location mixture be normal with variance $\sigma^2$. If $\vect{x} \in C_1$ then 
 		\begin{equation}
-			\frac{1}{n} \sum_{i=1}^n (x_i - \bar{\vect{x}})^2 \leq \sigma^2,
+			\frac{1}{n} \sum_{i=1}^n (x_i - \bar{x})^2 \leq \sigma^2,
 		\end{equation}
 		where 
 		\begin{equation}
-			\bar{\vect{x}} = \frac{1}{n}\sum_{i = 1}^n x_i.
+			\bar{x} = \frac{1}{n}\sum_{i = 1}^n x_i.
 		\end{equation}
 	\end{theorem}
 	\begin{proof}
-		If $\vect{x} \in C_1$ then the maximizing mixture has one component and so $\Psi_1(x; \vect{\theta}, \vect{p}) = 1$. Then \eqref{eq:PsiEq2} gives us that $\theta_1 = \bar{\vect{x}}$ and combining this with \eqref{eq:PsiEq3} completes the proof.
+		If $\vect{x} \in C_1$ then the maximizing mixture has one component and so $\Psi_1(x; \vect{\theta}, \vect{p}) = 1$. Then \eqref{eq:PsiEq2} gives us that $\theta_1 = \bar{x}$ and combining this with \eqref{eq:PsiEq3} completes the proof.
 	\end{proof}
 	In Figure \ref{fig:flag graph m1 bound} we compare the bound above to the `flag graphs' we produced in section \ref{sec: flag graphs}.
 
@@ -1147,7 +1145,7 @@
 
 	\label{sec:bounding Cm}
 		\begin{theorem}
-			If $\vect{x} \in C_m$ for some $m \leq n$, then there exists a subset of the $x_i$, $A$, such that $A$ contains at least $n/m$ elements and
+			Let the component density with which we are finding a maximum likelihood location mixture be normal with variance $\sigma^2$. If $\vect{x} \in C_m$ for some $m \leq n$, then there exists a subset of the $x_i$, $A$, such that $A$ contains at least $n/m$ elements and
 			\begin{equation}
 				\frac{1}{n} \sum_{i \in A} \left(x_i - \bar{x}_A\right)^2 \leq \sigma^2,
 			\end{equation}
@@ -1158,9 +1156,9 @@
 			\label{thm:general n constraints result}
 		\end{theorem}
 		\begin{proof}
-			Let $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ represent an $m$ point maximizing mixture of $\vect{x} \in C_m$. By Lemma \ref{lem:maxkGamma} below, for every $i \in \{1, \dots, n\}$ there exists a $k \in \{1, \dots, m\}$ such that $\Psi_{k}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$. Therefore by the pigeonhole principle there must exists some $k^*$ such that $\Psi_{k^*}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$ for at least $n / m$ different $i$. Define the set
+			Let $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ represent the $m$ point maximizing mixture of $\vect{x} \in C_m$. By Lemma \ref{lem:maxkGamma} below, for every $i \in \{1, \dots, n\}$ there exists a $k \in \{1, \dots, m\}$ such that $\Psi_{k}(x_i;\hat{\vect{\theta}},\hat{\vect{p}}) \geq 1$. Therefore by the pigeonhole principle there must exists some $k^*$ such that $\Psi_{k^*}(x_i;\hat{\vect{\theta}},\hat{\vect{p}}) \geq 1$ for at least $n / m$ different $i$. Define the set
 			\begin{equation}
-			 	A_{k^*} = \{i : \Psi_{k^*}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1 \},
+			 	A_{k^*} = \{i : \Psi_{k^*}(x_i;\hat{\vect{\theta}},\hat{\vect{p}}) \geq 1 \},
 			\end{equation}
 			which we know must have size $|A_{k^*}| \geq n/m$.
 			% Let $\vect{x} = (x_1,\dots,x_n)$ and assume that the maximum likelihood mixture for $\vect{x}$ has no more than $m$ components. Let $\hat{\vect{\theta}}$ and $\hat{\vect{p}}$ denote this maximizing mixture. %Let $\hat{\vect{\theta}} = (\hat{\theta}_1,\dots,\hat{\theta}_m)$ and $\hat{\vect{p}} = (\hat{p}_1,\dots,\hat{p}_m)$ be a maximizing mixture for $\vect{x}$
@@ -1177,7 +1175,7 @@
 					% &\geq \frac{1}{n} \sum_{i \in A_{\theta_{k^*}}} (x_i - \theta_{k^*})^2 \\
 					% &\geq \frac{1}{n} \sum_{i \in A_{k^*}} \left(x_i - \bar{x}_{A_{k^*}}\right)^2.
 			\end{align}
-			since $\Psi_{k^*}(x_i;\hat{\vect{p}},\hat{\vect{\theta}}) \geq 1$ for all $i \in A_{k^*}$. Finally, we can reduce \eqref{eq:sum A_k^star x_i - theta} by replacing $\theta_{k^*}$ with $\bar{x}_{A_{k^*}}$ to get that
+			since $\Psi_{k^*}(x_i;\hat{\vect{\theta}},\hat{\vect{p}}) \geq 1$ for all $i \in A_{k^*}$. Finally, we can reduce \eqref{eq:sum A_k^star x_i - theta} by replacing $\theta_{k^*}$ with $\bar{x}_{A_{k^*}}$ to get that
 			\begin{equation}
 				\sigma^2 \geq \frac{1}{n} \sum_{i \in A_{k^*}} \left(x_i - \bar{x}_{A_{k^*}}\right)^2.
 			\end{equation}
@@ -1192,33 +1190,32 @@
 	% 	% In order to obtains bounds on the regions $C_2, \dots, C_n$, we will need to get a handle on the behaviour of $\Psi_k(x;\vect{\theta}, \vect{p})$. 
 	% 	This section contains statements and proofs of Lemmas concerning the properties of $\Psi$ that are used in the proof of Theorem \ref{thm:general n constraints result}.
 
-		The bound for the $C_2$ region given by Theorem \ref{thm:general n constraints result} is compared to the `flag graphs' from Section \ref{sec: flag graphs} in Figure \ref{fig:flag graph m2 bound}. We observe that the bound does not appear as tight as the one bounding $C_1$.
-
-		\begin{figure}
-			\centering
-			\includegraphics{Figures/Mixtures/normal_flag_graph_m2_bound.png}
-			\caption{The bound obtanied in Theorem \ref{thm:general n constraints result} tells us that $C_2$ must lie between the pairs of parallel orange lines. The true shape of $C_2$ is given by the middle blue shaded region.}
-			\label{fig:flag graph m2 bound}
-		\end{figure}
-
 		\begin{lemma}
 		\label{lem:maxkGamma}
 		Let $f$ be a density supported on all of $\mathbb{R}$. For all $x \in \mathbb{R}$, and all discrete probability distributions with masses $\vect{p}$ at locations $\vect{\theta}$,
 			\begin{equation}
-				\max_k \left[ \Psi_k(x;\vect{p},\vect{\theta},f) \right] \geq 1.
+				\max_k \left[ \Psi_k(x;\vect{\theta},\vect{p},f) \right] \geq 1.
 			\end{equation}
 		\end{lemma}	
 		\begin{proof}
-			Let $x \in \mathbb{R}$, and $\vect{\theta},\vect{p}$ be the locations and weights respectively of an $m$ point discrete probability distribution. Choose $\theta_{k^*}$ to be the smallest $\theta_j$ that satisfies
+			Let $x \in \mathbb{R}$, and let $\vect{\theta}$ and $\vect{p}$ be the locations and weights respectively of an $m$ point discrete probability distribution. Choose $\theta_{k^*}$ to be the smallest $\theta_j$ that satisfies
 			\begin{align}
 				f(x - \theta_{k^*}) &\geq f(x - \theta_j) && j = 1, \dots, m.
 			\end{align}
 			(We choose the smallest in case there is more than one $\theta_j$ which satisfies the above). Then
 			\begin{equation}
-				\Psi_{k^*}(x;\vect{p},\vect{\theta},f) = \frac{f(x - \theta_{k^*})}{\sum_{j=1}^m p_j f(x - \theta_j)} \geq \frac{f(x - \theta_{k^*})}{\sum_{j=1}^m p_j f(x - \theta_{k^*})} = 1.
+				\Psi_{k^*}(x;\vect{\theta},\vect{p},f) = \frac{f(x - \theta_{k^*})}{\sum_{j=1}^m p_j f(x - \theta_j)} \geq \frac{f(x - \theta_{k^*})}{\sum_{j=1}^m p_j f(x - \theta_{k^*})} = 1.
 			\end{equation}
 		\end{proof}
 
+		The bound for the $C_2$ region given by Theorem \ref{thm:general n constraints result} is compared to the `flag graphs' from Section \ref{sec: flag graphs} in Figure \ref{fig:flag graph m2 bound}. We observe that the bound does not appear as tight as the one bounding $C_1$.
+
+		\begin{figure}
+			\centering
+			\includegraphics{Figures/Mixtures/normal_flag_graph_m2_bound.png}
+			\caption{The bound obtained in Theorem \ref{thm:general n constraints result} tells us that $C_2$ must lie between the pairs of parallel orange lines. The true shape of $C_2$ is given by the middle blue shaded region.}
+			\label{fig:flag graph m2 bound}
+		\end{figure}
 		% \begin{lemma}
 		% 	\begin{equation}
 		% 	\Psi_k(x;\vect{p},\vect{\theta}) \leq \frac{1}{p_k}
