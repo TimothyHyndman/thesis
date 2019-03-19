@@ -25,7 +25,7 @@
 .
 	The problem is one of \emph{deconvolution}, the recovery of the distribution, $F_X$, or density, $f_X$, of some random variable $X$, from measurements of
 	\begin{equation}
-		W = X + U
+		W = X + U,
 		\label{eq:W=X+U}
 	\end{equation}
 	where the measurement error $U$ is independent of $X$, and $U$ and $X$ are unobserved. %We use $\phi_X$ and $\phi_U$ to denote the characteristics functions of $X$ and $U$, and $F_X$ and $F_U$ for the distributions. We use $f_X$ and $f_U$ for the densities if they exist.
@@ -75,7 +75,7 @@
 	\end{equation}
 	which has characteristic function
 	\begin{equation}
-		\hat{\phi}_W(t) = \phi_{W_\mathrm{EMP}}(t) \phi_K(h t)
+		\hat{\phi}_W(t) = \phi_{W_\mathrm{EMP}}(t) \phi_K(h t),
 	\end{equation}
 	where $\phi_{W_\mathrm{EMP}}(t)$ denotes the empirical characteristic function of $\{W_j\}_{j = 1}^n$,
 	\begin{equation}
@@ -97,7 +97,7 @@
 
 	In this setting, we measure
 	\begin{align}
-		W_{jk} = X_j + U_{jk} && j = 1, \dots, n \text{ and } k = 1, \dots, N_j
+		W_{jk} = X_j + U_{jk}, && j = 1, \dots, n \text{ and } k = 1, \dots, N_j,
 	\end{align}
 	where the $X_j$ and $U_{jk}$ are independent and are identically distributed as $X$ and $U$ respectively. A consistent estimator of $\phi_U(t)$ is
 	\begin{equation}
@@ -113,7 +113,7 @@
 	\end{equation}
 	with
 	\begin{equation}
-		\phi_{W_\mathrm{EMP}}(t) = \frac{1}{M} \sum_{j = 1}^n \sum_{k= 1}^{N_j} \euler^{i t W_{jk}}
+		\phi_{W_\mathrm{EMP}}(t) = \frac{1}{M} \sum_{j = 1}^n \sum_{k= 1}^{N_j} \euler^{i t W_{jk}},
 	\end{equation}
 	where
 	% \begin{equation}
@@ -142,7 +142,7 @@
 	\subsection{Problem Setup}
 	Suppose that we observe $(W_1, \dots, W_n)$, where
 	\begin{align}
-		W_j &= X_j + U_j &&j = 1, \dots, n
+		W_j &= X_j + U_j, &&j = 1, \dots, n
 	\end{align}
 	and $X_j$ and $U_j$ are independent and identically distributed as $X$ and $U$ respectively, and $X$ and $U$ are independent. 
 
@@ -185,9 +185,9 @@
 
 	To form the estimator for $F_X$, we will make use of the \emph{phase function}, which for a random variable $V$, is defined by
 	\begin{equation}
-		\rho_V = \frac{\phi_V}{|\phi_V|}
+		\rho_V(t) = \frac{\phi_V(t)}{|\phi_V(t)|}
 	\end{equation}
-	on all points where $\phi_V \neq 0$.
+	on all points where $\phi_V(t) \neq 0$.
 	Note that from Assumption \ref{assump:phiU real}, we have that 
 	\begin{equation}
 	\label{eq: phiU equal mod phiU}
@@ -198,9 +198,9 @@
 	\begin{align}
 		\phi_W = \phi_X \phi_U
 	\end{align}
-	and so from \eqref{eq: phiU equal mod phiU}, on all points where $\phi_U \neq 0$,
+	and so from \eqref{eq: phiU equal mod phiU}, on all points where $\phi_U(t) \neq 0$,
 	\begin{align}
-		\rho_W = \rho_X.
+		\rho_W(t) = \rho_X(t).
 	\end{align}
 	In fact, all random variables of the form $V = X + Z$, where $Z$ is symmetric and independent of $X$, will have phase function $\rho_W$, and the variance of these will satisfy $\var(V) \geq \var(X)$. This motivates the final assumption we make for $X$:
 
@@ -214,9 +214,9 @@
 	From the discussion above, we might think to take our estimator for $F_X$ to be the distribution that has smallest variance out of all distributions with phase function equal to some estimator of $\rho_W$ constructed from $W_1, \dots, W_n$. However, when it comes to the implementation of our estimator, there are some additional details which make it more complex. We will introduce these details by presenting a hierarchy of estimators, leading from the idealised problem to what we implement in practice. 
 
 	\subsubsection{Estimator 1}
-	As mentioned above, ideally we would like to $\hat{F}_X$ to be the distribution with smallest variance out of all distributions with phase function equal to some estimator of $\rho_W$. We can estimate $\rho_W$ by
+	As mentioned above, ideally we would like $\hat{F}_X$ to be the distribution with smallest variance out of all distributions with phase function equal to some estimator of $\rho_W$. We can estimate $\rho_W$ by
 	\begin{equation}
-		\hat{\rho}_W = \frac{\hat{\phi}_W}{\left|\hat{\psi}_W\right|^{1/2}}
+		\hat{\rho}_W = \frac{\hat{\phi}_W}{\left|\hat{\psi}_W\right|^{1/2}},
 	\end{equation}
 	where
 	\begin{equation}
@@ -264,13 +264,13 @@
 
 	A concern that we might have at this stage is that even though $\phi_U = \phi_W / \phi_X$, there is no guarantee that 
 	\begin{equation}
-		\hat{\phi}_U = \hat{\phi}_W / \phi_{\hat{F}}
+		\hat{\phi}_U = \hat{\phi}_W / \phi_{F}
 	\end{equation}
 	is a valid characteristic function, or that it is real-valued as per Assumption \ref{assump:phiU real}.
 	% We also expect that $\hat{\phi}_U = \hat{\phi}_W / \phi_F$ should be real-valued as per Assumption \ref{assump:phiU real}, and have magnitude less than or equal to 1 as all characteristic functions do. 
 	For $\hat{\phi}_U$ to be real-valued we require that
 	\begin{equation}
-		\Im \left( \frac{\hat{\phi}_W}{\phi_F} \right) = 0
+		\Im \left( \frac{\hat{\phi}_W}{\phi_F} \right) = 0,
 	\end{equation}
 	where we use $\Im(z)$ to denote the imaginary part of $z$. Using $\bar{z}$ to denote the complex conjugate of $z$, we can replace this by,
 	\begin{equation}
@@ -283,7 +283,7 @@
 	In an attempt to satisfy this, we construct a penalty
 	% We try to satisfy this by constructing penalties which we desire to be small,
 	\begin{align}
-		P_1(F) = \int \Im \left(\hat{\phi}_W \bar{\phi}_F\right) w_2(t)\intd t,
+		P_1(F) = \int_\mathbb{R} \Im \left(\hat{\phi}_W(t) \bar{\phi}_F(t)\right) w_2(t)\intd t,
 		\label{eq:penalty1}
 	\end{align}
 	which we desire to be small,
@@ -291,7 +291,7 @@
 
 	It is difficult to determine whether a given function is a characteristic function, but we can at least try to force $\hat{\phi}_U$ to have magnitude less than or equal to 1, as all valid characteristic functions do. We use the penalty
 	\begin{align}
-		P_2(F) = \int \left(|\hat{\phi}_U(t)| - 1\right) \indicator_{\{|\hat{\phi}_U(t)| > 1\}}  w_2(t) \intd t.
+		P_2(F) = \int_\mathbb{R} \left(|\hat{\phi}_U(t)| - 1\right) \indicator_{\{|\hat{\phi}_U(t)| > 1\}}  w_2(t) \intd t.
 		\label{eq:penalty2}
 	\end{align} 
 
@@ -302,8 +302,8 @@
 	\end{equation}
 	for some choice of scaling factors $\lambda_1$ and $\lambda_2$, and set
 	\begin{align}
-		T^\mathrm{min} &= T(F_0)\\
-		P_1^\mathrm{min} &= P_1(F_0)\\
+		T^\mathrm{min} &= T(F_0),\\
+		P_1^\mathrm{min} &= P_1(F_0),\\
 		P_2^\mathrm{min} &= P_2(F_0).
 	\end{align}
 	Then our estimator for $F_X$ is
