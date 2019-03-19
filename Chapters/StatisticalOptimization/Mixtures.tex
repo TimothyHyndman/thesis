@@ -1251,16 +1251,17 @@
 
 		Up until now, we have treated $\vect{x}$ as fixed, not random, and treated the maximum likelihood problem purely as an optimization one, rather than a statistical one. However, for this section we consider a random sample
 		\begin{equation}
-			\vect{X} = (X_1, \dots, X_n)
+			\vect{X} = (X_1, \dots, X_n),
 		\end{equation}
-		where the $X_i$ are i.i.d. with normal distribution 
+		where the $X_i$ are independent and identically distributed as %normal with mean $\mu$ and variance $\sigma^2$, that is,
 		\begin{equation}
 			X_i \sim N(\mu, \sigma_1^2).
 		\end{equation}
-		Given a component density, we may consider the probabilities
+		Given a component density, we may then consider the probabilities
 		\begin{align}
 			&\prob[\vect{X} \in C_m],	&&m = 1,\dots,n.
 		\end{align}
+		Here we bound $\prob[\vect{X} \in C_1]$ in the case that our component density is also normal.
 		
 		\begin{theorem}
 		\label{thm:probability in C1}
@@ -1282,20 +1283,22 @@
 
 		Theorem \ref{thm:probability in C1} is of particular interest when the $\sigma_1 = \sigma_2$. In this case, our mixture can select the `true' number of components, which will happen if $\vect{X} \in C_1$. The probability of this occurring satisfies
 		\begin{align}
-			\prob\left(\vect{X} \in C_1\right) &\leq \prob\left(\chi_{n-1}^2 \leq n\right)
+			\prob\left(\vect{X} \in C_1\right) &\leq \prob\left(\chi_{n-1}^2 \leq n\right),
 		\end{align}
 		which converges to $1/2$ as $n \rightarrow \infty$. This is a simple proof that the number of components chosen by a normal location mixture is not a consistent estimator for the true number of components.
 
-		Similar results to this have already been discovered. In \cite{Hartigan1985-wn}, Hartigan considered the mixture 
+		Similar results to this have already been discovered. In \cite{Hartigan1985-wn}, Hartigan considered a sample from the mixture 
 		\begin{equation}
 			(1 - p)N(0,1) + pN(\theta, 1)
 		\end{equation}
-		and showed that the likelihood ratio between $\theta = 0$ and $\theta \neq 0$ converges to $\infty$ as $n \rightarrow \infty$. Also related is the result \cite{Leroux1992-ek} that certain penalised likelihoods do not underestimate the true number of components (and so it is reasonable to expect that the unpenalised likelihood might overestimate the true number of components).
+		and showed that $\theta$ is not consistently estimated by maximum likelihood when $\theta = 0$.
+		% the likelihood ratio between $\theta = 0$ and $\theta \neq 0$ converges to $\infty$ as $n \rightarrow \infty$. 
+		Also related is the result \cite{Leroux1992-ek} that certain penalised likelihoods do not underestimate the true number of components (and so it is reasonable to expect that the unpenalised likelihood might overestimate the true number of components).
 
 		% [SOMETHING RELATED TO RESULT FOR N = 2?]
 		%I.E. we can calculate the exact probability for $x \in C_1$ when n = 2... could compare this
 
-		In this section, we have taken advantage of the simple form that the gradient function and its derivatives take when the component density is normal. One might consider using equations \eqref{eq:Deq1} through \eqref{eq:Deq3} to find analogous results for the Cauchy density (which we considered in Section \ref{sec:results for n = 2}) or other densities outside of the normal family. However, we found that the derivatives of the gradient function were too complex to be able generalise these results to other component densities.
+		In this section, we have taken advantage of the simple form that the gradient function and its derivatives take when the component density is normal. One might consider using equations \eqref{eq:Deq1} through \eqref{eq:Deq3} to find analogous results for the Cauchy density (which we considered in Section \ref{sec:results for n = 2}) or other densities outside of the normal family. However, we found that the derivatives of the gradient function were too complex to be able to generalise these results to other component densities.
 
 	% \subsection{Derive Constraints again}
 	% WE SHOULD BE ABLE TO DERIVE \eqref{eq:PsiEq1} THROUGH \eqref{eq:PsiEq3} AGAIN USING THEOREM \ref{thm:solution in interior}.
