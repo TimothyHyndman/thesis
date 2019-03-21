@@ -21,8 +21,8 @@
 % We do this in R-package.
 
 \section{Introduction}
-	In this final chapter, we look at another statistical problem in which we perform an optimization over discrete probability distributions and find that the number of points of support of the optimal distribution is much smaller than expected. In contrast to Chapter \ref{Ch:Mixtures}, we will take a descriptive and practically minded point of view, rather than the more theory driven previous chapter. This is partly due to the additional complexity of the problem, which prevents many of the tools used on maximum likelihood mixtures from working here. However, this does not stop us from pointing out similarities between the two problems, and an empirical exploration allows us to benefit from the similar phenomenon that occurs in a variety of scenarios
-.
+	In this chapter, we look at another statistical problem in which we perform an optimization over discrete probability distributions and find that the number of points of support of the optimal distribution is much smaller than expected. In contrast to Chapter \ref{Ch:Mixtures}, we will take a descriptive and practically minded point of view, rather than the more theory driven previous chapter. This is partly due to the additional complexity of the problem, which prevents many of the tools used on maximum likelihood mixtures from working here. However, this does not stop us from pointing out similarities between the two problems, and an empirical exploration allows us to benefit from the similar phenomenon that occurs in a variety of scenarios.
+
 	The problem is one of \emph{deconvolution}, the recovery of the distribution, $F_X$, or density, $f_X$, of some random variable $X$, from measurements of
 	\begin{equation}
 		W = X + U,
@@ -69,9 +69,10 @@
 		\sup_t |\phi_K(t) / \phi_U(t / h) | < \infty, &&\int_\mathbb{R} |\phi_K(t) / \phi_U(t / h)| \intd t < \infty,
 		\label{eq:phiK conditions error known}
 	\end{align}
-	for any fixed $h > 0$ (we impose these conditions to make various functions integrable). We may estimate the density of $W$ via the usual kernel density estimator \cite[Section 20.3]{Wasserman2003-ot}
+	for any fixed $h > 0$ (we impose these conditions to make various functions integrable). We can estimate the density of $W$ via the usual kernel density estimator \cite[Section 20.3]{Wasserman2003-ot}
 	\begin{equation}
 		\hat{f}_W(x) = \frac{1}{n h} \sum_{j = 1}^n K((x - W_j)/h),
+		\label{eq:standard KDE}
 	\end{equation}
 	which has characteristic function
 	\begin{equation}
@@ -82,7 +83,7 @@
 		\phi_{W_\mathrm{EMP}}(t) = \frac{1}{n}\sum_{j = 1}^n \euler^{itW_j}.
 	\end{equation}
 
-	Motivated by \eqref{eq: phi_X is fraction phi_W phi_U}, we may estimate the characteristic function of $X$ by 
+	Motivated by \eqref{eq: phi_X is fraction phi_W phi_U}, we can estimate the characteristic function of $X$ by 
 	\begin{equation}
 		\hat{\phi}_X = \hat{\phi}_W / \phi_U
 	\end{equation}
@@ -127,16 +128,16 @@
 
 	% [WHY COMPACT SUPPORT?]
 
-	The presence of the ridge parameter is to account for potential fluctuations in $\hat{\phi}_U$ that could cause the denominator in \eqref{eq:replicates estimator} to be zero, or too close to zero. We may alternatively use another method to prevent $\hat{\phi}_U(t)$ from getting too close to zero such as replacing $\hat{\phi}_U(t)$ with some other function for $|t|$ larger than some threshold $t^*$.
+	The presence of the ridge parameter is to account for potential fluctuations in $\hat{\phi}_U$ that could cause the denominator in \eqref{eq:replicates estimator} to be zero, or too close to zero. We may alternatively use another method to prevent $\hat{\phi}_U(t)$ from getting too close to zero such as replacing $\hat{\phi}_U(t)$ with some other function for $|t|$ larger than some threshold $t^*$ which is where $\hat{\phi}_U(t)$ is in danger of becoming too small.
 
 	A similar approach could be used in scenarios where we are able to sample directly from the distribution of $U$. See also \cite{Diggle1993-jy} and \cite{Neumann1997-cr} for further discussion of cases where samples of the errors are available.
 
 	% \subsection{U unknown}
-	In the case where we do not know the distribution of $U$, nor have access to replicate measurements or direct measurements from $U$, methods for deconvolution generally require $F_U$ to have a parametric or semi-parametric form. Such methods can be found in \cite{Butucea2005-be}, \cite{Meister2006-nu}, \cite{Butucea2008-wm}, and \cite{Kneip2012-aa}. One exception to this is found in \cite{Schennach2013-yv} where the authors discuss non-parametric estimation of an errors-in-variables regression problem without extra information about the error distributions. However, in regression problems one has access to not only observations of $W = X+ U$, but also observations of $Y = g(X) + \epsilon$, where $\epsilon$ denotes some independent experimental error. This extra data contains information about $F_U$ which, at least in theory, makes it easier to estimate than in the plain deconvolution case.
+	In the case where we do not know the distribution of $U$, nor do we have access to replicate measurements or direct measurements from $U$, methods for deconvolution generally require $F_U$ to have a parametric or semi-parametric form. Such methods can be found in \cite{Butucea2005-be}, \cite{Meister2006-nu}, \cite{Butucea2008-wm}, and \cite{Kneip2012-aa}. One exception to this is found in \cite{Schennach2013-yv} where the authors discussed non-parametric estimation of an errors-in-variables regression problem without extra information about the error distributions. However, in regression problems one has access to not only observations of $W = X+ U$, but also observations of $Y = g(X) + \epsilon$, where $\epsilon$ denotes some independent experimental error. This extra data contains information about $F_U$ which, at least in theory, makes it easier to estimate than in the plain deconvolution case.
  
 \section{Method for deconvolution when the error is unknown}
 \label{sec:summary of delaigle hall}
-	Delaigle's and Hall's 2016 paper \cite{Delaigle2016-la}, presents a non-parametric deconvolution estimator for when the error distribution is unknown, and we do not have access to replicates or samples from the error distribution. %This is unusual in deconvolution problems. As in the methods described above, deconvolution methods usually require assumptions about the shape or scale of the error distribution, or rely on additional observations to estimate it. 
+	Delaigle's and Hall's 2016 paper \cite{Delaigle2016-la}, presents a non-parametric deconvolution estimator for situations when the error distribution is unknown, and we do not have access to replicates or samples from the error distribution. %This is unusual in deconvolution problems. As in the methods described above, deconvolution methods usually require assumptions about the shape or scale of the error distribution, or rely on additional observations to estimate it. 
 	In this section we summarise the estimator of \cite{Delaigle2016-la}, and discuss some practicalities that arise in the implementation. 
 
 	\subsection{Problem Setup}
@@ -241,7 +242,7 @@
 	\subsubsection{Estimator 2}
 	% Ideally, we would like to choose our estimate for $F_X$ to have phase function $\hat{\rho}_X = \hat{\rho}_W$, or equivalently, $\hat{\phi}_W(t) |\hat{\phi}_X(t)| - |\hat{\phi}_W(t)| \hat{\phi}_X(t) = 0$ for all $t$. 
 	% However, unless we take $F_X$ to be the empirical distribution function of $\{W_j\}_j$, it is not clear that it is even possible to choose it to have phase function exactly equal to $\hat{\rho}_W$. 
-	However, $\hat{\rho}_W(t)$ grows less reliable for large values of $|t|$, and so we should preference matching $\hat{\rho}_X$ and $\hat{\rho}_W$ around $t = 0$ over large values of $|t|$. Furthermore, it is not clear that there even exists a distribution with phase function equal to $\hat{\rho}_W(t)$ for all $t \in \mathbb{R}$. Taking this into consideration, and noting that when $\rho_F(t) = \hat{\rho}_W(t)$ we have $\hat{\phi}_W(t) |\phi_F(t)| - \left|\hat{\psi}_W(t)\right|^{1/2} \phi_F(t) = 0$, our goal is to instead choose an $F$ that makes
+	However, a problem with estimator 1 is that $\hat{\rho}_W(t)$ grows less reliable for large values of $|t|$. This motivates us to preference matching $\hat{\rho}_X$ and $\hat{\rho}_W$ around $t = 0$ over large values of $|t|$. Furthermore, it is not clear that there even exists a distribution with phase function equal to $\hat{\rho}_W(t)$ for all $t \in \mathbb{R}$. Taking this into consideration, and noting that when $\rho_F(t) = \hat{\rho}_W(t)$ we have $\hat{\phi}_W(t) |\phi_F(t)| - \left|\hat{\psi}_W(t)\right|^{1/2} \phi_F(t) = 0$, our goal is to instead choose an $F$ that makes
 	\begin{equation}
 		T(F) = \int_{-\infty}^\infty \left| \hat{\phi}_W(t) |\phi_F(t)| - \left|\hat{\psi}_W(t)\right|^{1/2} \phi_F(t) \right|^2 w_1(t) \intd t
 	\end{equation}
@@ -324,7 +325,9 @@
 
 	\subsection{Numerical implementation}
 
-	Delaigle and Hall \cite{Delaigle2016-la} suggested performing this optimization problem by approximating $F_X$ with a discrete distribution on $m$ points, allowing $m$ potentially to diverge with the sample size. They suggested choosing the locations of the probability masses of that discrete distribution, $\vect{\theta} = (\theta_1, \dots, \theta_m)$, to be distributed uniformly but randomly along $[\min(W_i), \max(W_i)]$ and letting the corresponding probability weights $\vect{p} = (p_1, \dots p_m)$ be the variables over which we find the solution of \eqref{eq:objective 1} -- \eqref{eq:objective 2}. We will denote by $F_{\vect{\theta}, \vect{p}}$ the distribution that places mass $p_j$ at $\theta_j$ for $j = 1,\dots, m$. Its characteristic function is given by
+	Delaigle and Hall \cite{Delaigle2016-la} suggested solving this optimization problem by approximating $F_X$ with a discrete distribution on $m$ points, allowing $m$ potentially to diverge with the sample size. They suggested choosing the locations $\vect{\theta} = (\theta_1, \dots, \theta_m)$ of the probability masses of that discrete distribution to be distributed uniformly along $[\min(W_i), \max(W_i)]$ and letting the corresponding probability weights $\vect{p} = (p_1, \dots p_m)$ be the variables over which we find the solution of \eqref{eq:objective 1} -- \eqref{eq:objective 2}. 
+
+	We will denote by $F_{\vect{\theta}, \vect{p}}$ the distribution that places mass $p_j$ at $\theta_j$ for $j = 1,\dots, m$. Its characteristic function is given by
 	\begin{equation}
 		\phi_{\vect{\theta}, \vect{p}}(t) = \sum_{j = 1}^m p_j \exp(it\theta_j)
 	\end{equation}
@@ -346,7 +349,7 @@
 	There is some freedom of choice in the number of points in the approximating discrete distribution but the authors suggested that in their experience, $m = 5\sqrt{n}$ is a reasonable choice.
 
 	\subsection{Example}
-	In Figure \ref{fig:fixed masses example no smoothing}, we provide an example of a typical output of the method just described. In this example we have sampled $n = 500$ points of $W = X+U$ where the true distribution, $F_X$, is chi-squared with 3 degrees of freedom, rescaled to have variance $\sigma_X^2 = 1$. The error distribution, $F_U$, is normal with variance $\sigma_U^2 = 0.2$, resulting in a noise to signal ratio (NSR) of $0.2$. Our deconvolved estimator, $\hat{F}_{\vect{\theta}, \vect{p}}$, is represented by placing a grey point at each $(\theta_j, p_j)$. For comparison, we also plot the true density, $f_X(x)$, as well as an empirical kernel density estimator of $f_W$.
+	In Figure \ref{fig:fixed masses example no smoothing}, we provide an example of a typical output of the method just described. In this example we have sampled $n = 500$ points of $W = X+U$ where the true distribution, $F_X$, is chi-squared with 3 degrees of freedom, rescaled to have variance $\sigma_X^2 = 1$. The error distribution, $F_U$, is normal with variance $\sigma_U^2 = 0.2$, resulting in a noise to signal ratio (NSR) of $0.2$. Our deconvolved estimator, $\hat{F}_{\vect{\theta}, \vect{p}}$, is represented by placing a grey point at each $(\theta_j, p_j)$. For comparison, we also plot the true density, $f_X(x)$, as well as an empirical kernel density estimator of $f_W$ (as in \eqref{eq:standard KDE}).
 
 	\begin{figure}[ht]
 		\centering
@@ -508,7 +511,7 @@
 
 	In this section, we instead explore the phenomenon empirically, and suggest that we might benefit by allowing both the $\theta_j$ and $p_j$ to be the variables of our optimization, rather than fixing the $\theta_j$ as suggested in \cite{Delaigle2016-la}.
 
-	We start by demonstrating the phenomenon using a variety of parameters and distributions. The base example (Figure \ref{fig:fixed masses example alone}) has the following setup:
+	We start by demonstrating the phenomenon using a variety of parameters and distributions. Recall that the base example (Figure \ref{fig:fixed masses example alone}) has the following setup:
 
 	\begin{enumerate}
 		\item The true distribution, $F_X$, is chi-squared with 3 degrees of freedom, rescaled to have variance $\sigma_X^2 = 1$.
@@ -668,7 +671,7 @@ For this particular example, we note that we need only 10 masses (Figure \ref{fi
 It also appears as if the 40 mass case is a closer fit for the true curve than any of the other estimates, despite achieving worse results in the first objective. Although this is purely conjecture, we suggest that this could be because the constraints $T(F) \leq T_\mathrm{min}$, $P_1(F) \leq P_1^\mathrm{min}$, and $P_2(F) \leq P_2^\mathrm{min}$ are often too strict to achieve the variance we desire in the second optimization. The first optimization found a solution which just happened to be far enough away from the global minimum to allow for enough freedom in minimizing the variance that we obtained a result that achieved closer to the true variance. One could try using as constraints, $T(F) \leq (1 + \delta) T_\mathrm{min}$, $P_1(F) \leq (1 + \delta) P_1^\mathrm{min}$, and $P_2(F) \leq (1 + \delta) P_2^\mathrm{min}$, to allow for this behaviour when the first minimization attains a result closer to the global optimum, but we cannot see any obvious way to determine good values for $\delta$.
 
 The results in Figure \ref{fig:compare fixed moving masses} are encouraging, and in our experience are consistent in a wide variety of scenarios. We present some more examples in Figure \ref{fig:more deconvolution examples}. 
-In this figure we compare the fixed but random location method with the varying location method for three different scenarios. A discrete true distribution with normal errors and $n = 5000$ observations (Figures \ref{fig:moving masses discrete} and \ref{fig:fixed masses discrete}), a Gumbel true distribution with Laplace errors and $n = 500$ observations (Figures \ref{fig:moving masses gumbel lap} and \ref{fig:fixed masses gumbel lap}), and a Gamma with shape 5 and rate 2 true distribution with discrete errors and $n = 100$ observations (Figures \ref{fig:moving masses gamma discrete} and \ref{fig:fixed masses gamma discrete}). For the varying location method we use $m = 20$ masses and for the fixed but random location method we use $m = 5\sqrt{n}$ masses. In each scenario we observe that the varying location method is much faster, and in two of the three scenarios produces better objective values. In the scenario where the varying location method did not produce as good results (Figures \ref{fig:moving masses gumbel lap} and \ref{fig:fixed masses gumbel lap}), the fixed location method only assigned approximately 12 or 13 points weights that were noticeably larger than zero and the varying location method made several point masses redundant. This suggests that the slightly worse result of the varying location method is not due to using too few points.
+In this figure we compare the fixed but random location method with the varying location method for three different scenarios. A discrete true distribution with normal errors and $n = 5000$ observations (Figures \ref{fig:moving masses discrete} and \ref{fig:fixed masses discrete}), a Gumbel true distribution with Laplace errors and $n = 500$ observations (Figures \ref{fig:moving masses gumbel lap} and \ref{fig:fixed masses gumbel lap}), and a Gamma with shape 5 and rate 2 true distribution with discrete errors and $n = 100$ observations (Figures \ref{fig:moving masses gamma discrete} and \ref{fig:fixed masses gamma discrete}). For the varying location method we use $m = 20$ masses and for the fixed but random location method we use $m = 5\sqrt{n}$ masses. In each scenario we observe that the varying location method is much faster, and in two of the three scenarios produces better objective values. We also still see instances of points coallescing and masses close to zero. In the scenario where the varying location method did not produce as good results (Figures \ref{fig:moving masses gumbel lap} and \ref{fig:fixed masses gumbel lap}), the fixed location method only assigned approximately 12 or 13 weights that were noticeably larger than zero and the varying location method made several point masses redundant. This suggests that the slightly worse result of the varying location method is not due to using too few points.
 
 % [GIVE AN EXPLANATION OF WHAT IS HAPPENING]
 
