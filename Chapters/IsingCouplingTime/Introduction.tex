@@ -129,14 +129,14 @@
 
 	We note that $f$ is monotonic, in the following sense. We define a partial ordering on $\Omega$ by writing that $\sigma \preceq \omega$ if $\sigma, \omega \in \Omega$ are such that $\sigma[i] \leq \omega[i]$ for all $i \in V$ (and similarly for $\sigma \succeq \omega$). Then for any fixed $i \in V$ and $u \in [0,1]$, if $\sigma \preceq \omega$ then $f(\sigma, i, u) \preceq f(\omega, i, u)$.
 	
-	Let $\mathscr{V}$ and $U$ be independent random variables, with $\mathscr{V}$ uniform on $V$ and $U$ uniform on $[0,1]$. Let $(\mathscr{V}_k, U_k)_{k \geq 1}$ be an i.i.d. sequence of copies of $(\mathscr{V}, U)$. Define top and bottom discrete time chains, $(\mathscr{T}_t)_{t\in \mathbb{N}}^\mathrm{DIS}$ and $(\mathscr{B}_t)_{t\in \mathbb{N}}^\mathrm{DIS}$, with initial states
+	Let $\mathscr{V}$ and $U$ be independent random variables, with $\mathscr{V}$ uniform on $V$ and $U$ uniform on $[0,1]$. Let $(\mathscr{V}_k, U_k)_{k \geq 1}$ be an i.i.d. sequence of copies of $(\mathscr{V}, U)$. Define top and bottom discrete time chains, $(\mathscr{T}_k)_{k\in \mathbb{N}}^\mathrm{DIS}$ and $(\mathscr{B}_k)_{k\in \mathbb{N}}^\mathrm{DIS}$, with initial states
 	\begin{align}
 		\mathscr{T}_0^\mathrm{DIS} &= (1, 1, \dots, 1)\\
 		\mathscr{B}_0^\mathrm{DIS} &= (-1, -1, \dots, -1)
 	\end{align}
-	that update according to $\mathscr{T}_{t+1}^\mathrm{DIS} = f(\mathscr{T}_{t}^\mathrm{DIS}, \mathscr{V}_k, U_k)$ and $\mathscr{B}_{t+1}^\mathrm{DIS} = f(\mathscr{B}_{t}^\mathrm{DIS}, \mathscr{V}_k, U_k)$.
+	that update according to $\mathscr{T}_{k+1}^\mathrm{DIS} = f(\mathscr{T}_{k}^\mathrm{DIS}, \mathscr{V}_{k+1}, U_{k+1})$ and $\mathscr{B}_{k+1}^\mathrm{DIS} = f(\mathscr{B}_{k}^\mathrm{DIS}, \mathscr{V}_{k+1}, U_{k+1})$.
 
-	We call the coupled process, $(\mathscr{B}_t^\mathrm{DIS}, \mathscr{F}_t^\mathrm{DIS})_{t\in \mathbb{N}}$, \emph{the discrete Ising heat-bath coupling}. From the monotonicity of $f$, $\mathscr{T}_t^\mathrm{DIS} \succeq \mathscr{B}_t^\mathrm{DIS}$, for all $t \geq 0$.
+	We call the coupled process, $(\mathscr{B}_k^\mathrm{DIS}, \mathscr{F}_k^\mathrm{DIS})_{k\in \mathbb{N}}$, \emph{the discrete Ising heat-bath coupling}. From the monotonicity of $f$, $\mathscr{T}_k^\mathrm{DIS} \succeq \mathscr{B}_k^\mathrm{DIS}$, for all $k \geq 0$.
 
 	There are two ways we can think about extending this process to our continuous-time chain. The first way is to ``continuize it at rate n'' \cite{Levin2009-fo}. To do this we use the discrete process as defined above but the time between each update is an independent exponential with rate $n$. That is, the continuous-time top and bottom chains are defined as $(\mathscr{B}_t, \mathscr{T}_t) = (\mathscr{B}_{N_t}^\mathrm{DIS}, \mathscr{T}_{N_t}^\mathrm{DIS})$ where $N_t$ is an independent rate $n$ Poisson process. We call $(\mathscr{B}_t, \mathscr{T}_t)_{t\geq 0}$ simply \emph{the Ising heat-bath coupling}.
 
