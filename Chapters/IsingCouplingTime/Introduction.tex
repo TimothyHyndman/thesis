@@ -415,7 +415,7 @@
 
 	\subsubsection{The update support function}
 	\label{sec: definition update support function}
-	Given the update sequence along the interval $(t_1, t_2]$, the \emph{update support function}, $\mathscr{F}(A, t_1, t_2)$, is the minimal set of vertices whose spins at time $t_1$ determine the spins of the vertices in $A$ at time $t_2$. That is, $i \in \mathscr{F}(A, t_1, t_2)$ if and only if there exist states $Y_{t_1}, Y_{t_1}' \in \{-1, +1\}^{V}$ that differ only at $i$ and such that when we construct $Y_{t_2}$ and $Y_{t_2}'$ using the update sequence, $Y_{t_2} \neq Y_{t_2}'$.
+	Given the update sequence along the interval $(t_1, t_2]$, the \emph{update support function}, $\mathscr{F}(A, t_1, t_2)$, is the minimal set of vertices whose spins at time $t_1$ determine the spins of the vertices in $A$ at time $t_2$. That is, $i \in \mathscr{F}(A, t_1, t_2)$ if and only if there exist states $Y_{t_1}, Y_{t_1}' \in \{-1, +1\}^{V}$ that differ only at $i$ and such that when we construct $Y_{t_2}$ and $Y_{t_2}'$ using the update sequence, $Y_{t_2}[A] \neq Y_{t_2}'[A]$.
 
 	In particular, if $\mathscr{F}(i, 0, t) = \emptyset$ then the spin at vertex $i$ at time $t$ does not depend on the initial state and so for our coupled chains, $\mathscr{B}_t[i] = \mathscr{T}_t[i]$.
 	% It follows that
