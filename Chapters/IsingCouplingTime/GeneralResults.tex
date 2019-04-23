@@ -751,15 +751,15 @@ This section contains the statements and proofs for a number of lemmas concernin
 		\end{equation}
 	\end{lemma}
 	\begin{proof}
-		Let $\mathcal{W} = \{\vect{w} = (w_1, w_2, \dots, w_l) : w_1 = i, w_{k-1} \sim w_k\}$ be the set of length $l$ sequences of adjacent vertices starting at vertex $i$. That is, $\mathcal{W}$ is the set of all walks of length $l-1$ on $G_n$ that start at $i$. If $\mathcal{H}_i$ contains any vertex outside $B(i, l)$ at a time $u \in [t_* - s, t_*]$ then there must be some sequence $w \in \mathcal{W}$ such that each $w_k$ was updated in order along the interval $[t_* - s, t_*]$. For any particular sequence $w$, let $M_w$ be the event that each $w_k$ was updated at some time $t_k$ such that $t_* > t_k > t_* - s$ and $t_{k-1} > t_k$. 
+		Let $\mathcal{W} = \{\vect{w} = (w_1, w_2, \dots, w_l) : w_1 = i, w_{k-1} \sim w_k\}$ be the set of length $l$ sequences of adjacent vertices starting at vertex $i$. That is, $\mathcal{W}$ is the set of all walks of length $l-1$ on $G_n$ that start at $i$. If $\mathcal{H}_i$ contains any vertex outside $B(i, l)$ at a time $u \in [t_* - s, t_*]$ then there must be some sequence $\vect{w} \in \mathcal{W}$ such that each $w_k$ was updated in order along the interval $[t_* - s, t_*]$. For any particular sequence $\vect{w}$, let $M_\vect{w}$ be the event that each $w_k$ was updated at some time $t_k$ such that $t_* > t_k > t_* - s$ and $t_{k-1} > t_k$. 
 
-		For $M_w$ to occur, we require that the $l$ independent rate 1 Poisson clocks associated with each $w_k$ ring in a particular order along $[t_* - s, t_*]$. The probability of this is equal to the probability that a single rate 1 Poisson clock rings at least $l$ times in $[0, s]$, or equivalently, a rate $s$ Poisson clock rings at least $l$ times in $[0, 1]$. So we have
+		For $M_\vect{w}$ to occur, we require that the $l$ independent rate 1 Poisson clocks associated with each $w_k$ ring in a particular order along $[t_* - s, t_*]$. The probability of this is equal to the probability that a single rate 1 Poisson clock rings at least $l$ times in $[0, s]$, or equivalently, a rate $s$ Poisson clock rings at least $l$ times in $[0, 1]$. So we have
 		\begin{equation}
-			\prob[M_w] = \prob[\mathrm{Po}(s) \geq l],
+			\prob[M_\vect{w}] = \prob[\mathrm{Po}(s) \geq l],
 		\end{equation}
 		where $\mathrm{Po}(s)$ is Poisson with rate $s$. By a union bound over $\mathcal{W}$,
 		\begin{align}
-			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t_* - u) \nsubseteq B(i, l)\right] &\leq \prob\left[\bigcup_{w \in \mathcal{W}} M_w\right]\\
+			\prob\left[\bigcup_{u \in [0, s]}\mathcal{H}_i(t_* - u) \nsubseteq B(i, l)\right] &\leq \prob\left[\bigcup_{\vect{w} \in \mathcal{W}} M_\vect{w}\right]\\
 			&\leq \Delta^{l-1} \prob[\mathrm{Po}(s) \geq l].
 		\end{align}
 		The moment generating function of a Poisson random variable with rate $s$ is
