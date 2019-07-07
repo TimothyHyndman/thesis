@@ -248,7 +248,7 @@
 		\label{sec:mixturelikelihoods:example}
 		In simple cases, we can plot the likelihood curve, $\Gamma_{\vect{x}, f}$, and objective function, $\mathcal{L}$, along with the maximizing point, $\hat{\vect{\gamma}}$. In particular, when $n = 2$, $\Gamma_{\vect{x}, f} \subset \mathbb{R}^2$ and if the component density is smoothly parametrized by a single parameter, then we can plot $\Gamma_{\vect{x}, f}$ by tracing out $\vect{\gamma}(\theta; \vect{x}, f)$ as we vary $\theta$.
 
-		For example, suppose our sample is made up of two points, $\vect{x} = (x_1, x_2) = (1,2)$, and suppose our component density is normal with variance $\sigma_2 = 0.4^2$ and parametrized by $\theta$, that is,
+		For example, suppose our sample is made up of two points, $\vect{x} = (x_1, x_2) = (1,2)$, and suppose our component density is normal with variance $\sigma^2 = 0.4^2$ and parametrized by $\theta$, that is,
 		\begin{equation}
 		f(x;\theta) = \frac{1}{0.4 \sqrt{2 \pi}} \exp\left(-\frac{(x-\theta)^2}{2\cdot 0.4^2}\right).
 		\label{eq:example component density for likelihood curve}
@@ -401,11 +401,11 @@
 	\begin{equation}
 		\langle \vect{\lambda}(\hat{Q};\vect{x},f), \vect{\gamma}(\vect{\theta};\vect{x},f) \rangle \leq n
 	\end{equation}
-	for all $\vect{\theta} \in \Omega$. This means that $\mathcal{M} = \conv(\Gamma_{\vect{x},f})$ lies entirely on one side of $\mathcal{H}$ and Theorem \ref{thm: Lindsay support is zeros of gradient} tell us that if $\vect{\theta}$ is in the support of $\hat{Q}$, then 
+	for all $\vect{\theta} \in \Omega$. This means that $\mathcal{M} = \conv(\Gamma_{\vect{x},f})$ lies entirely on one side of $\mathcal{H}_{\hat{Q}}$ and Theorem \ref{thm: Lindsay support is zeros of gradient} tell us that if $\vect{\theta}$ is in the support of $\hat{Q}$, then 
 	\begin{equation}
 		\langle \vect{\lambda}(\hat{Q};\vect{x},f), \vect{\gamma}(\vect{\theta};\vect{x},f) \rangle = n
 	\end{equation}
-	and so $\vect{\gamma}(\vect{\theta};\vect{x},f) \in \mathcal{H}$. Thus we can gain information about the number of support points of $\hat{Q}$ by finding the number of points at which $\Gamma_{\vect{x},f}$ touches $\mathcal{H}_{\hat{Q}}$. As an example, consider Figure \ref{fig:cauchy support hyperplane}. Here we observe the likelihood curve for a Cauchy density and $n = 2$ observations. The support line containing $\hat{\vect{\gamma}}$ has two points of contact with $\Gamma_{\vect{x}, f}$ which correspond to the two points of support of the maximum likelihood mixture $\hat{Q}$. In our experience it is fairly typical for every contact point of $\Gamma_{\vect{x}, f}$ with $\mathcal{H}_{\hat{Q}}$ (or equivalently, every point in \eqref{eq:set D_Q = 0}) to correspond to a support point of $\hat{Q}$. However, this is not always the case. In Figure \ref{fig:triangle support hyperplane} we have shown the likelihood curve for a symmetric triangular density and $n =2$ observations. We observe that $\mathcal{H}_{\hat{Q}}$ touches $\Gamma_{\vect{x}, f}$ at an infinite number of points along a line segment. The interpretation is that there are an infinite number of distinct mixtures which achieve the maximum likelihood, each with support points corresponding to various locations along that line segment.
+	and so $\vect{\gamma}(\vect{\theta};\vect{x},f) \in \mathcal{H}_{\hat{Q}}$. Thus we can gain information about the number of support points of $\hat{Q}$ by finding the number of points at which $\Gamma_{\vect{x},f}$ touches $\mathcal{H}_{\hat{Q}}$. As an example, consider Figure \ref{fig:cauchy support hyperplane}. Here we observe the likelihood curve for a Cauchy density and $n = 2$ observations. The support line containing $\hat{\vect{\gamma}}$ has two points of contact with $\Gamma_{\vect{x}, f}$ which correspond to the two points of support of the maximum likelihood mixture $\hat{Q}$. In our experience it is fairly typical for every contact point of $\Gamma_{\vect{x}, f}$ with $\mathcal{H}_{\hat{Q}}$ (or equivalently, every point in \eqref{eq:set D_Q = 0}) to correspond to a support point of $\hat{Q}$. However, this is not always the case. In Figure \ref{fig:triangle support hyperplane} we have shown the likelihood curve for a symmetric triangular density and $n =2$ observations. We observe that $\mathcal{H}_{\hat{Q}}$ touches $\Gamma_{\vect{x}, f}$ at an infinite number of points along a line segment. The interpretation is that there are an infinite number of distinct mixtures which achieve the maximum likelihood, each with support points corresponding to various locations along that line segment.
 
 	\begin{figure}
 		\centering
@@ -531,7 +531,7 @@
 	\end{align}
 	Overall, we have that at every support point, $\theta^*$, of an $m$-point maximizing mixture, $Q$, we must have that
 	\begin{equation}
-		D_Q''(\theta^*;\vect{x},f) \leq p^* \sum_{i = 1}^n \left(\frac{f'(x_i - \theta_j)}{\sum_{k = 1}^m p_k f(x_i - \theta_k)}\right)^2.
+		D_Q''(\theta^*;\vect{x},f) \leq p^* \sum_{i = 1}^n \left(\frac{f'(x_i - \theta^*)}{\sum_{k = 1}^m p_k f(x_i - \theta_k)}\right)^2.
 		\label{eq: our second order KKT condition}
 	\end{equation}
 	This is a weaker condition than that in \eqref{eq:Deq3}. We were unable to obtain an equivalent condition to \eqref{eq:Deq3} using the above method. This is somewhat expected as we have restricted our mixture to have no more than $m$ components, whereas the condition in \eqref{eq:Deq3} relates to the global maximizing mixture distribution.
@@ -917,7 +917,7 @@
 			% Since $f(x)$ has a single mode at $x = 0$, the points of support of the maximizing mixing distribution must lie between $x_{1}$ and $x_{2}$. Hence we are
 			If $x_1 = x_2$ then clearly $K_\vect{x} = 1$. Otherwise, without loss of generality, assume $x_1 < x_2$. By the unimodality of $f$ (\ref{assump:singlemode}), the points of support of any maximizing mixing distribution, $\hat{Q}$, must lie between $x_1$ and $x_2$ \cite[Proposition 25]{Lindsay1995-sq}. Hence $\hat{\vect{\gamma}} = \vect{\gamma}(\hat{Q}, \vect{x}, f)$ must lie in the convex hull of $\Gamma^*_{\vect{x}, f} = \{\vect{\gamma}(\theta; \vect{x}, f) : \theta \in [x_1, x_2]\}$. 
 
-			Consider the behaviour of $\vect{\gamma}(\theta; \vect{x}, f) = (f(x_1 - \theta), f(x_2 - \theta))$ as we increase $\theta$ from $x_1$ to $x_2$. Since $f(x)$ has a single mode at $x = 0$, $f(x_1 - \theta)$ is non-increasing and $f(x_2 - \theta)$ is non-decreasing along this interval. So $\vect{\gamma}(\theta;\vect{x}, f)$ crosses the line $\gamma_1 = \gamma_2$ once only and by the symmetry of $f(x)$, this occurs at $\theta = (x_1 + x_2)/2$. By Lemma \ref{lemma: maximizing point on line u = v}, we also know that $\hat{\vect{\gamma}}$ must lie on the line $\gamma_1 = \gamma_2$.
+			Consider the behaviour of $\vect{\gamma}(\theta; \vect{x}, f) = (f(x_1 - \theta), f(x_2 - \theta))$ as we increase $\theta$ from $x_1$ to $x_2$. Since $f(x)$ has a single mode at $x = 0$, $f(x_1 - \theta)$ is non-increasing and $f(x_2 - \theta)$ is non-decreasing along this interval. So $\vect{\gamma}(\theta;\vect{x}, f)$ crosses the line $\gamma_1 = \gamma_2$ once only and by the symmetry of $f(x)$, this occurs at $\theta = (x_1 + x_2)/2$. By Lemma \ref{lemma: maximizing point on line u = v} below, we also know that $\hat{\vect{\gamma}}$ must lie on the line $\gamma_1 = \gamma_2$.
 
 			Since $f$ is continuous and twice differentiable, $\vect{\gamma}$ traces out a continuous, smooth curve. The signed curvature
 			\begin{align}
@@ -950,7 +950,7 @@
 
 			% By Lemma \ref{lemma: gamma has non-negative curvature at points of support} the curve $\Gamma$ cannot have negative curvature at the points of support and so we cannot have that $K_\vect{x} = 1$.
 			
-			Now assume that $x_2 - x_1 \leq 2a$. By Lemma \ref{lem:magnitudegradients}, there is only one point at which $\vect{\gamma}$ is pointing along the direction $(1,-1)$. Now, by the symmetry of $f$, $\Gamma_{\vect{x}, f}$ must have a line of symmetry along $\gamma_1 = \gamma_2$. Since $\hat{\vect{\gamma}}$ lies on the line $\gamma_1 = \gamma_2$ by Lemma \ref{lemma: maximizing point on line u = v}, the support line of $\Gamma_{\vect{x},f}$ that contains $\hat{\vect{\gamma}}$ must point along the direction $(1, -1)$. Each contact point of $\Gamma_{\vect{x}, f}$ with one of its support lines must be tangent to that support line. Hence, there is only one possible point of contact with the support line that contains $\hat{\vect{\gamma}}$ and so $K_\vect{x} = 1$.
+			Now assume that $x_2 - x_1 \leq 2a$. By Lemma \ref{lem:magnitudegradients} below, there is only one point at which $\vect{\gamma}$ is pointing along the direction $(1,-1)$. Now, by the symmetry of $f$, $\Gamma_{\vect{x}, f}$ must have a line of symmetry along $\gamma_1 = \gamma_2$. Since $\hat{\vect{\gamma}}$ lies on the line $\gamma_1 = \gamma_2$ by Lemma \ref{lemma: maximizing point on line u = v}, the support line of $\Gamma_{\vect{x},f}$ that contains $\hat{\vect{\gamma}}$ must point along the direction $(1, -1)$. Each contact point of $\Gamma_{\vect{x}, f}$ with one of its support lines must be tangent to that support line. Hence, there is only one possible point of contact with the support line that contains $\hat{\vect{\gamma}}$ and so $K_\vect{x} = 1$.
 
 			% [JUST USE SUPORT HYPERPLANE WHICH MUST BE PARALLEL TO u1 = -u2]
 
