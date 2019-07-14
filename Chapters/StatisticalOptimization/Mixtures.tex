@@ -79,7 +79,9 @@
 
 	The third, is that we should be careful to make a distinction between calculating $K_\vect{x}$ and choosing an appropriate number of components for a mixture model. The former is simply a deterministic property of an optimization problem whereas the latter is an in-depth and difficult problem which involves consideration of properties such as consistency, and the use of techniques such as information criteria and likelihood ratios. This latter problem is discussed in \cite[Chapter 6]{McLachlan2004-ik}. In particular, if each $X_i$ comes from a distribution with density $g(x) = f_Q(x)$ (that is, $g(x)$ is a mixture density itself) then we may consider the `true' number of components and using certain penalised log likelihood criteria, such as the Akaike information criterion (AIC) \cite{Akaike1974-bl} or the Bayesian information criterion (BIC) \cite{Schwarz1978-ci}, does not underestimate this quantity asymptotically \cite{Leroux1992-ek}. This suggests that we should not expect $K_\vect{x}$ (which is defined from an unpenalised likelihood) to necessarily be reflective of the properties of $g(x)$.
 
-	In this Chapter, we will explore current results concerning $K_\vect{x}$, and expand on these to produce new bounds in a variety of settings. 
+	In this Chapter, we will explore current results concerning $K_\vect{x}$, and expand on these to produce new bounds for $K_\vect{x}$ in a variety of settings. We look at current results in Section \ref{sec:summary of Lindsay}, and present new results in Section \ref{sec:mixture results}. Our main results are Theorems \ref{thm:n=2 inflection result}, \ref{thm:general n C1 bound}, \ref{thm:bounding Cm}, and \ref{thm:probability in C1}; as well as a simple corollary that results from this last theorem. 
+	% As a corollary to this last theorem, we also obtain a simple proof of the non-consistency of $K_\vect{x}$ as an estimator of the `true' number of mass points when the data comes from a finite mixture of normals with fixed variance. 
+	We also make use of an empirical analysis of $K_\vect{x}$ in Section \ref{sec:empirical results} to frame the problem from a different perspective, and to give us a point of comparison for our bounds. The discussion of current results in Section \ref{sec:summary of Lindsay} also contains some original work placed throughout where it is directly applicable. In particular, Theorem \ref{thm:all points separated by alpha} and Section \ref{sec:KKT conditions} are both new.
  
 	% Not necessarily unique Q
 	% Location mixtures only (otherwise unbounded likelihood and use all n points)
@@ -179,6 +181,7 @@
 		% Consider the situation in which $|x_i - x_j| > \alpha$ for all $i\neq j$. Intuitively, we would expect that there is some $\alpha^*$ such that if $\alpha > \alpha^*$ then $\vect{x} \in C_n$.
 		
 		\begin{theorem}
+		\label{thm:all points separated by alpha}
 			Let $\vect{x} = (x_1, \dots, x_n)$ be the sample for which we are finding a maximum likelihood location mixture using $f(x)$ as our component density. Let $f(x)$ be a unimodal density on $\mathbb{R}$, symmetric about $x = 0$, and such that the conditions of Theorem \ref{thm: lindsay maximizing likelihood vector point} hold. Let $\alpha > 0$ be such that
 			\begin{equation}
 				\frac{f(\alpha/2)}{f(0)} < \frac{1}{n}\left(\frac{n-1}{n}\right)^{n-1}.
@@ -1146,8 +1149,9 @@
 	% \subsection{Bounding \texorpdfstring{$C_m$}{Cm}}
 	We now state a generalisation of Theorem \ref{thm:general n C1 bound} that bounds the regions $C_1, \dots, C_n$.
 
-	\label{sec:bounding Cm}
+	% \label{sec:bounding Cm}
 		\begin{theorem}
+		\label{thm:bounding Cm}
 			Let the component density with which we are finding a maximum likelihood location mixture be normal with variance $\sigma^2$. If $\vect{x} \in C_m$ for some $m \leq n$, then there exists a subset $A$ of the $x_i$ such that $A$ contains at least $n/m$ elements and
 			\begin{equation}
 				\frac{1}{n} \sum_{i \in A} \left(x_i - \bar{x}_A\right)^2 \leq \sigma^2,
@@ -1338,6 +1342,8 @@
 In this chapter we have analysed the behaviour of the mixing distribution of certain maximum likelihood location mixtures. We were concerned mainly with $K_\vect{x}$ - the number of components in these mixtures, or equivalently, the number of points of support in the corresponding mixing distribution. While bounds on $K_\vect{x}$ existed in the literature, mainly thanks to Lindsay's seminal papers on the geometry of mixture likelihoods, empirical results suggested that in many cases these bounds could be significantly tightened. In exploring these empirical results, we demonstrated that given a component density, we could partition $\mathbb{R}^n$ into sets, $C_m$, based on the number of components that each point $\vect{x} \in \mathbb{R}^n$ required. For small $n$ these could be easily visualized and these plots provided a reference against which to compare any bounds on $K_\vect{x}$.
 
 We proved a number of results providing bounds on $K_\vect{x}$ that to the best of our knowledge are new. For $n = 2$, we found an explicit formula for $K_\vect{x}$ for a certain class of symmetric, unimodal component densities. For $n \geq 2$, we restricted our attention to normal component densities and, for each $m \leq n$, provided a necessary condition for $\vect{x} \in C_m$. We used these bounds to show that the number of components chosen by a normal location mixture is not a consistent estimator for the true number of components. 
+
+One might hope to extend the results above to a wider class of densities, or to generalize the results for $n=2$ to $n > 2$. This is indeed an area of interest for future research, but there are some immediate apparent difficulties that arise if we try to use the same approaches as in this chapter. In particular, when $n=2$ we are able to simplify our problem to one concerning the curvature of the likelihood curve. For $n>2$, the problem cannot be answered by simply considering the curvature. For normal densities, we were able to obtain results for $n>2$ by taking advantage of the simple form that the derivatives of the normal density take. In general, we are not guaranteed that derivatives for other densities will simplify as well. However, we may be able to generalise our results to other densities in the one-parameter exponential family, in a similar fashion to Lindsay in \cite{Lindsay1983a-he}.
 
 Overall, this chapter provided new insights into maximum likelihood location mixtures by treating the problem as an optimization problem, rather than a statistical problem.
 % [EXTEND?]
